@@ -136,4 +136,7 @@ sketch
 # Ignore all local history of files
 .history
 
+### Config files ###
+.config.ts
+
 # End of https://www.toptal.com/developers/gitignore/api/node,visualstudiocode,react
