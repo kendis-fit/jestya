@@ -1,13 +1,26 @@
 import { Model } from "mongoose";
-import { Injectable, Inject } from "@nestjs/common";
+import { Injectable, Inject, HttpException, HttpStatus } from "@nestjs/common";
 
 import { IUser } from "./user.interface";
 import { USER_MODEL } from "./user.providers";
 import { UserLogin } from "./dto/user-login.dto";
+import { AuthService } from "src/auth/auth.service";
+import { UserResponse } from "./dto/user-response.dto";
 
 @Injectable()
 export class UserService {
-	constructor(@Inject(USER_MODEL) private readonly users: Model<IUser>) {}
+	constructor(@Inject(USER_MODEL) private readonly users: Model<IUser>, private readonly auth: AuthService) {}
 
-	public login(user: UserLogin) {}
+	public async login(user: UserLogin): Promise<UserResponse> {
+		const foundUser = await this.users.findOne({ login: user.login }).lean().exec();
+		if (!foundUser) {
+			throw new HttpException({ message: "User is not found" }, HttpStatus.NOT_FOUND);
+		}
+		const isPassword = foundUser.password === user.password;
+		if (!isPassword) {
+			throw new HttpException({}, HttpStatus.BAD_REQUEST);
+		}
+		const token = this.auth.signPayload({ id: foundUser._id, role: foundUser.role });
+		return new UserResponse(token);
+	}
 }
