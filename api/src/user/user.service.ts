@@ -7,6 +7,7 @@ import { USER_MODEL } from "./user.providers";
 import { UserLogin } from "./dto/user-login.dto";
 import { AuthService } from "src/auth/auth.service";
 import { UserRegistration } from "./dto/user-registration.dto";
+import { UserCreated } from "./dto/user-created.dto";
 
 @Injectable()
 export class UserService {
@@ -38,7 +39,7 @@ export class UserService {
 		return newUser._id;
 	}
 
-	public async create(user: UserRegistration): Promise<string> {
+	public async create(user: UserCreated): Promise<string> {
 		const existsUser = await this.users.exists({ login: user.login });
 		if (existsUser) {
 			throw new HttpException({ message: `User ${user.login} is already exists` }, HttpStatus.CONFLICT);

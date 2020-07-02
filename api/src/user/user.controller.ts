@@ -8,6 +8,7 @@ import { PasswordEncryptionPipe } from "src/pipes/password-encryption.pipe";
 import { RoleGuard } from "src/guards/role.guard";
 import { ROLE } from "./user.entity";
 import { UserSelected } from "./dto/user-selected.dto";
+import { UserCreated } from "./dto/user-created.dto";
 
 @Controller("user")
 export class UserController {
@@ -28,7 +29,7 @@ export class UserController {
 
 	@Post()
 	@UseGuards(new RoleGuard([ROLE.SuperAdmin, ROLE.Admin]))
-	public async create(@Body() user: UserRegistration): Promise<void> {
+	public async create(@Body() user: UserCreated): Promise<void> {
 		await this.userService.create(user);
 	}
 
