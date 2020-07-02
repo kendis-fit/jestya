@@ -47,4 +47,8 @@ export class UserService {
 		await newUser.save();
 		return newUser._id;
 	}
+
+	public async delete(userId: string): Promise<void> {
+		await this.users.deleteOne({ _id: userId });
+	}
 }
