@@ -8,6 +8,7 @@ import { UserLogin } from "./dto/user-login.dto";
 import { AuthService } from "src/auth/auth.service";
 import { UserRegistration } from "./dto/user-registration.dto";
 import { UserCreated } from "./dto/user-created.dto";
+import { UserUpdate } from "./dto/user-update.dto";
 
 @Injectable()
 export class UserService {
@@ -51,5 +52,15 @@ export class UserService {
 
 	public async delete(userId: string): Promise<void> {
 		await this.users.deleteOne({ _id: userId });
+	}
+
+	public async update(userId: string, user: UserUpdate): Promise<void> {
+		const foundUser = await this.users.findById(userId).exec();
+		if (!foundUser) {
+			throw new HttpException({ message: "User is not found" }, HttpStatus.NOT_FOUND);
+		}
+		foundUser.name = user.name;
+		foundUser.login = user.login;
+		await foundUser.save();
 	}
 }
