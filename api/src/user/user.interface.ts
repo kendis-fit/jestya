@@ -5,4 +5,5 @@ export interface IUser extends Document {
 	login: string;
 	password: string;
 	role: string;
+	createdAt: Date;
 }

@@ -15,12 +15,20 @@ import { UserUpdatePassword } from "./dto/user-update-password.dto";
 export class UserService {
 	constructor(@Inject(USER_MODEL) private readonly users: Model<IUser>, private readonly auth: AuthService) {}
 
-	public async findUserById(userId: string) {
+	public async findById(userId: string) {
 		const foundUser = await this.users.findById(userId);
 		if (!foundUser) {
 			throw new HttpException({ message: "User is not found" }, HttpStatus.NOT_FOUND);
 		}
 		return foundUser;
+	}
+
+	public async find(offset: number, size: number) {
+		if (size > 100) {
+			throw new HttpException({ message: "Users must be less than 100" }, HttpStatus.BAD_REQUEST);
+		}
+		const users = await this.users.find().skip(offset).limit(size).lean();
+		return users;
 	}
 
 	public async login(user: UserLogin): Promise<string> {
@@ -60,19 +68,19 @@ export class UserService {
 	}
 
 	public async delete(userId: string): Promise<void> {
-		const foundUser = await this.findUserById(userId);
+		const foundUser = await this.findById(userId);
 		await foundUser.remove();
 	}
 
 	public async update(userId: string, user: UserUpdate): Promise<void> {
-		const foundUser = await this.findUserById(userId);
+		const foundUser = await this.findById(userId);
 		foundUser.name = user.name;
 		foundUser.login = user.login;
 		await foundUser.save();
 	}
 
 	public async updatePassword(userId: string, user: UserUpdatePassword): Promise<void> {
-		const foundUser = await this.findUserById(userId);
+		const foundUser = await this.findById(userId);
 		if (foundUser.password !== user.oldPassword) {
 			throw new HttpException({ message: "Password is wrong" }, HttpStatus.BAD_REQUEST);
 		}

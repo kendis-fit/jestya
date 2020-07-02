@@ -27,6 +27,11 @@ const userSchema = new Schema({
 		default: ROLE.User,
 		required: true,
 	},
+	createdAt: {
+		type: Date,
+		default: Date.now(),
+		required: true,
+	},
 });
 
 export { userSchema };
