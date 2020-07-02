@@ -1,5 +1,11 @@
 import { Schema } from "mongoose";
 
+export enum ROLE {
+	User = "User",
+	Admin = "Admin",
+	SuperAdmin = "SuperAdmin",
+}
+
 const userSchema = new Schema({
 	name: {
 		type: String,
@@ -17,8 +23,8 @@ const userSchema = new Schema({
 	},
 	role: {
 		type: String,
-		enum: ["SuperAdmin", "Admin", "User"],
-		default: "User",
+		enum: [ROLE.SuperAdmin, ROLE.Admin, ROLE.User],
+		default: ROLE.User,
 		required: true,
 	},
 });

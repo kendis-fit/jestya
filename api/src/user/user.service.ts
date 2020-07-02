@@ -1,6 +1,7 @@
 import { Model } from "mongoose";
 import { Injectable, Inject, HttpException, HttpStatus } from "@nestjs/common";
 
+import { ROLE } from "./user.entity";
 import { IUser } from "./user.interface";
 import { USER_MODEL } from "./user.providers";
 import { UserLogin } from "./dto/user-login.dto";
@@ -26,7 +27,7 @@ export class UserService {
 	}
 
 	public async registration(user: UserRegistration): Promise<void> {
-		const superAdminExists = await this.users.exists({ role: "SuperAdmin" });
+		const superAdminExists = await this.users.exists({ role: ROLE.SuperAdmin });
 		if (superAdminExists) {
 			throw new HttpException(
 				{ message: "If super admin exists, then nobody can sign up" },
