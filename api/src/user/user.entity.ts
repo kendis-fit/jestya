@@ -26,9 +26,4 @@ const userSchema = new Schema({
 	},
 });
 
-userSchema.pre<IUser>("save", function (next) {
-	this.password = createHash("sha256").update(this.password).digest("hex");
-	next();
-});
-
 export { userSchema };
