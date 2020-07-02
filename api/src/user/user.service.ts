@@ -6,6 +6,7 @@ import { USER_MODEL } from "./user.providers";
 import { UserLogin } from "./dto/user-login.dto";
 import { AuthService } from "src/auth/auth.service";
 import { UserResponse } from "./dto/user-response.dto";
+import { UserRegistration } from "./dto/user-registration.dto";
 
 @Injectable()
 export class UserService {
@@ -22,5 +23,17 @@ export class UserService {
 		}
 		const token = this.auth.signPayload({ id: foundUser._id, role: foundUser.role });
 		return new UserResponse(token);
+	}
+
+	public async registration(user: UserRegistration): Promise<void> {
+		const superAdminExists = await this.users.exists({ role: "SuperAdmin" });
+		if (superAdminExists) {
+			throw new HttpException(
+				{ message: "If super admin exists, then nobody can sign up" },
+				HttpStatus.FORBIDDEN
+			);
+		}
+		const newUser = new this.users(user);
+		await newUser.save();
 	}
 }

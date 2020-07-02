@@ -1,7 +1,4 @@
 import { Schema } from "mongoose";
-import { createHash } from "crypto";
-
-import { IUser } from "./user.interface";
 
 const userSchema = new Schema({
 	name: {
