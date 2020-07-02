@@ -9,10 +9,19 @@ import { AuthService } from "src/auth/auth.service";
 import { UserRegistration } from "./dto/user-registration.dto";
 import { UserCreated } from "./dto/user-created.dto";
 import { UserUpdate } from "./dto/user-update.dto";
+import { UserUpdatePassword } from "./dto/user-update-password.dto";
 
 @Injectable()
 export class UserService {
 	constructor(@Inject(USER_MODEL) private readonly users: Model<IUser>, private readonly auth: AuthService) {}
+
+	public async findUserById(userId: string) {
+		const foundUser = await this.users.findById(userId);
+		if (!foundUser) {
+			throw new HttpException({ message: "User is not found" }, HttpStatus.NOT_FOUND);
+		}
+		return foundUser;
+	}
 
 	public async login(user: UserLogin): Promise<string> {
 		const foundUser = await this.users.findOne({ login: user.login }).lean();
@@ -51,20 +60,23 @@ export class UserService {
 	}
 
 	public async delete(userId: string): Promise<void> {
-		const foundUser = await this.users.findById(userId);
-		if (!foundUser) {
-			throw new HttpException({ message: "User is not found" }, HttpStatus.NOT_FOUND);
-		}
+		const foundUser = await this.findUserById(userId);
 		await foundUser.remove();
 	}
 
 	public async update(userId: string, user: UserUpdate): Promise<void> {
-		const foundUser = await this.users.findById(userId);
-		if (!foundUser) {
-			throw new HttpException({ message: "User is not found" }, HttpStatus.NOT_FOUND);
-		}
+		const foundUser = await this.findUserById(userId);
 		foundUser.name = user.name;
 		foundUser.login = user.login;
+		await foundUser.save();
+	}
+
+	public async updatePassword(userId: string, user: UserUpdatePassword): Promise<void> {
+		const foundUser = await this.findUserById(userId);
+		if (foundUser.password !== user.oldPassword) {
+			throw new HttpException({ message: "Password is wrong" }, HttpStatus.BAD_REQUEST);
+		}
+		foundUser.password = user.newPassword;
 		await foundUser.save();
 	}
 }

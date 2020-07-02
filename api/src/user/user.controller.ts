@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UsePipes, UseGuards, Delete, Put, Param } from "@nestjs/common";
+import { Controller, Post, Body, UsePipes, UseGuards, Delete, Put, Param, Patch } from "@nestjs/common";
 
 import { UserService } from "./user.service";
 import { UserLogin } from "./dto/user-login.dto";
@@ -11,6 +11,7 @@ import { UserSelected } from "./dto/user-selected.dto";
 import { UserCreated } from "./dto/user-created.dto";
 import { UserSelfGuard } from "src/guards/user-self.guard";
 import { UserUpdate } from "./dto/user-update.dto";
+import { UserUpdatePassword } from "./dto/user-update-password.dto";
 
 @Controller("user")
 export class UserController {
@@ -42,6 +43,14 @@ export class UserController {
 	}
 
 	@Put(":id")
-	@UseGuards(new UserSelfGuard(true))
-	public async update(@Param("id") id: string, @Body() user: UserUpdate): Promise<void> {}
+	@UseGuards(new UserSelfGuard(false))
+	public async update(@Param("id") userId: string, @Body() user: UserUpdate): Promise<void> {
+		await this.userService.update(userId, user);
+	}
+
+	@Patch(":id")
+	@UseGuards(new UserSelfGuard(false))
+	public async updatePassword(@Param("id") userId: string, user: UserUpdatePassword): Promise<void> {
+		await this.userService.updatePassword(userId, user);
+	}
 }
