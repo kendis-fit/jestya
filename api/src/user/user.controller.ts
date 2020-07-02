@@ -1,17 +1,16 @@
 import { Controller, Post, Body, UsePipes, UseGuards, Delete, Put, Param, Patch } from "@nestjs/common";
 
+import { ROLE } from "./user.entity";
 import { UserService } from "./user.service";
 import { UserLogin } from "./dto/user-login.dto";
+import { UserUpdate } from "./dto/user-update.dto";
 import { UserResponse } from "./dto/user-response.dto";
-import { UserRegistration } from "./dto/user-registration.dto";
-import { PasswordEncryptionPipe } from "src/pipes/password-encryption.pipe";
 import { RoleGuard } from "src/guards/role.guard";
-import { ROLE } from "./user.entity";
-import { UserSelected } from "./dto/user-selected.dto";
 import { UserCreated } from "./dto/user-created.dto";
 import { UserSelfGuard } from "src/guards/user-self.guard";
-import { UserUpdate } from "./dto/user-update.dto";
+import { UserRegistration } from "./dto/user-registration.dto";
 import { UserUpdatePassword } from "./dto/user-update-password.dto";
+import { PasswordEncryptionPipe } from "src/pipes/password-encryption.pipe";
 
 @Controller("user")
 export class UserController {
@@ -36,10 +35,10 @@ export class UserController {
 		await this.userService.create(user);
 	}
 
-	@Delete()
+	@Delete(":id")
 	@UseGuards(new RoleGuard([ROLE.SuperAdmin]))
-	public async delete(@Body() user: UserSelected): Promise<void> {
-		await this.userService.delete(user.id);
+	public async delete(@Param("id") userId: string): Promise<void> {
+		await this.userService.delete(userId);
 	}
 
 	@Put(":id")
