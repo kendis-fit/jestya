@@ -26,7 +26,7 @@ export class UserController {
 	}
 
 	@Post()
-	@UseGuards(new RoleGuard(ROLE.SuperAdmin))
+	@UseGuards(new RoleGuard([ROLE.SuperAdmin]))
 	public async create(@Body() user: UserRegistration): Promise<void> {
 		await this.userService.create(user);
 	}
