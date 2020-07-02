@@ -15,7 +15,7 @@ export class UserService {
 	constructor(@Inject(USER_MODEL) private readonly users: Model<IUser>, private readonly auth: AuthService) {}
 
 	public async login(user: UserLogin): Promise<string> {
-		const foundUser = await this.users.findOne({ login: user.login }).lean().exec();
+		const foundUser = await this.users.findOne({ login: user.login }).lean();
 		if (!foundUser) {
 			throw new HttpException({ message: "User is not found" }, HttpStatus.NOT_FOUND);
 		}
@@ -51,11 +51,15 @@ export class UserService {
 	}
 
 	public async delete(userId: string): Promise<void> {
-		await this.users.deleteOne({ _id: userId });
+		const foundUser = await this.users.findById(userId);
+		if (!foundUser) {
+			throw new HttpException({ message: "User is not found" }, HttpStatus.NOT_FOUND);
+		}
+		await foundUser.remove();
 	}
 
 	public async update(userId: string, user: UserUpdate): Promise<void> {
-		const foundUser = await this.users.findById(userId).exec();
+		const foundUser = await this.users.findById(userId);
 		if (!foundUser) {
 			throw new HttpException({ message: "User is not found" }, HttpStatus.NOT_FOUND);
 		}
