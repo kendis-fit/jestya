@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { Schema, Types } from "mongoose";
 
 export enum ROLE {
 	User = "User",
@@ -6,7 +6,7 @@ export enum ROLE {
 	SuperAdmin = "SuperAdmin",
 }
 
-const userSchema = new Schema({
+export const userSchema = new Schema({
 	name: {
 		type: String,
 		required: true,
@@ -32,6 +32,10 @@ const userSchema = new Schema({
 		default: Date.now(),
 		required: true,
 	},
+	projects: [
+		{
+			type: Types.ObjectId,
+			ref: "Project",
+		},
+	],
 });
-
-export { userSchema };
