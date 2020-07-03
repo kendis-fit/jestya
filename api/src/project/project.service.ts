@@ -30,13 +30,25 @@ export class ProjectService {
 		await user.save();
 
 		return newProject._id;
+
+		// TO DO: add base borders
 	}
 
 	public async addUser(projectId: string, userId: string) {}
 
 	public async addBoard(projectId: string) {}
 
-	public async delete(projectId: string) {}
+	public async delete(projectId: string, userId: string): Promise<void> {
+		const project = await this.projects.findById(projectId).populate({ path: "creator", select: "_id" });
+
+		if (project.creator._id !== userId) {
+			throw new HttpException({}, HttpStatus.FORBIDDEN);
+		}
+
+		await project.remove();
+
+		// TO DO: remove borders
+	}
 
 	public async removeUser(projectId: string, userId: string) {}
 

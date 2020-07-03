@@ -1,6 +1,8 @@
 import { Schema, Types } from "mongoose";
+import { IProject } from "./project.interface";
+import { UserModel } from "src/user/user.providers";
 
-export const projectShema = new Schema({
+const projectShema = new Schema({
 	name: {
 		type: String,
 		required: true,
@@ -25,3 +27,15 @@ export const projectShema = new Schema({
 		},
 	],
 });
+
+projectShema.pre<IProject>("remove", function (next) {
+	UserModel.updateOne({}, { $pull: { projects: { _id: this.creator._id } } }, err => {
+		if (err) {
+			next(err);
+		} else {
+			next();
+		}
+	});
+});
+
+export { projectShema };

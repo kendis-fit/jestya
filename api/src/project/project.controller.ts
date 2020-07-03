@@ -19,6 +19,7 @@ export class ProjectController {
 	public async findAllUsers(@Param("id") projectId: string) {}
 
 	@Post()
+	@UseGuards(new RoleGuard([ROLE.SuperAdmin, ROLE.Admin]))
 	public async create(@Body() project: ProjectCreated, @Req() req): Promise<{ id: string }> {
 		const newProjectId = await this.projectService.create(project, req.user.id);
 		return { id: newProjectId };
@@ -34,7 +35,9 @@ export class ProjectController {
 
 	@Delete(":id")
 	@UseGuards(new RoleGuard([ROLE.SuperAdmin, ROLE.Admin]))
-	public async delete(@Param("id") projectId: string) {}
+	public async delete(@Param("id") projectId: string, @Req() req) {
+		await this.projectService.delete(projectId, req.user.id);
+	}
 
 	@Delete(":id/users/:userId")
 	@UseGuards(new RoleGuard([ROLE.SuperAdmin, ROLE.Admin]))
