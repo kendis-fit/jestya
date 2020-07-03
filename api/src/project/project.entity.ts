@@ -13,6 +13,11 @@ export const projectShema = new Schema({
 		default: Date.now(),
 		required: true,
 	},
+	creator: {
+		type: Types.ObjectId,
+		ref: "User",
+		required: false,
+	},
 	users: [
 		{
 			type: Types.ObjectId,

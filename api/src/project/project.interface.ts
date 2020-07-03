@@ -6,5 +6,6 @@ export interface IProject extends Document {
 	name: string;
 	description?: string;
 	createdAt: Date;
+	creator: IUser;
 	users: IUser[];
 }
