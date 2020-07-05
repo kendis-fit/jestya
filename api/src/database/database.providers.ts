@@ -1,14 +1,23 @@
-import { connect } from "mongoose";
+import { Sequelize } from "sequelize-typescript";
 
+import { User, ProjectUser } from "src/user/user.entity";
 import { ConfigService } from "../config/config.service";
+import { Project } from "src/project/project.entity";
 
-export const DATABASE = "DATABASE";
+export const SEQUELIZE = "SEQUELIZE";
 
 export const databaseProviders = [
 	{
-		provide: DATABASE,
-		useFactory: async (config: ConfigService) =>
-			await connect(config.config.connectionString, { db: config.config.nameDatabase }),
+		provide: SEQUELIZE,
+		useFactory: async (config: ConfigService) => {
+			const sequelize = new Sequelize({
+				dialect: "postgres",
+				...config,
+			});
+			sequelize.addModels([User, Project, ProjectUser]);
+			await sequelize.sync();
+			return sequelize;
+		},
 		inject: [ConfigService],
 	},
 ];

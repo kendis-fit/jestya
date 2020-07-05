@@ -1,68 +1,47 @@
 import { Controller, Post, Body, UsePipes, UseGuards, Delete, Put, Param, Patch, Get, Query } from "@nestjs/common";
 
-import { ROLE } from "./user.entity";
 import { UserService } from "./user.service";
-import { UserInfo } from "./dto/user-info.dto";
 import { UserLogin } from "./dto/user-login.dto";
 import { RoleGuard } from "src/guards/role.guard";
 import { UserUpdate } from "./dto/user-update.dto";
 import { UserCreated } from "./dto/user-created.dto";
-import { UserResponse } from "./dto/user-response.dto";
 import { UserSelfGuard } from "src/guards/user-self.guard";
 import { UserRegistration } from "./dto/user-registration.dto";
 import { UserUpdatePassword } from "./dto/user-update-password.dto";
 import { PasswordEncryptionPipe } from "src/pipes/password-encryption.pipe";
+import { Role } from "./user.entity";
 
 @Controller("user")
 export class UserController {
 	constructor(private readonly userService: UserService) {}
 
 	@Get(":id")
-	public async findById(@Param("id") userId: string): Promise<UserInfo> {
-		const user = await this.userService.findById(userId);
-		return new UserInfo(user._id, user.name, user.login, user.createdAt);
-	}
+	public async findById(@Param("id") userId: string) {}
 
 	@Get()
-	public async find(@Query("offset") offset: number, @Query("size") size: number): Promise<UserInfo[]> {
-		const users = await this.userService.find(offset, size);
-		return users.map(user => new UserInfo(user._id, user.name, user.login, user.createdAt));
-	}
+	public async find(@Query("offset") offset: number, @Query("size") size: number) {}
 
 	@Post("login")
 	@UsePipes(new PasswordEncryptionPipe())
-	public async login(@Body() user: UserLogin): Promise<UserResponse> {
-		const token = await this.userService.login(user);
-		return new UserResponse(token);
-	}
+	public async login(@Body() user: UserLogin) {}
 
 	@Post("registration")
 	@UsePipes(new PasswordEncryptionPipe())
-	public async registration(@Body() user: UserRegistration): Promise<void> {
-		await this.userService.registration(user);
-	}
+	public async registration(@Body() user: UserRegistration) {}
 
 	@Post()
-	@UseGuards(new RoleGuard([ROLE.SuperAdmin, ROLE.Admin]))
-	public async create(@Body() user: UserCreated): Promise<void> {
-		await this.userService.create(user);
-	}
+	@UseGuards(new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
+	public async create(@Body() user: UserCreated) {}
 
 	@Delete(":id")
-	@UseGuards(new RoleGuard([ROLE.SuperAdmin]))
-	public async delete(@Param("id") userId: string): Promise<void> {
-		await this.userService.delete(userId);
-	}
+	@UseGuards(new RoleGuard([Role.SUPER_ADMIN]))
+	public async delete(@Param("id") userId: string) {}
 
 	@Put(":id")
 	@UseGuards(new UserSelfGuard(false))
-	public async update(@Param("id") userId: string, @Body() user: UserUpdate): Promise<void> {
-		await this.userService.update(userId, user);
-	}
+	public async update(@Param("id") userId: string, @Body() user: UserUpdate) {}
 
 	@Patch(":id")
 	@UseGuards(new UserSelfGuard(false))
-	public async updatePassword(@Param("id") userId: string, user: UserUpdatePassword): Promise<void> {
-		await this.userService.updatePassword(userId, user);
-	}
+	public async updatePassword(@Param("id") userId: string, user: UserUpdatePassword) {}
 }

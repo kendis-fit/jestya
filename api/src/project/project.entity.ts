@@ -1,41 +1,51 @@
-import { Schema, Types } from "mongoose";
-import { IProject } from "./project.interface";
-import { UserModel } from "src/user/user.providers";
+import { BelongsToMany, Table, BelongsTo, Model, Column, DataType, ForeignKey } from "sequelize-typescript";
 
-const projectShema = new Schema({
-	name: {
-		type: String,
-		required: true,
-	},
-	description: {
-		type: String,
-	},
-	createdAt: {
-		type: Date,
-		default: Date.now(),
-		required: true,
-	},
-	creator: {
-		type: Types.ObjectId,
-		ref: "User",
-		required: false,
-	},
-	users: [
-		{
-			type: Types.ObjectId,
-			ref: "User",
-		},
-	],
-});
+import { User, ProjectUser } from "src/user/user.entity";
 
-projectShema.pre<IProject>("remove", function (next) {
-	UserModel.updateOne({}, { $pull: { projects: { _id: this.creator._id } } }, err => {
-		if (err) {
-			next(err);
-		} else {
-			next();
-		}
-	});
-});
+@Table({ tableName: "projects" })
+export class Project extends Model<Project> {
+	@Column({
+		type: DataType.UUID,
+		primaryKey: true,
+		defaultValue: DataType.UUIDV4,
+	})
+	public id: string;
 
-export { projectShema };
+	@Column({
+		type: DataType.STRING,
+	})
+	public name: string;
+
+	@Column({
+		type: DataType.STRING,
+		allowNull: true,
+	})
+	public description!: string;
+
+	@Column({
+		type: DataType.DATE,
+	})
+	public createdAt: Date;
+
+	@Column({
+		type: DataType.DATE,
+	})
+	public updatedAt: Date;
+
+	@Column({
+		type: DataType.DATE,
+	})
+	public deletedAt: Date;
+
+	@ForeignKey(() => User)
+	@Column({
+		type: DataType.UUID,
+	})
+	public creatorId: string;
+
+	@BelongsTo(() => User)
+	public creator: User;
+
+	@BelongsToMany(() => User, () => ProjectUser)
+	public users: User[];
+}

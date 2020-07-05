@@ -1,15 +1,10 @@
-import { model, Model } from "mongoose";
+import { User } from "./user.entity";
 
-import { userSchema } from "./user.entity";
-import { IUser } from "./user.interface";
-
-export const USER_MODEL = "USER_MODEL";
-
-export const UserModel = model<IUser>("User", userSchema);
+export const USER_REPOSITORY = "USER_REPOSITORY";
 
 export const userProviders = [
 	{
-		provide: USER_MODEL,
-		useValue: UserModel,
+		provide: USER_REPOSITORY,
+		useValue: User,
 	},
 ];
