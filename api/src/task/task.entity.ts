@@ -6,9 +6,11 @@ import {
 	UpdateDateColumn,
 	ManyToOne,
 	ManyToMany,
+	OneToMany,
 } from "typeorm";
 
 import { Board } from "src/board/board.entity";
+import { Comment } from "src/comment/comment.entity";
 import { Component } from "src/component/component.entity";
 
 export enum Priority {
@@ -55,4 +57,7 @@ export class Task {
 
 	@ManyToMany(type => Component, component => component.tasks)
 	public components: Component[];
+
+	@OneToMany(type => Comment, comment => comment.task)
+	public comments: Comment[];
 }

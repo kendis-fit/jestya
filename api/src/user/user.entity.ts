@@ -10,6 +10,7 @@ import {
 } from "typeorm";
 
 import { Project } from "src/project/project.entity";
+import { Comment } from "src/comment/comment.entity";
 
 export enum Role {
 	USER = "USER",
@@ -57,4 +58,7 @@ export class User {
 
 	@OneToMany(type => Project, project => project.creator)
 	public createdProjects: Project[];
+
+	@OneToMany(type => Comment, comment => comment.user)
+	public comments: Comment[];
 }

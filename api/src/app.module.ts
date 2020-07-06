@@ -10,14 +10,20 @@ import { UserModule } from "./user/user.module";
 import { TaskModule } from "./task/task.module";
 import { Project } from "./project/project.entity";
 import { BoardModule } from "./board/board.module";
+import { Comment } from "./comment/comment.entity";
 import { ProjectModule } from "./project/project.module";
 import { Component } from "./component/component.entity";
+import { CommentModule } from "./comment/comment.module";
 import { ComponentModule } from "./component/component.module";
 
 @Module({
 	imports: [
 		UserModule,
 		ProjectModule,
+		BoardModule,
+		TaskModule,
+		ComponentModule,
+		CommentModule,
 		ConfigModule.forRoot({
 			load: [config[process.env.NODE_ENV || "development"]],
 		}),
@@ -30,14 +36,11 @@ import { ComponentModule } from "./component/component.module";
 				username: config.get<string>("database.username"),
 				password: config.get<string>("database.password"),
 				database: config.get<string>("database.database"),
-				entities: [User, Project, Board, Task, Component],
+				entities: [User, Project, Board, Task, Component, Comment],
 				synchronize: true,
 			}),
 			inject: [ConfigService],
 		}),
-		BoardModule,
-		TaskModule,
-		ComponentModule,
 	],
 })
 export class AppModule {}
