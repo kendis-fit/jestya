@@ -1,15 +1,22 @@
+import { Repository } from "typeorm";
+import { InjectRepository } from "@nestjs/typeorm";
 import { Injectable, HttpException, HttpStatus } from "@nestjs/common";
 
+import { User } from "./user.entity";
 import { UserLogin } from "./dto/user-login.dto";
-import { AuthService } from "src/auth/auth.service";
-import { UserRegistration } from "./dto/user-registration.dto";
-import { UserCreated } from "./dto/user-created.dto";
 import { UserUpdate } from "./dto/user-update.dto";
+import { AuthService } from "src/auth/auth.service";
+import { UserCreated } from "./dto/user-created.dto";
+import { UserRegistration } from "./dto/user-registration.dto";
 import { UserUpdatePassword } from "./dto/user-update-password.dto";
 
 @Injectable()
 export class UserService {
-	constructor(private readonly auth: AuthService) {}
+	constructor(
+		@InjectRepository(User)
+		private readonly usersRepository: Repository<User>,
+		private readonly auth: AuthService
+	) {}
 
 	public async findById(userId: string) {}
 

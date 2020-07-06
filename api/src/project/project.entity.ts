@@ -1,51 +1,42 @@
-import { BelongsToMany, Table, BelongsTo, Model, Column, DataType, ForeignKey } from "sequelize-typescript";
+import {
+	Entity,
+	Column,
+	PrimaryGeneratedColumn,
+	CreateDateColumn,
+	UpdateDateColumn,
+	ManyToMany,
+	OneToMany,
+	ManyToOne,
+} from "typeorm";
+import { User } from "src/user/user.entity";
 
-import { User, ProjectUser } from "src/user/user.entity";
-
-@Table({ tableName: "projects" })
-export class Project extends Model<Project> {
-	@Column({
-		type: DataType.UUID,
-		primaryKey: true,
-		defaultValue: DataType.UUIDV4,
-	})
+@Entity()
+export class Project {
+	@PrimaryGeneratedColumn("uuid")
 	public id: string;
 
-	@Column({
-		type: DataType.STRING,
-	})
+	@Column()
 	public name: string;
 
 	@Column({
-		type: DataType.STRING,
-		allowNull: true,
+		nullable: true,
 	})
 	public description!: string;
 
-	@Column({
-		type: DataType.DATE,
-	})
+	@CreateDateColumn()
 	public createdAt: Date;
 
-	@Column({
-		type: DataType.DATE,
-	})
+	@UpdateDateColumn()
 	public updatedAt: Date;
 
 	@Column({
-		type: DataType.DATE,
+		nullable: true,
 	})
-	public deletedAt: Date;
+	public finishedAt!: Date;
 
-	@ForeignKey(() => User)
-	@Column({
-		type: DataType.UUID,
-	})
-	public creatorId: string;
-
-	@BelongsTo(() => User)
+	@ManyToOne(type => User, user => user.createdProjects)
 	public creator: User;
 
-	@BelongsToMany(() => User, () => ProjectUser)
+	@ManyToMany(type => User, user => user.projects)
 	public users: User[];
 }

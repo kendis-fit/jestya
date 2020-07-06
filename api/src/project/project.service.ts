@@ -1,11 +1,18 @@
+import { Repository } from "typeorm";
 import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
 
+import { Project } from "./project.entity";
 import { UserService } from "src/user/user.service";
 import { ProjectCreated } from "./dto/project-created.dto";
 
 @Injectable()
 export class ProjectService {
-	constructor(private readonly userService: UserService) {}
+	constructor(
+		@InjectRepository(Project)
+		private readonly projectsRepository: Repository<Project>,
+		private readonly userService: UserService
+	) {}
 
 	public async findAll(offset: number, size: number, userId: string) {}
 
