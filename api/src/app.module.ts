@@ -9,6 +9,8 @@ import { UserModule } from "./user/user.module";
 import { Project } from "./project/project.entity";
 import { BoardModule } from "./board/board.module";
 import { ProjectModule } from "./project/project.module";
+import { TaskModule } from "./task/task.module";
+import { Task } from "./task/task.entity";
 
 @Module({
 	imports: [
@@ -26,12 +28,13 @@ import { ProjectModule } from "./project/project.module";
 				username: config.get<string>("database.username"),
 				password: config.get<string>("database.password"),
 				database: config.get<string>("database.database"),
-				entities: [User, Project, Board],
+				entities: [User, Project, Board, Task],
 				synchronize: true,
 			}),
 			inject: [ConfigService],
 		}),
 		BoardModule,
+		TaskModule,
 	],
 })
 export class AppModule {}

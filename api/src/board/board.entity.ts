@@ -1,6 +1,15 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne } from "typeorm";
+import {
+	Entity,
+	Column,
+	PrimaryGeneratedColumn,
+	CreateDateColumn,
+	UpdateDateColumn,
+	ManyToOne,
+	OneToMany,
+} from "typeorm";
 
 import { Project } from "src/project/project.entity";
+import { Task } from "src/task/task.entity";
 
 @Entity()
 export class Board {
@@ -23,4 +32,7 @@ export class Board {
 
 	@ManyToOne(type => Project, project => project.boards)
 	public project: Project;
+
+	@OneToMany(type => Task, task => task.board)
+	public tasks: Task[];
 }

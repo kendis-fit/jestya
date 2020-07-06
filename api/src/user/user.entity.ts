@@ -46,7 +46,9 @@ export class User {
 	@UpdateDateColumn()
 	public updatedAt: Date;
 
-	@Column()
+	@Column({
+		default: true,
+	})
 	public isActive: boolean;
 
 	@ManyToMany(type => Project, project => project.users)
