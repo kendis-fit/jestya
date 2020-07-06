@@ -4,13 +4,15 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import config from "../.config";
 import { User } from "./user/user.entity";
+import { Task } from "./task/task.entity";
 import { Board } from "./board/board.entity";
 import { UserModule } from "./user/user.module";
+import { TaskModule } from "./task/task.module";
 import { Project } from "./project/project.entity";
 import { BoardModule } from "./board/board.module";
 import { ProjectModule } from "./project/project.module";
-import { TaskModule } from "./task/task.module";
-import { Task } from "./task/task.entity";
+import { Component } from "./component/component.entity";
+import { ComponentModule } from "./component/component.module";
 
 @Module({
 	imports: [
@@ -28,13 +30,14 @@ import { Task } from "./task/task.entity";
 				username: config.get<string>("database.username"),
 				password: config.get<string>("database.password"),
 				database: config.get<string>("database.database"),
-				entities: [User, Project, Board, Task],
+				entities: [User, Project, Board, Task, Component],
 				synchronize: true,
 			}),
 			inject: [ConfigService],
 		}),
 		BoardModule,
 		TaskModule,
+		ComponentModule,
 	],
 })
 export class AppModule {}

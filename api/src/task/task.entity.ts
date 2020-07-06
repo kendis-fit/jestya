@@ -1,6 +1,15 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne } from "typeorm";
+import {
+	Entity,
+	Column,
+	PrimaryGeneratedColumn,
+	CreateDateColumn,
+	UpdateDateColumn,
+	ManyToOne,
+	ManyToMany,
+} from "typeorm";
 
 import { Board } from "src/board/board.entity";
+import { Component } from "src/component/component.entity";
 
 export enum Priority {
 	LOWEST = "LOWEST",
@@ -43,4 +52,7 @@ export class Task {
 
 	@ManyToOne(type => Board, board => board.tasks)
 	public board: Board;
+
+	@ManyToMany(type => Component, component => component.tasks)
+	public components: Component[];
 }
