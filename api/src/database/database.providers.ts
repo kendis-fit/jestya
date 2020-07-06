@@ -1,7 +1,7 @@
 import { Sequelize } from "sequelize-typescript";
+import { ConfigService } from "@nestjs/config";
 
 import { User, ProjectUser } from "src/user/user.entity";
-import { ConfigService } from "../config/config.service";
 import { Project } from "src/project/project.entity";
 
 export const SEQUELIZE = "SEQUELIZE";
