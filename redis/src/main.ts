@@ -2,7 +2,7 @@ import { Logger } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { Transport } from "@nestjs/microservices";
 
-import config from "../../.config";
+import config from "../.config";
 import { AppModule } from "./app.module";
 
 const logger = new Logger("Redis");

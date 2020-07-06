@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
-import config from "../../.config";
+import config from "../.config";
 import { User } from "./user/user.entity";
 import { UserModule } from "./user/user.module";
 import { Project } from "./project/project.entity";
@@ -13,7 +13,7 @@ import { ProjectModule } from "./project/project.module";
 		UserModule,
 		ProjectModule,
 		ConfigModule.forRoot({
-			load: [config[process.env.NODE_ENV]],
+			load: [config[process.env.NODE_ENV || "development"]],
 		}),
 		TypeOrmModule.forRootAsync({
 			imports: [ConfigModule],
@@ -21,9 +21,9 @@ import { ProjectModule } from "./project/project.module";
 				type: "postgres",
 				host: config.get<string>("database.host"),
 				port: config.get<number>("database.port"),
-				username: config.get("database.username"),
-				password: config.get("database.password"),
-				database: config.get("database.database"),
+				username: config.get<string>("database.username"),
+				password: config.get<string>("database.password"),
+				database: config.get<string>("database.database"),
 				entities: [User, Project],
 				synchronize: true,
 			}),

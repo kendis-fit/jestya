@@ -1,7 +1,7 @@
 import { Observable } from "rxjs";
 import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
 
-import { ROLE } from "src/user/user.entity";
+import { Role } from "src/user/user.entity";
 
 @Injectable()
 export class UserSelfGuard implements CanActivate {
@@ -10,10 +10,10 @@ export class UserSelfGuard implements CanActivate {
 	public canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
 		const ctx = context.switchToHttp();
 		const req = ctx.getRequest();
-		if (this.canSuperAdmin && req.user.role === ROLE.SuperAdmin) {
+		if (this.canSuperAdmin && req.user.role === Role.SUPER_ADMIN) {
 			return true;
 		}
-		if (this.isAdmin && req.user.role !== ROLE.Admin) {
+		if (this.isAdmin && req.user.role !== Role.ADMIN) {
 			return false;
 		}
 		return req.user.id === req.params.id;
