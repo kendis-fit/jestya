@@ -7,7 +7,6 @@ import config from "../../.config";
 	imports: [
 		ConfigModule.forRoot({
 			load: [config[process.env.NODE_ENV]],
-			isGlobal: true,
 		}),
 	],
 })
