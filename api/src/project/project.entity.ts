@@ -9,6 +9,7 @@ import {
 	ManyToOne,
 } from "typeorm";
 import { User } from "src/user/user.entity";
+import { Board } from "src/board/board.entity";
 
 @Entity()
 export class Project {
@@ -39,4 +40,7 @@ export class Project {
 
 	@ManyToMany(type => User, user => user.projects)
 	public users: User[];
+
+	@OneToMany(type => Board, board => board.project)
+	public boards: Board[];
 }

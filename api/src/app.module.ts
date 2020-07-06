@@ -4,8 +4,10 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import config from "../.config";
 import { User } from "./user/user.entity";
+import { Board } from "./board/board.entity";
 import { UserModule } from "./user/user.module";
 import { Project } from "./project/project.entity";
+import { BoardModule } from "./board/board.module";
 import { ProjectModule } from "./project/project.module";
 
 @Module({
@@ -24,11 +26,12 @@ import { ProjectModule } from "./project/project.module";
 				username: config.get<string>("database.username"),
 				password: config.get<string>("database.password"),
 				database: config.get<string>("database.database"),
-				entities: [User, Project],
+				entities: [User, Project, Board],
 				synchronize: true,
 			}),
 			inject: [ConfigService],
 		}),
+		BoardModule,
 	],
 })
 export class AppModule {}

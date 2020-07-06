@@ -8,6 +8,7 @@ import {
 	JoinTable,
 	OneToMany,
 } from "typeorm";
+
 import { Project } from "src/project/project.entity";
 
 export enum Role {
