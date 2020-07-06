@@ -3,7 +3,7 @@
   "author": "Kurt Endless",
   "license": "MIT",
   "scripts": {
-    "format": "prettier --write {api,client}/src/**/*.ts"
+    "format": "prettier --write {api,client,redis}/src/**/*.ts"
   },
   "devDependencies": {
     "eslint": "^7.3.1",

@@ -1,15 +1,18 @@
-import { RedisClient } from "redis"
+import { RedisClient } from "redis";
+import { ConfigService } from "@nestjs/config";
 
 export const REDIS = "REDIS";
 
 export const databaseProviders = [
-    {
-        provide: REDIS,
-        useFactory: () => {
-            const redis = new RedisClient({
-                url: ""
-            });
-            return redis;
-        }
-    }
-]
+	{
+		provide: REDIS,
+		useFactory: (config: ConfigService) => {
+			const redis = new RedisClient({
+				host: config.get<string>("redis.host"),
+				port: config.get<number>("redis.port"),
+			});
+			return redis;
+		},
+		inject: [ConfigService],
+	},
+];
