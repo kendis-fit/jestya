@@ -45,7 +45,7 @@ export class ProjectService {
 	}
 
 	public async create(userId: string, project: ProjectCreating): Promise<Project> {
-		const standartBoards = await this.boardService.findStandartBoards();
+		const standartBoards = await this.boardService.createStandartBoards();
 
 		const newProject = new Project();
 		newProject.name = project.name;
@@ -81,12 +81,6 @@ export class ProjectService {
 	public async removeUser(projectId: string, userId: string): Promise<void> {
 		const foundProject = await this.findById(projectId);
 		foundProject.userIds = foundProject.userIds.filter(id => id !== userId);
-		await this.projectsRepository.update(projectId, foundProject);
-	}
-
-	public async removeBoard(projectId: string, boardId: string): Promise<void> {
-		const foundProject = await this.findById(projectId);
-		foundProject.boardIds = foundProject.boardIds.filter(id => id !== boardId);
 		await this.projectsRepository.update(projectId, foundProject);
 	}
 }

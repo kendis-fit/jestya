@@ -14,7 +14,7 @@ import { UserInfo } from "./dto/user-info.dto";
 import { UserResponse } from "./dto/user-response.dto";
 import { UserCreated } from "./dto/user-created.dto";
 
-@Controller("user")
+@Controller("users")
 export class UserController {
 	constructor(private readonly userService: UserService) {}
 

@@ -7,7 +7,7 @@ import {
 	ManyToMany,
 	ManyToOne,
 	RelationId,
-	JoinTable,
+	OneToMany,
 } from "typeorm";
 
 import { User } from "src/user/user.entity";
@@ -49,10 +49,6 @@ export class Project {
 	@ManyToMany(type => User)
 	public users: User[];
 
-	@RelationId((board: Board) => board.projects)
-	public boardIds: string[];
-
-	@ManyToMany(type => Board)
-	@JoinTable()
+	@OneToMany(type => Board, board => board.project)
 	public boards: Board[];
 }

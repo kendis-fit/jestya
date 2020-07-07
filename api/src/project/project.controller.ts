@@ -12,7 +12,7 @@ import { ProjectUsersInfo } from "./dto/project-users-info.dto";
 import { BoardCreating } from "src/board/dto/board-creating.dto";
 import { ProjectUpdateState } from "./dto/project-update-state.dto";
 
-@Controller("project")
+@Controller("projects")
 export class ProjectController {
 	constructor(private readonly projectService: ProjectService) {}
 
@@ -68,11 +68,5 @@ export class ProjectController {
 	@UseGuards(new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
 	public async removeUser(@Param("id") projectId: string, @Param("userId") userId: string): Promise<void> {
 		await this.projectService.removeUser(projectId, userId);
-	}
-
-	@Delete(":id/boards/:boardId")
-	@UseGuards(new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
-	public async removeBoard(@Param("id") projectId: string, @Param("boardId") boardId: string): Promise<void> {
-		await this.projectService.removeBoard(projectId, boardId);
 	}
 }

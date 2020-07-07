@@ -4,10 +4,9 @@ import {
 	PrimaryGeneratedColumn,
 	CreateDateColumn,
 	UpdateDateColumn,
-	ManyToOne,
 	OneToMany,
 	RelationId,
-	ManyToMany,
+	ManyToOne,
 } from "typeorm";
 
 import { Project } from "src/project/project.entity";
@@ -18,9 +17,7 @@ export class Board {
 	@PrimaryGeneratedColumn("uuid")
 	public id: string;
 
-	@Column({
-		unique: true,
-	})
+	@Column()
 	public name: string;
 
 	@Column({
@@ -34,11 +31,8 @@ export class Board {
 	@UpdateDateColumn()
 	public updatedAt: Date;
 
-	@RelationId((project: Project) => project.boards)
-	public projectIds: string[];
-
-	@ManyToMany(type => Project)
-	public projects: Project[];
+	@ManyToOne(type => Project, project => project.boards)
+	public project: Project;
 
 	@OneToMany(type => Task, task => task.board)
 	public tasks: Task[];
