@@ -5,9 +5,10 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Project } from "./project.entity";
 import { User } from "src/user/user.entity";
 import { Board } from "src/board/board.entity";
-import { ProjectCreated } from "./dto/project-created.dto";
+import { ProjectCreating } from "./dto/project-creating.dto";
 import { BoardCreating } from "src/board/dto/board-creating.dto";
 import { BoardService } from "src/board/board.service";
+import { ProjectUpdateState } from "./dto/project-update-state.dto";
 
 @Injectable()
 export class ProjectService {
@@ -43,7 +44,7 @@ export class ProjectService {
 		return foundProject.users;
 	}
 
-	public async create(userId: string, project: ProjectCreated): Promise<string> {
+	public async create(userId: string, project: ProjectCreating): Promise<Project> {
 		const standartBoards = await this.boardService.findStandartBoards();
 
 		const newProject = new Project();
@@ -53,7 +54,7 @@ export class ProjectService {
 		newProject.boards.push(...standartBoards);
 
 		await this.projectsRepository.save(newProject);
-		return newProject.id;
+		return newProject;
 	}
 
 	public async addUser(projectId: string, userId: string): Promise<void> {
@@ -70,9 +71,11 @@ export class ProjectService {
 		return newBoard;
 	}
 
-	public async delete(projectId: string, userId: string): Promise<void> {
+	public async updateState(projectId: string, project: ProjectUpdateState): Promise<Project> {
 		const foundProject = await this.findById(projectId);
-		await this.projectsRepository.remove(foundProject);
+		foundProject.finishedAt = project.finishedAt;
+		await this.projectsRepository.update(projectId, foundProject);
+		return foundProject;
 	}
 
 	public async removeUser(projectId: string, userId: string): Promise<void> {

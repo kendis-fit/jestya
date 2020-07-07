@@ -14,6 +14,6 @@ export class UserInfo {
 		this.name = user.name;
 		this.createdAt = user.createdAt;
 		this.isActive = user.isActive;
-		this.projects = user.projects.map(project => new ProjectInfo(project.id, project.name, project.description));
+		this.projects = user.projects.map(project => new ProjectInfo(project));
 	}
 }

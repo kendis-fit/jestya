@@ -1,3 +1,3 @@
-export class ProjectCreated {
+export class BoardCreated {
 	constructor(public id: string) {}
 }

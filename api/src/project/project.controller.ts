@@ -1,44 +1,78 @@
-import { Controller, Post, Body, Delete, Param, UseGuards, Get, Req, Query } from "@nestjs/common";
+import { Controller, Post, Body, Delete, Param, UseGuards, Get, Req, Query, Patch } from "@nestjs/common";
 
 import { Role } from "src/user/user.entity";
 import { RoleGuard } from "src/guards/role.guard";
-import { ProjectCreated } from "./dto/project-created.dto";
 import { ProjectService } from "./project.service";
+import { ProjectInfo } from "./dto/project-info.dto";
+import { BoardInfo } from "src/board/dto/board-info.dto";
+import { ProjectCreated } from "./dto/project-created.dto";
+import { ProjectCreating } from "./dto/project-creating.dto";
+import { BoardCreated } from "src/board/dto/board-created.dto";
+import { ProjectUsersInfo } from "./dto/project-users-info.dto";
+import { BoardCreating } from "src/board/dto/board-creating.dto";
+import { ProjectUpdateState } from "./dto/project-update-state.dto";
 
 @Controller("project")
 export class ProjectController {
 	constructor(private readonly projectService: ProjectService) {}
 
 	@Get()
-	public async findAll(@Query("offset") offset: number, @Query("size") size: number, @Req() req) {}
+	public async findAll(
+		@Query("offset") offset: number,
+		@Query("size") size: number,
+		@Req() req
+	): Promise<ProjectInfo[]> {
+		const projects = await this.projectService.findAll(offset, size, req.user.id);
+		return projects.map(project => new ProjectInfo(project));
+	}
 
 	@Get(":id/boards")
-	public async findAllBoards(@Param("id") projectId: string) {}
+	public async findAllBoards(@Param("id") projectId: string): Promise<BoardInfo[]> {
+		const boards = await this.projectService.findAllBoards(projectId);
+		return boards.map(board => new BoardInfo(board));
+	}
 
 	@Get(":id/users")
-	public async findAllUsers(@Param("id") projectId: string) {}
+	public async findAllUsers(@Param("id") projectId: string): Promise<ProjectUsersInfo[]> {
+		const users = await this.projectService.findAllUsers(projectId);
+		return users.map(user => new ProjectUsersInfo(user));
+	}
 
 	@Post()
 	@UseGuards(new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
-	public async create(@Body() project: ProjectCreated, @Req() req) {}
+	public async create(@Body() project: ProjectCreating, @Req() req): Promise<ProjectCreated> {
+		const newProject = await this.projectService.create(req.user.id, project);
+		return new ProjectCreated(newProject.id);
+	}
 
 	@Post(":id/users/:userId")
 	@UseGuards(new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
-	public async addUser(@Param("id") projectId: string, @Param("userId") userId: string) {}
+	public async addUser(@Param("id") projectId: string, @Param("userId") userId: string): Promise<void> {
+		await this.addUser(projectId, userId);
+	}
 
 	@Post(":id/boards")
 	@UseGuards(new RoleGuard([Role.ADMIN]))
-	public async addBoard(@Param("id") projectId: string) {}
+	public async addBoard(@Param("id") projectId: string, @Body() board: BoardCreating): Promise<BoardCreated> {
+		const newBoard = await this.projectService.addBoard(projectId, board);
+		return new BoardCreated(newBoard.id);
+	}
 
-	@Delete(":id")
+	@Patch(":id")
 	@UseGuards(new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
-	public async delete(@Param("id") projectId: string, @Req() req) {}
+	public async updateState(@Param("id") projectId: string, @Body() project: ProjectUpdateState): Promise<void> {
+		await this.projectService.updateState(projectId, project);
+	}
 
 	@Delete(":id/users/:userId")
 	@UseGuards(new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
-	public async removeUser(@Param("id") projectId: string, @Param("userId") userId: string) {}
+	public async removeUser(@Param("id") projectId: string, @Param("userId") userId: string): Promise<void> {
+		await this.projectService.removeUser(projectId, userId);
+	}
 
 	@Delete(":id/boards/:boardId")
 	@UseGuards(new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
-	public async removeBoard(@Param("id") projectId: string, @Param("boardId") boardId: string) {}
+	public async removeBoard(@Param("id") projectId: string, @Param("boardId") boardId: string): Promise<void> {
+		await this.projectService.removeBoard(projectId, boardId);
+	}
 }
