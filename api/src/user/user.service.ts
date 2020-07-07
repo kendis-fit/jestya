@@ -6,7 +6,7 @@ import { User, Role } from "./user.entity";
 import { UserLogin } from "./dto/user-login.dto";
 import { UserUpdate } from "./dto/user-update.dto";
 import { AuthService } from "src/auth/auth.service";
-import { UserCreated } from "./dto/user-created.dto";
+import { UserCreating } from "./dto/user-creating.dto";
 import { UserRegistration } from "./dto/user-registration.dto";
 import { UserUpdatePassword } from "./dto/user-update-password.dto";
 
@@ -61,13 +61,18 @@ export class UserService {
 		await this.usersRepository.save(newUser);
 	}
 
-	public async create(user: UserCreated): Promise<void> {
+	public async create(user: UserCreating): Promise<string> {
 		const foundUser = this.usersRepository.findOne({ login: user.login });
 		if (foundUser) {
 			throw new HttpException({ message: "A user with such a login already exists" }, HttpStatus.CONFLICT);
 		}
-		const newUser = this.usersRepository.create(user);
+		const newUser = new User();
+		newUser.name = user.name;
+		newUser.login = user.login;
+		newUser.password = user.password;
+		newUser.role = user.role;
 		await this.usersRepository.save(newUser);
+		return newUser.id;
 	}
 
 	public async delete(userId: string): Promise<void> {
@@ -79,6 +84,7 @@ export class UserService {
 		const foundUser = await this.findById(userId);
 		foundUser.name = user.name;
 		foundUser.login = user.login;
+		foundUser.isActive = user.isActive;
 		await this.usersRepository.update(userId, foundUser);
 	}
 
