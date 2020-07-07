@@ -34,7 +34,7 @@ export class UserService {
 		return user;
 	}
 
-	public async find(offset: number, size: number): Promise<User[]> {
+	public async findAll(offset: number, size: number): Promise<User[]> {
 		if (size > 100) {
 			throw new HttpException({ message: "Users must be less than 100" }, HttpStatus.BAD_REQUEST);
 		}

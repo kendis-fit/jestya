@@ -26,7 +26,7 @@ export class UserController {
 
 	@Get()
 	public async find(@Query("offset") offset: number, @Query("size") size: number): Promise<UserInfo[]> {
-		const foundUsers = await this.userService.find(offset, size);
+		const foundUsers = await this.userService.findAll(offset, size);
 		return foundUsers.map(user => new UserInfo(user));
 	}
 

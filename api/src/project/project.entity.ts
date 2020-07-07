@@ -5,9 +5,11 @@ import {
 	CreateDateColumn,
 	UpdateDateColumn,
 	ManyToMany,
-	OneToMany,
 	ManyToOne,
+	RelationId,
+	JoinTable,
 } from "typeorm";
+
 import { User } from "src/user/user.entity";
 import { Board } from "src/board/board.entity";
 
@@ -35,12 +37,22 @@ export class Project {
 	})
 	public finishedAt!: Date;
 
-	@ManyToOne(type => User, user => user.createdProjects)
+	@RelationId((user: User) => user.createdProjects)
+	public creatorId: string;
+
+	@ManyToOne(type => User)
 	public creator: User;
 
-	@ManyToMany(type => User, user => user.projects)
+	@RelationId((user: User) => user.projects)
+	public userIds: string[];
+
+	@ManyToMany(type => User)
 	public users: User[];
 
-	@OneToMany(type => Board, board => board.project)
+	@RelationId((board: Board) => board.projects)
+	public boardIds: string[];
+
+	@ManyToMany(type => Board)
+	@JoinTable()
 	public boards: Board[];
 }

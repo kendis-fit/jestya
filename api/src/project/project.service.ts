@@ -1,34 +1,89 @@
 import { Repository } from "typeorm";
-import { Injectable } from "@nestjs/common";
+import { Injectable, HttpException, HttpStatus } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 
 import { Project } from "./project.entity";
-import { UserService } from "src/user/user.service";
+import { User } from "src/user/user.entity";
+import { Board } from "src/board/board.entity";
 import { ProjectCreated } from "./dto/project-created.dto";
+import { BoardCreating } from "src/board/dto/board-creating.dto";
+import { BoardService } from "src/board/board.service";
 
 @Injectable()
 export class ProjectService {
 	constructor(
 		@InjectRepository(Project)
 		private readonly projectsRepository: Repository<Project>,
-		private readonly userService: UserService
+		private readonly boardService: BoardService
 	) {}
 
-	public async findAll(offset: number, size: number, userId: string) {}
+	public async findById(projectId: string): Promise<Project> {
+		const foundProject = await this.projectsRepository.findOne(projectId);
+		if (!foundProject) {
+			throw new HttpException({ message: "Project wasn't found" }, HttpStatus.NOT_FOUND);
+		}
+		return foundProject;
+	}
 
-	public async findAllBoards(projectId: string) {}
+	public async findAll(offset: number, size: number, userId: string): Promise<Project[]> {
+		if (size > 100) {
+			throw new HttpException({ message: "Projects must be less than 100" }, HttpStatus.BAD_REQUEST);
+		}
+		const projects = await this.projectsRepository.find({ skip: offset, take: size });
+		return projects;
+	}
 
-	public async findAllUsers(projectId: string) {}
+	public async findAllBoards(projectId: string): Promise<Board[]> {
+		const foundProject = await this.findById(projectId);
+		return foundProject.boards;
+	}
 
-	public async create(project: ProjectCreated, userId: string) {}
+	public async findAllUsers(projectId: string): Promise<User[]> {
+		const foundProject = await this.findById(projectId);
+		return foundProject.users;
+	}
 
-	public async addUser(projectId: string, userId: string) {}
+	public async create(userId: string, project: ProjectCreated): Promise<string> {
+		const standartBoards = await this.boardService.findStandartBoards();
 
-	public async addBoard(projectId: string) {}
+		const newProject = new Project();
+		newProject.name = project.name;
+		newProject.description = project.description;
+		newProject.creatorId = userId;
+		newProject.boards.push(...standartBoards);
 
-	public async delete(projectId: string, userId: string): Promise<void> {}
+		await this.projectsRepository.save(newProject);
+		return newProject.id;
+	}
 
-	public async removeUser(projectId: string, userId: string) {}
+	public async addUser(projectId: string, userId: string): Promise<void> {
+		const foundProject = await this.findById(projectId);
+		foundProject.userIds.push(userId);
+		await this.projectsRepository.update(projectId, foundProject);
+	}
 
-	public async removeBoard(projectId: string, boardId: string) {}
+	public async addBoard(projectId: string, board: BoardCreating): Promise<Board> {
+		const foundProject = await this.findById(projectId);
+		const newBoard = await this.boardService.create(board);
+		foundProject.boards.push(newBoard);
+		await this.projectsRepository.update(projectId, foundProject);
+		return newBoard;
+	}
+
+	public async delete(projectId: string, userId: string): Promise<void> {
+		const foundProject = await this.findById(projectId);
+		await this.projectsRepository.remove(foundProject);
+	}
+
+	public async removeUser(projectId: string, userId: string): Promise<void> {
+		const foundProject = await this.findById(projectId);
+		foundProject.userIds = foundProject.userIds.filter(id => id !== userId);
+		await this.projectsRepository.update(projectId, foundProject);
+	}
+
+	public async removeBoard(projectId: string, boardId: string): Promise<void> {
+		const foundProject = await this.findById(projectId);
+		foundProject.boardIds = foundProject.boardIds.filter(id => id !== boardId);
+		await this.projectsRepository.update(projectId, foundProject);
+	}
 }
