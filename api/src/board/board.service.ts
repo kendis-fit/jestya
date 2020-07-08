@@ -4,12 +4,16 @@ import { Board } from "./board.entity";
 import { Repository } from "typeorm";
 import { BoardCreating } from "./dto/board-creating.dto";
 import { BoardUpdate } from "./dto/board-update.dto";
+import { TaskCreating } from "src/task/dto/task-creating.dto";
+import { Task } from "src/task/task.entity";
+import { TaskService } from "src/task/task.service";
 
 @Injectable()
 export class BoardService {
 	constructor(
 		@InjectRepository(Board)
-		private readonly boardRepository: Repository<Board>
+		private readonly boardRepository: Repository<Board>,
+		private readonly taskService: TaskService
 	) {}
 
 	public async findById(boardId: string): Promise<Board> {
@@ -49,5 +53,13 @@ export class BoardService {
 	public async remove(boardId: string): Promise<void> {
 		const foundBoard = await this.findById(boardId);
 		await this.boardRepository.remove(foundBoard);
+	}
+
+	public async createTask(boardId: string, task: TaskCreating): Promise<Task> {
+		const board = await this.findById(boardId);
+		const newTask = await this.taskService.create(task);
+		board.tasks.push(newTask);
+		await this.boardRepository.update(boardId, board);
+		return newTask;
 	}
 }

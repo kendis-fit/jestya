@@ -1,4 +1,4 @@
-import { Controller, Put, Delete, Param, Body } from "@nestjs/common";
+import { Controller, Put, Delete, Param, Body, Post } from "@nestjs/common";
 
 import { BoardService } from "./board.service";
 import { BoardUpdate } from "./dto/board-update.dto";
@@ -16,4 +16,7 @@ export class BoardController {
 	public async remove(@Param("id") boardId: string): Promise<void> {
 		await this.boardService.remove(boardId);
 	}
+
+	@Post(":id/tasks")
+	public async createTask(@Param("id") boardId: string): Promise<void> {}
 }
