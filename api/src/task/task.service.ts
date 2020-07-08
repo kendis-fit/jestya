@@ -3,6 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Task } from "./task.entity";
 import { Repository } from "typeorm";
 import { TaskCreating } from "./dto/task-creating.dto";
+import { TaskUpdateActual } from "./dto/task-update-actual.dto";
 
 @Injectable()
 export class TaskService {
@@ -11,10 +12,10 @@ export class TaskService {
 		public taskRepository: Repository<Task>
 	) {}
 
-	public findById(taskId: string) {
+	public findById(taskId: string): Promise<Task> {
 		const foundTask = this.taskRepository.findOne(taskId);
 		if (!foundTask) {
-			throw new HttpException({ message: "" }, HttpStatus.NOT_FOUND);
+			throw new HttpException({ message: "Task wasn't found" }, HttpStatus.NOT_FOUND);
 		}
 		return foundTask;
 	}
@@ -27,5 +28,12 @@ export class TaskService {
 		/* TO_DO Logic with components */
 		await this.taskRepository.save(newTask);
 		return newTask;
+	}
+
+	public async setState(taskId: string, task: TaskUpdateActual): Promise<Task> {
+		const foundTask = await this.findById(taskId);
+		foundTask.isActual = task.isActual;
+		await this.taskRepository.update(taskId, foundTask);
+		return foundTask;
 	}
 }
