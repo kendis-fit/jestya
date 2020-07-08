@@ -4,6 +4,7 @@ import { Task } from "./task.entity";
 import { Repository } from "typeorm";
 import { TaskCreating } from "./dto/task-creating.dto";
 import { TaskUpdateActual } from "./dto/task-update-actual.dto";
+import { TaskUpdate } from "./dto/task-update.dto";
 
 @Injectable()
 export class TaskService {
@@ -34,6 +35,14 @@ export class TaskService {
 		const foundTask = await this.findById(taskId);
 		foundTask.isActual = task.isActual;
 		await this.taskRepository.update(taskId, foundTask);
+		return foundTask;
+	}
+
+	public async update(taskId: string, task: TaskUpdate): Promise<Task> {
+		const foundTask = await this.findById(taskId);
+		foundTask.name = task.name;
+		foundTask.description = task.description;
+		foundTask.priority = task.priority;
 		return foundTask;
 	}
 }
