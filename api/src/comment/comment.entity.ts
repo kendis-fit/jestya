@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToOne } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToOne, RelationId } from "typeorm";
 
 import { Task } from "src/task/task.entity";
 import { User } from "src/user/user.entity";
@@ -14,8 +14,14 @@ export class Comment {
 	@CreateDateColumn()
 	public createdAt: Date;
 
-	@ManyToOne(type => User, user => user.comments)
+	@RelationId((user: User) => user.comments)
+	public userId: string;
+
+	@ManyToOne(type => User)
 	public user: User;
+
+	@RelationId((task: Task) => task.comments)
+	public taskId: string;
 
 	@ManyToOne(type => Task, task => task.comments)
 	public task: Task;
