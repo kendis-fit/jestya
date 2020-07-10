@@ -26,6 +26,11 @@ export class UserService {
 		return user;
 	}
 
+	public async findByIds(userIds: string[]): Promise<User[]> {
+		const users = await this.usersRepository.findByIds(userIds);
+		return users;
+	}
+
 	public async findByLogin(userLogin: string): Promise<User> {
 		const user = await this.usersRepository.findOne({ login: userLogin });
 		if (!user) {

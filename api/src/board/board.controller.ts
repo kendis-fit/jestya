@@ -18,10 +18,4 @@ export class BoardController {
 	public async remove(@Param("id") boardId: string): Promise<void> {
 		await this.boardService.remove(boardId);
 	}
-
-	@Post(":id/tasks")
-	public async createTask(@Param("id") boardId: string, @Body() task: TaskCreating): Promise<TaskCreated> {
-		const newTask = await this.boardService.createTask(boardId, task);
-		return new TaskCreated(newTask.id);
-	}
 }

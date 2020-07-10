@@ -5,12 +5,16 @@ import { Repository } from "typeorm";
 import { TaskCreating } from "./dto/task-creating.dto";
 import { TaskUpdateActual } from "./dto/task-update-actual.dto";
 import { TaskUpdate } from "./dto/task-update.dto";
+import { UserService } from "src/user/user.service";
+import { BoardService } from "src/board/board.service";
 
 @Injectable()
 export class TaskService {
 	constructor(
 		@InjectRepository(Task)
-		public taskRepository: Repository<Task>
+		public readonly taskRepository: Repository<Task>,
+		public readonly boardService: BoardService,
+		public readonly userService: UserService
 	) {}
 
 	public findById(taskId: string): Promise<Task> {
@@ -22,10 +26,15 @@ export class TaskService {
 	}
 
 	public async create(task: TaskCreating): Promise<Task> {
+		const [foundUser, ...foundUsers] = await this.userService.findByIds([...task.creatorId, ...task.executorsId]);
+		const foundBoard = await this.boardService.findById(task.boardId);
+
 		const newTask = new Task();
 		newTask.name = task.name;
 		newTask.description = task.description;
 		newTask.priority = task.priority;
+		newTask.creator = foundUser;
+		newTask.executors = foundUsers;
 		/* TO_DO Logic with components */
 		await this.taskRepository.save(newTask);
 		return newTask;

@@ -1,8 +1,10 @@
-import { Controller, Get, Param, Patch, Body, Put } from "@nestjs/common";
+import { Controller, Get, Param, Patch, Body, Put, Post } from "@nestjs/common";
 import { TaskService } from "./task.service";
 import { TaskInfo } from "./dto/task-info.dto";
 import { TaskUpdateActual } from "./dto/task-update-actual.dto";
 import { TaskUpdate } from "./dto/task-update.dto";
+import { TaskCreating } from "./dto/task-creating.dto";
+import { TaskCreated } from "./dto/task-created.dto";
 
 @Controller("tasks")
 export class TaskController {
@@ -22,5 +24,11 @@ export class TaskController {
 	@Put(":id")
 	public async update(@Param("id") taskId: string, @Body() task: TaskUpdate): Promise<void> {
 		await this.taskService.update(taskId, task);
+	}
+
+	@Post()
+	public async create(@Body() task: TaskCreating): Promise<TaskCreated> {
+		const newTask = await this.taskService.create(task);
+		return new TaskCreated(newTask.id);
 	}
 }
