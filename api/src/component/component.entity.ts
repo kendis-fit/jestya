@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToMany, JoinTable } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToMany, JoinTable, RelationId } from "typeorm";
 
 import { Task } from "src/task/task.entity";
 
@@ -13,7 +13,10 @@ export class Component {
 	@CreateDateColumn()
 	public createdAt: Date;
 
-	@ManyToMany(type => Task, task => task.components)
+	@RelationId((task: Task) => task.components)
+	public taskIds: string[];
+
+	@ManyToMany(type => Task)
 	@JoinTable()
 	public tasks: Task[];
 }

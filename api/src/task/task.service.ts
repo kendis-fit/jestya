@@ -1,12 +1,14 @@
-import { Injectable, HttpException, HttpStatus } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Task } from "./task.entity";
 import { Repository } from "typeorm";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Injectable, HttpException, HttpStatus } from "@nestjs/common";
+
+import { Task } from "./task.entity";
+import { TaskUpdate } from "./dto/task-update.dto";
+import { UserService } from "../user/user.service";
+import { BoardService } from "../board/board.service";
 import { TaskCreating } from "./dto/task-creating.dto";
 import { TaskUpdateActual } from "./dto/task-update-actual.dto";
-import { TaskUpdate } from "./dto/task-update.dto";
-import { UserService } from "src/user/user.service";
-import { BoardService } from "src/board/board.service";
+import { ComponentService } from "src/component/component.service";
 
 @Injectable()
 export class TaskService {
@@ -14,7 +16,8 @@ export class TaskService {
 		@InjectRepository(Task)
 		public readonly taskRepository: Repository<Task>,
 		public readonly boardService: BoardService,
-		public readonly userService: UserService
+		public readonly userService: UserService,
+		public readonly componentService: ComponentService
 	) {}
 
 	public findById(taskId: string): Promise<Task> {
@@ -26,7 +29,8 @@ export class TaskService {
 	}
 
 	public async create(task: TaskCreating): Promise<Task> {
-		const [foundUser, ...foundUsers] = await this.userService.findByIds([...task.creatorId, ...task.executorsId]);
+		const [foundUser, ...foundUsers] = await this.userService.findByIds([...task.creatorId, ...task.executorIds]);
+		const foundComponents = await this.componentService.findByIds(task.componentIds);
 		const foundBoard = await this.boardService.findById(task.boardId);
 
 		const newTask = new Task();
@@ -36,7 +40,8 @@ export class TaskService {
 		newTask.creator = foundUser;
 		newTask.executors = foundUsers;
 		newTask.board = foundBoard;
-		/* TO_DO Logic with components */
+		newTask.components = foundComponents;
+
 		await this.taskRepository.save(newTask);
 		return newTask;
 	}
