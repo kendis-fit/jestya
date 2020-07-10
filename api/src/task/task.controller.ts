@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Patch, Body, Put, Post } from "@nestjs/common";
+import { Controller, Get, Param, Patch, Body, Put, Post, Req } from "@nestjs/common";
 
 import { TaskService } from "./task.service";
 import { TaskInfo } from "./dto/task-info.dto";
@@ -42,8 +42,8 @@ export class TaskController {
 	}
 
 	@Post()
-	public async create(@Body() task: TaskCreating): Promise<TaskCreated> {
-		const newTask = await this.taskService.create(task);
+	public async create(@Body() task: TaskCreating, @Req() req): Promise<TaskCreated> {
+		const newTask = await this.taskService.create(req.user.id, task);
 		return new TaskCreated(newTask.id);
 	}
 }

@@ -28,8 +28,8 @@ export class TaskService {
 		return foundTask;
 	}
 
-	public async create(task: TaskCreating): Promise<Task> {
-		const [foundUser, ...foundUsers] = await this.userService.findByIds([...task.creatorId, ...task.executorIds]);
+	public async create(creatorId: string, task: TaskCreating): Promise<Task> {
+		const foundUsers = await this.userService.findByIds(task.executorIds);
 		const foundComponents = await this.componentService.findByIds(task.componentIds);
 		const foundBoard = await this.boardService.findById(task.boardId);
 
@@ -37,7 +37,7 @@ export class TaskService {
 		newTask.name = task.name;
 		newTask.description = task.description;
 		newTask.priority = task.priority;
-		newTask.creator = foundUser;
+		newTask.creatorId = creatorId;
 		newTask.executors = foundUsers;
 		newTask.board = foundBoard;
 		newTask.components = foundComponents;

@@ -4,6 +4,5 @@ export class TaskCreating {
 	public priority: string;
 	public componentIds: string[];
 	public boardId: string;
-	public creatorId: string;
 	public executorIds: string[];
 }
