@@ -35,6 +35,7 @@ export class TaskService {
 		newTask.priority = task.priority;
 		newTask.creator = foundUser;
 		newTask.executors = foundUsers;
+		newTask.board = foundBoard;
 		/* TO_DO Logic with components */
 		await this.taskRepository.save(newTask);
 		return newTask;
