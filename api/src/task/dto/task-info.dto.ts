@@ -1,4 +1,5 @@
 import { Task } from "../task.entity";
+import { TaskCreatorInfo } from "./task-creator-info.dto";
 
 export class TaskInfo {
 	public id: string;
@@ -9,6 +10,7 @@ export class TaskInfo {
 	public createdAt: Date;
 	public updateAt: Date;
 	public boardName: string;
+	public creator: TaskCreatorInfo;
 
 	constructor(task: Task) {
 		this.id = task.id;
@@ -19,5 +21,6 @@ export class TaskInfo {
 		this.createdAt = task.createdAt;
 		this.updateAt = task.updatedAt;
 		this.boardName = task.board.name;
+		this.creator = new TaskCreatorInfo(task.creator);
 	}
 }

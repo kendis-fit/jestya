@@ -7,8 +7,10 @@ import {
 	ManyToOne,
 	ManyToMany,
 	OneToMany,
+	RelationId,
 } from "typeorm";
 
+import { User } from "src/user/user.entity";
 import { Board } from "src/board/board.entity";
 import { Comment } from "src/comment/comment.entity";
 import { Component } from "src/component/component.entity";
@@ -52,12 +54,30 @@ export class Task {
 	@UpdateDateColumn()
 	public updatedAt: Date;
 
+	@RelationId((board: Board) => board.tasks)
+	public boardId: Board;
+
 	@ManyToOne(type => Board, board => board.tasks)
 	public board: Board;
 
-	@ManyToMany(type => Component, component => component.tasks)
+	@RelationId((component: Component) => component.tasks)
+	public componentIds: string[];
+
+	@ManyToMany(type => Component)
 	public components: Component[];
 
 	@OneToMany(type => Comment, comment => comment.task)
 	public comments: Comment[];
+
+	@RelationId((user: User) => user.createdTasks)
+	public creatorId: string;
+
+	@ManyToOne(type => User)
+	public creator: User;
+
+	@RelationId((user: User) => user.tasks)
+	public userIds: string[];
+
+	@ManyToMany(type => User)
+	public executors: User[];
 }

@@ -3,4 +3,7 @@ export class TaskCreating {
 	public description: string;
 	public priority: string;
 	public components: string[];
+	public boardId: string;
+	public creatorId: string;
+	public executorsId: string;
 }
