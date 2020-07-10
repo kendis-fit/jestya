@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { Comment } from "./comment.entity";
-import { TaskModule } from "src/task/task.module";
+import { TaskModule } from "../task/task.module";
 import { CommentService } from "./comment.service";
 import { CommentController } from "./comment.controller";
 

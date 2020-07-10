@@ -9,8 +9,8 @@ import {
 	ManyToOne,
 } from "typeorm";
 
-import { Project } from "src/project/project.entity";
-import { Task } from "src/task/task.entity";
+import { Project } from "../project/project.entity";
+import { Task } from "../task/task.entity";
 
 @Entity()
 export class Board {

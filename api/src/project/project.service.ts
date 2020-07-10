@@ -3,11 +3,11 @@ import { Injectable, HttpException, HttpStatus } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 
 import { Project } from "./project.entity";
-import { User } from "src/user/user.entity";
-import { Board } from "src/board/board.entity";
+import { User } from "../user/user.entity";
+import { Board } from "../board/board.entity";
 import { ProjectCreating } from "./dto/project-creating.dto";
-import { BoardCreating } from "src/board/dto/board-creating.dto";
-import { BoardService } from "src/board/board.service";
+import { BoardCreating } from "../board/dto/board-creating.dto";
+import { BoardService } from "../board/board.service";
 import { ProjectUpdateState } from "./dto/project-update-state.dto";
 
 @Injectable()

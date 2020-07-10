@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToOne, RelationId } from "typeorm";
 
-import { Task } from "src/task/task.entity";
-import { User } from "src/user/user.entity";
+import { Task } from "../task/task.entity";
+import { User } from "../user/user.entity";
 
 @Entity()
 export class Comment {

@@ -8,7 +8,7 @@ import { UserService } from "../user/user.service";
 import { BoardService } from "../board/board.service";
 import { TaskCreating } from "./dto/task-creating.dto";
 import { TaskUpdateActual } from "./dto/task-update-actual.dto";
-import { ComponentService } from "src/component/component.service";
+import { ComponentService } from "../component/component.service";
 
 @Injectable()
 export class TaskService {

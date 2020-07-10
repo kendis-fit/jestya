@@ -10,10 +10,10 @@ import {
 	RelationId,
 } from "typeorm";
 
-import { User } from "src/user/user.entity";
-import { Board } from "src/board/board.entity";
-import { Comment } from "src/comment/comment.entity";
-import { Component } from "src/component/component.entity";
+import { User } from "../user/user.entity";
+import { Board } from "../board/board.entity";
+import { Comment } from "../comment/comment.entity";
+import { Component } from "../component/component.entity";
 
 export enum Priority {
 	LOWEST = "LOWEST",

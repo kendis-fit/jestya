@@ -3,7 +3,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { Project } from "./project.entity";
 import { ProjectService } from "./project.service";
-import { BoardModule } from "src/board/board.module";
+import { BoardModule } from "../board/board.module";
 import { ProjectController } from "./project.controller";
 
 @Module({

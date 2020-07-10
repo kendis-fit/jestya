@@ -10,8 +10,8 @@ import {
 	OneToMany,
 } from "typeorm";
 
-import { User } from "src/user/user.entity";
-import { Board } from "src/board/board.entity";
+import { User } from "../user/user.entity";
+import { Board } from "../board/board.entity";
 
 @Entity()
 export class Project {

@@ -5,7 +5,7 @@ import { Injectable, HttpException, HttpStatus } from "@nestjs/common";
 import { User, Role } from "./user.entity";
 import { UserLogin } from "./dto/user-login.dto";
 import { UserUpdate } from "./dto/user-update.dto";
-import { AuthService } from "src/auth/auth.service";
+import { AuthService } from "../auth/auth.service";
 import { UserCreating } from "./dto/user-creating.dto";
 import { UserRegistration } from "./dto/user-registration.dto";
 import { UserUpdatePassword } from "./dto/user-update-password.dto";

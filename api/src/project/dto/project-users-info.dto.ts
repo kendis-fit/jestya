@@ -1,4 +1,4 @@
-import { User } from "src/user/user.entity";
+import { User } from "../../user/user.entity";
 
 export class ProjectUsersInfo {
 	public id: string;

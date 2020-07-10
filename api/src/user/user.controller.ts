@@ -2,13 +2,13 @@ import { Controller, Post, Body, UsePipes, UseGuards, Delete, Put, Param, Patch,
 
 import { UserService } from "./user.service";
 import { UserLogin } from "./dto/user-login.dto";
-import { RoleGuard } from "src/guards/role.guard";
+import { RoleGuard } from "../guards/role.guard";
 import { UserUpdate } from "./dto/user-update.dto";
 import { UserCreating } from "./dto/user-creating.dto";
-import { UserSelfGuard } from "src/guards/user-self.guard";
+import { UserSelfGuard } from "../guards/user-self.guard";
 import { UserRegistration } from "./dto/user-registration.dto";
 import { UserUpdatePassword } from "./dto/user-update-password.dto";
-import { PasswordEncryptionPipe } from "src/pipes/password-encryption.pipe";
+import { PasswordEncryptionPipe } from "../pipes/password-encryption.pipe";
 import { Role } from "./user.entity";
 import { UserInfo } from "./dto/user-info.dto";
 import { UserResponse } from "./dto/user-response.dto";

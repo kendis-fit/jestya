@@ -10,9 +10,9 @@ import {
 	RelationId,
 } from "typeorm";
 
-import { Project } from "src/project/project.entity";
-import { Comment } from "src/comment/comment.entity";
-import { Task } from "src/task/task.entity";
+import { Project } from "../project/project.entity";
+import { Comment } from "../comment/comment.entity";
+import { Task } from "../task/task.entity";
 
 export enum Role {
 	USER = "USER",

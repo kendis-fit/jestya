@@ -2,8 +2,6 @@ import { Controller, Put, Delete, Param, Body, Post } from "@nestjs/common";
 
 import { BoardService } from "./board.service";
 import { BoardUpdate } from "./dto/board-update.dto";
-import { TaskCreated } from "src/task/dto/task-created.dto";
-import { TaskCreating } from "src/task/dto/task-creating.dto";
 
 @Controller("boards")
 export class BoardController {

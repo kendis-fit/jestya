@@ -3,10 +3,10 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { Task } from "./task.entity";
 import { TaskService } from "./task.service";
-import { UserModule } from "src/user/user.module";
+import { UserModule } from "../user/user.module";
 import { TaskController } from "./task.controller";
-import { BoardModule } from "src/board/board.module";
-import { ComponentModule } from "src/component/component.module";
+import { BoardModule } from "../board/board.module";
+import { ComponentModule } from "../component/component.module";
 
 @Module({
 	imports: [TypeOrmModule.forFeature([Task]), BoardModule, UserModule, ComponentModule],

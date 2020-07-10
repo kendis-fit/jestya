@@ -1,5 +1,5 @@
 import { User } from "../user.entity";
-import { ProjectInfo } from "src/project/dto/project-info.dto";
+import { ProjectInfo } from "../../project/dto/project-info.dto";
 
 export class UserInfo {
 	public id: string;

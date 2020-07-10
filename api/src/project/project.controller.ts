@@ -1,15 +1,15 @@
 import { Controller, Post, Body, Delete, Param, UseGuards, Get, Req, Query, Patch } from "@nestjs/common";
 
-import { Role } from "src/user/user.entity";
-import { RoleGuard } from "src/guards/role.guard";
+import { Role } from "../user/user.entity";
+import { RoleGuard } from "../guards/role.guard";
 import { ProjectService } from "./project.service";
 import { ProjectInfo } from "./dto/project-info.dto";
-import { BoardInfo } from "src/board/dto/board-info.dto";
+import { BoardInfo } from "../board/dto/board-info.dto";
 import { ProjectCreated } from "./dto/project-created.dto";
 import { ProjectCreating } from "./dto/project-creating.dto";
-import { BoardCreated } from "src/board/dto/board-created.dto";
+import { BoardCreated } from "../board/dto/board-created.dto";
 import { ProjectUsersInfo } from "./dto/project-users-info.dto";
-import { BoardCreating } from "src/board/dto/board-creating.dto";
+import { BoardCreating } from "../board/dto/board-creating.dto";
 import { ProjectUpdateState } from "./dto/project-update-state.dto";
 
 @Controller("projects")

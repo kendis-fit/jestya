@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToMany, JoinTable, RelationId } from "typeorm";
 
-import { Task } from "src/task/task.entity";
+import { Task } from "../task/task.entity";
 
 @Entity()
 export class Component {
