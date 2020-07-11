@@ -1,3 +1,4 @@
+import { ApiTags } from "@nestjs/swagger";
 import { Controller, Get, Param, Patch, Body, Put, Post, Req } from "@nestjs/common";
 
 import { TaskService } from "./task.service";
@@ -9,6 +10,7 @@ import { TaskCommentInfo } from "./dto/task-comment-info.dto";
 import { TaskUpdateActual } from "./dto/task-update-actual.dto";
 import { TaskComponentInfo } from "./dto/task-component-info.dto";
 
+@ApiTags("tasks")
 @Controller("tasks")
 export class TaskController {
 	constructor(private readonly taskService: TaskService) {}

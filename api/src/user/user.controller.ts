@@ -1,19 +1,21 @@
+import { ApiTags } from "@nestjs/swagger";
 import { Controller, Post, Body, UsePipes, UseGuards, Delete, Put, Param, Patch, Get, Query } from "@nestjs/common";
 
+import { Role } from "./user.entity";
 import { UserService } from "./user.service";
+import { UserInfo } from "./dto/user-info.dto";
 import { UserLogin } from "./dto/user-login.dto";
 import { RoleGuard } from "../guards/role.guard";
 import { UserUpdate } from "./dto/user-update.dto";
+import { UserCreated } from "./dto/user-created.dto";
+import { UserResponse } from "./dto/user-response.dto";
 import { UserCreating } from "./dto/user-creating.dto";
 import { UserSelfGuard } from "../guards/user-self.guard";
 import { UserRegistration } from "./dto/user-registration.dto";
 import { UserUpdatePassword } from "./dto/user-update-password.dto";
 import { PasswordEncryptionPipe } from "../pipes/password-encryption.pipe";
-import { Role } from "./user.entity";
-import { UserInfo } from "./dto/user-info.dto";
-import { UserResponse } from "./dto/user-response.dto";
-import { UserCreated } from "./dto/user-created.dto";
 
+@ApiTags("users")
 @Controller("users")
 export class UserController {
 	constructor(private readonly userService: UserService) {}

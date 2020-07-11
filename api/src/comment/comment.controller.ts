@@ -1,10 +1,13 @@
+import { ApiTags } from "@nestjs/swagger";
 import { Controller, Post, Body, Req, Put, Param, Delete } from "@nestjs/common";
+
 import { CommentService } from "./comment.service";
+import { CommentUpdate } from "./dto/comment-update.dto";
 import { CommentCreated } from "./dto/comment-created.dto";
 import { CommentCreating } from "./dto/comment-creating.dto";
-import { CommentUpdate } from "./dto/comment-update.dto";
 
-@Controller("comment")
+@ApiTags("comments")
+@Controller("comments")
 export class CommentController {
 	constructor(public readonly commentService: CommentService) {}
 

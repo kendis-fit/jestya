@@ -1,8 +1,10 @@
-import { Controller, Put, Delete, Param, Body, Post } from "@nestjs/common";
+import { ApiTags } from "@nestjs/swagger";
+import { Controller, Put, Delete, Param, Body } from "@nestjs/common";
 
 import { BoardService } from "./board.service";
 import { BoardUpdate } from "./dto/board-update.dto";
 
+@ApiTags("boards")
 @Controller("boards")
 export class BoardController {
 	constructor(private readonly boardService: BoardService) {}

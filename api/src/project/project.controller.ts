@@ -1,3 +1,4 @@
+import { ApiTags } from "@nestjs/swagger";
 import { Controller, Post, Body, Delete, Param, UseGuards, Get, Req, Query, Patch } from "@nestjs/common";
 
 import { Role } from "../user/user.entity";
@@ -12,6 +13,7 @@ import { ProjectUsersInfo } from "./dto/project-users-info.dto";
 import { BoardCreating } from "../board/dto/board-creating.dto";
 import { ProjectUpdateState } from "./dto/project-update-state.dto";
 
+@ApiTags("projects")
 @Controller("projects")
 export class ProjectController {
 	constructor(private readonly projectService: ProjectService) {}
