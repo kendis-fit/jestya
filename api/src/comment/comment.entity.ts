@@ -14,15 +14,15 @@ export class Comment {
 	@CreateDateColumn()
 	public createdAt: Date;
 
-	@RelationId((user: User) => user.comments)
+	@RelationId((comment: Comment) => comment.user)
 	public userId: string;
 
-	@ManyToOne(type => User)
+	@ManyToOne(() => User, user => user.comments)
 	public user: User;
 
-	@RelationId((task: Task) => task.comments)
+	@RelationId((comment: Comment) => comment.task)
 	public taskId: string;
 
-	@ManyToOne(type => Task, task => task.comments)
+	@ManyToOne(() => Task, task => task.comments)
 	public task: Task;
 }

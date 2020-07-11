@@ -54,26 +54,26 @@ export class User {
 	})
 	public isActive: boolean;
 
-	@RelationId((project: Project) => project.users)
-	public projectIds: string[];
+	@RelationId((user: User) => user.projects)
+	public projectsIds: string[];
 
-	@ManyToMany(type => Project)
+	@ManyToMany(() => Project, project => project.users)
 	@JoinTable()
 	public projects: Project[];
 
-	@OneToMany(type => Project, project => project.creator)
+	@OneToMany(() => Project, project => project.creator)
 	public createdProjects: Project[];
 
-	@OneToMany(type => Comment, comment => comment.user)
+	@OneToMany(() => Comment, comment => comment.user)
 	public comments: Comment[];
 
-	@OneToMany(type => Task, task => task.creator)
+	@OneToMany(() => Task, task => task.creator)
 	public createdTasks: Task[];
 
-	@RelationId((task: Task) => task.executors)
+	@RelationId((user: User) => user.tasks)
 	public taskIds: string[];
 
-	@ManyToMany(type => Task)
+	@ManyToMany(() => Task, task => task.executors)
 	@JoinTable()
 	public tasks: Task[];
 }

@@ -37,18 +37,18 @@ export class Project {
 	})
 	public finishedAt!: Date;
 
-	@RelationId((user: User) => user.createdProjects)
+	@RelationId((project: Project) => project.creator)
 	public creatorId: string;
 
-	@ManyToOne(type => User)
+	@ManyToOne(() => User, user => user.createdProjects)
 	public creator: User;
 
-	@RelationId((user: User) => user.projects)
+	@RelationId((project: Project) => project.users)
 	public userIds: string[];
 
-	@ManyToMany(type => User)
+	@ManyToMany(() => User, user => user.projects)
 	public users: User[];
 
-	@OneToMany(type => Board, board => board.project)
+	@OneToMany(() => Board, board => board.project)
 	public boards: Board[];
 }

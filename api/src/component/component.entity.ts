@@ -13,10 +13,10 @@ export class Component {
 	@CreateDateColumn()
 	public createdAt: Date;
 
-	@RelationId((task: Task) => task.components)
+	@RelationId((component: Component) => component.tasks)
 	public taskIds: string[];
 
-	@ManyToMany(type => Task)
+	@ManyToMany(() => Task, task => task.components)
 	@JoinTable()
 	public tasks: Task[];
 }

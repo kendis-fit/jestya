@@ -54,30 +54,30 @@ export class Task {
 	@UpdateDateColumn()
 	public updatedAt: Date;
 
-	@RelationId((board: Board) => board.tasks)
+	@RelationId((task: Task) => task.board)
 	public boardId: Board;
 
-	@ManyToOne(type => Board, board => board.tasks)
+	@ManyToOne(() => Board, board => board.tasks)
 	public board: Board;
 
-	@RelationId((component: Component) => component.tasks)
+	@RelationId((task: Task) => task.components)
 	public componentIds: string[];
 
-	@ManyToMany(type => Component)
+	@ManyToMany(() => Component, component => component.tasks)
 	public components: Component[];
 
-	@OneToMany(type => Comment, comment => comment.task)
+	@OneToMany(() => Comment, comment => comment.task)
 	public comments: Comment[];
 
-	@RelationId((user: User) => user.createdTasks)
+	@RelationId((user: Task) => user.creator)
 	public creatorId: string;
 
-	@ManyToOne(type => User)
+	@ManyToOne(() => User, user => user.createdTasks)
 	public creator: User;
 
-	@RelationId((user: User) => user.tasks)
+	@RelationId((task: Task) => task.executors)
 	public userIds: string[];
 
-	@ManyToMany(type => User)
+	@ManyToMany(() => User, user => user.tasks)
 	public executors: User[];
 }
