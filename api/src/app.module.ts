@@ -1,5 +1,6 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { ClientsModule, Transport } from "@nestjs/microservices";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import config from "../.config";
@@ -15,6 +16,8 @@ import { ProjectModule } from "./project/project.module";
 import { Component } from "./component/component.entity";
 import { CommentModule } from "./comment/comment.module";
 import { ComponentModule } from "./component/component.module";
+
+export const REDIS_SERVICE = "REDIS_SERVICE";
 
 @Module({
 	imports: [
@@ -41,6 +44,19 @@ import { ComponentModule } from "./component/component.module";
 			}),
 			inject: [ConfigService],
 		}),
+		ClientsModule.registerAsync([
+			{
+				name: REDIS_SERVICE,
+				imports: [ConfigModule],
+				useFactory: (config: ConfigService) => ({
+					transport: Transport.REDIS,
+					options: {
+						url: config.get<string>("redis.url"),
+					},
+				}),
+				inject: [ConfigService],
+			},
+		]),
 	],
 })
 export class AppModule {}

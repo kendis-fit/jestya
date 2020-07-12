@@ -1,10 +1,11 @@
 import { ApiTags } from "@nestjs/swagger";
-import { Controller, Get, Param, Patch, Body, Put, Post, Req } from "@nestjs/common";
+import { Controller, Get, Param, Patch, Body, Put, Post } from "@nestjs/common";
 
 import { TaskService } from "./task.service";
 import { TaskInfo } from "./dto/task-info.dto";
 import { TaskUpdate } from "./dto/task-update.dto";
 import { TaskCreated } from "./dto/task-created.dto";
+import { User } from "src/decorators/user.decorator";
 import { TaskCreating } from "./dto/task-creating.dto";
 import { TaskCommentInfo } from "./dto/task-comment-info.dto";
 import { TaskUpdateActual } from "./dto/task-update-actual.dto";
@@ -44,8 +45,8 @@ export class TaskController {
 	}
 
 	@Post()
-	public async create(@Body() task: TaskCreating, @Req() req): Promise<TaskCreated> {
-		const newTask = await this.taskService.create(req.user.id, task);
+	public async create(@Body() task: TaskCreating, @User("id") userId: string): Promise<TaskCreated> {
+		const newTask = await this.taskService.create(userId, task);
 		return new TaskCreated(newTask.id);
 	}
 }

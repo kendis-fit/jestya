@@ -5,6 +5,7 @@ import { Role } from "../user/user.entity";
 import { RoleGuard } from "../guards/role.guard";
 import { ProjectService } from "./project.service";
 import { ProjectInfo } from "./dto/project-info.dto";
+import { User } from "src/decorators/user.decorator";
 import { BoardInfo } from "../board/dto/board-info.dto";
 import { ProjectCreated } from "./dto/project-created.dto";
 import { ProjectCreating } from "./dto/project-creating.dto";
@@ -22,9 +23,9 @@ export class ProjectController {
 	public async findAll(
 		@Query("offset") offset: number,
 		@Query("size") size: number,
-		@Req() req
+		@User("id") userId: string
 	): Promise<ProjectInfo[]> {
-		const projects = await this.projectService.findAll(offset, size, req.user.id);
+		const projects = await this.projectService.findAll(offset, size, userId);
 		return projects.map(project => new ProjectInfo(project));
 	}
 
@@ -42,8 +43,8 @@ export class ProjectController {
 
 	@Post()
 	@UseGuards(new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
-	public async create(@Body() project: ProjectCreating, @Req() req): Promise<ProjectCreated> {
-		const newProject = await this.projectService.create(req.user.id, project);
+	public async create(@Body() project: ProjectCreating, @User("id") userId: string): Promise<ProjectCreated> {
+		const newProject = await this.projectService.create(userId, project);
 		return new ProjectCreated(newProject.id);
 	}
 
