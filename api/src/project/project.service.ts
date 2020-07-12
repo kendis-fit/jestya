@@ -5,18 +5,23 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Project } from "./project.entity";
 import { User } from "../user/user.entity";
 import { Board } from "../board/board.entity";
+import { Comment } from "../comment/comment.entity";
+import { BoardService } from "../board/board.service";
+import { BoardUpdate } from "../board/dto/board-update.dto";
+import { CommentService } from "../comment/comment.service";
 import { ProjectCreating } from "./dto/project-creating.dto";
 import { BoardCreating } from "../board/dto/board-creating.dto";
-import { BoardService } from "../board/board.service";
 import { ProjectUpdateState } from "./dto/project-update-state.dto";
-import { BoardUpdate } from "src/board/dto/board-update.dto";
+import { CommentCreating } from "../comment/dto/comment-creating.dto";
+import { CommentUpdate } from "src/comment/dto/comment-update.dto";
 
 @Injectable()
 export class ProjectService {
 	constructor(
 		@InjectRepository(Project)
 		private readonly projectsRepository: Repository<Project>,
-		private readonly boardService: BoardService
+		private readonly boardService: BoardService,
+		private readonly commentService: CommentService
 	) {}
 
 	public async findById(projectId: string): Promise<Project> {
@@ -83,13 +88,5 @@ export class ProjectService {
 		const foundProject = await this.findById(projectId);
 		foundProject.userIds = foundProject.userIds.filter(id => id !== userId);
 		await this.projectsRepository.update(projectId, foundProject);
-	}
-
-	public async updateBoard(boardId: string, board: BoardUpdate): Promise<Board> {
-		return await this.boardService.update(boardId, board);
-	}
-
-	public async removeBoard(boardId: string): Promise<void> {
-		await this.boardService.remove(boardId);
 	}
 }
