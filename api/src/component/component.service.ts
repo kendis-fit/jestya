@@ -11,6 +11,11 @@ export class ComponentService {
 		private readonly componentRepository: Repository<Component>
 	) {}
 
+	public async findAll(): Promise<Component[]> {
+		const components = await this.componentRepository.find();
+		return components;
+	}
+
 	public async findByIds(componentIds: string[]): Promise<Component[]> {
 		const components = await this.componentRepository.findByIds(componentIds);
 		return components;
