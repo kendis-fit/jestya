@@ -11,18 +11,15 @@ import { UserService } from "../user/user.service";
 import { CommentService } from "./comment.service";
 import { TaskService } from "../task/task.service";
 import { BoardService } from "../board/board.service";
-import { CommentController } from "./comment.controller";
 import { Component } from "../component/component.entity";
 import { mockedConfigService } from "../mocks/config.mock";
 import { ComponentService } from "../component/component.service";
 
 describe("Project Controller", () => {
-	let controller: CommentController;
 	let service: CommentService;
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
-			controllers: [CommentController],
 			providers: [
 				BoardService,
 				UserService,
@@ -57,14 +54,7 @@ describe("Project Controller", () => {
 			],
 		}).compile();
 
-		controller = module.get<CommentController>(CommentController);
 		service = module.get<CommentService>(CommentService);
-	});
-
-	describe("Comment Controller", () => {
-		it("should be defined", () => {
-			expect(controller).toBeDefined();
-		});
 	});
 
 	describe("Comment Service", () => {

@@ -7,7 +7,6 @@ import { User } from "../user/user.entity";
 import { TaskService } from "./task.service";
 import { Board } from "../board/board.entity";
 import { AuthService } from "../auth/auth.service";
-import { TaskController } from "./task.controller";
 import { UserService } from "../user/user.service";
 import { BoardService } from "../board/board.service";
 import { Component } from "../component/component.entity";
@@ -15,12 +14,10 @@ import { mockedConfigService } from "../mocks/config.mock";
 import { ComponentService } from "../component/component.service";
 
 describe("Task", () => {
-	let controller: TaskController;
 	let service: TaskService;
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
-			controllers: [TaskController],
 			providers: [
 				BoardService,
 				UserService,
@@ -50,17 +47,10 @@ describe("Task", () => {
 			],
 		}).compile();
 
-		controller = module.get<TaskController>(TaskController);
 		service = module.get<TaskService>(TaskService);
 	});
 
-	describe("TaskController", () => {
-		it("should be defined", () => {
-			expect(controller).toBeDefined();
-		});
-	});
-
-	describe("TaskService", () => {
+	describe("Task Service", () => {
 		it("should be defined", () => {
 			expect(service).toBeDefined();
 		});
