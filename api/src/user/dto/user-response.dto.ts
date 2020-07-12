@@ -1,3 +1,10 @@
+import { ApiProperty } from "@nestjs/swagger";
+
 export class UserResponse {
-	constructor(public token: string) {}
+	@ApiProperty()
+	public token: string;
+
+	constructor(token: string) {
+		this.token = token;
+	}
 }
