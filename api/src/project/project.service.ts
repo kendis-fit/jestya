@@ -9,6 +9,7 @@ import { ProjectCreating } from "./dto/project-creating.dto";
 import { BoardCreating } from "../board/dto/board-creating.dto";
 import { BoardService } from "../board/board.service";
 import { ProjectUpdateState } from "./dto/project-update-state.dto";
+import { BoardUpdate } from "src/board/dto/board-update.dto";
 
 @Injectable()
 export class ProjectService {
@@ -82,5 +83,13 @@ export class ProjectService {
 		const foundProject = await this.findById(projectId);
 		foundProject.userIds = foundProject.userIds.filter(id => id !== userId);
 		await this.projectsRepository.update(projectId, foundProject);
+	}
+
+	public async updateBoard(boardId: string, board: BoardUpdate): Promise<Board> {
+		return await this.boardService.update(boardId, board);
+	}
+
+	public async removeBoard(boardId: string): Promise<void> {
+		await this.boardService.remove(boardId);
 	}
 }

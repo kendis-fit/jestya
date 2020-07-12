@@ -48,7 +48,9 @@ export class BoardService {
 	}
 
 	public async remove(boardId: string): Promise<void> {
-		const foundBoard = await this.findById(boardId);
-		await this.boardRepository.remove(foundBoard);
+		const deleteResponse = await this.boardRepository.delete(boardId);
+		if (!deleteResponse.affected) {
+			throw new HttpException({ message: "Board is not found" }, HttpStatus.NOT_FOUND);
+		}
 	}
 }

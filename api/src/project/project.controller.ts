@@ -1,5 +1,5 @@
 import { ApiTags } from "@nestjs/swagger";
-import { Controller, Post, Body, Delete, Param, UseGuards, Get, Req, Query, Patch } from "@nestjs/common";
+import { Controller, Post, Body, Delete, Param, UseGuards, Get, Req, Query, Patch, Put } from "@nestjs/common";
 
 import { Role } from "../user/user.entity";
 import { RoleGuard } from "../guards/role.guard";
@@ -13,6 +13,7 @@ import { BoardCreated } from "../board/dto/board-created.dto";
 import { ProjectUsersInfo } from "./dto/project-users-info.dto";
 import { BoardCreating } from "../board/dto/board-creating.dto";
 import { ProjectUpdateState } from "./dto/project-update-state.dto";
+import { BoardUpdate } from "src/board/dto/board-update.dto";
 
 @ApiTags("projects")
 @Controller("projects")
@@ -71,5 +72,15 @@ export class ProjectController {
 	@UseGuards(new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
 	public async removeUser(@Param("id") projectId: string, @Param("userId") userId: string): Promise<void> {
 		await this.projectService.removeUser(projectId, userId);
+	}
+
+	@Put(":id/boards/:boardId")
+	public async update(@Param("id") boardId: string, @Body() board: BoardUpdate): Promise<void> {
+		await this.projectService.updateBoard(boardId, board);
+	}
+
+	@Delete(":id/boards/:boardId")
+	public async remove(@Param("id") boardId: string): Promise<void> {
+		await this.projectService.removeBoard(boardId);
 	}
 }
