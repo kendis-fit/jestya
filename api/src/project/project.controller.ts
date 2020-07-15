@@ -1,5 +1,5 @@
 import { ApiTags } from "@nestjs/swagger";
-import { Controller, Post, Body, Delete, Param, UseGuards, Get, Query, Patch, Put } from "@nestjs/common";
+import { Controller, Post, Body, Delete, Param, UseGuards, Get, Query, Patch, Put, Inject } from "@nestjs/common";
 
 import { Role } from "../user/user.entity";
 import { RoleGuard } from "../guards/role.guard";
@@ -35,7 +35,7 @@ export class ProjectController {
 		private readonly projectService: ProjectService,
 		private readonly commentService: CommentService,
 		private readonly boardService: BoardService,
-		private readonly taskService: TaskService
+		private readonly taskService: TaskService,
 	) {}
 
 	@Get()
