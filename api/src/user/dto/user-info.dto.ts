@@ -1,6 +1,7 @@
+import { ApiProperty } from "@nestjs/swagger";
+
 import { User } from "../user.entity";
 import { ProjectInfo } from "../../project/dto/project-info.dto";
-import { ApiProperty } from "@nestjs/swagger";
 
 export class UserInfo {
 	@ApiProperty()
