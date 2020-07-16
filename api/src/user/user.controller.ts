@@ -1,5 +1,5 @@
-import { ApiTags } from "@nestjs/swagger";
-import { Controller, Post, Body, UsePipes, UseGuards, Delete, Put, Param, Patch, Get, Query } from "@nestjs/common";
+import { ApiTags, ApiBearerAuth } from "@nestjs/swagger";
+import { Controller, Post, Body, UsePipes, UseGuards, Delete, Put, Param, Patch, Get, Query, ParseIntPipe, ParseUUIDPipe } from "@nestjs/common";
 
 import { Role } from "./user.entity";
 import { UserService } from "./user.service";
@@ -16,6 +16,7 @@ import { UserUpdatePassword } from "./dto/user-update-password.dto";
 import { PasswordEncryptionPipe } from "../pipes/password-encryption.pipe";
 
 @ApiTags("users")
+@ApiBearerAuth()
 @Controller("users")
 export class UserController {
 	constructor(private readonly userService: UserService) {}
@@ -27,7 +28,7 @@ export class UserController {
 	}
 
 	@Get()
-	public async find(@Query("offset") offset: number, @Query("size") size: number): Promise<UserInfo[]> {
+	public async find(@Query("offset", ParseIntPipe) offset: number, @Query("size", ParseIntPipe) size: number): Promise<UserInfo[]> {
 		const foundUsers = await this.userService.findAll(offset, size);
 		return foundUsers.map(user => new UserInfo(user));
 	}
@@ -54,7 +55,7 @@ export class UserController {
 
 	@Delete(":id")
 	@UseGuards(new RoleGuard([Role.SUPER_ADMIN]))
-	public async delete(@Param("id") userId: string): Promise<void> {
+	public async delete(@Param("id", ParseUUIDPipe) userId: string): Promise<void> {
 		await this.userService.delete(userId);
 	}
 

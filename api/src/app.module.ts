@@ -1,5 +1,4 @@
 import { Module } from "@nestjs/common";
-import { APP_GUARD } from "@nestjs/core";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { ClientsModule, Transport } from "@nestjs/microservices";
@@ -17,7 +16,6 @@ import { ProjectModule } from "./project/project.module";
 import { Component } from "./component/component.entity";
 import { CommentModule } from "./comment/comment.module";
 import { ComponentModule } from "./component/component.module";
-import { UserAuthorizatedGuard } from "./guards/user-authorizated.guard";
 
 export const REDIS_SERVICE = "REDIS_SERVICE";
 
@@ -59,12 +57,6 @@ export const REDIS_SERVICE = "REDIS_SERVICE";
 				inject: [ConfigService],
 			},
 		]),
-	],
-	providers: [
-		{
-			provide: APP_GUARD,
-			useValue: UserAuthorizatedGuard
-		}
 	]
 })
 export class AppModule {}

@@ -43,7 +43,7 @@ export class UserService {
 		if (size > 100) {
 			throw new HttpException({ message: "Users must be less than 100" }, HttpStatus.BAD_REQUEST);
 		}
-		const users = await this.usersRepository.find({ skip: offset, take: size });
+		const users = await this.usersRepository.find({ skip: offset, take: size, relations: ["projects"] });
 		return users;
 	}
 
@@ -61,7 +61,10 @@ export class UserService {
 		if (countUsers !== 0) {
 			throw new HttpException({ message: "Registration isn't available anymore" }, HttpStatus.FORBIDDEN);
 		}
-		const newUser = this.usersRepository.create(user);
+		const newUser = new User();
+		newUser.name = user.name;
+		newUser.login = user.login;
+		newUser.password = user.password;
 		newUser.role = Role.SUPER_ADMIN;
 		await this.usersRepository.save(newUser);
 	}

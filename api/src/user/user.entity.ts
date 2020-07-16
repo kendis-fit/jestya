@@ -17,7 +17,7 @@ import { Task } from "../task/task.entity";
 export enum Role {
 	USER = "USER",
 	ADMIN = "ADMIN",
-	SUPER_ADMIN = "SUPE_ADMIN",
+	SUPER_ADMIN = "SUPER_ADMIN",
 }
 
 @Entity()
