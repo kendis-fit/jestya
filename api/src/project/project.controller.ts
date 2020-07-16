@@ -1,7 +1,8 @@
-import { ApiTags } from "@nestjs/swagger";
-import { Controller, Post, Body, Delete, Param, UseGuards, Get, Query, Patch, Put, Inject } from "@nestjs/common";
+import { ApiTags, ApiBearerAuth } from "@nestjs/swagger";
+import { Controller, Post, Body, Delete, Param, UseGuards, Get, Query, Patch, Put } from "@nestjs/common";
 
 import { Role } from "../user/user.entity";
+import { JwtGuard } from "../guards/jwt.guard";
 import { RoleGuard } from "../guards/role.guard";
 import { TaskService } from "../task/task.service";
 import { ProjectService } from "./project.service";
@@ -28,6 +29,7 @@ import { CommentCreating } from "../comment/dto/comment-creating.dto";
 import { TaskUpdateActual } from "../task/dto/task-update-actual.dto";
 import { TaskComponentInfo } from "../task/dto/task-component-info.dto";
 
+@ApiBearerAuth()
 @ApiTags("projects")
 @Controller("projects")
 export class ProjectController {
@@ -39,6 +41,7 @@ export class ProjectController {
 	) {}
 
 	@Get()
+	@UseGuards(JwtGuard)
 	public async findAll(
 		@Query("offset") offset: number,
 		@Query("size") size: number,
@@ -61,33 +64,33 @@ export class ProjectController {
 	}
 
 	@Post()
-	@UseGuards(new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
+	@UseGuards(JwtGuard, new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
 	public async create(@Body() project: ProjectCreating, @User("id") userId: string): Promise<ProjectCreated> {
 		const newProject = await this.projectService.create(userId, project);
 		return new ProjectCreated(newProject.id);
 	}
 
 	@Post(":id/users/:userId")
-	@UseGuards(new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
+	@UseGuards(JwtGuard, new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
 	public async addUser(@Param("id") projectId: string, @Param("userId") userId: string): Promise<void> {
 		await this.addUser(projectId, userId);
 	}
 
 	@Post(":id/boards")
-	@UseGuards(new RoleGuard([Role.ADMIN]))
+	@UseGuards(JwtGuard, new RoleGuard([Role.ADMIN]))
 	public async addBoard(@Param("id") projectId: string, @Body() board: BoardCreating): Promise<BoardCreated> {
 		const newBoard = await this.projectService.addBoard(projectId, board);
 		return new BoardCreated(newBoard.id);
 	}
 
 	@Patch(":id")
-	@UseGuards(new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
+	@UseGuards(JwtGuard, new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
 	public async updateState(@Param("id") projectId: string, @Body() project: ProjectUpdateState): Promise<void> {
 		await this.projectService.updateState(projectId, project);
 	}
 
 	@Delete(":id/users/:userId")
-	@UseGuards(new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
+	@UseGuards(JwtGuard, new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
 	public async removeUser(@Param("id") projectId: string, @Param("userId") userId: string): Promise<void> {
 		await this.projectService.removeUser(projectId, userId);
 	}
@@ -103,6 +106,7 @@ export class ProjectController {
 	}
 
 	@Post(":id/comments")
+	@UseGuards(JwtGuard)
 	public async createComment(@Body() comment: CommentCreating, @User("id") userId: string): Promise<CommentCreated> {
 		const newComment = await this.commentService.create(userId, comment);
 		return new CommentCreated(newComment.id);
@@ -147,6 +151,7 @@ export class ProjectController {
 	}
 
 	@Post(":id/tasks")
+	@UseGuards(JwtGuard)
 	public async createTask(@Body() task: TaskCreating, @User("id") userId: string): Promise<TaskCreated> {
 		const newTask = await this.taskService.create(userId, task);
 		return new TaskCreated(newTask.id);

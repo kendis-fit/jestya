@@ -1,27 +1,23 @@
 import { Observable } from "rxjs";
-import { ExecutionContext, Injectable, ForbiddenException, UnauthorizedException } from "@nestjs/common";
+import { ExecutionContext, Injectable, CanActivate } from "@nestjs/common";
 
-import { JwtGuard } from "./jwt.guard";
 import { Role } from "../user/user.entity";
+import { RequestUser } from "../helpers/request-user.interface";
 
 @Injectable()
-export class RoleGuard extends JwtGuard {
-	constructor(private readonly roles: Role[]) {
-		super({});
-	}
+export class RoleGuard implements CanActivate {
+	constructor(private readonly roles: Role[]) {}
 
 	public canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
-		return super.canActivate(context);
-	}
-
-	public handleRequest(err: any, user: any, info: any) {
-		if (err || !user) {
-			throw err || new UnauthorizedException();
+		const ctx = context.switchToHttp();
+		const req = ctx.getRequest<RequestUser>();
+		const user = req.user;
+		if (!user) {
+			return false;
 		}
-		
-		if (!this.roles.includes(user.role)) {
-			throw new ForbiddenException();
+		if (this.roles.includes(user.role)) {
+			return true;
 		}
-		return user;
+		return false;
 	}
 }
