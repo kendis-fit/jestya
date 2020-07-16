@@ -41,7 +41,7 @@ export class User {
 		enum: Role,
 		default: Role.USER,
 	})
-	public role: string;
+	public role: Role;
 
 	@CreateDateColumn()
 	public createdAt: Date;

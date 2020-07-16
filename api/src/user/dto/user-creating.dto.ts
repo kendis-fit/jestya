@@ -1,9 +1,9 @@
-import { UserRegistration } from "./user-registration.dto";
 import { ApiProperty } from "@nestjs/swagger";
 
-export type UserCreatingType = "Admin" | "User";
+import { Role } from "../user.entity";
+import { UserRegistration } from "./user-registration.dto";
 
 export class UserCreating extends UserRegistration {
 	@ApiProperty()
-	public role: UserCreatingType;
+	public role: Role;
 }
