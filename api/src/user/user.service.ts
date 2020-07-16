@@ -2,12 +2,9 @@ import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Injectable, HttpException, HttpStatus } from "@nestjs/common";
 
-import { User, Role } from "./user.entity";
-import { UserLogin } from "./dto/user-login.dto";
+import { User } from "./user.entity";
 import { UserUpdate } from "./dto/user-update.dto";
-import { AuthService } from "../auth/auth.service";
 import { UserCreating } from "./dto/user-creating.dto";
-import { UserRegistration } from "./dto/user-registration.dto";
 import { UserUpdatePassword } from "./dto/user-update-password.dto";
 
 @Injectable()
@@ -15,8 +12,11 @@ export class UserService {
 	constructor(
 		@InjectRepository(User)
 		private readonly usersRepository: Repository<User>,
-		private readonly auth: AuthService
 	) {}
+
+	public async count(): Promise<number> {
+		return await this.usersRepository.count();
+	}
 
 	public async findById(userId: string): Promise<User> {
 		const user = await this.usersRepository.findOne(userId);
@@ -47,30 +47,8 @@ export class UserService {
 		return users;
 	}
 
-	public async login(user: UserLogin): Promise<string> {
-		const foundUser = await this.findByLogin(user.login);
-		if (foundUser.password !== user.password) {
-			throw new HttpException({ message: "Password is wrong" }, HttpStatus.BAD_REQUEST);
-		}
-		const token = this.auth.signPayload({ id: foundUser.id, role: foundUser.role });
-		return token;
-	}
-
-	public async registration(user: UserRegistration): Promise<void> {
-		const countUsers = await this.usersRepository.count();
-		if (countUsers !== 0) {
-			throw new HttpException({ message: "Registration isn't available anymore" }, HttpStatus.FORBIDDEN);
-		}
-		const newUser = new User();
-		newUser.name = user.name;
-		newUser.login = user.login;
-		newUser.password = user.password;
-		newUser.role = Role.SUPER_ADMIN;
-		await this.usersRepository.save(newUser);
-	}
-
 	public async create(user: UserCreating): Promise<string> {
-		const foundUser = this.usersRepository.findOne({ login: user.login });
+		const foundUser = await this.usersRepository.findOne({ login: user.login });
 		if (foundUser) {
 			throw new HttpException({ message: "A user with such a login already exists" }, HttpStatus.CONFLICT);
 		}

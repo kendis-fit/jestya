@@ -16,11 +16,13 @@ import { ProjectModule } from "./project/project.module";
 import { Component } from "./component/component.entity";
 import { CommentModule } from "./comment/comment.module";
 import { ComponentModule } from "./component/component.module";
+import { AuthModule } from "./auth/auth.module";
 
 export const REDIS_SERVICE = "REDIS_SERVICE";
 
 @Module({
 	imports: [
+		AuthModule,
 		UserModule,
 		ProjectModule,
 		BoardModule,

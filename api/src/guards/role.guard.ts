@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import { ExecutionContext, Injectable, ForbiddenException } from "@nestjs/common";
+import { ExecutionContext, Injectable, ForbiddenException, UnauthorizedException } from "@nestjs/common";
 
 import { JwtGuard } from "./jwt.guard";
 import { Role } from "../user/user.entity";
@@ -15,6 +15,10 @@ export class RoleGuard extends JwtGuard {
 	}
 
 	public handleRequest(err: any, user: any, info: any) {
+		if (err || !user) {
+			throw err || new UnauthorizedException();
+		}
+		
 		if (!this.roles.includes(user.role)) {
 			throw new ForbiddenException();
 		}

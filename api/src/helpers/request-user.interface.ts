@@ -1,6 +1,6 @@
 import { Request } from "express";
 
-import { IJwt } from "../auth/jwt.interface";
+import { IJwt } from "../strategies/jwt.interface";
 
 export interface RequestUser extends Request {
     user?: IJwt;

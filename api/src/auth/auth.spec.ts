@@ -2,7 +2,7 @@ import { Test, TestingModule } from "@nestjs/testing";
 import { AuthService } from "./auth.service";
 import { ConfigService } from "@nestjs/config";
 import { mockedConfigService } from "../mocks/config.mock";
-import { JwtStrategy } from "./jwt.strategy";
+import { JwtStrategy } from "../strategies/jwt.strategy";
 
 describe("Auth", () => {
 	let service: AuthService;

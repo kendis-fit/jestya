@@ -33,19 +33,6 @@ export class UserController {
 		return foundUsers.map(user => new UserInfo(user));
 	}
 
-	@Post("login")
-	@UsePipes(new PasswordEncryptionPipe())
-	public async login(@Body() user: UserLogin): Promise<UserResponse> {
-		const token = await this.userService.login(user);
-		return new UserResponse(token);
-	}
-
-	@Post("registration")
-	@UsePipes(new PasswordEncryptionPipe())
-	public async registration(@Body() user: UserRegistration): Promise<void> {
-		await this.userService.registration(user);
-	}
-
 	@Post()
 	@UseGuards(new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
 	public async create(@Body() user: UserCreating): Promise<UserCreated> {
