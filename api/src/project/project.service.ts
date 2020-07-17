@@ -31,12 +31,9 @@ export class ProjectService {
 		return projects > 0;
 	}
 
-	public async findAll(offset: number, size: number, userId: string): Promise<Project[]> {
-		if (size > 100) {
-			throw new HttpException({ message: "Projects must be less than 100" }, HttpStatus.BAD_REQUEST);
-		}
-		const projects = await this.projectsRepository.find({ skip: offset, take: size });
-		return projects.filter(project => project.userIds.includes(userId));
+	public async findAll(userId: string): Promise<Project[]> {
+		const projects = await this.projectsRepository.find({ userIds: [userId] });
+		return projects;
 	}
 
 	public async findAllBoards(projectId: string): Promise<Board[]> {

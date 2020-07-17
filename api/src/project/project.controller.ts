@@ -42,12 +42,8 @@ export class ProjectController {
 
 	@Get()
 	@UseGuards(JwtGuard)
-	public async findAll(
-		@Query("offset", ParseIntPipe) offset: number,
-		@Query("size", ParseIntPipe) size: number,
-		@User("id") userId: string
-	): Promise<ProjectInfo[]> {
-		const projects = await this.projectService.findAll(offset, size, userId);
+	public async findAll(@User("id") userId: string): Promise<ProjectInfo[]> {
+		const projects = await this.projectService.findAll(userId);
 		return projects.map(project => new ProjectInfo(project));
 	}
 
