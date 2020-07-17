@@ -28,6 +28,9 @@ import { TaskCommentInfo } from "../task/dto/task-comment-info.dto";
 import { CommentCreating } from "../comment/dto/comment-creating.dto";
 import { TaskUpdateActual } from "../task/dto/task-update-actual.dto";
 import { TaskComponentInfo } from "../task/dto/task-component-info.dto";
+import { JwtProjectsGuard } from "src/guards/jwt-projects.guard";
+import { RoleProjectsGuard } from "src/guards/role-projects.guard";
+import { UserSelfGuard } from "src/guards/user-self.guard";
 
 @ApiBearerAuth()
 @ApiTags("projects")
@@ -48,12 +51,14 @@ export class ProjectController {
 	}
 
 	@Get(":id/boards")
+	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.USER]))
 	public async findAllBoards(@Param("id", ParseUUIDPipe) projectId: string): Promise<BoardInfo[]> {
 		const boards = await this.projectService.findAllBoards(projectId);
 		return boards.map(board => new BoardInfo(board));
 	}
 
 	@Get(":id/users")
+	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.USER]))
 	public async findAllUsers(@Param("id", ParseUUIDPipe) projectId: string): Promise<ProjectUsersInfo[]> {
 		const users = await this.projectService.findAllUsers(projectId);
 		return users.map(user => new ProjectUsersInfo(user));
@@ -67,70 +72,77 @@ export class ProjectController {
 	}
 
 	@Post(":id/users/:userId")
-	@UseGuards(JwtGuard, new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
+	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.ADMIN]), new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
 	public async addUser(@Param("id", ParseUUIDPipe) projectId: string, @Param("userId", ParseUUIDPipe) userId: string): Promise<void> {
 		await this.addUser(projectId, userId);
 	}
 
 	@Post(":id/boards")
-	@UseGuards(JwtGuard, new RoleGuard([Role.ADMIN]))
+	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.ADMIN]), new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
 	public async addBoard(@Param("id", ParseUUIDPipe) projectId: string, @Body() board: BoardCreating): Promise<BoardCreated> {
 		const newBoard = await this.projectService.addBoard(projectId, board);
 		return new BoardCreated(newBoard.id);
 	}
 
 	@Patch(":id")
-	@UseGuards(JwtGuard, new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
+	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.ADMIN]), new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
 	public async updateState(@Param("id", ParseUUIDPipe) projectId: string, @Body() project: ProjectUpdateState): Promise<void> {
 		await this.projectService.updateState(projectId, project);
 	}
 
 	@Delete(":id/users/:userId")
-	@UseGuards(JwtGuard, new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
+	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.ADMIN]), new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
 	public async removeUser(@Param("id", ParseUUIDPipe) projectId: string, @Param("userId", ParseUUIDPipe) userId: string): Promise<void> {
 		await this.projectService.removeUser(projectId, userId);
 	}
 
 	@Put(":id/boards/:boardId")
+	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.ADMIN]), new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
 	public async updateBoard(@Param("boardId", ParseUUIDPipe) boardId: string, @Body() board: BoardUpdate): Promise<void> {
 		await this.boardService.update(boardId, board);
 	}
 
 	@Delete(":id/boards/:boardId")
+	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.ADMIN]), new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
 	public async removeBoard(@Param("boardId", ParseUUIDPipe) boardId: string): Promise<void> {
 		await this.boardService.remove(boardId);
 	}
 
 	@Post(":id/comments")
-	@UseGuards(JwtGuard)
+	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.USER]))
 	public async createComment(@Body() comment: CommentCreating, @User("id") userId: string): Promise<CommentCreated> {
 		const newComment = await this.commentService.create(userId, comment);
 		return new CommentCreated(newComment.id);
 	}
 
 	@Put(":id/comments/:commentId")
+	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.USER]), new UserSelfGuard([]))
 	public async updateComment(@Param("commentId", ParseUUIDPipe) commentId: string, @Body() comment: CommentUpdate): Promise<void> {
 		await this.commentService.update(commentId, comment);
 	}
 
 	@Delete(":id/comments/:commentId")
+	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.USER]), new UserSelfGuard([Role.SUPER_ADMIN, Role.ADMIN]))
 	public async removeComment(@Param("commentId", ParseUUIDPipe) commentId: string): Promise<void> {
 		await this.commentService.remove(commentId);
 	}
 
 	@Get(":id/tasks/:taskId")
+	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.USER]))
 	public async findById(@Param("taskId", ParseUUIDPipe) taskId: string): Promise<TaskInfo> {
 		const task = await this.taskService.findById(taskId);
 		return new TaskInfo(task);
 	}
 
 	@Get(":id/tasks/:taskId/components")
+	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.USER]))
 	public async findComponents(@Param("taskId", ParseUUIDPipe) taskId: string): Promise<TaskComponentInfo[]> {
 		const task = await this.taskService.findById(taskId);
 		return task.components.map(component => new TaskComponentInfo(component));
 	}
 
 	@Get(":id/tasks/:taskId/comments")
+	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.USER]))
 	public async findComments(@Param("taskId", ParseUUIDPipe) taskId: string): Promise<TaskCommentInfo[]> {
 		const task = await this.taskService.findById(taskId);
 		return task.comments.map(comment => new TaskCommentInfo(comment));
@@ -147,9 +159,13 @@ export class ProjectController {
 	}
 
 	@Post(":id/tasks")
-	@UseGuards(JwtGuard)
+	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.USER]))
 	public async createTask(@Body() task: TaskCreating, @User("id") userId: string): Promise<TaskCreated> {
 		const newTask = await this.taskService.create(userId, task);
 		return new TaskCreated(newTask.id);
+	}
+
+	@Patch(":id/tasks/:taskId/boards/:boardId")
+	public async changeBoard(@Param("taskId", ParseUUIDPipe) taskId: string, @Param("boardId") boardId: string): Promise<void> {
 	}
 }
