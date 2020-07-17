@@ -1,5 +1,5 @@
 import { ApiTags, ApiBearerAuth } from "@nestjs/swagger";
-import { Controller, Post, Body, Delete, Param, UseGuards, Get, Query, Patch, Put } from "@nestjs/common";
+import { Controller, Post, Body, Delete, Param, UseGuards, Get, Query, Patch, Put, ParseIntPipe, ParseUUIDPipe } from "@nestjs/common";
 
 import { Role } from "../user/user.entity";
 import { JwtGuard } from "../guards/jwt.guard";
@@ -43,8 +43,8 @@ export class ProjectController {
 	@Get()
 	@UseGuards(JwtGuard)
 	public async findAll(
-		@Query("offset") offset: number,
-		@Query("size") size: number,
+		@Query("offset", ParseIntPipe) offset: number,
+		@Query("size", ParseIntPipe) size: number,
 		@User("id") userId: string
 	): Promise<ProjectInfo[]> {
 		const projects = await this.projectService.findAll(offset, size, userId);
@@ -52,13 +52,13 @@ export class ProjectController {
 	}
 
 	@Get(":id/boards")
-	public async findAllBoards(@Param("id") projectId: string): Promise<BoardInfo[]> {
+	public async findAllBoards(@Param("id", ParseUUIDPipe) projectId: string): Promise<BoardInfo[]> {
 		const boards = await this.projectService.findAllBoards(projectId);
 		return boards.map(board => new BoardInfo(board));
 	}
 
 	@Get(":id/users")
-	public async findAllUsers(@Param("id") projectId: string): Promise<ProjectUsersInfo[]> {
+	public async findAllUsers(@Param("id", ParseUUIDPipe) projectId: string): Promise<ProjectUsersInfo[]> {
 		const users = await this.projectService.findAllUsers(projectId);
 		return users.map(user => new ProjectUsersInfo(user));
 	}
@@ -72,36 +72,36 @@ export class ProjectController {
 
 	@Post(":id/users/:userId")
 	@UseGuards(JwtGuard, new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
-	public async addUser(@Param("id") projectId: string, @Param("userId") userId: string): Promise<void> {
+	public async addUser(@Param("id", ParseUUIDPipe) projectId: string, @Param("userId", ParseUUIDPipe) userId: string): Promise<void> {
 		await this.addUser(projectId, userId);
 	}
 
 	@Post(":id/boards")
 	@UseGuards(JwtGuard, new RoleGuard([Role.ADMIN]))
-	public async addBoard(@Param("id") projectId: string, @Body() board: BoardCreating): Promise<BoardCreated> {
+	public async addBoard(@Param("id", ParseUUIDPipe) projectId: string, @Body() board: BoardCreating): Promise<BoardCreated> {
 		const newBoard = await this.projectService.addBoard(projectId, board);
 		return new BoardCreated(newBoard.id);
 	}
 
 	@Patch(":id")
 	@UseGuards(JwtGuard, new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
-	public async updateState(@Param("id") projectId: string, @Body() project: ProjectUpdateState): Promise<void> {
+	public async updateState(@Param("id", ParseUUIDPipe) projectId: string, @Body() project: ProjectUpdateState): Promise<void> {
 		await this.projectService.updateState(projectId, project);
 	}
 
 	@Delete(":id/users/:userId")
 	@UseGuards(JwtGuard, new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
-	public async removeUser(@Param("id") projectId: string, @Param("userId") userId: string): Promise<void> {
+	public async removeUser(@Param("id", ParseUUIDPipe) projectId: string, @Param("userId", ParseUUIDPipe) userId: string): Promise<void> {
 		await this.projectService.removeUser(projectId, userId);
 	}
 
 	@Put(":id/boards/:boardId")
-	public async updateBoard(@Param("boardId") boardId: string, @Body() board: BoardUpdate): Promise<void> {
+	public async updateBoard(@Param("boardId", ParseUUIDPipe) boardId: string, @Body() board: BoardUpdate): Promise<void> {
 		await this.boardService.update(boardId, board);
 	}
 
 	@Delete(":id/boards/:boardId")
-	public async removeBoard(@Param("boardId") boardId: string): Promise<void> {
+	public async removeBoard(@Param("boardId", ParseUUIDPipe) boardId: string): Promise<void> {
 		await this.boardService.remove(boardId);
 	}
 
@@ -113,40 +113,40 @@ export class ProjectController {
 	}
 
 	@Put(":id/comments/:commentId")
-	public async updateComment(@Param("commentId") commentId: string, @Body() comment: CommentUpdate): Promise<void> {
+	public async updateComment(@Param("commentId", ParseUUIDPipe) commentId: string, @Body() comment: CommentUpdate): Promise<void> {
 		await this.commentService.update(commentId, comment);
 	}
 
 	@Delete(":id/comments/:commentId")
-	public async removeComment(@Param("commentId") commentId: string): Promise<void> {
+	public async removeComment(@Param("commentId", ParseUUIDPipe) commentId: string): Promise<void> {
 		await this.commentService.remove(commentId);
 	}
 
 	@Get(":id/tasks/:taskId")
-	public async findById(@Param("taskId") taskId: string): Promise<TaskInfo> {
+	public async findById(@Param("taskId", ParseUUIDPipe) taskId: string): Promise<TaskInfo> {
 		const task = await this.taskService.findById(taskId);
 		return new TaskInfo(task);
 	}
 
 	@Get(":id/tasks/:taskId/components")
-	public async findComponents(@Param("taskId") taskId: string): Promise<TaskComponentInfo[]> {
+	public async findComponents(@Param("taskId", ParseUUIDPipe) taskId: string): Promise<TaskComponentInfo[]> {
 		const task = await this.taskService.findById(taskId);
 		return task.components.map(component => new TaskComponentInfo(component));
 	}
 
 	@Get(":id/tasks/:taskId/comments")
-	public async findComments(@Param("taskId") taskId: string): Promise<TaskCommentInfo[]> {
+	public async findComments(@Param("taskId", ParseUUIDPipe) taskId: string): Promise<TaskCommentInfo[]> {
 		const task = await this.taskService.findById(taskId);
 		return task.comments.map(comment => new TaskCommentInfo(comment));
 	}
 
 	@Patch(":id/tasks/:taskId")
-	public async setStateTask(@Param("taskId") taskId: string, @Body() task: TaskUpdateActual): Promise<void> {
+	public async setStateTask(@Param("taskId", ParseUUIDPipe) taskId: string, @Body() task: TaskUpdateActual): Promise<void> {
 		await this.taskService.setState(taskId, task);
 	}
 
 	@Put(":id/tasks/:taskId")
-	public async updateTask(@Param("taskId") taskId: string, @Body() task: TaskUpdate): Promise<void> {
+	public async updateTask(@Param("taskId", ParseUUIDPipe) taskId: string, @Body() task: TaskUpdate): Promise<void> {
 		await this.taskService.update(taskId, task);
 	}
 
