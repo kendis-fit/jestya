@@ -65,14 +65,6 @@ export class ProjectService {
 		await this.projectsRepository.update(projectId, foundProject);
 	}
 
-	public async addBoard(projectId: string, board: BoardCreating): Promise<Board> {
-		const foundProject = await this.findById(projectId);
-		const newBoard = await this.boardService.create(board);
-		foundProject.boards.push(newBoard);
-		await this.projectsRepository.update(projectId, foundProject);
-		return newBoard;
-	}
-
 	public async updateState(projectId: string, project: ProjectUpdateState): Promise<Project> {
 		const foundProject = await this.findById(projectId);
 		foundProject.finishedAt = project.finishedAt;

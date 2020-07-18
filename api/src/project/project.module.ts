@@ -5,12 +5,16 @@ import { Project } from "./project.entity";
 import { TaskModule } from "../task/task.module";
 import { ProjectService } from "./project.service";
 import { BoardModule } from "../board/board.module";
-import { ProjectController } from "./project.controller";
 import { CommentModule } from "../comment/comment.module";
+import { ProjectController } from "./controllers/project.controller";
+import { ProjectTaskController } from "./controllers/project-task.controller";
+import { ProjectBoardController } from "./controllers/project-board.controller";
+import { ProjectCommentController } from "./controllers/project-comment.controller";
 
 @Module({
 	imports: [TypeOrmModule.forFeature([Project]), BoardModule, CommentModule, TaskModule],
+	controllers: [ProjectController, ProjectTaskController, ProjectBoardController, ProjectCommentController],
 	providers: [ProjectService],
-	controllers: [ProjectController],
+	exports: [ProjectService]
 })
 export class ProjectModule {}

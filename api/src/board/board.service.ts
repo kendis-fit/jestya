@@ -29,10 +29,13 @@ export class BoardService {
 		return foundBoard;
 	}
 
-	public async create(board: BoardCreating): Promise<Board> {
+	public async create(board: BoardCreating, projectId?: string): Promise<Board> {
 		const newBoard = new Board();
 		newBoard.name = board.name;
 		newBoard.description = board.description;
+		if (projectId) {
+			newBoard.projectId = projectId;
+		}
 		await this.boardRepository.save(newBoard);
 		return newBoard;
 	}

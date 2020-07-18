@@ -12,7 +12,7 @@ import { AuthService } from "../auth/auth.service";
 import { ProjectService } from "./project.service";
 import { Comment } from "../comment/comment.entity";
 import { BoardService } from "../board/board.service";
-import { ProjectController } from "./project.controller";
+import { ProjectController } from "./controllers/project.controller";
 import { Component } from "../component/component.entity";
 import { mockedConfigService } from "../mocks/config.mock";
 import { CommentService } from "../comment/comment.service";

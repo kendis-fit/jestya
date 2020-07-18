@@ -31,6 +31,9 @@ export class Board {
 	@UpdateDateColumn()
 	public updatedAt: Date;
 
+	@RelationId((board: Board) => board.project)
+	public projectId: string;
+
 	@ManyToOne(type => Project, project => project.boards)
 	public project: Project;
 
