@@ -7,7 +7,6 @@ import { User } from "../user/user.entity";
 import { Board } from "../board/board.entity";
 import { BoardService } from "../board/board.service";
 import { ProjectCreating } from "./dto/project-creating.dto";
-import { BoardCreating } from "../board/dto/board-creating.dto";
 import { ProjectUpdateState } from "./dto/project-update-state.dto";
 
 @Injectable()

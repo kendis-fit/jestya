@@ -11,8 +11,8 @@ import { CommentUpdate } from "./dto/comment-update.dto";
 export class CommentService {
 	constructor(
 		@InjectRepository(Comment)
-		public readonly commentRepository: Repository<Comment>,
-		public readonly taskService: TaskService
+		private readonly commentRepository: Repository<Comment>,
+		private readonly taskService: TaskService
 	) {}
 
 	public async findById(commentId: string): Promise<Comment> {

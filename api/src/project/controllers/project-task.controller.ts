@@ -44,7 +44,7 @@ export class ProjectTaskController {
 	}
 
 	@Patch(":id/tasks/:taskId")
-	@UseGuards(JwtProjectsGuard)
+	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.USER]))
 	public async setStateTask(@Param("taskId", ParseUUIDPipe) taskId: string, @Body() task: TaskUpdateActual): Promise<void> {
 		await this.taskService.setState(taskId, task);
 	}

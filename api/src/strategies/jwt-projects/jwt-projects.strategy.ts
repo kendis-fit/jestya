@@ -10,7 +10,7 @@ import { ProjectService } from "../../project/project.service";
 @Injectable()
 export class JwtProjectsStrategy extends PassportStrategy(Strategy, "jwt-projects") {
     constructor(
-        private readonly configService: ConfigService,
+        configService: ConfigService,
         private readonly projectService: ProjectService
         ) {
         super({

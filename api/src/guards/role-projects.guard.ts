@@ -19,13 +19,13 @@ export class RoleProjectsGuard implements CanActivate {
 		for (const face of this.checkFromFaces) {
 			switch (face) {
 				case Role.USER:
+				case Role.SUPER_ADMIN:
 					const userContainsProject = user.projectIds.some(id => id === projectId);
 					if (userContainsProject) {
 						return true;
 					}
 					break;
 				case Role.ADMIN:
-				case Role.SUPER_ADMIN:
 					const adminContainsProject = user.creatorIds.some(id => id === projectId);
 					if (adminContainsProject) {
 						return true;

@@ -14,11 +14,16 @@ import { ComponentService } from "../component/component.service";
 export class TaskService {
 	constructor(
 		@InjectRepository(Task)
-		public readonly taskRepository: Repository<Task>,
-		public readonly boardService: BoardService,
-		public readonly userService: UserService,
-		public readonly componentService: ComponentService
+		private readonly taskRepository: Repository<Task>,
+		private readonly boardService: BoardService,
+		private readonly userService: UserService,
+		private readonly componentService: ComponentService
 	) {}
+
+	public findAll(userId: string): Promise<Task[]> {
+		const foundTasks = this.taskRepository.find({ creatorId: userId });
+		return foundTasks;
+	}
 
 	public findById(taskId: string): Promise<Task> {
 		const foundTask = this.taskRepository.findOne(taskId);
