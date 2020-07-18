@@ -7,8 +7,10 @@ import { IJwt } from "../jwt/jwt.interface";
 import { IJwtProjects } from "./jwt-projects.interface";
 import { ProjectService } from "../../project/project.service";
 
+export const JWT_PROJECTS = "jwt-projects";
+
 @Injectable()
-export class JwtProjectsStrategy extends PassportStrategy(Strategy, "jwt-projects") {
+export class JwtProjectsStrategy extends PassportStrategy(Strategy, JWT_PROJECTS) {
     constructor(
         configService: ConfigService,
         private readonly projectService: ProjectService

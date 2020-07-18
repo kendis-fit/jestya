@@ -1,5 +1,5 @@
-import { IJwt } from "../jwt/jwt.interface";
+import { IJwtProjects } from "../jwt-projects/jwt-projects.interface";
 
-export interface IJwtTasks extends IJwt {
+export interface IJwtTasks extends IJwtProjects {
     taskIds: string[];
 }

@@ -13,6 +13,8 @@ import { RoleProjectsGuard } from '../../guards/role-projects.guard';
 import { TaskCommentInfo } from '../../task/dto/task-comment-info.dto';
 import { TaskUpdateActual } from '../../task/dto/task-update-actual.dto';
 import { TaskComponentInfo } from '../../task/dto/task-component-info.dto';
+import { JwtTasksGuard } from 'src/guards/jwt-tasks/jwt-tasks.guard';
+import { RoleTasksGuard } from 'src/guards/role-tasks/role-tasks.guard';
 
 @ApiBearerAuth()
 @ApiTags("projects")
@@ -44,12 +46,13 @@ export class ProjectTaskController {
 	}
 
 	@Patch(":id/tasks/:taskId")
-	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.USER]))
+	@UseGuards(JwtTasksGuard, new RoleProjectsGuard([Role.USER]), new RoleTasksGuard(true))
 	public async setStateTask(@Param("taskId", ParseUUIDPipe) taskId: string, @Body() task: TaskUpdateActual): Promise<void> {
 		await this.taskService.setState(taskId, task);
 	}
 
 	@Put(":id/tasks/:taskId")
+	@UseGuards(JwtTasksGuard, new RoleProjectsGuard([Role.USER]), new RoleTasksGuard(true))
 	public async updateTask(@Param("taskId", ParseUUIDPipe) taskId: string, @Body() task: TaskUpdate): Promise<void> {
 		await this.taskService.update(taskId, task);
 	}
