@@ -25,12 +25,17 @@ export class JwtTasksStrategy extends PassportStrategy(Strategy, JWT_TASKS) {
 
     public async validate(payload: IJwt): Promise<IJwtTasks> {
 		const foundTasks = await this.taskService.findAll(payload.id);
-        const projects = await this.projectService.findAll(payload.id);
+        const foundProjects = await this.projectService.findAll(payload.id);
 
-        const taskIds = foundTasks.map(task => task.id);
-        const projectIds = projects.map(project => project.id);
-        const creatorIds = projects.map(project => project.creatorId);
+        const tasks = foundTasks.map(task => ({
+            id: task.id,
+            userIds: task.userIds
+        }));
+        const projects = foundProjects.map(project => ({
+            id: project.id,
+            creatorId: project.creatorId
+        }));
 
-        return { ...payload, taskIds, projectIds, creatorIds };
+        return { ...payload, tasks, projects };
     }
 }

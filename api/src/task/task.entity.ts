@@ -55,7 +55,7 @@ export class Task {
 	public updatedAt: Date;
 
 	@RelationId((task: Task) => task.board)
-	public boardId: Board;
+	public boardId: string;
 
 	@ManyToOne(() => Board, board => board.tasks)
 	public board: Board;

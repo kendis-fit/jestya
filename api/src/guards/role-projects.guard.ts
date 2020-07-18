@@ -20,13 +20,13 @@ export class RoleProjectsGuard implements CanActivate {
 			switch (face) {
 				case Role.USER:
 				case Role.SUPER_ADMIN:
-					const userContainsProject = user.projectIds.some(id => id === projectId);
+					const userContainsProject = user.projects.some(project => project.id === projectId);
 					if (userContainsProject) {
 						return true;
 					}
 					break;
 				case Role.ADMIN:
-					const adminContainsProject = user.creatorIds.some(id => id === projectId);
+					const adminContainsProject = user.projects.some(project => project.creatorId === user.id);
 					if (adminContainsProject) {
 						return true;
 					}

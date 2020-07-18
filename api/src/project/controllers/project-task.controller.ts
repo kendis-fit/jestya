@@ -11,10 +11,10 @@ import { TaskCreating } from '../../task/dto/task-creating.dto';
 import { JwtProjectsGuard } from '../../guards/jwt-projects.guard';
 import { RoleProjectsGuard } from '../../guards/role-projects.guard';
 import { TaskCommentInfo } from '../../task/dto/task-comment-info.dto';
+import { JwtTasksGuard } from '../../guards/jwt-tasks/jwt-tasks.guard';
 import { TaskUpdateActual } from '../../task/dto/task-update-actual.dto';
+import { RoleTasksGuard } from '../../guards/role-tasks/role-tasks.guard';
 import { TaskComponentInfo } from '../../task/dto/task-component-info.dto';
-import { JwtTasksGuard } from 'src/guards/jwt-tasks/jwt-tasks.guard';
-import { RoleTasksGuard } from 'src/guards/role-tasks/role-tasks.guard';
 
 @ApiBearerAuth()
 @ApiTags("projects")
@@ -58,7 +58,9 @@ export class ProjectTaskController {
 	}
 
 	@Patch(":id/tasks/:taskId/boards/:boardId")
+	@UseGuards(JwtTasksGuard, new RoleProjectsGuard([Role.USER]), new RoleTasksGuard(true, true))
 	public async changeBoard(@Param("taskId", ParseUUIDPipe) taskId: string, @Param("boardId") boardId: string): Promise<void> {
+		await this.taskService.changeBoard(taskId, boardId);
 	}
 
 	@Post(":id/tasks")

@@ -6,7 +6,7 @@ import { RequestUserTasks } from '../../helpers/request.interface';
 
 @Injectable()
 export class RoleTasksGuard implements CanActivate {
-	constructor(private readonly allowedAdmin?: boolean) {}
+	constructor(private readonly allowedAdmin?: boolean, private readonly allowedExecutors?: boolean) {}
 	
 	public canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
 		const ctx = context.switchToHttp();
@@ -18,8 +18,11 @@ export class RoleTasksGuard implements CanActivate {
 			return false;
 		}
 		if (this.allowedAdmin && (user.role === Role.ADMIN || user.role === Role.SUPER_ADMIN)) {
-			return user.creatorIds.some(id => id === projectId);
+			return user.projects.some(project => project.id === projectId);
 		}
-		return user.taskIds.some(id => id === taskId);
+		if (this.allowedExecutors) {
+			return user.tasks.some(task => task.userIds.some(id => id === user.id));
+		}
+		return user.tasks.some(task => task.id === taskId);
 	}
 }

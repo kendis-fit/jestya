@@ -63,6 +63,14 @@ export class TaskService {
 		foundTask.name = task.name;
 		foundTask.description = task.description;
 		foundTask.priority = task.priority;
+		await this.taskRepository.update(taskId, foundTask);
 		return foundTask;
+	}
+
+	public async changeBoard(taskId: string, boardId: string): Promise<Task> {
+		const foundTask = await this.findById(taskId);
+		foundTask.boardId = boardId;
+		await this.taskRepository.update(taskId, foundTask);
+		return foundTask;		
 	}
 }
