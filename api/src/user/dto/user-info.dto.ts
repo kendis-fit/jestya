@@ -22,7 +22,7 @@ export class UserInfo {
 	@ApiProperty({ type: [ProjectInfo] })
 	public projects: ProjectInfo[];
 
-	constructor(public user: User) {
+	constructor(user: User) {
 		this.id = user.id;
 		this.name = user.name;
 		this.createdAt = user.createdAt;
