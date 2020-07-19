@@ -18,32 +18,32 @@ export class UserService {
 		return await this.usersRepository.count();
 	}
 
-	public async findById(userId: string): Promise<User> {
-		const user = await this.usersRepository.findOne(userId);
+	public async findById(userId: string, relations?: string[]): Promise<User> {
+		const user = await this.usersRepository.findOne(userId, { relations });
 		if (!user) {
 			throw new HttpException({ message: "User wasn't found" }, HttpStatus.NOT_FOUND);
 		}
 		return user;
 	}
 
-	public async findByIds(userIds: string[]): Promise<User[]> {
-		const users = await this.usersRepository.findByIds(userIds);
+	public async findByIds(userIds: string[], relations?: string[]): Promise<User[]> {
+		const users = await this.usersRepository.findByIds(userIds, { relations });
 		return users;
 	}
 
-	public async findByLogin(userLogin: string): Promise<User> {
-		const user = await this.usersRepository.findOne({ login: userLogin });
+	public async findByLogin(userLogin: string, relations?: string[]): Promise<User> {
+		const user = await this.usersRepository.findOne({ login: userLogin }, { relations });
 		if (!user) {
 			throw new HttpException({ message: "User wasn't found" }, HttpStatus.NOT_FOUND);
 		}
 		return user;
 	}
 
-	public async findAll(offset: number, size: number): Promise<User[]> {
+	public async findAll(offset: number, size: number, relations?: string[]): Promise<User[]> {
 		if (size > 100) {
 			throw new HttpException({ message: "Users must be less than 100" }, HttpStatus.BAD_REQUEST);
 		}
-		const users = await this.usersRepository.find({ skip: offset, take: size, relations: ["projects"] });
+		const users = await this.usersRepository.find({ skip: offset, take: size, relations });
 		return users;
 	}
 
