@@ -13,14 +13,14 @@ export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
     @Post("login")
-	@UsePipes(new PasswordEncryptionPipe())
+	@UsePipes(new PasswordEncryptionPipe(["password"]))
 	public async login(@Body() user: UserLogin): Promise<UserResponse> {
 		const token = await this.authService.login(user);
 		return new UserResponse(token);
 	}
 
 	@Post("registration")
-	@UsePipes(new PasswordEncryptionPipe())
+	@UsePipes(new PasswordEncryptionPipe(["password"]))
 	public async registration(@Body() user: UserRegistration): Promise<void> {
 		await this.authService.registration(user);
 	}

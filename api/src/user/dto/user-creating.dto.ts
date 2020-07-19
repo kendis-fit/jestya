@@ -4,7 +4,7 @@ import { Role, User } from "../user.entity";
 import { UserRegistration } from "./user-registration.dto";
 
 export class UserCreating extends UserRegistration {
-	@ApiProperty()
+	@ApiProperty({ enum: Role })
 	public role: Role;
 
 	constructor(user: User) {

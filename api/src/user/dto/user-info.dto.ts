@@ -1,11 +1,14 @@
 import { ApiProperty } from "@nestjs/swagger";
 
-import { User } from "../user.entity";
+import { User, Role } from "../user.entity";
 import { ProjectInfo } from "../../project/dto/project-info.dto";
 
 export class UserInfo {
 	@ApiProperty()
 	public id: string;
+
+	@ApiProperty({ enum: Role })
+	public role: Role;
 
 	@ApiProperty()
 	public name: string;
@@ -24,6 +27,7 @@ export class UserInfo {
 
 	constructor(user: User) {
 		this.id = user.id;
+		this.role = user.role;
 		this.name = user.name;
 		this.createdAt = user.createdAt;
 		this.isActive = user.isActive;

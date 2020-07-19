@@ -1,5 +1,5 @@
 import { ApiTags, ApiBearerAuth } from "@nestjs/swagger";
-import { Controller, Post, Body, UseGuards, Delete, Put, Param, Patch, Get, Query, ParseIntPipe, ParseUUIDPipe } from "@nestjs/common";
+import { Controller, Post, Body, UseGuards, Delete, Put, Param, Patch, Get, Query, ParseIntPipe, ParseUUIDPipe, UsePipes } from "@nestjs/common";
 
 import { Role } from "./user.entity";
 import { UserService } from "./user.service";
@@ -11,6 +11,7 @@ import { UserCreated } from "./dto/user-created.dto";
 import { UserCreating } from "./dto/user-creating.dto";
 import { UserSelfGuard } from "../guards/user-self.guard";
 import { UserUpdatePassword } from "./dto/user-update-password.dto";
+import { PasswordEncryptionPipe } from "src/pipes/password-encryption.pipe";
 
 @ApiTags("users")
 @ApiBearerAuth()
@@ -33,6 +34,7 @@ export class UserController {
 	}
 
 	@Post()
+	@UsePipes(new PasswordEncryptionPipe(["password"]))
 	@UseGuards(JwtGuard, new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
 	public async create(@Body() user: UserCreating): Promise<UserCreated> {
 		const id = await this.userService.create(user);
@@ -52,8 +54,9 @@ export class UserController {
 	}
 
 	@Patch(":id")
+	@UsePipes(new PasswordEncryptionPipe(["oldPassword", "newPassword"]))
 	@UseGuards(JwtGuard, new UserSelfGuard([]))
-	public async updatePassword(@Param("id", ParseUUIDPipe) userId: string, user: UserUpdatePassword): Promise<void> {
+	public async updatePassword(@Param("id", ParseUUIDPipe) userId: string, @Body() user: UserUpdatePassword): Promise<void> {
 		await this.userService.updatePassword(userId, user);
 	}
 }
