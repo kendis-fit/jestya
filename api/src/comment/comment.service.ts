@@ -39,7 +39,7 @@ export class CommentService {
 		const foundComment = await this.findById(commentId);
 		foundComment.content = comment.content;
 
-		await this.commentRepository.update(commentId, foundComment);
+		await this.commentRepository.save(foundComment);
 		return foundComment;
 	}
 

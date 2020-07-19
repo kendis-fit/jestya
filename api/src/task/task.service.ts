@@ -54,7 +54,7 @@ export class TaskService {
 	public async setState(taskId: string, task: TaskUpdateActual): Promise<Task> {
 		const foundTask = await this.findById(taskId);
 		foundTask.isActual = task.isActual;
-		await this.taskRepository.update(taskId, foundTask);
+		await this.taskRepository.save(foundTask);
 		return foundTask;
 	}
 
@@ -63,14 +63,14 @@ export class TaskService {
 		foundTask.name = task.name;
 		foundTask.description = task.description;
 		foundTask.priority = task.priority;
-		await this.taskRepository.update(taskId, foundTask);
+		await this.taskRepository.save(foundTask);
 		return foundTask;
 	}
 
 	public async changeBoard(taskId: string, boardId: string): Promise<Task> {
 		const foundTask = await this.findById(taskId);
 		foundTask.boardId = boardId;
-		await this.taskRepository.update(taskId, foundTask);
+		await this.taskRepository.save(foundTask);
 		return foundTask;		
 	}
 }

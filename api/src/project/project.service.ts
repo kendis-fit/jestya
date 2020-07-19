@@ -61,19 +61,19 @@ export class ProjectService {
 	public async addUser(projectId: string, userId: string): Promise<void> {
 		const foundProject = await this.findById(projectId);
 		foundProject.userIds.push(userId);
-		await this.projectsRepository.update(projectId, foundProject);
+		await this.projectsRepository.save(foundProject);
 	}
 
 	public async updateState(projectId: string, project: ProjectUpdateState): Promise<Project> {
 		const foundProject = await this.findById(projectId);
 		foundProject.finishedAt = project.finishedAt;
-		await this.projectsRepository.update(projectId, foundProject);
+		await this.projectsRepository.save(foundProject);
 		return foundProject;
 	}
 
 	public async removeUser(projectId: string, userId: string): Promise<void> {
 		const foundProject = await this.findById(projectId);
 		foundProject.userIds = foundProject.userIds.filter(id => id !== userId);
-		await this.projectsRepository.update(projectId, foundProject);
+		await this.projectsRepository.save(foundProject);
 	}
 }

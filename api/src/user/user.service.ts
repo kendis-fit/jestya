@@ -71,7 +71,7 @@ export class UserService {
 		foundUser.name = user.name;
 		foundUser.login = user.login;
 		foundUser.isActive = user.isActive;
-		await this.usersRepository.update(userId, foundUser);
+		await this.usersRepository.save(foundUser);
 	}
 
 	public async updatePassword(userId: string, user: UserUpdatePassword): Promise<void> {
@@ -80,6 +80,6 @@ export class UserService {
 			throw new HttpException({ message: "Passwords aren't equal" }, HttpStatus.BAD_REQUEST);
 		}
 		foundUser.password = user.newPassword;
-		await this.usersRepository.update(userId, foundUser);
+		await this.usersRepository.save(foundUser);
 	}
 }
