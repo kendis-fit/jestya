@@ -19,12 +19,14 @@ export class UserController {
 	constructor(private readonly userService: UserService) {}
 
 	@Get(":id")
+	@UseGuards(JwtGuard)
 	public async findById(@Param("id", ParseUUIDPipe) userId: string): Promise<UserInfo> {
 		const foundUser = await this.userService.findById(userId);
 		return new UserInfo(foundUser);
 	}
 
 	@Get()
+	@UseGuards(JwtGuard)
 	public async find(@Query("offset", ParseIntPipe) offset: number, @Query("size", ParseIntPipe) size: number): Promise<UserInfo[]> {
 		const foundUsers = await this.userService.findAll(offset, size);
 		return foundUsers.map(user => new UserInfo(user));
