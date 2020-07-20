@@ -1,24 +1,19 @@
 import { ApiTags, ApiBearerAuth } from "@nestjs/swagger";
-import { Controller, Post, Body, Delete, Param, UseGuards, Get, Patch, Put, ParseUUIDPipe } from "@nestjs/common";
+import { Controller, Post, Body, Delete, Param, UseGuards, Get, Patch, ParseUUIDPipe } from "@nestjs/common";
 
 import { Role } from "../../user/user.entity";
 import { JwtGuard } from "../../guards/jwt.guard";
 import { RoleGuard } from "../../guards/role.guard";
 import { ProjectService } from "../project.service";
-import { User } from "../../decorators/user.decorator";
 import { ProjectInfo } from "../dto/project-info.dto";
+import { User } from "../../decorators/user.decorator";
 import { BoardInfo } from "../../board/dto/board-info.dto";
 import { ProjectCreated } from "../dto/project-created.dto";
-import { UserSelfGuard } from "../../guards/user-self.guard";
 import { ProjectCreating } from "../dto/project-creating.dto";
-import { CommentService } from "../../comment/comment.service";
 import { ProjectUsersInfo } from "../dto/project-users-info.dto";
 import { JwtProjectsGuard } from "../../guards/jwt-projects.guard";
-import { CommentUpdate } from "../../comment/dto/comment-update.dto";
 import { RoleProjectsGuard } from "../../guards/role-projects.guard";
 import { ProjectUpdateState } from "../dto/project-update-state.dto";
-import { CommentCreated } from "../../comment/dto/comment-created.dto";
-import { CommentCreating } from "../../comment/dto/comment-creating.dto";
 
 @ApiBearerAuth()
 @ApiTags("projects")
@@ -31,7 +26,7 @@ export class ProjectController {
 	@Get()
 	@UseGuards(JwtGuard)
 	public async findAll(@User("id") userId: string): Promise<ProjectInfo[]> {
-		const projects = await this.projectService.findAll(userId);
+		const [projects] = await this.projectService.findAll(userId);
 		return projects.map(project => new ProjectInfo(project));
 	}
 

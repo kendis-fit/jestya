@@ -25,14 +25,14 @@ export class ProjectService {
 		return foundProject;
 	}
 
-	public async contain(userId: string): Promise<boolean> {
-		const projects = await this.projectsRepository.count({ userIds: [userId] });
-		return projects > 0;
-	}
+	public async findAll(userId: string): Promise<[Project[], number]> {
+		const [projects, count] = await this.projectsRepository
+			.createQueryBuilder("project")
+			.innerJoin("project.users", "user")
+			.where("user.id = :id", { id: userId })
+			.getManyAndCount();
 
-	public async findAll(userId: string): Promise<Project[]> {
-		const projects = await this.projectsRepository.find({ userIds: [userId] });
-		return projects;
+		return [projects, count];
 	}
 
 	public async findAllBoards(projectId: string): Promise<Board[]> {

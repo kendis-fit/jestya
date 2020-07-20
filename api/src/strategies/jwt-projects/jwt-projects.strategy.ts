@@ -22,7 +22,7 @@ export class JwtProjectsStrategy extends PassportStrategy(Strategy, JWT_PROJECTS
     }
 
     public async validate(payload: IJwt): Promise<IJwtProjects> {
-        const foundProjects = await this.projectService.findAll(payload.id);
+        const [foundProjects] = await this.projectService.findAll(payload.id);
 
         const projects = foundProjects.map(project => ({
             id: project.id,
