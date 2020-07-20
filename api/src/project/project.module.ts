@@ -15,6 +15,6 @@ import { ProjectCommentController } from "./controllers/project-comment.controll
 	imports: [TypeOrmModule.forFeature([Project]), BoardModule, CommentModule, TaskModule],
 	controllers: [ProjectController, ProjectTaskController, ProjectBoardController, ProjectCommentController],
 	providers: [ProjectService],
-	exports: [ProjectService]
+	exports: [ProjectService],
 })
 export class ProjectModule {}

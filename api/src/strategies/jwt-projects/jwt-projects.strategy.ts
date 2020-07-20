@@ -11,24 +11,21 @@ export const JWT_PROJECTS = "jwt-projects";
 
 @Injectable()
 export class JwtProjectsStrategy extends PassportStrategy(Strategy, JWT_PROJECTS) {
-    constructor(
-        configService: ConfigService,
-        private readonly projectService: ProjectService
-        ) {
-        super({
+	constructor(configService: ConfigService, private readonly projectService: ProjectService) {
+		super({
 			jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 			secretOrKey: configService.get<string>("jwt.secretKey"),
 		});
-    }
+	}
 
-    public async validate(payload: IJwt): Promise<IJwtProjects> {
-        const [foundProjects] = await this.projectService.findAll(payload.id);
+	public async validate(payload: IJwt): Promise<IJwtProjects> {
+		const [foundProjects] = await this.projectService.findAll(payload.id);
 
-        const projects = foundProjects.map(project => ({
-            id: project.id,
-            creatorId: project.creatorId
-        }));
+		const projects = foundProjects.map(project => ({
+			id: project.id,
+			creatorId: project.creatorId,
+		}));
 
-        return { ...payload, projects };
-    }
+		return { ...payload, projects };
+	}
 }

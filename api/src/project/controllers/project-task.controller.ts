@@ -1,29 +1,27 @@
-import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
-import { Controller, Get, UseGuards, Param, ParseUUIDPipe, Patch, Put, Body, Post } from '@nestjs/common';
+import { ApiTags, ApiBearerAuth } from "@nestjs/swagger";
+import { Controller, Get, UseGuards, Param, ParseUUIDPipe, Patch, Put, Body, Post } from "@nestjs/common";
 
-import { Role } from '../../user/user.entity';
-import { TaskService } from '../../task/task.service';
-import { User } from '../../decorators/user.decorator';
-import { TaskInfo } from '../../task/dto/task-info.dto';
-import { TaskUpdate } from '../../task/dto/task-update.dto';
-import { TaskCreated } from '../../task/dto/task-created.dto';
-import { TaskCreating } from '../../task/dto/task-creating.dto';
-import { JwtProjectsGuard } from '../../guards/jwt-projects.guard';
-import { RoleProjectsGuard } from '../../guards/role-projects.guard';
-import { TaskCommentInfo } from '../../task/dto/task-comment-info.dto';
-import { JwtTasksGuard } from '../../guards/jwt-tasks/jwt-tasks.guard';
-import { TaskUpdateActual } from '../../task/dto/task-update-actual.dto';
-import { RoleTasksGuard } from '../../guards/role-tasks/role-tasks.guard';
-import { TaskComponentInfo } from '../../task/dto/task-component-info.dto';
+import { Role } from "../../user/user.entity";
+import { TaskService } from "../../task/task.service";
+import { User } from "../../decorators/user.decorator";
+import { TaskInfo } from "../../task/dto/task-info.dto";
+import { TaskUpdate } from "../../task/dto/task-update.dto";
+import { TaskCreated } from "../../task/dto/task-created.dto";
+import { TaskCreating } from "../../task/dto/task-creating.dto";
+import { JwtProjectsGuard } from "../../guards/jwt-projects.guard";
+import { RoleProjectsGuard } from "../../guards/role-projects.guard";
+import { TaskCommentInfo } from "../../task/dto/task-comment-info.dto";
+import { JwtTasksGuard } from "../../guards/jwt-tasks/jwt-tasks.guard";
+import { TaskUpdateActual } from "../../task/dto/task-update-actual.dto";
+import { RoleTasksGuard } from "../../guards/role-tasks/role-tasks.guard";
+import { TaskComponentInfo } from "../../task/dto/task-component-info.dto";
 
 @ApiBearerAuth()
 @ApiTags("projects")
-@Controller('projects')
+@Controller("projects")
 export class ProjectTaskController {
-    constructor(
-        private readonly taskService: TaskService
-    ) {}
-    
+	constructor(private readonly taskService: TaskService) {}
+
 	@Get(":id/tasks/:taskId")
 	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.USER]))
 	public async findById(@Param("taskId", ParseUUIDPipe) taskId: string): Promise<TaskInfo> {
@@ -47,7 +45,10 @@ export class ProjectTaskController {
 
 	@Patch(":id/tasks/:taskId")
 	@UseGuards(JwtTasksGuard, new RoleProjectsGuard([Role.USER]), new RoleTasksGuard(true))
-	public async setStateTask(@Param("taskId", ParseUUIDPipe) taskId: string, @Body() task: TaskUpdateActual): Promise<void> {
+	public async setStateTask(
+		@Param("taskId", ParseUUIDPipe) taskId: string,
+		@Body() task: TaskUpdateActual
+	): Promise<void> {
 		await this.taskService.setState(taskId, task);
 	}
 
@@ -59,7 +60,10 @@ export class ProjectTaskController {
 
 	@Patch(":id/tasks/:taskId/boards/:boardId")
 	@UseGuards(JwtTasksGuard, new RoleProjectsGuard([Role.USER]), new RoleTasksGuard(true, true))
-	public async changeBoard(@Param("taskId", ParseUUIDPipe) taskId: string, @Param("boardId") boardId: string): Promise<void> {
+	public async changeBoard(
+		@Param("taskId", ParseUUIDPipe) taskId: string,
+		@Param("boardId") boardId: string
+	): Promise<void> {
 		await this.taskService.changeBoard(taskId, boardId);
 	}
 

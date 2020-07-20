@@ -1,7 +1,7 @@
-import { JwtTasksGuard } from './jwt-tasks.guard';
+import { JwtTasksGuard } from "./jwt-tasks.guard";
 
-describe('JwtTasksGuard', () => {
-  it('should be defined', () => {
-    expect(new JwtTasksGuard()).toBeDefined();
-  });
+describe("JwtTasksGuard", () => {
+	it("should be defined", () => {
+		expect(new JwtTasksGuard()).toBeDefined();
+	});
 });

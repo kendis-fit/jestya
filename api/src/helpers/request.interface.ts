@@ -5,13 +5,13 @@ import { IJwtTasks } from "../strategies/jwt-tasks/jwt-tasks.interface";
 import { IJwtProjects } from "../strategies/jwt-projects/jwt-projects.interface";
 
 export interface RequestUser extends Request {
-    user?: IJwt;
+	user?: IJwt;
 }
 
 export interface RequestUserProjects extends Request {
-    user?: IJwtProjects;
+	user?: IJwtProjects;
 }
 
 export interface RequestUserTasks extends Request {
-    user?: IJwtTasks;
+	user?: IJwtTasks;
 }

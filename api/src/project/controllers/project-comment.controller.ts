@@ -17,7 +17,7 @@ import { CommentCreating } from "../../comment/dto/comment-creating.dto";
 export class ProjectCommentController {
 	constructor(private readonly commentService: CommentService) {}
 
-    @Post(":id/comments")
+	@Post(":id/comments")
 	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.USER]))
 	public async createComment(@Body() comment: CommentCreating, @User("id") userId: string): Promise<CommentCreated> {
 		const newComment = await this.commentService.create(userId, comment);
@@ -26,7 +26,10 @@ export class ProjectCommentController {
 
 	@Put(":id/comments/:commentId")
 	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.USER]), new UserSelfGuard([]))
-	public async updateComment(@Param("commentId", ParseUUIDPipe) commentId: string, @Body() comment: CommentUpdate): Promise<void> {
+	public async updateComment(
+		@Param("commentId", ParseUUIDPipe) commentId: string,
+		@Body() comment: CommentUpdate
+	): Promise<void> {
 		await this.commentService.update(commentId, comment);
 	}
 

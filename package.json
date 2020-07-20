@@ -3,34 +3,17 @@
   "author": "Kurt Endless",
   "license": "MIT",
   "scripts": {
-    "format": "prettier --write {api,client,redis}/src/**/*.ts",
-    "test": "jest"
+    "format": "prettier --write {api,client,redis}/src/**/*.ts"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.4",
     "eslint": "^7.3.1",
     "husky": "^4.2.5",
-    "jest": "^26.1.0",
-    "prettier": "^2.0.5",
-    "ts-jest": "^26.1.1"
+    "prettier": "^2.0.5"
   },
   "husky": {
     "hooks": {
       "pre-commit": "yarn format && git add .",
-      "pre-push": "yarn test"
+      "pre-push": "yarn --cwd api test"
     }
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "rootDir": "api/src",
-    "testRegex": ".spec.ts$",
-    "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
-    },
-    "testEnvironment": "node"
   }
 }

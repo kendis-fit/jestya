@@ -1,13 +1,13 @@
-import { Observable } from 'rxjs';
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import { Observable } from "rxjs";
+import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
 
-import { Role } from '../../user/user.entity';
-import { RequestUserTasks } from '../../helpers/request.interface';
+import { Role } from "../../user/user.entity";
+import { RequestUserTasks } from "../../helpers/request.interface";
 
 @Injectable()
 export class RoleTasksGuard implements CanActivate {
 	constructor(private readonly allowedAdmin?: boolean, private readonly allowedExecutors?: boolean) {}
-	
+
 	public canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
 		const ctx = context.switchToHttp();
 		const req = ctx.getRequest<RequestUserTasks>();

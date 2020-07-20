@@ -1,4 +1,4 @@
-import { sign } from "jsonwebtoken";
+import { JwtService } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
 import { Injectable, BadRequestException, ForbiddenException } from "@nestjs/common";
 
@@ -11,22 +11,14 @@ import { UserRegistration } from "../user/dto/user-registration.dto";
 
 @Injectable()
 export class AuthService {
-	constructor(
-		private readonly configService: ConfigService,
-		private readonly userService: UserService
-		) {}
-
-	public signPayload(payload: IJwt) {
-		const secretKey = this.configService.get<string>("jwt.secretKey");
-		return sign(payload, secretKey, { expiresIn: "10h" });
-	}
+	constructor(private readonly userService: UserService, private readonly jwtService: JwtService) {}
 
 	public async login(user: UserLogin): Promise<string> {
 		const foundUser = await this.userService.findByLogin(user.login);
 		if (foundUser.password !== user.password) {
 			throw new BadRequestException({ message: "Password is wrong" });
 		}
-		const token = this.signPayload({ id: foundUser.id, role: foundUser.role });
+		const token = this.jwtService.sign({ id: foundUser.id, role: foundUser.role });
 		return token;
 	}
 

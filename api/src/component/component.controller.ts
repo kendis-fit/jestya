@@ -9,7 +9,7 @@ import { ComponentInfo } from "./dto/component-info.dto";
 @Controller("components")
 export class ComponentController {
 	constructor(private readonly componentService: ComponentService) {}
-	
+
 	@Get()
 	@UseGuards(JwtGuard)
 	public async findAll(): Promise<ComponentInfo[]> {

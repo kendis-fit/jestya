@@ -15,17 +15,23 @@ import { RoleProjectsGuard } from "../../guards/role-projects.guard";
 @Controller("projects")
 export class ProjectBoardController {
 	constructor(private readonly boardService: BoardService) {}
-	
+
 	@Post(":id/boards")
 	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.ADMIN]), new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
-	public async addBoard(@Param("id", ParseUUIDPipe) projectId: string, @Body() board: BoardCreating): Promise<BoardCreated> {
+	public async addBoard(
+		@Param("id", ParseUUIDPipe) projectId: string,
+		@Body() board: BoardCreating
+	): Promise<BoardCreated> {
 		const newBoard = await this.boardService.create(board, projectId);
 		return new BoardCreated(newBoard.id);
 	}
 
-    @Put(":id/boards/:boardId")
+	@Put(":id/boards/:boardId")
 	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.ADMIN]), new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
-	public async updateBoard(@Param("boardId", ParseUUIDPipe) boardId: string, @Body() board: BoardUpdate): Promise<void> {
+	public async updateBoard(
+		@Param("boardId", ParseUUIDPipe) boardId: string,
+		@Body() board: BoardUpdate
+	): Promise<void> {
 		await this.boardService.update(boardId, board);
 	}
 

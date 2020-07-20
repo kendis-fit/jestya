@@ -11,7 +11,7 @@ import { UserUpdatePassword } from "./dto/user-update-password.dto";
 export class UserService {
 	constructor(
 		@InjectRepository(User)
-		private readonly usersRepository: Repository<User>,
+		private readonly usersRepository: Repository<User>
 	) {}
 
 	public async count(): Promise<number> {

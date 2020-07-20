@@ -71,6 +71,6 @@ export class TaskService {
 		const foundTask = await this.findById(taskId);
 		foundTask.boardId = boardId;
 		await this.taskRepository.save(foundTask);
-		return foundTask;		
+		return foundTask;
 	}
 }

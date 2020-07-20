@@ -53,6 +53,6 @@ export const REDIS_SERVICE = "REDIS_SERVICE";
 				inject: [ConfigService],
 			},
 		]),
-	]
+	],
 })
 export class AppModule {}

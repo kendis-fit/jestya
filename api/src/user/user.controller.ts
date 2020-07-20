@@ -1,5 +1,19 @@
 import { ApiTags, ApiBearerAuth } from "@nestjs/swagger";
-import { Controller, Post, Body, UseGuards, Delete, Put, Param, Patch, Get, Query, ParseIntPipe, ParseUUIDPipe, UsePipes } from "@nestjs/common";
+import {
+	Controller,
+	Post,
+	Body,
+	UseGuards,
+	Delete,
+	Put,
+	Param,
+	Patch,
+	Get,
+	Query,
+	ParseIntPipe,
+	ParseUUIDPipe,
+	UsePipes,
+} from "@nestjs/common";
 
 import { Role } from "./user.entity";
 import { UserService } from "./user.service";
@@ -28,7 +42,10 @@ export class UserController {
 
 	@Get()
 	@UseGuards(JwtGuard)
-	public async findAll(@Query("offset", ParseIntPipe) offset: number, @Query("size", ParseIntPipe) size: number): Promise<UserInfo[]> {
+	public async findAll(
+		@Query("offset", ParseIntPipe) offset: number,
+		@Query("size", ParseIntPipe) size: number
+	): Promise<UserInfo[]> {
 		const foundUsers = await this.userService.findAll(offset, size, ["projects"]);
 		return foundUsers.map(user => new UserInfo(user));
 	}
@@ -56,7 +73,10 @@ export class UserController {
 	@Patch(":id")
 	@UsePipes(new PasswordEncryptionPipe(["oldPassword", "newPassword"]))
 	@UseGuards(JwtGuard, new UserSelfGuard([]))
-	public async updatePassword(@Param("id", ParseUUIDPipe) userId: string, @Body() user: UserUpdatePassword): Promise<void> {
+	public async updatePassword(
+		@Param("id", ParseUUIDPipe) userId: string,
+		@Body() user: UserUpdatePassword
+	): Promise<void> {
 		await this.userService.updatePassword(userId, user);
 	}
 }

@@ -19,9 +19,7 @@ import { ProjectUpdateState } from "../dto/project-update-state.dto";
 @ApiTags("projects")
 @Controller("projects")
 export class ProjectController {
-	constructor(
-		private readonly projectService: ProjectService,
-	) {}
+	constructor(private readonly projectService: ProjectService) {}
 
 	@Get()
 	@UseGuards(JwtGuard)
@@ -53,19 +51,28 @@ export class ProjectController {
 
 	@Post(":id/users/:userId")
 	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.ADMIN]), new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
-	public async addUser(@Param("id", ParseUUIDPipe) projectId: string, @Param("userId", ParseUUIDPipe) userId: string): Promise<void> {
+	public async addUser(
+		@Param("id", ParseUUIDPipe) projectId: string,
+		@Param("userId", ParseUUIDPipe) userId: string
+	): Promise<void> {
 		await this.addUser(projectId, userId);
 	}
 
 	@Patch(":id")
 	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.ADMIN]), new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
-	public async updateState(@Param("id", ParseUUIDPipe) projectId: string, @Body() project: ProjectUpdateState): Promise<void> {
+	public async updateState(
+		@Param("id", ParseUUIDPipe) projectId: string,
+		@Body() project: ProjectUpdateState
+	): Promise<void> {
 		await this.projectService.updateState(projectId, project);
 	}
 
 	@Delete(":id/users/:userId")
 	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.ADMIN]), new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
-	public async removeUser(@Param("id", ParseUUIDPipe) projectId: string, @Param("userId", ParseUUIDPipe) userId: string): Promise<void> {
+	public async removeUser(
+		@Param("id", ParseUUIDPipe) projectId: string,
+		@Param("userId", ParseUUIDPipe) userId: string
+	): Promise<void> {
 		await this.projectService.removeUser(projectId, userId);
 	}
 }
