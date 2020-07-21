@@ -1,9 +1,7 @@
 import { JwtService } from "@nestjs/jwt";
-import { ConfigService } from "@nestjs/config";
 import { Injectable, BadRequestException, ForbiddenException } from "@nestjs/common";
 
 import { User, Role } from "../user/user.entity";
-import { IJwt } from "../strategies/jwt/jwt.interface";
 import { UserService } from "../user/user.service";
 import { UserLogin } from "../user/dto/user-login.dto";
 import { UserCreating } from "../user/dto/user-creating.dto";
@@ -18,6 +16,7 @@ export class AuthService {
 		if (foundUser.password !== user.password) {
 			throw new BadRequestException({ message: "Password is wrong" });
 		}
+
 		const token = this.jwtService.sign({ id: foundUser.id, role: foundUser.role });
 		return token;
 	}
@@ -32,6 +31,7 @@ export class AuthService {
 		newUser.login = user.login;
 		newUser.password = user.password;
 		newUser.role = Role.SUPER_ADMIN;
+
 		await this.userService.create(new UserCreating(newUser));
 	}
 }
