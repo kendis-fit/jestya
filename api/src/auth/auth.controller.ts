@@ -5,7 +5,7 @@ import { AuthService } from "./auth.service";
 import { UserLogin } from "../user/dto/user-login.dto";
 import { UserResponse } from "../user/dto/user-response.dto";
 import { UserRegistration } from "../user/dto/user-registration.dto";
-import { PasswordEncryptionPipe } from "../pipes/password-encryption.pipe";
+import { PasswordEncryptionPipe } from "../pipes/password-encryption/password-encryption.pipe";
 
 @ApiTags("auth")
 @Controller("auth")
