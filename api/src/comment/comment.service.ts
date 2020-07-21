@@ -3,16 +3,14 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Injectable, HttpException, HttpStatus } from "@nestjs/common";
 
 import { Comment } from "./comment.entity";
-import { TaskService } from "../task/task.service";
-import { CommentCreating } from "./dto/comment-creating.dto";
 import { CommentUpdate } from "./dto/comment-update.dto";
+import { CommentCreating } from "./dto/comment-creating.dto";
 
 @Injectable()
 export class CommentService {
 	constructor(
 		@InjectRepository(Comment)
-		private readonly commentRepository: Repository<Comment>,
-		private readonly taskService: TaskService
+		private readonly commentRepository: Repository<Comment>
 	) {}
 
 	public async findById(commentId: string): Promise<Comment> {
@@ -23,13 +21,11 @@ export class CommentService {
 		return foundComment;
 	}
 
-	public async create(userId: string, comment: CommentCreating): Promise<Comment> {
-		const foundTask = await this.taskService.findById(comment.taskId);
-
+	public async create(userId: string, taskId: string, comment: CommentCreating): Promise<Comment> {
 		const newComment = new Comment();
-		newComment.userId = userId;
+		newComment.user = { id: userId } as any;
 		newComment.content = comment.content;
-		newComment.task = foundTask;
+		newComment.task = { id: taskId } as any;
 
 		await this.commentRepository.save(newComment);
 		return newComment;

@@ -25,7 +25,7 @@ import { UserCreated } from "./dto/user-created.dto";
 import { UserCreating } from "./dto/user-creating.dto";
 import { UserSelfGuard } from "../guards/user-self/user-self.guard";
 import { UserUpdatePassword } from "./dto/user-update-password.dto";
-import { PasswordEncryptionPipe } from "../pipes/password-encryption.pipe";
+import { PasswordEncryptionPipe } from "../pipes/password-encryption/password-encryption.pipe";
 
 @ApiTags("users")
 @ApiBearerAuth()

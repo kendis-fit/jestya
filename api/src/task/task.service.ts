@@ -4,20 +4,14 @@ import { Injectable, HttpException, HttpStatus } from "@nestjs/common";
 
 import { Task } from "./task.entity";
 import { TaskUpdate } from "./dto/task-update.dto";
-import { UserService } from "../user/user.service";
-import { BoardService } from "../board/board.service";
 import { TaskCreating } from "./dto/task-creating.dto";
 import { TaskUpdateActual } from "./dto/task-update-actual.dto";
-import { ComponentService } from "../component/component.service";
 
 @Injectable()
 export class TaskService {
 	constructor(
 		@InjectRepository(Task)
-		private readonly taskRepository: Repository<Task>,
-		private readonly boardService: BoardService,
-		private readonly userService: UserService,
-		private readonly componentService: ComponentService
+		private readonly taskRepository: Repository<Task>
 	) {}
 
 	public findAll(userId: string): Promise<Task[]> {
@@ -34,18 +28,18 @@ export class TaskService {
 	}
 
 	public async create(creatorId: string, task: TaskCreating): Promise<Task> {
-		const foundUsers = await this.userService.findByIds(task.executorIds);
-		const foundComponents = await this.componentService.findByIds(task.componentIds);
-		const foundBoard = await this.boardService.findById(task.boardId);
-
 		const newTask = new Task();
 		newTask.name = task.name;
 		newTask.description = task.description;
 		newTask.priority = task.priority;
 		newTask.creatorId = creatorId;
-		newTask.executors = foundUsers;
-		newTask.board = foundBoard;
-		newTask.components = foundComponents;
+		newTask.executors = task.executorIds.map(id => {
+			id;
+		}) as any;
+		newTask.board = { id: task.boardId } as any;
+		newTask.components = task.componentIds.map(id => {
+			id;
+		}) as any;
 
 		await this.taskRepository.save(newTask);
 		return newTask;
@@ -54,6 +48,7 @@ export class TaskService {
 	public async setState(taskId: string, task: TaskUpdateActual): Promise<Task> {
 		const foundTask = await this.findById(taskId);
 		foundTask.isActual = task.isActual;
+
 		await this.taskRepository.save(foundTask);
 		return foundTask;
 	}
@@ -63,13 +58,15 @@ export class TaskService {
 		foundTask.name = task.name;
 		foundTask.description = task.description;
 		foundTask.priority = task.priority;
+
 		await this.taskRepository.save(foundTask);
 		return foundTask;
 	}
 
 	public async changeBoard(taskId: string, boardId: string): Promise<Task> {
 		const foundTask = await this.findById(taskId);
-		foundTask.boardId = boardId;
+		foundTask.board = { id: boardId } as any;
+
 		await this.taskRepository.save(foundTask);
 		return foundTask;
 	}

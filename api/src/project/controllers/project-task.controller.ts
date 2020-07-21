@@ -7,20 +7,23 @@ import { User } from "../../decorators/user.decorator";
 import { TaskInfo } from "../../task/dto/task-info.dto";
 import { TaskUpdate } from "../../task/dto/task-update.dto";
 import { TaskCreated } from "../../task/dto/task-created.dto";
+import { CommentService } from "../../comment/comment.service";
 import { TaskCreating } from "../../task/dto/task-creating.dto";
-import { JwtProjectsGuard } from "../../guards/jwt-projects/jwt-projects.guard";
-import { RoleProjectsGuard } from "../../guards/role-projects/role-projects.guard";
 import { TaskCommentInfo } from "../../task/dto/task-comment-info.dto";
 import { JwtTasksGuard } from "../../guards/jwt-tasks/jwt-tasks.guard";
+import { CommentCreated } from "../../comment/dto/comment-created.dto";
+import { CommentCreating } from "../../comment/dto/comment-creating.dto";
 import { TaskUpdateActual } from "../../task/dto/task-update-actual.dto";
 import { RoleTasksGuard } from "../../guards/role-tasks/role-tasks.guard";
 import { TaskComponentInfo } from "../../task/dto/task-component-info.dto";
+import { JwtProjectsGuard } from "../../guards/jwt-projects/jwt-projects.guard";
+import { RoleProjectsGuard } from "../../guards/role-projects/role-projects.guard";
 
 @ApiBearerAuth()
 @ApiTags("projects")
 @Controller("projects")
 export class ProjectTaskController {
-	constructor(private readonly taskService: TaskService) {}
+	constructor(private readonly taskService: TaskService, private readonly commentService: CommentService) {}
 
 	@Get(":id/tasks/:taskId")
 	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.USER]))
@@ -72,5 +75,16 @@ export class ProjectTaskController {
 	public async createTask(@Body() task: TaskCreating, @User("id") userId: string): Promise<TaskCreated> {
 		const newTask = await this.taskService.create(userId, task);
 		return new TaskCreated(newTask.id);
+	}
+
+	@Post(":id/tasks/:taskId/comments")
+	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.USER]))
+	public async createComment(
+		@Param("taskId", ParseUUIDPipe) taskId: string,
+		@Body() comment: CommentCreating,
+		@User("id") userId: string
+	): Promise<CommentCreated> {
+		const newComment = await this.commentService.create(userId, taskId, comment);
+		return new CommentCreated(newComment.id);
 	}
 }

@@ -1,6 +1,6 @@
 import { Repository } from "typeorm";
-import { Injectable, HttpException, HttpStatus } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { Injectable, HttpException, HttpStatus } from "@nestjs/common";
 
 import { Project } from "./project.entity";
 import { User } from "../user/user.entity";
@@ -17,8 +17,8 @@ export class ProjectService {
 		private readonly boardService: BoardService
 	) {}
 
-	public async findById(projectId: string): Promise<Project> {
-		const foundProject = await this.projectsRepository.findOne(projectId);
+	public async findById(projectId: string, relations?: string[]): Promise<Project> {
+		const foundProject = await this.projectsRepository.findOne(projectId, { relations });
 		if (!foundProject) {
 			throw new HttpException({ message: "Project wasn't found" }, HttpStatus.NOT_FOUND);
 		}
@@ -36,12 +36,12 @@ export class ProjectService {
 	}
 
 	public async findAllBoards(projectId: string): Promise<Board[]> {
-		const foundProject = await this.findById(projectId);
+		const foundProject = await this.findById(projectId, ["boards"]);
 		return foundProject.boards;
 	}
 
 	public async findAllUsers(projectId: string): Promise<User[]> {
-		const foundProject = await this.findById(projectId);
+		const foundProject = await this.findById(projectId, ["users"]);
 		return foundProject.users;
 	}
 
@@ -52,15 +52,15 @@ export class ProjectService {
 		newProject.name = project.name;
 		newProject.description = project.description;
 		newProject.creatorId = userId;
-		newProject.boards.push(...standartBoards);
+		newProject.boards = standartBoards;
 
 		await this.projectsRepository.save(newProject);
 		return newProject;
 	}
 
 	public async addUser(projectId: string, userId: string): Promise<void> {
-		const foundProject = await this.findById(projectId);
-		foundProject.userIds.push(userId);
+		const foundProject = await this.findById(projectId, ["users"]);
+		foundProject.users = [{ id: userId }] as any;
 		await this.projectsRepository.save(foundProject);
 	}
 
@@ -72,8 +72,8 @@ export class ProjectService {
 	}
 
 	public async removeUser(projectId: string, userId: string): Promise<void> {
-		const foundProject = await this.findById(projectId);
-		foundProject.userIds = foundProject.userIds.filter(id => id !== userId);
+		const foundProject = await this.findById(projectId, ["users"]);
+		foundProject.users = foundProject.users.filter(user => user.id !== userId);
 		await this.projectsRepository.save(foundProject);
 	}
 }
