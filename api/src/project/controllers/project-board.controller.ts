@@ -2,13 +2,13 @@ import { ApiTags, ApiBearerAuth } from "@nestjs/swagger";
 import { Controller, Put, UseGuards, Delete, Param, ParseUUIDPipe, Body, Post } from "@nestjs/common";
 
 import { Role } from "../../user/user.entity";
-import { RoleGuard } from "../../guards/role.guard";
+import { RoleGuard } from "../../guards/role/role.guard";
 import { BoardService } from "../../board/board.service";
 import { BoardUpdate } from "../../board/dto/board-update.dto";
 import { BoardCreated } from "../../board/dto/board-created.dto";
-import { JwtProjectsGuard } from "../../guards/jwt-projects.guard";
+import { JwtProjectsGuard } from "../../guards/jwt-projects/jwt-projects.guard";
 import { BoardCreating } from "../../board/dto/board-creating.dto";
-import { RoleProjectsGuard } from "../../guards/role-projects.guard";
+import { RoleProjectsGuard } from "../../guards/role-projects/role-projects.guard";
 
 @ApiBearerAuth()
 @ApiTags("projects")

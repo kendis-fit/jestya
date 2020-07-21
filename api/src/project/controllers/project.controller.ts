@@ -2,8 +2,8 @@ import { ApiTags, ApiBearerAuth } from "@nestjs/swagger";
 import { Controller, Post, Body, Delete, Param, UseGuards, Get, Patch, ParseUUIDPipe } from "@nestjs/common";
 
 import { Role } from "../../user/user.entity";
-import { JwtGuard } from "../../guards/jwt.guard";
-import { RoleGuard } from "../../guards/role.guard";
+import { JwtGuard } from "../../guards/jwt/jwt.guard";
+import { RoleGuard } from "../../guards/role/role.guard";
 import { ProjectService } from "../project.service";
 import { ProjectInfo } from "../dto/project-info.dto";
 import { User } from "../../decorators/user.decorator";
@@ -11,8 +11,8 @@ import { BoardInfo } from "../../board/dto/board-info.dto";
 import { ProjectCreated } from "../dto/project-created.dto";
 import { ProjectCreating } from "../dto/project-creating.dto";
 import { ProjectUsersInfo } from "../dto/project-users-info.dto";
-import { JwtProjectsGuard } from "../../guards/jwt-projects.guard";
-import { RoleProjectsGuard } from "../../guards/role-projects.guard";
+import { JwtProjectsGuard } from "../../guards/jwt-projects/jwt-projects.guard";
+import { RoleProjectsGuard } from "../../guards/role-projects/role-projects.guard";
 import { ProjectUpdateState } from "../dto/project-update-state.dto";
 
 @ApiBearerAuth()

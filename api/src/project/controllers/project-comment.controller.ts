@@ -3,10 +3,10 @@ import { Controller, Post, UseGuards, Body, Put, Delete, Param, ParseUUIDPipe } 
 
 import { Role } from "../../user/user.entity";
 import { User } from "../../decorators/user.decorator";
-import { UserSelfGuard } from "../../guards/user-self.guard";
+import { UserSelfGuard } from "../../guards/user-self/user-self.guard";
 import { CommentService } from "../../comment/comment.service";
-import { JwtProjectsGuard } from "../../guards/jwt-projects.guard";
-import { RoleProjectsGuard } from "../../guards/role-projects.guard";
+import { JwtProjectsGuard } from "../../guards/jwt-projects/jwt-projects.guard";
+import { RoleProjectsGuard } from "../../guards/role-projects/role-projects.guard";
 import { CommentUpdate } from "../../comment/dto/comment-update.dto";
 import { CommentCreated } from "../../comment/dto/comment-created.dto";
 import { CommentCreating } from "../../comment/dto/comment-creating.dto";

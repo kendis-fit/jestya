@@ -18,14 +18,14 @@ import {
 import { Role } from "./user.entity";
 import { UserService } from "./user.service";
 import { UserInfo } from "./dto/user-info.dto";
-import { JwtGuard } from "../guards/jwt.guard";
-import { RoleGuard } from "../guards/role.guard";
+import { JwtGuard } from "../guards/jwt/jwt.guard";
+import { RoleGuard } from "../guards/role/role.guard";
 import { UserUpdate } from "./dto/user-update.dto";
 import { UserCreated } from "./dto/user-created.dto";
 import { UserCreating } from "./dto/user-creating.dto";
-import { UserSelfGuard } from "../guards/user-self.guard";
+import { UserSelfGuard } from "../guards/user-self/user-self.guard";
 import { UserUpdatePassword } from "./dto/user-update-password.dto";
-import { PasswordEncryptionPipe } from "src/pipes/password-encryption.pipe";
+import { PasswordEncryptionPipe } from "../pipes/password-encryption.pipe";
 
 @ApiTags("users")
 @ApiBearerAuth()

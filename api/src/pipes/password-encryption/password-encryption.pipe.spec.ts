@@ -2,6 +2,6 @@ import { PasswordEncryptionPipe } from "./password-encryption.pipe";
 
 describe("PasswordEncryptionPipe", () => {
 	it("should be defined", () => {
-		expect(new PasswordEncryptionPipe()).toBeDefined();
+		expect(new PasswordEncryptionPipe(["password"])).toBeDefined();
 	});
 });

@@ -1,7 +1,7 @@
 import { ApiTags } from "@nestjs/swagger";
 import { Controller, Get, UseGuards } from "@nestjs/common";
 
-import { JwtGuard } from "../guards/jwt.guard";
+import { JwtGuard } from "../guards/jwt/jwt.guard";
 import { ComponentService } from "./component.service";
 import { ComponentInfo } from "./dto/component-info.dto";
 

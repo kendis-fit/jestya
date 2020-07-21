@@ -1,8 +1,8 @@
 import { Observable } from "rxjs";
 import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
 
-import { Role } from "../user/user.entity";
-import { RequestUserProjects } from "../helpers/request.interface";
+import { Role } from "../../user/user.entity";
+import { RequestUserProjects } from "../../helpers/request.interface";
 
 @Injectable()
 export class RoleProjectsGuard implements CanActivate {
