@@ -21,7 +21,7 @@ export class AuthService {
 		return token;
 	}
 
-	public async registration(user: UserRegistration): Promise<void> {
+	public async registration(user: UserRegistration): Promise<User> {
 		const countUsers = await this.userService.count();
 		if (countUsers !== 0) {
 			throw new ForbiddenException({ message: "Registration isn't available anymore" });
@@ -33,5 +33,6 @@ export class AuthService {
 		newUser.role = Role.SUPER_ADMIN;
 
 		await this.userService.create(new UserCreating(newUser));
+		return newUser;
 	}
 }

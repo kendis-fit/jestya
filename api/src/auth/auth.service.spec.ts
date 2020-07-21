@@ -1,18 +1,20 @@
 import { JwtService } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
 import { getRepositoryToken } from "@nestjs/typeorm";
-import { BadRequestException } from "@nestjs/common";
+import { BadRequestException, NotFoundException, ForbiddenException } from "@nestjs/common";
 import { Test, TestingModule } from "@nestjs/testing";
 
-import { User } from "../user/user.entity";
+import { User, Role } from "../user/user.entity";
 import { AuthService } from "./auth.service";
 import { UserService } from "../user/user.service";
 import { mockedConfigService } from "../mocks/config.mock";
 import { UserLogin } from "../user/dto/user-login.dto";
+import { UserRegistration } from "../user/dto/user-registration.dto";
 
 interface IUserServiceMock {
 	findByLogin: jest.Mock;
 	count: jest.Mock;
+	create: jest.Mock;
 }
 
 interface IUserRepositoryMock {
@@ -30,6 +32,7 @@ describe("Auth service", () => {
 		userService = {
 			count: jest.fn(),
 			findByLogin: jest.fn(),
+			create: jest.fn(),
 		};
 		userRepository = {
 			findOne: jest.fn(),
@@ -99,9 +102,59 @@ describe("Auth service", () => {
 					userService.findByLogin.mockReturnValue(wrongUserLogin);
 				});
 
-				it("should throw an error", async () => {
-					await expect(service.login(user)).rejects.toThrow(BadRequestException);
+				it("should throw an error 400", async () => {
+					await expect(service.login(userLogin)).rejects.toThrow(BadRequestException);
 				});
+			});
+		});
+
+		describe("else user isn't found", () => {
+			beforeEach(() => {
+				userService.findByLogin.mockRejectedValue(new NotFoundException());
+			});
+
+			it("should throw an error 404", async () => {
+				await expect(service.login(userLogin)).rejects.toThrow(NotFoundException);
+			});
+		});
+	});
+
+	describe("method registration", () => {
+		let user: User;
+		let userRegistration: UserRegistration;
+
+		beforeEach(() => {
+			user = new User();
+			user.login = "just_a_login";
+			user.password = "just_a_password";
+			user.name = "name";
+			userRegistration = new UserRegistration(user);
+		});
+
+		describe("if nobody signed up", () => {
+			let newUser: User;
+
+			beforeEach(async () => {
+				userService.count.mockReturnValue(0);
+				newUser = await service.registration(userRegistration);
+			});
+
+			it("should be defined", () => {
+				expect(newUser).toBeDefined();
+			});
+
+			it("should have role SUPER_ADMIN", () => {
+				expect(newUser.role).toEqual(Role.SUPER_ADMIN);
+			});
+		});
+
+		describe("else anybody signed up", () => {
+			beforeEach(() => {
+				userService.count.mockReturnValue(1);
+			});
+
+			it("should throw an error 403", async () => {
+				await expect(service.registration(userRegistration)).rejects.toThrow(ForbiddenException);
 			});
 		});
 	});
