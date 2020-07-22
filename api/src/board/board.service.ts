@@ -1,6 +1,6 @@
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Injectable, HttpException, HttpStatus } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 
 import { Board } from "./board.entity";
 import { BoardUpdate } from "./dto/board-update.dto";
@@ -16,7 +16,7 @@ export class BoardService {
 	public async findById(boardId: string): Promise<Board> {
 		const foundBoard = await this.boardRepository.findOne(boardId);
 		if (!foundBoard) {
-			throw new HttpException({ message: "Board wasn't found" }, HttpStatus.NOT_FOUND);
+			throw new NotFoundException("Board wasn't found");
 		}
 		return foundBoard;
 	}
@@ -25,8 +25,7 @@ export class BoardService {
 		const foundBoard = await this.findById(boardId);
 		foundBoard.name = board.name;
 		foundBoard.description = board.description;
-		await this.boardRepository.save(board);
-		return foundBoard;
+		return await this.boardRepository.save(board);
 	}
 
 	public async create(board: BoardCreating, projectId?: string): Promise<Board> {
@@ -34,17 +33,17 @@ export class BoardService {
 		newBoard.name = board.name;
 		newBoard.description = board.description;
 		if (projectId) {
-			newBoard.projectId = projectId;
+			newBoard.project = { id: projectId } as any;
 		}
-		await this.boardRepository.save(newBoard);
-		return newBoard;
+		return await this.boardRepository.save(newBoard);
 	}
 
 	public async createStandartBoards(): Promise<Board[]> {
 		const standartBoards = ["TO DO", "IN PROCESSING", "DONE"];
 		const newBoards: Board[] = [];
 		standartBoards.forEach(async board => {
-			const newBoard = await this.create(new BoardCreating(board));
+			const newBoard = new Board();
+			newBoard.name = board;
 			newBoards.push(newBoard);
 		});
 		return newBoards;
@@ -53,7 +52,7 @@ export class BoardService {
 	public async remove(boardId: string): Promise<void> {
 		const deleteResponse = await this.boardRepository.delete(boardId);
 		if (!deleteResponse.affected) {
-			throw new HttpException({ message: "Board is not found" }, HttpStatus.NOT_FOUND);
+			throw new NotFoundException("Board is not found");
 		}
 	}
 }
