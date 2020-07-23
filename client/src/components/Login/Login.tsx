@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 const Login = () => {
 	const [state, setState] = useState({ login: "", password: "" });
-	const [loginError, SetLoginError] = useState(true);
+	// const [loginError, SetLoginError] = useState(true);
 
 	const handleSubmiting = (event: React.FormEvent) => {
 		event.preventDefault();
@@ -12,6 +12,8 @@ const Login = () => {
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setState({ ...state, [event.target.name]: event.target.value });
 	};
+
+	// 201 object.tocin       
 
 	return (
 		<div className="login">
