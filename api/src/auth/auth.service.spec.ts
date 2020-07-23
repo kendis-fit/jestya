@@ -1,14 +1,14 @@
 import { JwtService } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
 import { getRepositoryToken } from "@nestjs/typeorm";
-import { BadRequestException, NotFoundException, ForbiddenException } from "@nestjs/common";
 import { Test, TestingModule } from "@nestjs/testing";
+import { NotFoundException, ForbiddenException } from "@nestjs/common";
 
-import { User, Role } from "../user/user.entity";
 import { AuthService } from "./auth.service";
+import { User, Role } from "../user/user.entity";
 import { UserService } from "../user/user.service";
-import { mockedConfigService } from "../mocks/config.mock";
 import { UserLogin } from "../user/dto/user-login.dto";
+import { mockedConfigService } from "../mocks/config.mock";
 import { UserRegistration } from "../user/dto/user-registration.dto";
 
 interface IUserServiceMock {
@@ -103,7 +103,7 @@ describe("Auth service", () => {
 				});
 
 				it("should throw an error 400", async () => {
-					await expect(service.login(userLogin)).rejects.toThrow(BadRequestException);
+					await expect(service.login(userLogin)).rejects.toThrow(ForbiddenException);
 				});
 			});
 		});

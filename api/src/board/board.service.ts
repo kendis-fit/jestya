@@ -38,13 +38,12 @@ export class BoardService {
 		return await this.boardRepository.save(newBoard);
 	}
 
-	public async createStandartBoards(): Promise<Board[]> {
-		const standartBoards = ["TO DO", "IN PROCESSING", "DONE"];
+	public async createBoards(boardsNames: string[]): Promise<Board[]> {
 		const newBoards: Board[] = [];
-		standartBoards.forEach(async board => {
+		boardsNames.forEach(async board => {
 			const newBoard = new Board();
 			newBoard.name = board;
-			newBoards.push(newBoard);
+			newBoards.push(await this.boardRepository.save(newBoard));
 		});
 		return newBoards;
 	}

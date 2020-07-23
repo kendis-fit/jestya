@@ -156,4 +156,20 @@ describe("Board service", () => {
 			});
 		});
 	});
+
+	describe("method createStandartBoards", () => {
+		let standartBoards: string[];
+
+		beforeEach(() => {
+			standartBoards = ["TO DO", "IN PROCESSING", "DONE"];
+			boardRepository.save.mockImplementation(board => board);
+		});
+
+		it("should have same names that pass", async () => {
+			const boards = await service.createBoards(standartBoards);
+			boards.forEach((board, index) => {
+				expect(board.name).toEqual(standartBoards[index]);
+			});
+		});
+	});
 });
