@@ -1,15 +1,21 @@
 import React from "react";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+
 import "./scss/main.scss";
-import {} from "redux";
 import Login from "./components/Login";
 
-function App() {
+const App = () => {
 	return (
-		<div className="">
-			{/* <button className="btn btn-primary">cool</button>
-			 */}
-			<Login />
-		</div>
+		<BrowserRouter>
+			<Switch>
+				<Route path="/login" component={Login} />
+				<Route path="/registration" />
+				<Route exact path="/projects" />
+				<Route path="/projects/:id" />
+				<Route exact path="/users" />
+				<Route path="/users/:id" />
+			</Switch>
+		</BrowserRouter>
 	);
 }
 

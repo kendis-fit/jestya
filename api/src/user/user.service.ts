@@ -2,7 +2,7 @@ import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Injectable, HttpException, HttpStatus, NotFoundException, ConflictException } from "@nestjs/common";
 
-import { User } from "./user.entity";
+import { User, Role } from "./user.entity";
 import { UserUpdate } from "./dto/user-update.dto";
 import { UserCreating } from "./dto/user-creating.dto";
 import { UserUpdatePassword } from "./dto/user-update-password.dto";
@@ -29,6 +29,14 @@ export class UserService {
 	public async findByIds(userIds: string[], relations?: string[]): Promise<User[]> {
 		const users = await this.usersRepository.findByIds(userIds, { relations });
 		return users;
+	}
+
+	public async findByRole(role: Role, relations?: string[]): Promise<User> {
+		const user = await this.usersRepository.findOne({ role }, { relations });
+		if (!user) {
+			throw new NotFoundException("User wasn't found");
+		}
+		return user;
 	}
 
 	public async findByLogin(userLogin: string, relations?: string[]): Promise<User> {
