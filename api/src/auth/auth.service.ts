@@ -1,9 +1,7 @@
 import { JwtService } from "@nestjs/jwt";
-import { ConfigService } from "@nestjs/config";
-import { Injectable, BadRequestException, ForbiddenException } from "@nestjs/common";
+import { Injectable, ForbiddenException } from "@nestjs/common";
 
 import { User, Role } from "../user/user.entity";
-import { IJwt } from "../strategies/jwt/jwt.interface";
 import { UserService } from "../user/user.service";
 import { UserLogin } from "../user/dto/user-login.dto";
 import { UserCreating } from "../user/dto/user-creating.dto";
@@ -16,13 +14,14 @@ export class AuthService {
 	public async login(user: UserLogin): Promise<string> {
 		const foundUser = await this.userService.findByLogin(user.login);
 		if (foundUser.password !== user.password) {
-			throw new BadRequestException({ message: "Password is wrong" });
+			throw new ForbiddenException("Password is wrong");
 		}
+
 		const token = this.jwtService.sign({ id: foundUser.id, role: foundUser.role });
 		return token;
 	}
 
-	public async registration(user: UserRegistration): Promise<void> {
+	public async registration(user: UserRegistration): Promise<User> {
 		const countUsers = await this.userService.count();
 		if (countUsers !== 0) {
 			throw new ForbiddenException({ message: "Registration isn't available anymore" });
@@ -32,6 +31,8 @@ export class AuthService {
 		newUser.login = user.login;
 		newUser.password = user.password;
 		newUser.role = Role.SUPER_ADMIN;
+
 		await this.userService.create(new UserCreating(newUser));
+		return newUser;
 	}
 }

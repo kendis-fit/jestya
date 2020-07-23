@@ -1,13 +1,21 @@
-import { ApiTags, ApiBearerAuth } from "@nestjs/swagger";
-import { Controller, Put, UseGuards, Delete, Param, ParseUUIDPipe, Body, Post } from "@nestjs/common";
+import { Controller, Put, UseGuards, Delete, Param, ParseUUIDPipe, Body, Post, HttpCode } from "@nestjs/common";
+import {
+	ApiTags,
+	ApiBearerAuth,
+	ApiCreatedResponse,
+	ApiNotFoundResponse,
+	ApiForbiddenResponse,
+	ApiNoContentResponse,
+} from "@nestjs/swagger";
 
 import { Role } from "../../user/user.entity";
+import { Error } from "../../helpers/error.interfaces";
 import { RoleGuard } from "../../guards/role/role.guard";
 import { BoardService } from "../../board/board.service";
 import { BoardUpdate } from "../../board/dto/board-update.dto";
 import { BoardCreated } from "../../board/dto/board-created.dto";
-import { JwtProjectsGuard } from "../../guards/jwt-projects/jwt-projects.guard";
 import { BoardCreating } from "../../board/dto/board-creating.dto";
+import { JwtProjectsGuard } from "../../guards/jwt-projects/jwt-projects.guard";
 import { RoleProjectsGuard } from "../../guards/role-projects/role-projects.guard";
 
 @ApiBearerAuth()
@@ -16,6 +24,9 @@ import { RoleProjectsGuard } from "../../guards/role-projects/role-projects.guar
 export class ProjectBoardController {
 	constructor(private readonly boardService: BoardService) {}
 
+	@ApiCreatedResponse({ type: BoardCreated })
+	@ApiNotFoundResponse({ type: Error })
+	@ApiForbiddenResponse({ type: Error })
 	@Post(":id/boards")
 	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.ADMIN]), new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
 	public async addBoard(
@@ -26,6 +37,10 @@ export class ProjectBoardController {
 		return new BoardCreated(newBoard.id);
 	}
 
+	@ApiNoContentResponse()
+	@ApiNotFoundResponse({ type: Error })
+	@ApiForbiddenResponse({ type: Error })
+	@HttpCode(204)
 	@Put(":id/boards/:boardId")
 	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.ADMIN]), new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
 	public async updateBoard(
@@ -35,6 +50,10 @@ export class ProjectBoardController {
 		await this.boardService.update(boardId, board);
 	}
 
+	@ApiNoContentResponse()
+	@ApiNotFoundResponse({ type: Error })
+	@ApiForbiddenResponse({ type: Error })
+	@HttpCode(204)
 	@Delete(":id/boards/:boardId")
 	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.ADMIN]), new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
 	public async removeBoard(@Param("boardId", ParseUUIDPipe) boardId: string): Promise<void> {

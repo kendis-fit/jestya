@@ -1,6 +1,6 @@
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Injectable, HttpException, HttpStatus } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 
 import { Comment } from "./comment.entity";
 import { CommentUpdate } from "./dto/comment-update.dto";
@@ -16,7 +16,7 @@ export class CommentService {
 	public async findById(commentId: string): Promise<Comment> {
 		const foundComment = this.commentRepository.findOne(commentId);
 		if (!foundComment) {
-			throw new HttpException({ message: "Comment wasn't found" }, HttpStatus.NOT_FOUND);
+			throw new NotFoundException("The comment isn't found");
 		}
 		return foundComment;
 	}
@@ -40,7 +40,9 @@ export class CommentService {
 	}
 
 	public async remove(commentId: string): Promise<void> {
-		const foundComment = await this.findById(commentId);
-		await this.commentRepository.remove(foundComment);
+		const deletedComment = await this.commentRepository.delete(commentId);
+		if (!deletedComment.affected) {
+			throw new NotFoundException("The commen isn't found");
+		}
 	}
 }

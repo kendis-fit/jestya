@@ -1,7 +1,14 @@
-import { ApiTags, ApiBearerAuth } from "@nestjs/swagger";
-import { Controller, UseGuards, Body, Put, Delete, Param, ParseUUIDPipe } from "@nestjs/common";
+import { Controller, UseGuards, Body, Put, Delete, Param, ParseUUIDPipe, HttpCode } from "@nestjs/common";
+import {
+	ApiTags,
+	ApiBearerAuth,
+	ApiNoContentResponse,
+	ApiForbiddenResponse,
+	ApiNotFoundResponse,
+} from "@nestjs/swagger";
 
 import { Role } from "../../user/user.entity";
+import { Error } from "../../helpers/error.interfaces";
 import { CommentService } from "../../comment/comment.service";
 import { CommentUpdate } from "../../comment/dto/comment-update.dto";
 import { UserSelfGuard } from "../../guards/user-self/user-self.guard";
@@ -14,6 +21,10 @@ import { RoleProjectsGuard } from "../../guards/role-projects/role-projects.guar
 export class ProjectCommentController {
 	constructor(private readonly commentService: CommentService) {}
 
+	@ApiNoContentResponse()
+	@ApiNotFoundResponse({ type: Error })
+	@ApiForbiddenResponse({ type: Error })
+	@HttpCode(204)
 	@Put(":id/comments/:commentId")
 	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.USER]), new UserSelfGuard([]))
 	public async updateComment(
@@ -23,6 +34,10 @@ export class ProjectCommentController {
 		await this.commentService.update(commentId, comment);
 	}
 
+	@ApiNoContentResponse()
+	@ApiNotFoundResponse({ type: Error })
+	@ApiForbiddenResponse({ type: Error })
+	@HttpCode(204)
 	@Delete(":id/comments/:commentId")
 	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.USER]), new UserSelfGuard([Role.SUPER_ADMIN, Role.ADMIN]))
 	public async removeComment(@Param("commentId", ParseUUIDPipe) commentId: string): Promise<void> {

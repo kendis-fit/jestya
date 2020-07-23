@@ -1,6 +1,6 @@
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Injectable, HttpException, HttpStatus } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 
 import { Task } from "./task.entity";
 import { TaskUpdate } from "./dto/task-update.dto";
@@ -22,7 +22,7 @@ export class TaskService {
 	public findById(taskId: string): Promise<Task> {
 		const foundTask = this.taskRepository.findOne(taskId);
 		if (!foundTask) {
-			throw new HttpException({ message: "Task wasn't found" }, HttpStatus.NOT_FOUND);
+			throw new NotFoundException("Task wasn't found");
 		}
 		return foundTask;
 	}

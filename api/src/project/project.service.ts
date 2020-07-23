@@ -46,7 +46,7 @@ export class ProjectService {
 	}
 
 	public async create(userId: string, project: ProjectCreating): Promise<Project> {
-		const standartBoards = await this.boardService.createStandartBoards();
+		const standartBoards = await this.boardService.createBoards(["TO DO", "IN PROCESSING", "DONE"]);
 
 		const newProject = new Project();
 		newProject.name = project.name;
