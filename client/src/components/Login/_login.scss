@@ -1,0 +1,20 @@
+.login {
+    height: 85vh;
+    flex-wrap: wrap;
+
+    &__title {
+        letter-spacing: 0.62em;
+        font-weight: 300;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+    }
+
+    &__container {
+        width: 400px;
+    }
+
+    &__sumbitButton {
+        display: block;
+        margin: 0 auto;
+    }
+} 
