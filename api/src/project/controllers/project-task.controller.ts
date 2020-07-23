@@ -1,5 +1,25 @@
-import { ApiTags, ApiBearerAuth } from "@nestjs/swagger";
-import { Controller, Get, UseGuards, Param, ParseUUIDPipe, Patch, Put, Body, Post } from "@nestjs/common";
+import {
+	ApiTags,
+	ApiBearerAuth,
+	ApiOkResponse,
+	ApiNotFoundResponse,
+	ApiNoContentResponse,
+	ApiCreatedResponse,
+	ApiForbiddenResponse,
+} from "@nestjs/swagger";
+import {
+	Controller,
+	Get,
+	UseGuards,
+	Param,
+	ParseUUIDPipe,
+	Patch,
+	Put,
+	Body,
+	Post,
+	HttpStatus,
+	HttpCode,
+} from "@nestjs/common";
 
 import { Role } from "../../user/user.entity";
 import { TaskService } from "../../task/task.service";
@@ -18,6 +38,7 @@ import { RoleTasksGuard } from "../../guards/role-tasks/role-tasks.guard";
 import { TaskComponentInfo } from "../../task/dto/task-component-info.dto";
 import { JwtProjectsGuard } from "../../guards/jwt-projects/jwt-projects.guard";
 import { RoleProjectsGuard } from "../../guards/role-projects/role-projects.guard";
+import { Error } from "../../helpers/error.interfaces";
 
 @ApiBearerAuth()
 @ApiTags("projects")
@@ -25,6 +46,9 @@ import { RoleProjectsGuard } from "../../guards/role-projects/role-projects.guar
 export class ProjectTaskController {
 	constructor(private readonly taskService: TaskService, private readonly commentService: CommentService) {}
 
+	@ApiOkResponse({ type: TaskInfo })
+	@ApiNotFoundResponse({ type: Error })
+	@ApiForbiddenResponse({ type: Error })
 	@Get(":id/tasks/:taskId")
 	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.USER]))
 	public async findById(@Param("taskId", ParseUUIDPipe) taskId: string): Promise<TaskInfo> {
@@ -32,6 +56,9 @@ export class ProjectTaskController {
 		return new TaskInfo(task);
 	}
 
+	@ApiOkResponse({ type: [TaskComponentInfo] })
+	@ApiNotFoundResponse({ type: Error })
+	@ApiForbiddenResponse({ type: Error })
 	@Get(":id/tasks/:taskId/components")
 	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.USER]))
 	public async findComponents(@Param("taskId", ParseUUIDPipe) taskId: string): Promise<TaskComponentInfo[]> {
@@ -39,6 +66,9 @@ export class ProjectTaskController {
 		return task.components.map(component => new TaskComponentInfo(component));
 	}
 
+	@ApiOkResponse({ type: [TaskCommentInfo] })
+	@ApiNotFoundResponse({ type: Error })
+	@ApiForbiddenResponse({ type: Error })
 	@Get(":id/tasks/:taskId/comments")
 	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.USER]))
 	public async findComments(@Param("taskId", ParseUUIDPipe) taskId: string): Promise<TaskCommentInfo[]> {
@@ -46,6 +76,10 @@ export class ProjectTaskController {
 		return task.comments.map(comment => new TaskCommentInfo(comment));
 	}
 
+	@ApiNoContentResponse()
+	@ApiNotFoundResponse({ type: Error })
+	@ApiForbiddenResponse({ type: Error })
+	@HttpCode(204)
 	@Patch(":id/tasks/:taskId")
 	@UseGuards(JwtTasksGuard, new RoleProjectsGuard([Role.USER]), new RoleTasksGuard(true))
 	public async setStateTask(
@@ -55,12 +89,20 @@ export class ProjectTaskController {
 		await this.taskService.setState(taskId, task);
 	}
 
+	@ApiNoContentResponse()
+	@ApiNotFoundResponse({ type: Error })
+	@ApiForbiddenResponse({ type: Error })
+	@HttpCode(204)
 	@Put(":id/tasks/:taskId")
 	@UseGuards(JwtTasksGuard, new RoleProjectsGuard([Role.USER]), new RoleTasksGuard(true))
 	public async updateTask(@Param("taskId", ParseUUIDPipe) taskId: string, @Body() task: TaskUpdate): Promise<void> {
 		await this.taskService.update(taskId, task);
 	}
 
+	@ApiNoContentResponse()
+	@ApiNotFoundResponse({ type: Error })
+	@ApiForbiddenResponse({ type: Error })
+	@HttpCode(204)
 	@Patch(":id/tasks/:taskId/boards/:boardId")
 	@UseGuards(JwtTasksGuard, new RoleProjectsGuard([Role.USER]), new RoleTasksGuard(true, true))
 	public async changeBoard(
@@ -70,6 +112,9 @@ export class ProjectTaskController {
 		await this.taskService.changeBoard(taskId, boardId);
 	}
 
+	@ApiCreatedResponse({ type: TaskCreated })
+	@ApiNotFoundResponse({ type: Error })
+	@ApiForbiddenResponse({ type: Error })
 	@Post(":id/tasks")
 	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.USER]))
 	public async createTask(@Body() task: TaskCreating, @User("id") userId: string): Promise<TaskCreated> {
@@ -77,6 +122,9 @@ export class ProjectTaskController {
 		return new TaskCreated(newTask.id);
 	}
 
+	@ApiCreatedResponse({ type: CommentCreated })
+	@ApiNotFoundResponse({ type: Error })
+	@ApiForbiddenResponse({ type: Error })
 	@Post(":id/tasks/:taskId/comments")
 	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.USER]))
 	public async createComment(

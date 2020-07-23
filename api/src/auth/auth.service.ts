@@ -1,5 +1,5 @@
 import { JwtService } from "@nestjs/jwt";
-import { Injectable, BadRequestException, ForbiddenException } from "@nestjs/common";
+import { Injectable, ForbiddenException } from "@nestjs/common";
 
 import { User, Role } from "../user/user.entity";
 import { UserService } from "../user/user.service";
@@ -14,7 +14,7 @@ export class AuthService {
 	public async login(user: UserLogin): Promise<string> {
 		const foundUser = await this.userService.findByLogin(user.login);
 		if (foundUser.password !== user.password) {
-			throw new BadRequestException({ message: "Password is wrong" });
+			throw new ForbiddenException("Password is wrong");
 		}
 
 		const token = this.jwtService.sign({ id: foundUser.id, role: foundUser.role });

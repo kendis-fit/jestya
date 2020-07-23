@@ -1,6 +1,6 @@
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Injectable, HttpException, HttpStatus, NotFoundException } from "@nestjs/common";
+import { Injectable, HttpException, HttpStatus, NotFoundException, ConflictException } from "@nestjs/common";
 
 import { User } from "./user.entity";
 import { UserUpdate } from "./dto/user-update.dto";
@@ -50,7 +50,7 @@ export class UserService {
 	public async create(user: UserCreating): Promise<string> {
 		const foundUser = await this.usersRepository.findOne({ login: user.login });
 		if (foundUser) {
-			throw new HttpException({ message: "A user with such a login already exists" }, HttpStatus.CONFLICT);
+			throw new ConflictException("A user with such a login already exists");
 		}
 		const newUser = new User();
 		newUser.name = user.name;
@@ -62,8 +62,10 @@ export class UserService {
 	}
 
 	public async delete(userId: string): Promise<void> {
-		const foundUser = await this.findById(userId);
-		await this.usersRepository.remove(foundUser);
+		const deletedUser = await this.usersRepository.delete(userId);
+		if (!deletedUser.affected) {
+			throw new NotFoundException("The user wasn't found");
+		}
 	}
 
 	public async update(userId: string, user: UserUpdate): Promise<void> {

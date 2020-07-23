@@ -1,19 +1,28 @@
-import { ApiTags, ApiBearerAuth } from "@nestjs/swagger";
-import { Controller, Post, Body, Delete, Param, UseGuards, Get, Patch, ParseUUIDPipe } from "@nestjs/common";
+import { Controller, Post, Body, Delete, Param, UseGuards, Get, Patch, ParseUUIDPipe, HttpCode } from "@nestjs/common";
+import {
+	ApiTags,
+	ApiBearerAuth,
+	ApiOkResponse,
+	ApiForbiddenResponse,
+	ApiCreatedResponse,
+	ApiNoContentResponse,
+	ApiNotFoundResponse,
+} from "@nestjs/swagger";
 
 import { Role } from "../../user/user.entity";
-import { JwtGuard } from "../../guards/jwt/jwt.guard";
-import { RoleGuard } from "../../guards/role/role.guard";
 import { ProjectService } from "../project.service";
+import { JwtGuard } from "../../guards/jwt/jwt.guard";
 import { ProjectInfo } from "../dto/project-info.dto";
 import { User } from "../../decorators/user.decorator";
+import { Error } from "../../helpers/error.interfaces";
+import { RoleGuard } from "../../guards/role/role.guard";
 import { BoardInfo } from "../../board/dto/board-info.dto";
 import { ProjectCreated } from "../dto/project-created.dto";
 import { ProjectCreating } from "../dto/project-creating.dto";
 import { ProjectUsersInfo } from "../dto/project-users-info.dto";
+import { ProjectUpdateState } from "../dto/project-update-state.dto";
 import { JwtProjectsGuard } from "../../guards/jwt-projects/jwt-projects.guard";
 import { RoleProjectsGuard } from "../../guards/role-projects/role-projects.guard";
-import { ProjectUpdateState } from "../dto/project-update-state.dto";
 
 @ApiBearerAuth()
 @ApiTags("projects")
@@ -21,6 +30,8 @@ import { ProjectUpdateState } from "../dto/project-update-state.dto";
 export class ProjectController {
 	constructor(private readonly projectService: ProjectService) {}
 
+	@ApiOkResponse({ type: [ProjectInfo] })
+	@ApiForbiddenResponse({ type: Error })
 	@Get()
 	@UseGuards(JwtGuard)
 	public async findAll(@User("id") userId: string): Promise<ProjectInfo[]> {
@@ -28,6 +39,8 @@ export class ProjectController {
 		return projects.map(project => new ProjectInfo(project));
 	}
 
+	@ApiOkResponse({ type: [BoardInfo] })
+	@ApiForbiddenResponse({ type: Error })
 	@Get(":id/boards")
 	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.USER]))
 	public async findAllBoards(@Param("id", ParseUUIDPipe) projectId: string): Promise<BoardInfo[]> {
@@ -35,6 +48,8 @@ export class ProjectController {
 		return boards.map(board => new BoardInfo(board));
 	}
 
+	@ApiOkResponse({ type: [ProjectUsersInfo] })
+	@ApiForbiddenResponse({ type: Error })
 	@Get(":id/users")
 	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.USER]))
 	public async findAllUsers(@Param("id", ParseUUIDPipe) projectId: string): Promise<ProjectUsersInfo[]> {
@@ -42,6 +57,8 @@ export class ProjectController {
 		return users.map(user => new ProjectUsersInfo(user));
 	}
 
+	@ApiCreatedResponse({ type: [ProjectCreated] })
+	@ApiForbiddenResponse({ type: Error })
 	@Post()
 	@UseGuards(JwtGuard, new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
 	public async create(@Body() project: ProjectCreating, @User("id") userId: string): Promise<ProjectCreated> {
@@ -49,15 +66,23 @@ export class ProjectController {
 		return new ProjectCreated(newProject.id);
 	}
 
+	@ApiNoContentResponse()
+	@ApiNotFoundResponse({ type: Error })
+	@ApiForbiddenResponse({ type: Error })
+	@HttpCode(204)
 	@Post(":id/users/:userId")
 	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.ADMIN]), new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
 	public async addUser(
 		@Param("id", ParseUUIDPipe) projectId: string,
 		@Param("userId", ParseUUIDPipe) userId: string
 	): Promise<void> {
-		await this.addUser(projectId, userId);
+		await this.projectService.addUser(projectId, userId);
 	}
 
+	@ApiNoContentResponse()
+	@ApiNotFoundResponse({ type: Error })
+	@ApiForbiddenResponse({ type: Error })
+	@HttpCode(204)
 	@Patch(":id")
 	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.ADMIN]), new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
 	public async updateState(
@@ -67,6 +92,10 @@ export class ProjectController {
 		await this.projectService.updateState(projectId, project);
 	}
 
+	@ApiNoContentResponse()
+	@ApiNotFoundResponse({ type: Error })
+	@ApiForbiddenResponse({ type: Error })
+	@HttpCode(204)
 	@Delete(":id/users/:userId")
 	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.ADMIN]), new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
 	public async removeUser(
