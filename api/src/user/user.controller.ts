@@ -23,6 +23,7 @@ import {
 	ParseUUIDPipe,
 	UsePipes,
 	HttpCode,
+	Head,
 } from "@nestjs/common";
 
 import { Role } from "./user.entity";
@@ -36,6 +37,7 @@ import { RoleGuard } from "../guards/role/role.guard";
 import { UserCreating } from "./dto/user-creating.dto";
 import { UserSelfGuard } from "../guards/user-self/user-self.guard";
 import { UserUpdatePassword } from "./dto/user-update-password.dto";
+import { ParseEnumPipe } from "../pipes/parse-enum/parse-enum.pipe";
 import { PasswordEncryptionPipe } from "../pipes/password-encryption/password-encryption.pipe";
 
 @ApiTags("users")
@@ -43,6 +45,14 @@ import { PasswordEncryptionPipe } from "../pipes/password-encryption/password-en
 @Controller("users")
 export class UserController {
 	constructor(private readonly userService: UserService) {}
+
+	@ApiNoContentResponse()
+	@ApiNotFoundResponse({ type: Error })
+	@Head(":role")
+	@UseGuards(JwtGuard)
+	public async findByRole(@Param("role", new ParseEnumPipe(Role)) role: Role): Promise<void> {
+		await this.userService.findByRole(role);
+	}
 
 	@ApiOkResponse({ type: UserInfo })
 	@ApiNotFoundResponse({ type: Error })
