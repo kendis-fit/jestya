@@ -8,22 +8,25 @@ import Login from "./components/Login";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import Registration from "./components/Registration/Registration";
 import reducer from "./reducers/reducer";
+import Auth from "./components/Auth/Auth";
 
 const store = createStore(reducer);
 
 const App = () => {
 	return (
 		<Provider store={store}>
-			<BrowserRouter>
-				<Switch>
-					<Route path="/login" component={Login} />
-					<PrivateRoute path="/registration" component={Registration} />
-					<Route exact path="/projects" />
-					<Route path="/projects/:id" />
-					<Route exact path="/users" />
-					<Route path="/users/:id" />
-				</Switch>
-			</BrowserRouter>
+			<Auth>
+				<BrowserRouter>
+					<Switch>
+						<Route path="/login" component={Login} />
+						<PrivateRoute path="/registration" component={Registration} />
+						<Route exact path="/projects" />
+						<Route path="/projects/:id" />
+						<Route exact path="/users" />
+						<Route path="/users/:id" />
+					</Switch>
+				</BrowserRouter>
+			</Auth>
 		</Provider>
 	);
 }
