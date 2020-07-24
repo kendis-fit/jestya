@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import Input from "../Input";
 
 const Login = () => {
 	const [state, setState] = useState({ login: "", password: "" });
 	// const [loginError, SetLoginError] = useState(true);
+
+	document.title = "Login | JESTYA";
 
 	const handleSubmiting = (event: React.FormEvent) => {
 		event.preventDefault();
@@ -13,7 +16,7 @@ const Login = () => {
 		setState({ ...state, [event.target.name]: event.target.value });
 	};
 
-	// 201 object.tocin       
+	// 201 object.tocin
 
 	return (
 		<div className="login">
@@ -35,26 +38,23 @@ const Login = () => {
 					<div className="alert alert-danger" role="alert">
 						Can`t login. Invalid email or password.
 					</div>
-					<div className="form-group mb-3">
-						<label className="w-100">
-							Login
-							<input className="form-control" name="login" value={state.login} onChange={handleChange} />
-							<small className="form-text text-muted">Type your login</small>
-						</label>
-					</div>
-					<div className="form-group mb-4">
-						<label className="w-100">
-							Password
-							<input
-								type="password"
-								className="form-control"
-								name="password"
-								value={state.password}
-								onChange={handleChange}
-							/>
-							<small className="form-text text-muted ">Type your password</small>
-						</label>
-					</div>
+					<Input
+						name="login"
+						label="Name"
+						value={state.login}
+						onChange={handleChange}
+						className="mb-3"
+						heplerText="Type your login"
+					/>
+					<Input
+						type="password"
+						name="password"
+						label="Password"
+						value={state.password}
+						onChange={handleChange}
+						className="mb-4"
+						heplerText="Type your password"
+					/>
 					<button
 						type="submit"
 						className="
