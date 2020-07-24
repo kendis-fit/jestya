@@ -1,6 +1,9 @@
 .login {
     height: 85vh;
-    flex-wrap: wrap;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // background-color: #e0f5ff;
 
     &__title {
         letter-spacing: 0.62em;

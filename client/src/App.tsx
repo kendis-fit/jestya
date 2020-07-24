@@ -5,10 +5,10 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import "./scss/main.scss";
 import Login from "./components/Login";
-import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
-import Registration from "./components/Registration/Registration";
 import reducer from "./reducers/reducer";
 import Auth from "./components/Auth/Auth";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import Registration from "./components/Registration/Registration";
 
 const store = createStore(reducer);
 
