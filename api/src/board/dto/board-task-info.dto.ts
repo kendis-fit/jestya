@@ -1,10 +1,19 @@
-import { Task } from "../../task/task.entity";
+import { ApiProperty } from "@nestjs/swagger";
+
+import { Task, Priority } from "../../task/task.entity";
 
 export class BoardTaskInfo {
+	@ApiProperty()
 	public id: string;
+
+	@ApiProperty()
 	public name: string;
+
+	@ApiProperty()
 	public description: string;
-	public priority: string;
+
+	@ApiProperty({ enum: Priority })
+	public priority: Priority;
 
 	constructor(task: Task) {
 		this.id = task.id;

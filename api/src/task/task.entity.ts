@@ -41,7 +41,7 @@ export class Task {
 		enum: [Priority.LOWEST, Priority.LOW, Priority.MEDIUM, Priority.HIGH, Priority.HIGHEST],
 		default: Priority.MEDIUM,
 	})
-	public priority: string;
+	public priority: Priority;
 
 	@Column({
 		default: true,

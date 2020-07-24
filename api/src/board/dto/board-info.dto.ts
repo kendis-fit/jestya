@@ -1,10 +1,18 @@
 import { Board } from "../board.entity";
 import { BoardTaskInfo } from "./board-task-info.dto";
+import { ApiProperty } from "@nestjs/swagger";
 
 export class BoardInfo {
+	@ApiProperty()
 	public id: string;
+
+	@ApiProperty()
 	public name: string;
-	public description!: string;
+
+	@ApiProperty()
+	public description: string;
+
+	@ApiProperty({ type: [BoardTaskInfo] })
 	public tasks: BoardTaskInfo[];
 
 	constructor(board: Board) {

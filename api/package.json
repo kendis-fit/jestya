@@ -23,6 +23,8 @@
     "@nestjs/platform-express": "^6.10.14",
     "@nestjs/swagger": "^4.5.12",
     "@nestjs/typeorm": "^7.1.0",
+    "class-transformer": "^0.2.3",
+    "class-validator": "^0.12.2",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "pg": "^8.2.1",

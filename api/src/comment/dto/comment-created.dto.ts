@@ -1,3 +1,10 @@
+import { ApiProperty } from "@nestjs/swagger";
+
 export class CommentCreated {
-	constructor(public id: string) {}
+	@ApiProperty()
+	public id: string;
+
+	constructor(id: string) {
+		this.id = id;
+	}
 }
