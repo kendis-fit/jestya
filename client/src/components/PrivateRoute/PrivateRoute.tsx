@@ -1,7 +1,7 @@
 import React from "react";
 import { Route } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-import { useAuth } from "../../context/auth";
 import NonUnauthenticatedRoute from "../NonUnauthenticatedRoute/NonUnauthenticatedRoute";
 
 export interface IPrivateRoute {
@@ -10,7 +10,7 @@ export interface IPrivateRoute {
 }
 
 const PrivateRoute = (props: IPrivateRoute) => {
-    const { isAuthenticated } = useAuth();
+    const {} = useSelector(() => {});
     const { component: Component, ...rest } = props;
     
     return(

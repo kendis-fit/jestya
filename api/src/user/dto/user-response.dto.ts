@@ -6,7 +6,7 @@ export class UserResponse {
 	@ApiProperty()
 	public id: string;
 
-	@ApiProperty({ type: Role })
+	@ApiProperty({ enum: Role })
 	public role: Role;
 
 	@ApiProperty()

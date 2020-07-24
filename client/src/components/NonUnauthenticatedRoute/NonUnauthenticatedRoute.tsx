@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useVanillaFetch } from "vanilla-hooks";
+import { Redirect, useRouteMatch } from 'react-router-dom';
 
 import resource from '../../api/resource';
-import { Redirect } from 'react-router-dom';
+import Registration from '../Registration/Registration';
 
 const NonUnauthenticatedRoute = () => {
-    const [superAdminExisted, setSuperAdminExisted] =  useState<boolean | null>(null);
+    const { url } = useRouteMatch();
+    const { data: superAdminExisted, loading } = useVanillaFetch(() => resource.users.findByRole("SUPER_ADMIN"));
 
-    useEffect(() => {
-        const fetchSuperAdmin = async () => {
-            setSuperAdminExisted(await resource.users.findByRole("SUPER_ADMIN"));
-        }
-        fetchSuperAdmin();
-    }, []);
-    
+    if (loading) {
+        return <div>loading...</div>;
+    }
+
     return(
         <>
             {
-                superAdminExisted ? <Redirect to="/login" /> : <Redirect to="/registration" />
+                superAdminExisted ? <Redirect to="/login" /> : url === "/registration" ? <Registration /> : <Redirect to="/registration" />
             }
         </>
     );
