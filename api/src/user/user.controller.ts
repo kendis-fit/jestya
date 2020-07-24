@@ -49,7 +49,6 @@ export class UserController {
 	@ApiNoContentResponse()
 	@ApiNotFoundResponse({ type: Error })
 	@Head(":role")
-	@UseGuards(JwtGuard)
 	public async findByRole(@Param("role", new ParseEnumPipe(Role)) role: Role): Promise<void> {
 		await this.userService.findByRole(role);
 	}

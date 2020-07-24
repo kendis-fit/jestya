@@ -11,14 +11,14 @@ import { UserRegistration } from "../user/dto/user-registration.dto";
 export class AuthService {
 	constructor(private readonly userService: UserService, private readonly jwtService: JwtService) {}
 
-	public async login(user: UserLogin): Promise<string> {
+	public async login(user: UserLogin): Promise<[User, string]> {
 		const foundUser = await this.userService.findByLogin(user.login);
 		if (foundUser.password !== user.password) {
 			throw new ForbiddenException("Password is wrong");
 		}
 
 		const token = this.jwtService.sign({ id: foundUser.id, role: foundUser.role });
-		return token;
+		return [foundUser, token];
 	}
 
 	public async registration(user: UserRegistration): Promise<User> {

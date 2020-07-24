@@ -18,8 +18,8 @@ export class AuthController {
 	@Post("login")
 	@UsePipes(new PasswordEncryptionPipe(["password"]))
 	public async login(@Body() user: UserLogin): Promise<UserResponse> {
-		const token = await this.authService.login(user);
-		return new UserResponse(token);
+		const [foundUser, token] = await this.authService.login(user);
+		return new UserResponse(foundUser, token);
 	}
 
 	@ApiNoContentResponse()
