@@ -19,7 +19,7 @@ const users = {
 					reject(error);
 				}
 			} catch {
-				reject();
+				reject({ message: "Unknown error" });
 			}
 		});
 	},

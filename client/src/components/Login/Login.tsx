@@ -1,22 +1,35 @@
 import React, { useState } from "react";
+
 import Input from "../Input";
+import { useAuth } from "../../context/auth";
+import { Redirect } from "react-router-dom";
+import resource from "../../api/resource";
 
 const Login = () => {
+	const { auth, setUser } = useAuth();
 	const [state, setState] = useState({ login: "", password: "" });
 	// const [loginError, SetLoginError] = useState(true);
 
 	document.title = "Login | JESTYA";
 
-	const handleSubmiting = (event: React.FormEvent) => {
+	const handleSubmiting = async (event: React.FormEvent) => {
 		event.preventDefault();
-		alert(JSON.stringify(state, null, 2));
+
+		try {
+			const user = await resource.auth.login(state);
+			setUser?.(user);
+		} catch {
+			alert("ERROR");
+		}
 	};
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setState({ ...state, [event.target.name]: event.target.value });
 	};
 
-	// 201 object.tocin
+	if (auth.isAuthenticated) {
+		return <Redirect to="/projects" />
+	}
 
 	return (
 		<div className="login">
