@@ -11027,6 +11027,14 @@ value-equal@^1.0.1:
   resolved "https://registry.yarnpkg.com/value-equal/-/value-equal-1.0.1.tgz#1e0b794c734c5c0cade179c437d356d931a34d6c"
   integrity sha512-NOJ6JZCAWr0zlxZt+xqCHNTEKOsrks2HQd4MqhP1qy4z1SkbEP467eNx6TgDKXMvUOb+OENfJCZwM+16n7fRfw==
 
+vanilla-hooks@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/vanilla-hooks/-/vanilla-hooks-1.3.0.tgz#d7a7b4c9e570bcfda9b888c96248bf9895e7f3bd"
+  integrity sha512-h1d7NY0Ug95MuaXJ2FIwSHuAPN30c0gSgJwSmHw9MXnpUJnFHkjrglA8AhP7KFbkEAhahCzISN8LmWDgu/Iq/Q==
+  dependencies:
+    "@types/yup" "^0.29.3"
+    yup "^0.29.1"
+
 vary@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"

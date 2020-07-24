@@ -87,7 +87,7 @@ describe("Auth service", () => {
 			});
 
 			it("should return a token", async () => {
-				token = await service.login(userLogin);
+				[user, token] = await service.login(userLogin);
 				expect(token).toEqual("SHA-256 HASH");
 			});
 
