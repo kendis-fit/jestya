@@ -8,7 +8,8 @@ import Login from "./components/Login";
 import reducer from "./reducers/reducer";
 import Auth from "./components/Auth/Auth";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
-import Registration from "./components/Registration/Registration";
+import Registration from "./components/Registration";
+// import Registration from "./components/Registration";
 
 const store = createStore(reducer);
 
@@ -29,6 +30,6 @@ const App = () => {
 			</Auth>
 		</Provider>
 	);
-}
+};
 
 export default App;

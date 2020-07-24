@@ -1,6 +1,6 @@
 import React from "react";
 import { Formik } from "formik";
-import IRegistration from "./Interfaces";
+// import IRegistration from "./Interfaces";
 import * as Yup from "yup";
 import Input from "../Input";
 import Select from "../Select";
@@ -12,12 +12,23 @@ const SignupSchema = Yup.object().shape({
 	role: Yup.string().required("Required"),
 });
 
+interface IInitialRegistrationData {
+	name: string;
+	login: string;
+	password: string;
+	role: string;
+}
+
+interface IRegistration {
+	authenthicated: boolean;
+}
+
 const Registration = () => {
 	// const [loginError, SetLoginError] = useState(true);
 
 	document.title = "Registration | JESTYA";
 
-	const handleSubmiting = (values: IRegistration) => {
+	const handleSubmiting = (values: IInitialRegistrationData) => {
 		alert(JSON.stringify(values, null, 2));
 	};
 
