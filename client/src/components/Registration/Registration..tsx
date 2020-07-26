@@ -40,10 +40,10 @@ const Registration = () => {
 	};
 
 	return (
-		<div className="login">
+		<div className="registration">
 			<div
 				className=" 
-				login__container
+				registration__container
 				card 
 				shadow p-3 mb-5 bg-white rounded "
 			>
@@ -99,8 +99,8 @@ const Registration = () => {
 							<button
 								type="submit"
 								className="
-                            login__sumbitButton
-                            btn btn-primary"
+								registration__sumbitButton
+                            	btn btn-primary"
 							>
 								Register
 							</button>

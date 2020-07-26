@@ -8,7 +8,7 @@ import resource from "../../api/resource";
 const Login = () => {
 	const { auth, setUser } = useAuth();
 	const [state, setState] = useState({ login: "", password: "" });
-	// const [loginError, SetLoginError] = useState(true);
+	const [loginError, SetLoginError] = useState(false);
 
 	document.title = "Login | JESTYA";
 
@@ -20,6 +20,7 @@ const Login = () => {
 			setUser?.(user);
 		} catch {
 			alert("ERROR");
+			SetLoginError(true);
 		}
 	};
 
@@ -28,7 +29,7 @@ const Login = () => {
 	};
 
 	if (auth.isAuthenticated) {
-		return <Redirect to="/projects" />
+		return <Redirect to="/projects" />;
 	}
 
 	return (
@@ -48,9 +49,12 @@ const Login = () => {
 				</h2>
 				<h3 className="text-center card-title">Log In</h3>
 				<form onSubmit={handleSubmiting}>
-					<div className="alert alert-danger" role="alert">
-						Can`t login. Invalid email or password.
-					</div>
+					{loginError ? (
+						<div className="alert alert-danger" role="alert">
+							Can`t login. Invalid email or password.
+						</div>
+					) : null}
+
 					<Input
 						name="login"
 						label="Name"
