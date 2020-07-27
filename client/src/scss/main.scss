@@ -1,9 +1,10 @@
-// Variables
-// $primary: #401f;
+// variables
+@import "./variables";
 
-//bootstrap
+// bootstrap
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
 
 // components css
 @import "../components/Login/login";
+@import "../components/Project/project";
 @import "../components/Registration/registration";

@@ -1,0 +1,16 @@
+$project-colour: $light-gray;
+
+.project {
+    background-color: $project-colour;
+    width: map-get($map: $project-size, $key: "width");
+    height: map-get($map: $project-size, $key: "height");
+}
+
+.project__body {
+    padding: 5px;
+}
+
+.project__title {
+    @extend .bg-info;
+    font-size: 15px;
+}
