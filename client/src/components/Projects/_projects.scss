@@ -1,0 +1,22 @@
+$projects-height: map-get($map: $page-size, $key: "height");
+$projects-width: map-get($map: $page-size, $key: "width");
+
+.projects {
+    @include size($projects-height, $projects-width);
+}
+
+.project__body {
+    padding: 10px;
+}
+
+.projects__title {
+    font-size: 20px;
+}
+
+.projects__content {
+    @include flex(center);
+}
+
+.project_wrapper {
+    margin: 50px;
+}

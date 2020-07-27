@@ -1,4 +1,5 @@
-// variables
+// common
+@import "./mixins";
 @import "./variables";
 
 // bootstrap
@@ -7,4 +8,9 @@
 // components css
 @import "../components/Login/login";
 @import "../components/Project/project";
+@import "../components/Projects/projects";
 @import "../components/Registration/registration";
+
+body {
+    background: #fffefe;
+}

@@ -1,24 +1,20 @@
 import React from "react";
 import { Doughnut } from "react-chartjs-2";
 
-export interface IChart {
-    datasets: {
-        data: string[];
-    }[];
+export interface IProject {
+    name: string;
+    data: number[];
     labels: string[];
 }
 
-export interface IProject {
-    name: string;
-    data: IChart;
-}
-
 const Project = (props: IProject) => {
+    const datasets = [props.data];
+
     return (
         <div className="project">
             <div className="project__body">
                 <label className="project__title">{props.name}</label>
-                <Doughnut data={props.data} />
+                <Doughnut data={{ labels: props.labels, datasets }} />
             </div>
         </div>
     );
