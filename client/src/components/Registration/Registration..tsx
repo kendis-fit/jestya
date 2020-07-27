@@ -1,9 +1,9 @@
 import React from "react";
 import { Formik } from "formik";
-// import IRegistration from "./Interfaces";
 import * as Yup from "yup";
 import Input from "../Input";
 import Select from "../Select";
+import { useAuth } from "../../context/auth";
 
 const SignupSchema = Yup.object().shape({
 	name: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("Required"),
@@ -19,26 +19,34 @@ interface IInitialRegistrationData {
 	role: string;
 }
 
-interface IRegistration {
-	authenthicated: boolean;
-}
+//------Select data----
+const FirstRegistrationSelect = [{ value: "SUPER_ADMIN", label: "Super Admin" }];
+const SuperAdminSelect = [
+	{ value: "", label: "Choose.." },
+	{ value: "ADMIN", label: "Admin" },
+	{ value: "USER", label: "User" },
+];
+const AdminSelect = [{ value: "USER", label: "User" }];
+//---------------------
 
 const Registration = () => {
-	// const [loginError, SetLoginError] = useState(true);
-
 	document.title = "Registration | JESTYA";
-
+	const { auth } = useAuth();
 	const handleSubmiting = (values: IInitialRegistrationData) => {
 		alert(JSON.stringify(values, null, 2));
 	};
 
+	const SelectData = auth.user?.role
+		? auth.user?.role === "SUPER_ADMIN"
+			? SuperAdminSelect
+			: AdminSelect
+		: FirstRegistrationSelect;
 	const initialValues = {
 		name: "",
 		login: "",
 		password: "",
-		role: "",
+		role: auth.user?.role ? (auth.user?.role === "SUPER_ADMIN" ? "" : "USER") : "SUPER_ADMIN",
 	};
-
 	return (
 		<div className="registration">
 			<div
@@ -47,7 +55,9 @@ const Registration = () => {
 				card 
 				shadow p-3 mb-5 bg-white rounded "
 			>
-				<h3 className="text-center card-title">Registration of user</h3>
+				<h3 className="text-center card-title">
+					{auth.user?.role ? "Creating of user" : "Registration of user"}
+				</h3>
 				<Formik initialValues={initialValues} validationSchema={SignupSchema} onSubmit={handleSubmiting}>
 					{({ handleChange, handleSubmit, errors, touched, values }) => (
 						<form onSubmit={handleSubmit}>
@@ -64,7 +74,7 @@ const Registration = () => {
 							<Input
 								errors={errors}
 								name="login"
-								label="login"
+								label="Login"
 								value={values.login}
 								touched={touched}
 								onChange={handleChange}
@@ -86,15 +96,16 @@ const Registration = () => {
 								errors={errors}
 								touched={touched}
 								value={values.role}
+								disabled={auth.user?.role === "ADMIN" ? true : false}
+								label="User role"
 								onChange={handleChange}
 								name="role"
 								className="mb-4"
 								heplerText="Choose user role"
 							>
-								<option value="" label="Choose.." />
-								<option value="1" label="Super Admin" />
-								<option value="2" label="Admin" />
-								<option value="3" label="User" />
+								{SelectData.map((ell, i) => (
+									<option key={i} value={ell.value} label={ell.label} />
+								))}
 							</Select>
 							<button
 								type="submit"
@@ -102,7 +113,7 @@ const Registration = () => {
 								registration__sumbitButton
                             	btn btn-primary"
 							>
-								Register
+								{auth.user?.role ? "Create User" : "Register"}
 							</button>
 						</form>
 					)}

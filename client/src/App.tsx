@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import "./scss/main.scss";
+import Users from "./components/Users";
 import Login from "./components/Login";
 import reducer from "./reducers/reducer";
 import Auth from "./components/Auth/Auth";
@@ -24,7 +25,7 @@ const App = () => {
 						<PrivateRoute path="/registration" component={Registration} />
 						<PrivateRoute exact path="/projects" component={Projects} />
 						<Route path="/projects/:id" />
-						<Route exact path="/users" />
+						<Route exact path="/users" component={Users} />
 						<Route path="/users/:id" />
 					</Switch>
 				</BrowserRouter>
