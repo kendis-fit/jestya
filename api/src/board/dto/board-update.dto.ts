@@ -1,8 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsString } from "class-validator";
 
-import { Board } from "../board.entity";
-
 export class BoardUpdate {
 	@ApiProperty()
 	@IsNotEmpty()
@@ -12,9 +10,4 @@ export class BoardUpdate {
 	@ApiProperty()
 	@IsString()
 	public description: string;
-
-	constructor(board: Board) {
-		this.name = board.name;
-		this.description = board.description;
-	}
 }

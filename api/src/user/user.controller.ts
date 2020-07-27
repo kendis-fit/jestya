@@ -46,7 +46,7 @@ import { PasswordEncryptionPipe } from "../pipes/password-encryption/password-en
 export class UserController {
 	constructor(private readonly userService: UserService) {}
 
-	@ApiNoContentResponse()
+	@ApiOkResponse()
 	@ApiNotFoundResponse({ type: Error })
 	@Head(":role")
 	public async findByRole(@Param("role", new ParseEnumPipe(Role)) role: Role): Promise<void> {
