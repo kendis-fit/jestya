@@ -1,3 +1,4 @@
+import { plainToClass } from "class-transformer";
 import { getRepositoryToken } from "@nestjs/typeorm";
 import { Test, TestingModule } from "@nestjs/testing";
 
@@ -49,7 +50,7 @@ describe("Component service", () => {
 		});
 
 		it("should be equal", async () => {
-			const newComponent = await service.create(new ComponentCreating(component));
+			const newComponent = await service.create(plainToClass(ComponentCreating, component));
 			expect(newComponent).toEqual(component);
 		});
 	});

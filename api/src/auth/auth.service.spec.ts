@@ -1,5 +1,6 @@
 import { JwtService } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
+import { plainToClass } from "class-transformer";
 import { getRepositoryToken } from "@nestjs/typeorm";
 import { Test, TestingModule } from "@nestjs/testing";
 import { NotFoundException, ForbiddenException } from "@nestjs/common";
@@ -74,7 +75,7 @@ describe("Auth service", () => {
 			user = new User();
 			user.login = "just_a_login";
 			user.password = "just_a_password";
-			userLogin = new UserLogin(user);
+			userLogin = plainToClass(UserLogin, user);
 		});
 
 		describe("if user is found", () => {
@@ -98,7 +99,7 @@ describe("Auth service", () => {
 				beforeEach(() => {
 					wrongUser = new User();
 					wrongUser.password = "wrong_a_password";
-					wrongUserLogin = new UserLogin(wrongUser);
+					wrongUserLogin = plainToClass(UserLogin, wrongUser);
 					userService.findByLogin.mockReturnValue(wrongUserLogin);
 				});
 
@@ -128,7 +129,7 @@ describe("Auth service", () => {
 			user.login = "just_a_login";
 			user.password = "just_a_password";
 			user.name = "name";
-			userRegistration = new UserRegistration(user);
+			userRegistration = plainToClass(UserRegistration, user);
 		});
 
 		describe("if nobody signed up", () => {

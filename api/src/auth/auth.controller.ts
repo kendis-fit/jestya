@@ -1,8 +1,14 @@
 import { Controller, Post, UsePipes, Body, HttpCode } from "@nestjs/common";
-import { ApiTags, ApiCreatedResponse, ApiForbiddenResponse, ApiNoContentResponse } from "@nestjs/swagger";
+import {
+	ApiTags,
+	ApiCreatedResponse,
+	ApiForbiddenResponse,
+	ApiNoContentResponse,
+	ApiBadRequestResponse,
+} from "@nestjs/swagger";
 
 import { AuthService } from "./auth.service";
-import { Error } from "../helpers/error.interfaces";
+import { Error, ErrorBadRequest } from "../helpers/error.interfaces";
 import { UserLogin } from "../user/dto/user-login.dto";
 import { UserResponse } from "../user/dto/user-response.dto";
 import { UserRegistration } from "../user/dto/user-registration.dto";
@@ -14,6 +20,7 @@ export class AuthController {
 	constructor(private readonly authService: AuthService) {}
 
 	@ApiCreatedResponse({ type: UserResponse })
+	@ApiBadRequestResponse({ type: ErrorBadRequest })
 	@ApiForbiddenResponse({ type: Error })
 	@Post("login")
 	@UsePipes(new PasswordEncryptionPipe(["password"]))
@@ -23,6 +30,7 @@ export class AuthController {
 	}
 
 	@ApiNoContentResponse()
+	@ApiBadRequestResponse({ type: ErrorBadRequest })
 	@ApiForbiddenResponse({ type: Error })
 	@HttpCode(204)
 	@Post("registration")

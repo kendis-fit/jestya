@@ -7,8 +7,4 @@ export class ProjectUpdateState {
 	@ApiProperty()
 	@IsISO8601()
 	public finishedAt: Date;
-
-	constructor(project: Project) {
-		this.finishedAt = project.finishedAt;
-	}
 }

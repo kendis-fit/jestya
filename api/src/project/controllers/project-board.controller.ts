@@ -6,10 +6,11 @@ import {
 	ApiNotFoundResponse,
 	ApiForbiddenResponse,
 	ApiNoContentResponse,
+	ApiBadRequestResponse,
 } from "@nestjs/swagger";
 
 import { Role } from "../../user/user.entity";
-import { Error } from "../../helpers/error.interfaces";
+import { Error, ErrorBadRequest } from "../../helpers/error.interfaces";
 import { RoleGuard } from "../../guards/role/role.guard";
 import { BoardService } from "../../board/board.service";
 import { BoardUpdate } from "../../board/dto/board-update.dto";
@@ -25,6 +26,7 @@ export class ProjectBoardController {
 	constructor(private readonly boardService: BoardService) {}
 
 	@ApiCreatedResponse({ type: BoardCreated })
+	@ApiBadRequestResponse({ type: ErrorBadRequest })
 	@ApiNotFoundResponse({ type: Error })
 	@ApiForbiddenResponse({ type: Error })
 	@Post(":id/boards")
@@ -38,6 +40,7 @@ export class ProjectBoardController {
 	}
 
 	@ApiNoContentResponse()
+	@ApiBadRequestResponse({ type: ErrorBadRequest })
 	@ApiNotFoundResponse({ type: Error })
 	@ApiForbiddenResponse({ type: Error })
 	@HttpCode(204)

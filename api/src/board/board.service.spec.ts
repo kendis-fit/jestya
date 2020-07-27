@@ -1,3 +1,5 @@
+import { DeleteResult } from "typeorm";
+import { plainToClass } from "class-transformer";
 import { NotFoundException } from "@nestjs/common";
 import { getRepositoryToken } from "@nestjs/typeorm";
 import { Test, TestingModule } from "@nestjs/testing";
@@ -6,7 +8,6 @@ import { Board } from "./board.entity";
 import { BoardService } from "./board.service";
 import { BoardCreating } from "./dto/board-creating.dto";
 import { BoardUpdate } from "./dto/board-update.dto";
-import { DeleteResult } from "typeorm";
 
 interface IBoardRepositoryMock {
 	findOne: jest.Mock;
@@ -75,7 +76,7 @@ describe("Board service", () => {
 		let boardCreating: BoardCreating;
 
 		beforeEach(async () => {
-			boardCreating = new BoardCreating(board);
+			boardCreating = plainToClass(BoardCreating, board);
 			boardRepository.save.mockReturnValue({ id: "123a", ...board });
 			newBoard = await service.create(boardCreating);
 		});
@@ -102,7 +103,7 @@ describe("Board service", () => {
 				boardUpdate.name = "test";
 				boardUpdate.description = "test2";
 
-				boardRepository.save.mockReturnValue(new BoardUpdate(boardUpdate));
+				boardRepository.save.mockReturnValue(plainToClass(BoardUpdate, boardUpdate));
 				boardUpdated = await service.update("123", boardUpdate);
 			});
 
@@ -121,7 +122,9 @@ describe("Board service", () => {
 			});
 
 			it("should throw an error 404", async () => {
-				await expect(service.update("123", new BoardUpdate(board))).rejects.toThrow(NotFoundException);
+				await expect(service.update("123", plainToClass(BoardUpdate, board))).rejects.toThrow(
+					NotFoundException
+				);
 			});
 		});
 	});

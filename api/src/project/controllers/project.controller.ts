@@ -7,6 +7,7 @@ import {
 	ApiCreatedResponse,
 	ApiNoContentResponse,
 	ApiNotFoundResponse,
+	ApiBadRequestResponse,
 } from "@nestjs/swagger";
 
 import { Role } from "../../user/user.entity";
@@ -14,7 +15,7 @@ import { ProjectService } from "../project.service";
 import { JwtGuard } from "../../guards/jwt/jwt.guard";
 import { ProjectInfo } from "../dto/project-info.dto";
 import { User } from "../../decorators/user.decorator";
-import { Error } from "../../helpers/error.interfaces";
+import { Error, ErrorBadRequest } from "../../helpers/error.interfaces";
 import { RoleGuard } from "../../guards/role/role.guard";
 import { BoardInfo } from "../../board/dto/board-info.dto";
 import { ProjectCreated } from "../dto/project-created.dto";
@@ -58,6 +59,7 @@ export class ProjectController {
 	}
 
 	@ApiCreatedResponse({ type: [ProjectCreated] })
+	@ApiBadRequestResponse({ type: ErrorBadRequest })
 	@ApiForbiddenResponse({ type: Error })
 	@Post()
 	@UseGuards(JwtGuard, new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
@@ -80,6 +82,7 @@ export class ProjectController {
 	}
 
 	@ApiNoContentResponse()
+	@ApiBadRequestResponse({ type: ErrorBadRequest })
 	@ApiNotFoundResponse({ type: Error })
 	@ApiForbiddenResponse({ type: Error })
 	@HttpCode(204)

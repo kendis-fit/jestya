@@ -5,10 +5,11 @@ import {
 	ApiNoContentResponse,
 	ApiForbiddenResponse,
 	ApiNotFoundResponse,
+	ApiBadRequestResponse,
 } from "@nestjs/swagger";
 
 import { Role } from "../../user/user.entity";
-import { Error } from "../../helpers/error.interfaces";
+import { Error, ErrorBadRequest } from "../../helpers/error.interfaces";
 import { CommentService } from "../../comment/comment.service";
 import { CommentUpdate } from "../../comment/dto/comment-update.dto";
 import { UserSelfGuard } from "../../guards/user-self/user-self.guard";
@@ -22,6 +23,7 @@ export class ProjectCommentController {
 	constructor(private readonly commentService: CommentService) {}
 
 	@ApiNoContentResponse()
+	@ApiBadRequestResponse({ type: ErrorBadRequest })
 	@ApiNotFoundResponse({ type: Error })
 	@ApiForbiddenResponse({ type: Error })
 	@HttpCode(204)

@@ -4,7 +4,6 @@ import { Injectable, ForbiddenException } from "@nestjs/common";
 import { User, Role } from "../user/user.entity";
 import { UserService } from "../user/user.service";
 import { UserLogin } from "../user/dto/user-login.dto";
-import { UserCreating } from "../user/dto/user-creating.dto";
 import { UserRegistration } from "../user/dto/user-registration.dto";
 
 @Injectable()
@@ -32,7 +31,7 @@ export class AuthService {
 		newUser.password = user.password;
 		newUser.role = Role.SUPER_ADMIN;
 
-		await this.userService.create(new UserCreating(newUser));
+		await this.userService.create(newUser);
 		return newUser;
 	}
 }

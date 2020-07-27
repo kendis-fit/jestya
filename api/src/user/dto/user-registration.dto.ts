@@ -20,10 +20,4 @@ export class UserRegistration {
 	@IsString()
 	@Length(9)
 	public password: string;
-
-	constructor(user: User) {
-		this.name = user.name;
-		this.login = user.login;
-		this.password = user.password;
-	}
 }

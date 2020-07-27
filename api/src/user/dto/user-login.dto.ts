@@ -13,9 +13,4 @@ export class UserLogin {
 	@IsNotEmpty()
 	@IsString()
 	public password: string;
-
-	constructor(user: User) {
-		this.login = user.login;
-		this.password = user.password;
-	}
 }
