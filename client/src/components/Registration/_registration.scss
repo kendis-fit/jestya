@@ -1,0 +1,15 @@
+дфн.registration {
+    height: 85vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &__container {
+        width: 400px;
+    }
+
+    &__sumbitButton {
+        display: block;
+        margin: 0 auto;
+    }
+} 
