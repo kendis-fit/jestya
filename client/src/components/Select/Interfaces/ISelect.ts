@@ -5,7 +5,9 @@ export default interface ISelect {
 	className?: string;
 	heplerText?: string;
 	label?: string;
-	errors?: any;
-	touched?: any;
 	children: any;
+	disabled?: boolean;
+	//formik
+	touched?: any;
+	errors?: any;
 }

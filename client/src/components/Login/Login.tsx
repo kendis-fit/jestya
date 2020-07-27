@@ -18,8 +18,8 @@ const Login = () => {
 		try {
 			const user = await resource.auth.login(state);
 			setUser?.(user);
-		} catch {
-			alert("ERROR");
+		} catch (error) {
+			console.log("ERROR", error);
 			SetLoginError(true);
 		}
 	};
@@ -57,7 +57,7 @@ const Login = () => {
 
 					<Input
 						name="login"
-						label="Name"
+						label="Login"
 						value={state.login}
 						onChange={handleChange}
 						className="mb-3"
