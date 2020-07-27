@@ -6,6 +6,7 @@ import {
 	ApiNoContentResponse,
 	ApiCreatedResponse,
 	ApiForbiddenResponse,
+	ApiBadRequestResponse,
 } from "@nestjs/swagger";
 import {
 	Controller,
@@ -38,7 +39,7 @@ import { RoleTasksGuard } from "../../guards/role-tasks/role-tasks.guard";
 import { TaskComponentInfo } from "../../task/dto/task-component-info.dto";
 import { JwtProjectsGuard } from "../../guards/jwt-projects/jwt-projects.guard";
 import { RoleProjectsGuard } from "../../guards/role-projects/role-projects.guard";
-import { Error } from "../../helpers/error.interfaces";
+import { Error, ErrorBadRequest } from "../../helpers/error.interfaces";
 
 @ApiBearerAuth()
 @ApiTags("projects")
@@ -77,6 +78,7 @@ export class ProjectTaskController {
 	}
 
 	@ApiNoContentResponse()
+	@ApiBadRequestResponse({ type: ErrorBadRequest })
 	@ApiNotFoundResponse({ type: Error })
 	@ApiForbiddenResponse({ type: Error })
 	@HttpCode(204)
@@ -90,6 +92,7 @@ export class ProjectTaskController {
 	}
 
 	@ApiNoContentResponse()
+	@ApiBadRequestResponse({ type: ErrorBadRequest })
 	@ApiNotFoundResponse({ type: Error })
 	@ApiForbiddenResponse({ type: Error })
 	@HttpCode(204)
@@ -113,6 +116,7 @@ export class ProjectTaskController {
 	}
 
 	@ApiCreatedResponse({ type: TaskCreated })
+	@ApiBadRequestResponse({ type: ErrorBadRequest })
 	@ApiNotFoundResponse({ type: Error })
 	@ApiForbiddenResponse({ type: Error })
 	@Post(":id/tasks")
@@ -123,6 +127,7 @@ export class ProjectTaskController {
 	}
 
 	@ApiCreatedResponse({ type: CommentCreated })
+	@ApiBadRequestResponse({ type: ErrorBadRequest })
 	@ApiNotFoundResponse({ type: Error })
 	@ApiForbiddenResponse({ type: Error })
 	@Post(":id/tasks/:taskId/comments")

@@ -7,6 +7,7 @@ import {
 	ApiCreatedResponse,
 	ApiConflictResponse,
 	ApiNoContentResponse,
+	ApiBadRequestResponse,
 } from "@nestjs/swagger";
 import {
 	Controller,
@@ -30,7 +31,7 @@ import { Role } from "./user.entity";
 import { UserService } from "./user.service";
 import { UserInfo } from "./dto/user-info.dto";
 import { JwtGuard } from "../guards/jwt/jwt.guard";
-import { Error } from "../helpers/error.interfaces";
+import { Error, ErrorBadRequest } from "../helpers/error.interfaces";
 import { UserUpdate } from "./dto/user-update.dto";
 import { UserCreated } from "./dto/user-created.dto";
 import { RoleGuard } from "../guards/role/role.guard";
@@ -64,6 +65,7 @@ export class UserController {
 	}
 
 	@ApiOkResponse({ type: [UserInfo] })
+	@ApiBadRequestResponse({ type: Error })
 	@ApiForbiddenResponse({ type: Error })
 	@Get()
 	@UseGuards(JwtGuard)
@@ -76,6 +78,7 @@ export class UserController {
 	}
 
 	@ApiCreatedResponse({ type: UserCreated })
+	@ApiBadRequestResponse({ type: ErrorBadRequest })
 	@ApiConflictResponse({ type: Error })
 	@ApiForbiddenResponse({ type: Error })
 	@Post()
@@ -87,6 +90,7 @@ export class UserController {
 	}
 
 	@ApiNoContentResponse()
+	@ApiBadRequestResponse({ type: Error })
 	@ApiNotFoundResponse({ type: Error })
 	@HttpCode(204)
 	@Delete(":id")
@@ -96,6 +100,7 @@ export class UserController {
 	}
 
 	@ApiNoContentResponse()
+	@ApiBadRequestResponse({ type: ErrorBadRequest })
 	@ApiNotFoundResponse({ type: Error })
 	@HttpCode(204)
 	@Put(":id")
@@ -105,6 +110,7 @@ export class UserController {
 	}
 
 	@ApiNoContentResponse()
+	@ApiBadRequestResponse({ type: ErrorBadRequest })
 	@ApiNotFoundResponse({ type: Error })
 	@HttpCode(204)
 	@Patch(":id")

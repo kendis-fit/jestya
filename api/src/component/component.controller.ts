@@ -1,9 +1,15 @@
 import { Controller, Get, UseGuards, Post, Body } from "@nestjs/common";
-import { ApiTags, ApiOkResponse, ApiForbiddenResponse, ApiCreatedResponse } from "@nestjs/swagger";
+import {
+	ApiTags,
+	ApiOkResponse,
+	ApiForbiddenResponse,
+	ApiCreatedResponse,
+	ApiBadRequestResponse,
+} from "@nestjs/swagger";
 
 import { Role } from "../user/user.entity";
 import { JwtGuard } from "../guards/jwt/jwt.guard";
-import { Error } from "../helpers/error.interfaces";
+import { Error, ErrorBadRequest } from "../helpers/error.interfaces";
 import { RoleGuard } from "../guards/role/role.guard";
 import { ComponentService } from "./component.service";
 import { ComponentInfo } from "./dto/component-info.dto";
@@ -25,6 +31,7 @@ export class ComponentController {
 	}
 
 	@ApiCreatedResponse({ type: ComponentCreated })
+	@ApiBadRequestResponse({ type: ErrorBadRequest })
 	@ApiForbiddenResponse({ type: Error })
 	@Post()
 	@UseGuards(JwtGuard, new RoleGuard([Role.ADMIN, Role.SUPER_ADMIN]))
