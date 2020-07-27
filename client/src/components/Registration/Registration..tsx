@@ -1,6 +1,5 @@
 import React from "react";
 import { Formik } from "formik";
-// import IRegistration from "./Interfaces";
 import * as Yup from "yup";
 import Input from "../Input";
 import Select from "../Select";
@@ -20,39 +19,33 @@ interface IInitialRegistrationData {
 	role: string;
 }
 
-// const FirstRegistrationSelect = [{ value: "SUPER_ADMIN", label: "Super Admin" }];
+//------Select data----
+const FirstRegistrationSelect = [{ value: "SUPER_ADMIN", label: "Super Admin" }];
 const SuperAdminSelect = [
 	{ value: "", label: "Choose.." },
 	{ value: "ADMIN", label: "Admin" },
 	{ value: "USER", label: "User" },
 ];
 const AdminSelect = [{ value: "USER", label: "User" }];
+//---------------------
 
 const Registration = () => {
-	// const [loginError, SetLoginError] = useState(true);
-
 	document.title = "Registration | JESTYA";
-	// const { auth } = useAuth();
+	const { auth } = useAuth();
 	const handleSubmiting = (values: IInitialRegistrationData) => {
 		alert(JSON.stringify(values, null, 2));
 	};
 
-	// console.log(auth);
-	const auth = {
-		user: {
-			role: "ADMIN",
-		},
-	};
-
-	// auth.user?.role = "ADMIN";
-
-	const SelectData = auth.user?.role === "SUPER_ADMIN" ? SuperAdminSelect : AdminSelect;
-
+	const SelectData = auth.user?.role
+		? auth.user?.role === "SUPER_ADMIN"
+			? SuperAdminSelect
+			: AdminSelect
+		: FirstRegistrationSelect;
 	const initialValues = {
 		name: "",
 		login: "",
 		password: "",
-		role: auth.user?.role === "SUPER_ADMIN" ? "" : "USER",
+		role: auth.user?.role ? (auth.user?.role === "SUPER_ADMIN" ? "" : "USER") : "SUPER_ADMIN",
 	};
 	return (
 		<div className="registration">
