@@ -4,13 +4,13 @@ import { Route } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 import NoUnauthenticatedRoute from "../NoUnauthenticatedRoute/NoUnauthenticatedRoute";
 
-export interface IPrivateRoute {
+export interface IRoute {
     component: () => JSX.Element;
     path: string | string[];
     exact?: boolean;
 }
 
-const PrivateRoute = (props: IPrivateRoute) => {
+const PrivateRoute = (props: IRoute) => {
     const { auth } = useAuth();
     const { component: Component, ...rest } = props;
     

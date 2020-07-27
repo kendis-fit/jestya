@@ -6,7 +6,7 @@ import resource from "../../api/resource";
 import Registration from "../Registration";
 
 const NoUnauthenticatedRoute = () => {
-	const { path } = useRouteMatch();
+	const { url } = useRouteMatch();
 	const { data: superAdminExisted, loading, error } = useVanillaFetch(() => resource.users.findByRole("SUPER_ADMIN"));
 
 	if (error) {
@@ -19,7 +19,7 @@ const NoUnauthenticatedRoute = () => {
 
 	if (superAdminExisted) {
 		return <Redirect to="/login" />
-	} else if (path === "/registration") {
+	} else if (url === "/registration") {
 		return <Registration />
 	}
 	return <Redirect to="/registration" />

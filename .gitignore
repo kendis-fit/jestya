@@ -139,4 +139,7 @@ sketch
 ### Config files ###
 .config.ts
 
+### Docker ###
+Dockerfile
+
 # End of https://www.toptal.com/developers/gitignore/api/node,visualstudiocode,react

@@ -1,23 +1,20 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 
-import Login from "../Login";
 import { useAuth } from "../../context/auth";
+import { IRoute } from "../PrivateRoute/PrivateRoute";
 import NoUnauthenticatedRoute from "../NoUnauthenticatedRoute/NoUnauthenticatedRoute";
-
-export interface IRoute {
-    path: "/login" | "/registration";
-}
 
 const PublicSignRoute = (props: IRoute) => {
     const { auth } = useAuth();
+    const { component: Component } = props;
 
     if (auth.isAuthenticated) {
         return <Redirect to="/projects" />
     }
 
     if (props.path === "/login") {
-        return <Login />
+        return <Component />
     }
     return <NoUnauthenticatedRoute />
 }
