@@ -13,6 +13,7 @@
         border-radius: 10px;
         background-color: #fff;
     }
+    
 
     &__button {
         display: flex;
@@ -25,11 +26,28 @@
     }
 
     
+    
 }
 
 .task__avatar{
     height: 30px;
     width: 30px;
-
     border-radius: 50%;
+}
+
+.section__noTasks{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 200px;
+    height: 60vh;
+}
+
+.noTasks {
+
+    &__icon{
+        font-size: 70px;
+        margin-bottom: 15px;
+    
+    }
 }
