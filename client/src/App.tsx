@@ -22,7 +22,7 @@ const App = () => {
 			<Auth>
 				<BrowserRouter>
 					<Switch>
-						<PublicSignRoute path="/login" component={Login} />
+						<PublicSignRoute exact path={["/", "/login"]} component={Login} />
 						<PrivateRoute path="/registration" component={Registration} />
 						<PrivateRoute exact path="/projects" component={Projects} />
 						<Route path="/projects/:id" />

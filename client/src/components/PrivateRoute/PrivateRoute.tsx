@@ -15,7 +15,7 @@ const PrivateRoute = (props: IRoute) => {
     const { component: Component, ...rest } = props;
     
     return(
-        <Route {...rest} render={() => auth.isAuthenticated ? <Component /> : <NoUnauthenticatedRoute />} />
+        <Route {...rest} render={() => auth.isAuthenticated && props.path !== "/registration" ? <Component /> : <NoUnauthenticatedRoute />} />
     );
 }
 

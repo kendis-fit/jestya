@@ -1,11 +1,32 @@
 import React from "react";
 import Section from "../Section";
 
+import Project from "../Project/Project";
+import resource from "../../api/resource";
+import { useVanillaFetch } from "vanilla-hooks";
+
 const Projects = () => {
+
+	const { data: projects, loading } = useVanillaFetch(resource.projects.findAll);
+	
+	if (loading) {
+		return <div>loading...</div>
+	}
+
 	return (
-		<div>
-			<h2>Page /projects</h2>
-			<Section />
+		<div className="projects">
+			<div className="projects__body">
+				<div className="projects__title">My projects</div>
+				<div className="projects__content">
+					{
+						projects.map(project => 
+							<div className="project_wrapper">
+								<Project {...project} />
+							</div>
+						)
+					}
+				</div>
+			</div>
 		</div>
 	);
 };

@@ -13,7 +13,7 @@ const PublicSignRoute = (props: IRoute) => {
         return <Redirect to="/projects" />
     }
 
-    if (props.path === "/login") {
+    if (props.path === "/login" || "/") {
         return <Component />
     }
     return <NoUnauthenticatedRoute />

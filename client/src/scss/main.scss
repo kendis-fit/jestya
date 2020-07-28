@@ -1,11 +1,19 @@
-// Variables
-// $primary: #401f;
+// common
+@import "./mixins";
+@import "./variables";
 
-//bootstrap
+// bootstrap
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
 
 // components css
 @import "../components/Login/login";
 @import "../components/Registration/registration";
 @import "../components/Section/section";
-@import "../components/SectionList/sectionList"
+@import "../components/SectionList/sectionList";
+@import "../components/Project/project";
+@import "../components/Projects/projects";
+@import "../components/Registration/registration";
+
+body {
+    background: #fffefe;
+}
