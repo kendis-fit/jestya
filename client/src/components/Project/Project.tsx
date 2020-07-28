@@ -8,13 +8,13 @@ export interface IProject {
 }
 
 const Project = (props: IProject) => {
-    const datasets = [props.data];
+    const datasets = [{ data: props.data, backgroundColor: ["blue", "red", "green"] }];
 
     return (
         <div className="project">
             <div className="project__body">
-                <label className="project__title">{props.name}</label>
-                <Doughnut data={{ labels: props.labels, datasets }} />
+                <div className="project__title"><span>{props.name}</span></div>
+                <Doughnut data={{ labels: props.labels, datasets }} options={{ legend: { display: false } }} />
             </div>
         </div>
     );

@@ -5,18 +5,22 @@ $projects-width: map-get($map: $page-size, $key: "width");
     @include size($projects-height, $projects-width);
 }
 
-.project__body {
-    padding: 10px;
+.projects__body {
+    padding-left: 50px;
+    padding-bottom: 50px;
+    padding-right: 50px;
 }
 
 .projects__title {
-    font-size: 20px;
+    font-size: 28px;
+    padding-bottom: 10px;
+    border-bottom: 1px $secondary solid;
 }
 
 .projects__content {
-    @include flex(center);
+    @include flex(left);
 }
 
 .project_wrapper {
-    margin: 50px;
+    margin: 25px;
 }

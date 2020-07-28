@@ -7,10 +7,11 @@ $project-height: map-get($map: $project-size, $key: "height");
 }
 
 .project__body {
-    padding: 5px;
+    padding: 10px;
 }
 
 .project__title {
-    @extend .bg-info;
-    font-size: 15px;
+    @extend .text-info;
+    font-size: 24px;
+    text-align: center;
 }

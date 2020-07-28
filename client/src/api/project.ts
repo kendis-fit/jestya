@@ -6,6 +6,16 @@ const projects = {
 				data: [12, 34, 44],
 				labels: ["to-do", "in processing", "done"],
 			},
+			{
+				name: "Back-end",
+				data: [12, 34, 44],
+				labels: ["to-do", "in processing", "done"],
+			},
+			{
+				name: "Devops",
+				data: [12, 34, 44],
+				labels: ["to-do", "in processing", "done"],
+			},
 		]);
 	},
 };
