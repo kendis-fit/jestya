@@ -1,10 +1,12 @@
 import React from "react";
 
 const Users = () => {
+	document.title = "Users | JESTYA";
+
 	return (
-		<>
-			<h2>Users</h2>
-		</>
+		<div>
+			<h2 className="text-center">Users</h2>
+		</div>
 	);
 };
 

@@ -22,7 +22,7 @@ interface IInitialRegistrationData {
 //------Select data----
 const FirstRegistrationSelect = [{ value: "SUPER_ADMIN", label: "Super Admin" }];
 const SuperAdminSelect = [
-	{ value: "", label: "Choose.." },
+	{ value: "", label: "Choose..." },
 	{ value: "ADMIN", label: "Admin" },
 	{ value: "USER", label: "User" },
 ];

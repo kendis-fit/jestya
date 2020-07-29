@@ -6,9 +6,9 @@ import { useVanillaFetch } from "vanilla-hooks";
 
 const Projects = () => {
 	const { data: projects, loading } = useVanillaFetch(resource.projects.findAll);
-	
+
 	if (loading) {
-		return <div>loading...</div>
+		return <div>loading...</div>;
 	}
 
 	return (
@@ -16,13 +16,11 @@ const Projects = () => {
 			<div className="projects__body">
 				<div className="projects__title">My projects</div>
 				<div className="projects__content">
-					{
-						projects.map(project => 
-							<div className="project_wrapper">
-								<Project {...project} />
-							</div>
-						)
-					}
+					{projects.map(project => (
+						<div className="project_wrapper">
+							<Project {...project} />
+						</div>
+					))}
 				</div>
 			</div>
 		</div>

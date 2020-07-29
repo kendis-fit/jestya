@@ -12,6 +12,7 @@ import Projects from "./components/Projects/Projects";
 import Registration from "./components/Registration";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import PublicSignRoute from "./components/PublicSignRoute/PublicSignRoute";
+import SectionList from "./components/SectionList";
 
 const store = createStore(reducer);
 
@@ -27,6 +28,8 @@ const App = () => {
 						<Route path="/projects/:id" />
 						<Route exact path="/users" component={Users} />
 						<Route path="/users/:id" />
+						<Route exact path="/sectionlist" component={SectionList} />
+
 					</Switch>
 				</BrowserRouter>
 			</Auth>
