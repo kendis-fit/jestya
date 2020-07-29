@@ -5,6 +5,8 @@ import resource from "../../api/resource";
 import { useVanillaFetch } from "vanilla-hooks";
 
 const Projects = () => {
+	document.title = "PROJECTS | JESTYA";
+
 	const { data: projects, loading } = useVanillaFetch(resource.projects.findAll);
 
 	if (loading) {
@@ -14,7 +16,6 @@ const Projects = () => {
 	return (
 		<div className="projects">
 			<div className="projects__body">
-				<div className="projects__title">My projects</div>
 				<div className="projects__content">
 					{projects.map(project => (
 						<div className="project_wrapper">

@@ -19,33 +19,9 @@ body {
     background: #fffefe;
 }
 
-
-//--------width in-%-----
-.w-55 {
-    width: 55% !important;
+@for $i from 0 to 20 {
+    $i: $i * 5;
+    .w-#{$i} {
+        width: $i !important;
+    }
 }
-
-.w-60 {
-    width: 60% !important;
-}
-
-.w-65 {
-    width: 65% !important;
-}
-
-.w-80 {
-    width: 80% !important;
-}
-
-.w-85 {
-  
-    width: 85% !important;
-}
-.w-90 {
-    width: 90% !important;
-}
-
-.w-95 {
-    width: 95% !important;
-}
-// -----------------------

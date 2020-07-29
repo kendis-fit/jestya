@@ -12,15 +12,8 @@ $projects-width: map-get($map: $page-size, $key: "width");
         padding-right: 50px;
     }
 
-    &__title {
-        font-size: 28px;
-        padding-bottom: 10px;
-        border-bottom: 1px $secondary solid;
-    }
-
     &__content {
         @include flex(flex-start);
         @include flex-position(row, wrap);
-        // height: 100vh;
     }
 }

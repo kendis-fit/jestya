@@ -2,12 +2,21 @@ $project-colour: $light-gray;
 $project-width: map-get($map: $project-size, $key: "width");
 $project-height: map-get($map: $project-size, $key: "height");
 
+.top-line {
+    border-top: 2px solid $project-colour;
+}
+
+.top-line_wrapper {
+    margin-top: 10px;
+}
+
 .project {
     @include bg-colour-size($project-colour, $project-width, $project-height);
     cursor: pointer;
+    opacity: 0.9;
 
     &__body {
-        padding: 10px;
+        padding: 10px 10px 0 10px;
     }
     
     &__title {
@@ -15,9 +24,22 @@ $project-height: map-get($map: $project-size, $key: "height");
         font-size: 24px;
         text-align: center;
     }
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.area {
+    padding: 10px;
+    border-radius: 5px;
+    
+    &--filled {
+        background: $light-pink;
+    }
 }
 
 .project_wrapper {
-    margin: 25px;
+    margin: 20px;
     height: map-get($map: $project-size, $key: "height");
 }
