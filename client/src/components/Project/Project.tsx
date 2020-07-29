@@ -5,6 +5,7 @@ import { Redirect } from "react-router-dom";
 export interface IProject {
     id: string;
     name: string;
+    description?: string;
     data: number[];
     labels: string[];
 }
@@ -27,15 +28,16 @@ const Project = (props: IProject) => {
     }
 
     return (
-        <div className="top-line" onClick={() => setIsRedirected(true)}>
+        <div className="top-line">
             <div className="top-line_wrapper">
                 <div className="project">
-                    <div className="project__body">
+                    <div className="project__body" onClick={() => setIsRedirected(true)}>
                         <div className="project__title"><span>{props.name}</span></div>
                         <Pie data={{ labels: props.labels, datasets }} options={{ legend: { display: false } }} />
                     </div>
                     <div className="area area--filled">
-                        Count tasks: {props.data.length}
+                        <span>Count tasks: {props.data.length}</span>
+                        <span className="material-icons area__icon">info</span>
                     </div>
                 </div>
             </div>

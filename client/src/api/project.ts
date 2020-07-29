@@ -4,6 +4,7 @@ const projects = {
 			{
 				id: "1",
 				name: "Front-end",
+				description: "mdaa",
 				data: [12, 34, 44],
 				labels: ["to-do", "in processing", "done"],
 			},
