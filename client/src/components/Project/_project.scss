@@ -52,5 +52,6 @@ $project-height: map-get($map: $project-size, $key: "height");
 
 .project_wrapper {
     margin: 20px;
+    margin-bottom: 75px;
     height: map-get($map: $project-size, $key: "height");
 }

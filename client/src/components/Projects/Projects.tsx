@@ -1,16 +1,21 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
+import { useVanillaFetch } from "vanilla-hooks";
 
 import Project from "../Project/Project";
 import resource from "../../api/resource";
-import { useVanillaFetch } from "vanilla-hooks";
 
 const Projects = () => {
 	document.title = "PROJECTS | JESTYA";
 
-	const { data: projects, loading } = useVanillaFetch(resource.projects.findAll);
+	const { data: projects, loading, error } = useVanillaFetch(resource.projects.findAll);
+
+	if (error) {
+		return <Redirect to={`/not-available/projects`} />
+	}
 
 	if (loading) {
-		return <div>loading...</div>;
+		return <div>loading...</div>
 	}
 
 	return (

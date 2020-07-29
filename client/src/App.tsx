@@ -8,9 +8,10 @@ import Users from "./components/Users";
 import Login from "./components/Login";
 import reducer from "./reducers/reducer";
 import Auth from "./components/Auth/Auth";
-import Projects from "./components/Projects/Projects";
-import Registration from "./components/Registration";
 import SectionList from "./components/SectionList";
+import Registration from "./components/Registration";
+import NotAvailable from "./components/NotAvailable";
+import Projects from "./components/Projects/Projects";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import PublicSignRoute from "./components/PublicSignRoute/PublicSignRoute";
 
@@ -27,6 +28,8 @@ const App = () => {
 						<PrivateRoute exact path="/projects" component={Projects} />
 						<PrivateRoute exact path="/projects/:id" component={SectionList} />
 						<PrivateRoute exact path="/users" component={Users} />
+						<Route exact path="/not-available" component={NotAvailable} />
+						<Route path="/not-available/:page" render={(route) => <NotAvailable page={route.match.params.page} />} />
 						<Route path="/users/:id" />
 					</Switch>
 				</BrowserRouter>
