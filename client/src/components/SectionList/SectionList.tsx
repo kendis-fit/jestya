@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import Section from "../Section";
 
 const SectionList = () => {
-	const arr = [1, 2];
-
 	const [sectionsList, setSectionsList] = useState<any[]>([1]);
 
 	const hendleAddSection = () => {
+		console.log("tut");
+
 		setSectionsList([...sectionsList, 1]);
 	};
 
@@ -15,9 +15,9 @@ const SectionList = () => {
 	return (
 		<div className="sectionList ">
 			{sectionsList.map((ell, i) => (
-				<Section key={i} index={i} hendleAddSection={hendleAddSection} />
+				<Section key={i} index={i} />
 			))}
-			<Section index={arr.length} addSection />
+			<Section index={sectionsList.length} addSection hendleAddSection={hendleAddSection} />
 		</div>
 	);
 };

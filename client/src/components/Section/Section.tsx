@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Task from "./Task";
+import SectionHeader from "./SectionHeader";
 
-const Colors = ["bg-primary", "bg-success", "bg-danger", "bg-warning", "bg-info"];
 
 const Section = (props: any) => {
 	const [taskList, setTaskList] = useState<any[]>([]);
@@ -9,25 +9,12 @@ const Section = (props: any) => {
 	const hendleAddTask = () => {
 		setTaskList([...taskList, "s"]);
 	};
+	console.log(props);
+	
 
 	return (
 		<div className="section" style={{ background: props.index % 2 === 0 ? "#fafafa" : "#f2f2f2" }}>
-			<div
-				className={`section__header p-2 mb-3 d-flex ${
-					props.addSection ? "bg-secondary" : Colors[props.index]
-				} `}
-			>
-				{props.addSection ? (
-					<button className="btn text-white p-0 d-flex align-items-center" onClick={props.hendleAddSection}>
-						<span className="material-icons p-2 mr-2">add_circle_outline</span> Add Section
-					</button>
-				) : (
-					<>
-						<span className="material-icons text-white p-2 mr-2">build</span>
-						<input className="form-control w-75 " type="text" value={"asdasd"} />{" "}
-					</>
-				)}
-			</div>
+			<SectionHeader {...props}/>
 			<div className="section__tasklist">
 				{props.addSection ? (
 					<p className="text-center">Add new section</p>

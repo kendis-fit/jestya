@@ -20,7 +20,7 @@ const Task = (props: any) => {
 				align-items-center
 				 "
 			>
-				<h5 className="m-0">Some task text</h5>
+				<h5 className="m-0">Black Lives Matter)))</h5>
 				<img
 					className="task__avatar"
 					src="https://upload.wikimedia.org/wikipedia/commons/f/f5/Poster-sized_portrait_of_Barack_Obama.jpg"

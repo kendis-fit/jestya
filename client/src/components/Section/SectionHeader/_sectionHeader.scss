@@ -1,0 +1,27 @@
+.section-header{
+
+     
+
+    &__title{
+    color: #fff;
+    font-weight: 500;
+    font-size: 18px;
+        &:focus {
+            color: #404040;
+            background: #fff !important;
+        }
+    }
+    &__arrow {
+        // section-header__arrow
+        // display: none;
+        color: rgba(255, 255, 255, 0);
+        &:hover {
+            color: rgba(255, 255, 255, 1);
+            @include flex(center, center, center);
+        }
+    }
+    &:hover .section-header__arrow {
+        color: rgba(255, 255, 255, 1);
+
+    }
+}
