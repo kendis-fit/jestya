@@ -7,8 +7,17 @@ export interface IProject {
     labels: string[];
 }
 
+const getRandomColour = () => {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
 const Project = (props: IProject) => {
-    const datasets = [{ data: props.data, backgroundColor: ["blue", "red", "green"] }];
+    const datasets = [{ data: props.data, backgroundColor: props.data.map(() => getRandomColour()) }];
 
     return (
         <div className="project">

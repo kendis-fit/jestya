@@ -8,9 +8,25 @@
     @include size($width, $height);
 }
 
-@mixin flex($j-content: &, $a-items: &, $a-content: &) {
+@mixin flex($j-content: null, $a-items: null, $a-content: null) {
     display: flex;
-    justify-content: $j-content;
-    align-items: $a-items;
-    align-content: $a-content;
+    @if ($j-content != null) {
+        justify-content: $j-content;
+    }
+    @if ($a-items != null) {
+        align-items: $a-items;
+    }
+    @if ($a-content != null) {
+        align-content: $a-content;
+    }
+}
+
+@mixin flex-position($f-direction: null, $f-wrap: null) {
+    display: flex;
+    @if ($f-direction != null) {
+        flex-direction: $f-direction;
+    }
+    @if ($f-wrap != null) {
+        flex-wrap: $f-wrap;
+    }
 }

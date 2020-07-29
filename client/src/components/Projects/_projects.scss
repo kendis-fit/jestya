@@ -2,25 +2,25 @@ $projects-height: map-get($map: $page-size, $key: "height");
 $projects-width: map-get($map: $page-size, $key: "width");
 
 .projects {
-    @include size($projects-height, $projects-width);
-}
+    @include size($projects-width, $projects-height);
+    overflow-y: auto;
 
-.projects__body {
-    padding-left: 50px;
-    padding-bottom: 50px;
-    padding-right: 50px;
-}
+    
+    &__body {
+        padding-left: 50px;
+        padding-bottom: 50px;
+        padding-right: 50px;
+    }
 
-.projects__title {
-    font-size: 28px;
-    padding-bottom: 10px;
-    border-bottom: 1px $secondary solid;
-}
+    &__title {
+        font-size: 28px;
+        padding-bottom: 10px;
+        border-bottom: 1px $secondary solid;
+    }
 
-.projects__content {
-    @include flex(left);
-}
-
-.project_wrapper {
-    margin: 25px;
+    &__content {
+        @include flex(flex-start);
+        @include flex-position(row, wrap);
+        // height: 100vh;
+    }
 }
