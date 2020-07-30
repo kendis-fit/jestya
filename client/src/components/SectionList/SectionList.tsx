@@ -4,10 +4,14 @@ import Section from "../Section";
 const SectionList = () => {
 	const [sectionsList, setSectionsList] = useState<any[]>([1]);
 
-	const hendleAddSection = () => {
+	const handleAddSection = (index: number) => {
 		console.log("tut");
-
-		setSectionsList([...sectionsList, 1]);
+		if (typeof index === "number") {
+			console.log("leeeeeeeft");
+			setSectionsList([...sectionsList.splice(index, 0, 2), ...sectionsList]);
+		} else {
+			setSectionsList([...sectionsList, 1]);
+		}
 	};
 
 	console.log(sectionsList);
@@ -15,9 +19,9 @@ const SectionList = () => {
 	return (
 		<div className="sectionList ">
 			{sectionsList.map((ell, i) => (
-				<Section key={i} index={i} />
+				<Section key={i} index={i} handleAddSection={handleAddSection} />
 			))}
-			<Section index={sectionsList.length} addSection hendleAddSection={hendleAddSection} />
+			<Section index={sectionsList.length} addSection handleAddSection={handleAddSection} />
 		</div>
 	);
 };

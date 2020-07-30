@@ -6,7 +6,7 @@ import SectionHeader from "./SectionHeader";
 const Section = (props: any) => {
 	const [taskList, setTaskList] = useState<any[]>([]);
 
-	const hendleAddTask = () => {
+	const handleAddTask = () => {
 		setTaskList([...taskList, "s"]);
 	};
 	console.log(props);
@@ -31,7 +31,7 @@ const Section = (props: any) => {
 							btn 
 							bg-white
 							shadow "
-							onClick={hendleAddTask}
+							onClick={handleAddTask}
 						>
 							<span className="material-icons">add_circle_outline</span>
 						</button>

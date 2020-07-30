@@ -5,6 +5,17 @@
     // height: 100
     &__header {
         height: 60px;
+        // cursor: grab;
+        position: relative;
+        &:active {
+        // cursor: grabbing;
+
+        }
+        &:hover {
+            .section-header__arrow {
+                color: #fff;
+            }
+        }
     }
     &__task {
         height: 150px;
