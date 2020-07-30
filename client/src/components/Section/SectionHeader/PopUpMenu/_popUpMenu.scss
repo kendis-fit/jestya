@@ -18,23 +18,31 @@
         width: 20px;
     }
     &__icon-list{
-        @include flex(space-around,center,center);
-        // width: 100%;
+        // @include flex(space-around,center,center);
+        width: 92%;
+        display: flex;
         height: 30px;
         flex-wrap: wrap;
+        margin: 0 auto;
     ;
     }
 
     &__icon {
-        height: 10px;
-        width: 10px;
+        // height: 10px;
+        // width: 10px;
+        display: flex;
         cursor: pointer;
         color: $gray-500;
+        padding: 2px;
+        span {
+
+            font-size: 33px;
+        }
     }
 
     &__icon--active {
-        height: 10px;
-        width: 10px;
+        // height: 10px;
+        // width: 10px;
         color: $info;
     }
 }

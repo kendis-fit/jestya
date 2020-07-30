@@ -10,35 +10,27 @@ interface ISectionHeader {
 const ColorsArray = ["blue", "indigo", "purple", "pink", "red", "orange", "yellow", "green", "teal", "cyan", "gray"];
 const IconsArray = [
 	"error",
-	"warning",
 	"add_alert",
-	"report",
 	"access_alarm",
-	'build_circle',
-	'bookmark_border',
-	'bug_report',
-	'check_circle',
-	'code',
-	'explore',
-	'event',
-	'favorite_border',
-	'grade',
-	'home',
-	'language',
-	'lock'
-	// 	"report",
-	// 	"access_alarm",
-	// 	"error",
-	// 	"warning",
-	// 	"add_alert",
-	// 	"report",
-	// 	"access_alarm",
+	"build_circle",
+	"bookmark_border",
+	"bug_report",
+	"check_circle",
+	"code",
+	"explore",
+	"event",
+	"favorite_border",
+	"grade",
+	"home",
+	"language",
+	"lock",
 ];
 
 const SectionHeader = (props: ISectionHeader) => {
 	console.log(props);
 	const [headerColor, setHeaderColor] = useState<string>(ColorsArray[1]);
 	const [headerIcon, setHeaderIcon] = useState<string>(IconsArray[1]);
+	const [showPopUp, setShowPopUp] = useState<boolean>(false);
 
 	const handleChangeColor = (color: string) => {
 		setHeaderColor(color);
@@ -47,8 +39,12 @@ const SectionHeader = (props: ISectionHeader) => {
 		setHeaderIcon(icon);
 	};
 
+	const handlePopUp = () => {
+		setShowPopUp(!showPopUp);
+	};
+
 	return (
-		<div className={`section__header p-2 mb-3 d-flex ${props.addSection ? "border-bottom" : "bg-" + headerColor} `}>
+		<div className={`section__header p-2 mb-3  ${props.addSection ? "border-bottom" : "bg-" + headerColor} `}>
 			<div className="section-header__wrapperAddBtnLeft">
 				{props.addSection ? null : (
 					//if not addSection show add button section before curent section
@@ -65,17 +61,23 @@ const SectionHeader = (props: ISectionHeader) => {
 			) : (
 				//else show header with title of section
 				<>
-					<span className="material-icons text-white p-2 pl-3 mr-2">{headerIcon}</span>
+					<span className="section-header__icon material-icons text-white p-2 pl-3 mr-2">{headerIcon}</span>
 					<input
 						className={` form-control w-65 ${"bg-" + headerColor}  border-0 section-header__title`}
 						type="text"
 						defaultValue={"asdasd"}
 					/>
-					<span className="section-header__arrow material-icons  ">keyboard_arrow_down</span>
+					<span
+						className={`section-header__arrow${showPopUp ? "--active" : ""} material-icons`}
+						onClick={handlePopUp}
+					>
+						keyboard_arrow_down
+					</span>
 				</>
 			)}
 			{props.addSection ? null : (
 				<PopUpMenu
+					ShowPopUp={showPopUp}
 					IconsArray={IconsArray}
 					HeaderIcon={headerIcon}
 					handleChangeIcon={handleChangeIcon}

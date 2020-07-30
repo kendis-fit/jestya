@@ -28,11 +28,11 @@ body {
     $i: $i * 5;
     
     .w-#{$i} {
-        width: $i !important;
+        width: #{$i}% !important;
     }
 
     .h-#{$i} {
-        height: $i !important;
+        height: #{$i}% !important;
     }
 }
 // -----------------------

@@ -5,14 +5,15 @@ interface IPopUpMenu {
 	IconsArray: string[];
 	HeaderColor: string;
 	HeaderIcon: string;
+	ShowPopUp: boolean;
 	handleChangeColor(color: string): void;
 	handleChangeIcon(icon: string): void;
 }
 
 const PopUpMenu = (props: IPopUpMenu) => {
-	const { ColorsArray, HeaderColor, HeaderIcon, handleChangeColor, handleChangeIcon, IconsArray } = props;
+	const { ColorsArray, HeaderColor, ShowPopUp, HeaderIcon, handleChangeColor, handleChangeIcon, IconsArray } = props;
 	return (
-		<div className="section-header__popUpMenu p-2">
+		<div className={`section-header__popUpMenu${ShowPopUp ? "" : "--disable"} p-2 `}>
 			<div className="popUpMenu__color-list ">
 				{ColorsArray.map((color, i) => (
 					<div
@@ -31,7 +32,6 @@ const PopUpMenu = (props: IPopUpMenu) => {
 						key={i}
 						className={`popUpMenu__icon ${icon === HeaderIcon ? "popUpMenu__icon--active" : ""}`}
 						onClick={() => {
-							// handleChangeColor(color);
 							handleChangeIcon(icon);
 						}}
 					>
