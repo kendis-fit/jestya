@@ -25,15 +25,15 @@ const App = () => {
 					<Switch>
 						<PrivateRoute exact path={["/", "/login"]} component={Login} />
 						<PrivateRoute exact path="/registration" component={Registration} />
-					</Switch>
-					<Header />
-					<Switch>
-						<PrivateRoute exact path="/projects" component={Projects} />
-						<PrivateRoute exact path="/projects/:id" component={SectionList} />
-						<PrivateRoute exact path="/users" component={Users} />
-						<Route path="/users/:id" />
 						<Route exact path="/not-available" component={NotAvailable} />
 						<Route path="/not-available/:page" render={(route) => <NotAvailable page={route.match.params.page} />} />
+						<>
+							<Header />
+							<PrivateRoute exact path="/projects" component={Projects} />
+							<PrivateRoute exact path="/projects/:id" component={SectionList} />
+							<PrivateRoute exact path="/users" component={Users} />
+							<Route path="/users/:id" />
+						</>
 					</Switch>
 				</BrowserRouter>
 			</Auth>
