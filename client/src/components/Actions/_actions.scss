@@ -1,0 +1,21 @@
+.actions {
+    @include flex($a-items: center);
+    @extend .h-100;
+    list-style: none;
+
+    &__item {
+        cursor: pointer;
+        padding: 10px;
+    }
+}
+
+.action-link {
+    @include flex();
+    color: white;
+    text-decoration: none;
+
+    &__title {
+        padding-left: 5px;
+    }
+}
+

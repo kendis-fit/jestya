@@ -13,6 +13,7 @@ import Registration from "./components/Registration";
 import NotAvailable from "./components/NotAvailable";
 import Projects from "./components/Projects/Projects";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import Header from "./components/Header";
 
 const store = createStore(reducer);
 
@@ -24,12 +25,15 @@ const App = () => {
 					<Switch>
 						<PrivateRoute exact path={["/", "/login"]} component={Login} />
 						<PrivateRoute exact path="/registration" component={Registration} />
+					</Switch>
+					<Header />
+					<Switch>
 						<PrivateRoute exact path="/projects" component={Projects} />
 						<PrivateRoute exact path="/projects/:id" component={SectionList} />
 						<PrivateRoute exact path="/users" component={Users} />
+						<Route path="/users/:id" />
 						<Route exact path="/not-available" component={NotAvailable} />
 						<Route path="/not-available/:page" render={(route) => <NotAvailable page={route.match.params.page} />} />
-						<Route path="/users/:id" />
 					</Switch>
 				</BrowserRouter>
 			</Auth>

@@ -7,11 +7,13 @@
 
 // components css
 @import "../components/Login/login";
-@import "../components/Registration/registration";
+@import "../components/Header/header";
+@import "../components/Actions/actions";
 @import "../components/Section/section";
-@import "../components/SectionList/sectionList";
 @import "../components/Project/project";
 @import "../components/Projects/projects";
+@import "../components/SectionList/sectionList";
+@import "../components/Registration/registration";
 @import "../components/Registration/registration";
 @import "../components/Section/SectionHeader/sectionHeader";
 
@@ -21,7 +23,12 @@ body {
 
 @for $i from 0 to 20 {
     $i: $i * 5;
+    
     .w-#{$i} {
         width: $i !important;
+    }
+
+    .h-#{$i} {
+        height: $i !important;
     }
 }

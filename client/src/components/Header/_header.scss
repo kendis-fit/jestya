@@ -1,0 +1,20 @@
+.header {
+    @extend .w-100;
+    @extend .bg-primary;
+    color: white;
+    height: $header;
+    border-bottom: 1px solid black;
+
+    &__main-container {
+        @extend .h-100;
+        @include flex(space-between);
+
+        &:nth-child(1) {
+            @extend .w-80;
+        }
+
+        &:nth-child(2) {
+            @extend .w-20;
+        }
+    }
+}
