@@ -14,7 +14,7 @@ const PrivateRoute = (props: IRoute) => {
     const { auth } = useAuth();
     const { component: Component, ...rest } = props;
     
-    if (auth.isAuthenticated) {
+    if (auth.isAuthenticated && ["/login", "/"].some(path => path === props.path)) {
         return <Redirect to="/projects" />
     }
 

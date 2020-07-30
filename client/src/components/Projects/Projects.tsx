@@ -22,8 +22,8 @@ const Projects = () => {
 		<div className="projects">
 			<div className="projects__body">
 				<div className="projects__content">
-					{projects.map(project => (
-						<div className="project_wrapper">
+					{projects.map((project, id) => (
+						<div key={id} className="project_wrapper">
 							<Project {...project} />
 						</div>
 					))}

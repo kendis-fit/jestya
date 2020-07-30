@@ -1,10 +1,10 @@
 import React from "react";
 import { useVanillaFetch } from "vanilla-hooks";
-import { Redirect, useRouteMatch, Route } from "react-router-dom";
+import { Redirect, useRouteMatch } from "react-router-dom";
 
+import Login from "../Login";
 import resource from "../../api/resource";
 import Registration from "../Registration";
-import Login from "../Login";
 
 const NoUnauthenticatedRoute = () => {
 	const { url } = useRouteMatch();
@@ -18,8 +18,10 @@ const NoUnauthenticatedRoute = () => {
 		return <div>loading...</div>
 	}
 
-	if (superAdminExisted) {
-		return <Route path={["/", "/login"]} component={Login} />	
+	if (superAdminExisted && url === "/login") {
+		return <Login />
+	} else if (superAdminExisted) {
+		return <Redirect to="/login" />	
 	} else if (url === "/registration") {
 		return <Registration />
 	}

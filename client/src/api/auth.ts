@@ -49,7 +49,7 @@ const auth = {
 					},
 				});
 				const body = await req.json();
-				if (req.status === 201) {
+				if (req.status === 204) {
 					resolve(body);
 				} else {
 					reject(body);
