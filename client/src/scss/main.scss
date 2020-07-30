@@ -7,12 +7,16 @@
 
 // components css
 @import "../components/Login/login";
-@import "../components/Registration/registration";
+@import "../components/Header/header";
+@import "../components//Action//action";
+@import "../components/Actions/actions";
 @import "../components/Section/section";
-@import "../components/SectionList/sectionList";
 @import "../components/Project/project";
 @import "../components/Projects/projects";
+@import "../components/SectionList/sectionList";
 @import "../components/Registration/registration";
+@import "../components/Registration/registration";
+@import "../components/ProfileActions/profile-actions";
 @import "../components/Section/SectionHeader/sectionHeader";
 @import "../components/Section/SectionHeader/PopUpMenu/popUpMenu";
 
@@ -20,34 +24,16 @@ body {
     background: #fffefe;
 }
 
+@for $i from 0 to 20 {
+    $i: $i * 5;
+    
+    .w-#{$i} {
+        width: $i !important;
+    }
 
-//--------width in-%-----
-.w-55 {
-    width: 55% !important;
-}
-
-.w-60 {
-    width: 60% !important;
-}
-
-.w-65 {
-    width: 65% !important;
-}
-
-.w-80 {
-    width: 80% !important;
-}
-
-.w-85 {
-  
-    width: 85% !important;
-}
-.w-90 {
-    width: 90% !important;
-}
-
-.w-95 {
-    width: 95% !important;
+    .h-#{$i} {
+        height: $i !important;
+    }
 }
 // -----------------------
 
@@ -76,3 +62,4 @@ $colors: (
         color: $color !important;
     }   
 }
+// =======

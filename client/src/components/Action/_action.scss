@@ -1,0 +1,13 @@
+.action-link {
+    @include flex();
+    color: white;
+    text-decoration: none;
+
+    &__title {
+        padding-left: 5px;
+    }
+
+    &:hover {
+        @extend .text-dark;
+    }
+}

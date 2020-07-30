@@ -1,0 +1,14 @@
+.header {
+    @extend .w-100;
+    @extend .bg-primary;
+    color: white;
+    height: $header;
+    border-bottom: 1px solid black;
+    padding: 0 25px 0 25px;
+
+    &__main-container {
+        @extend .h-100;
+        @extend .w-100;
+        @include flex(space-between);
+    }
+}

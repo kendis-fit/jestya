@@ -8,9 +8,15 @@
     @include size($width, $height);
 }
 
-@mixin flex($j-content: &, $a-items: &, $a-content: &) {
+@mixin flex($j-content: null, $a-items: null, $a-content: null) {
     display: flex;
     justify-content: $j-content;
     align-items: $a-items;
     align-content: $a-content;
+}
+
+@mixin flex-position($f-direction: null, $f-wrap: null) {
+    display: flex;
+    flex-direction: $f-direction;
+    flex-wrap: $f-wrap;
 }

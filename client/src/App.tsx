@@ -8,11 +8,12 @@ import Users from "./components/Users";
 import Login from "./components/Login";
 import reducer from "./reducers/reducer";
 import Auth from "./components/Auth/Auth";
-import Projects from "./components/Projects/Projects";
-import Registration from "./components/Registration";
-import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
-import PublicSignRoute from "./components/PublicSignRoute/PublicSignRoute";
 import SectionList from "./components/SectionList";
+import Registration from "./components/Registration";
+import NotAvailable from "./components/NotAvailable";
+import Projects from "./components/Projects/Projects";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import Header from "./components/Header";
 
 const store = createStore(reducer);
 
@@ -22,14 +23,17 @@ const App = () => {
 			<Auth>
 				<BrowserRouter>
 					<Switch>
-						<PublicSignRoute exact path={["/", "/login"]} component={Login} />
-						<PrivateRoute path="/registration" component={Registration} />
-						<PrivateRoute exact path="/projects" component={Projects} />
-						<Route path="/projects/:id" />
-						<Route exact path="/users" component={Users} />
-						<Route path="/users/:id" />
-						<Route exact path="/sectionlist" component={SectionList} />
-
+						<PrivateRoute exact path={["/", "/login"]} component={Login} />
+						<PrivateRoute exact path="/registration" component={Registration} />
+						<Route exact path="/not-available" component={NotAvailable} />
+						<Route path="/not-available/:page" render={(route) => <NotAvailable page={route.match.params.page} />} />
+						<>
+							<Header />
+							<PrivateRoute exact path="/projects" component={Projects} />
+							<PrivateRoute exact path="/projects/:id" component={SectionList} />
+							<PrivateRoute exact path="/users" component={Users} />
+							<Route path="/users/:id" />
+						</>
 					</Switch>
 				</BrowserRouter>
 			</Auth>

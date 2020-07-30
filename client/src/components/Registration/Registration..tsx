@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import Input from "../Input";
 import Select from "../Select";
 import { useAuth } from "../../context/auth";
+import resource from "../../api/resource";
+import { Redirect } from "react-router-dom";
 
 const SignupSchema = Yup.object().shape({
 	name: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("Required"),
 	login: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("Required"),
-	password: Yup.string().min(6, "Too Short!").max(50, "Too Long!").required("Required"),
+	password: Yup.string().min(9, "Too Short!").max(50, "Too Long!").required("Required"),
 	role: Yup.string().required("Required"),
 });
 
@@ -32,8 +34,14 @@ const AdminSelect = [{ value: "USER", label: "User" }];
 const Registration = () => {
 	document.title = "Registration | JESTYA";
 	const { auth } = useAuth();
-	const handleSubmiting = (values: IInitialRegistrationData) => {
-		alert(JSON.stringify(values, null, 2));
+	const [isRedirected, setIsRedirected] = useState(false);
+	const handleSubmiting = async (values: IInitialRegistrationData) => {
+		try {
+			await resource.auth.registration(values);
+			setIsRedirected(true);
+		} catch (error) {
+			alert(error.message);
+		}
 	};
 
 	const SelectData = auth.user?.role
@@ -47,6 +55,11 @@ const Registration = () => {
 		password: "",
 		role: auth.user?.role ? (auth.user?.role === "SUPER_ADMIN" ? "" : "USER") : "SUPER_ADMIN",
 	};
+
+	if (isRedirected) {
+		return <Redirect to="/login" />
+	}
+
 	return (
 		<div className="registration">
 			<div

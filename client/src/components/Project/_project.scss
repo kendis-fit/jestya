@@ -2,16 +2,56 @@ $project-colour: $light-gray;
 $project-width: map-get($map: $project-size, $key: "width");
 $project-height: map-get($map: $project-size, $key: "height");
 
+.top-line {
+    border-top: 2px solid $project-colour;
+}
+
+.top-line_wrapper {
+    margin-top: 10px;
+}
+
 .project {
     @include bg-colour-size($project-colour, $project-width, $project-height);
+    
+    &__body {
+        cursor: pointer;
+        opacity: 0.9;
+        padding: 10px 10px 0 10px;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+    
+    &__title {
+        @extend .text-primary;
+        font-size: 24px;
+        text-align: center;
+    }
 }
 
-.project__body {
+.area {
+    @include flex(space-between);
     padding: 10px;
+    border-radius: 5px;
+    
+    &--filled {
+        background: $light-pink;
+    }
+
+    &__icon {
+        @extend .text-primary;
+        opacity: 0.8;
+        cursor: pointer;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
 }
 
-.project__title {
-    @extend .text-info;
-    font-size: 24px;
-    text-align: center;
+.project_wrapper {
+    margin: 20px;
+    margin-bottom: 75px;
+    height: map-get($map: $project-size, $key: "height");
 }

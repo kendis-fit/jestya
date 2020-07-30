@@ -1,7 +1,8 @@
 // colors
 $light-gray: #f0f0f0;
+$light-pink: #eedede;
 
 // sizes
-$header: 50px;
+$header: 55px;
 $project-size: ("width": 300px, "height": 180px);
-$page-size: ("width": 100vw, "height": calc(100vh - $header));
+$page-size: ("width": 100vw, "height": calc(100vh - 55px));
