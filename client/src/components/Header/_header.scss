@@ -4,17 +4,11 @@
     color: white;
     height: $header;
     border-bottom: 1px solid black;
+    padding: 0 25px 0 25px;
 
     &__main-container {
         @extend .h-100;
+        @extend .w-100;
         @include flex(space-between);
-
-        &:nth-child(1) {
-            @extend .w-80;
-        }
-
-        &:nth-child(2) {
-            @extend .w-20;
-        }
     }
 }

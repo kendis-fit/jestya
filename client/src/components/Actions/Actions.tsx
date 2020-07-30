@@ -1,26 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
+import Action from "../Action/Action";
 import { useAuth } from "../../context/auth";
 
 const Actions = () => {
     const { auth } = useAuth();
 
     return(
-        <ul className="actions">
-            <li className="actions__item">
-                <Link to="/projects" className="action-link">
-                    <span className="material-icons">assignment</span>
-                    <span className="action-link__title">My projects</span>
-                </Link>
-            </li>
+        <ul className="actions w-50 pl-0">
+            <Action path="/projects" icon="assignment" name="My project" />
             {
-                auth?.user?.role === "SUPER_ADMIN" && <li className="actions__item">
-                    <Link to="/" className="actions__link">
-                        <span className="material-icons">person_add</span>
-                        <span className="action-link__title">Create user</span>
-                    </Link>
-                </li>
+                auth.user?.role === "SUPER_ADMIN" ? <Action path="/" icon="person_add" name="Create user" /> : null
             }
         </ul>
     );

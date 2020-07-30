@@ -5,17 +5,6 @@
 
     &__item {
         cursor: pointer;
-        padding: 10px;
+        padding: 10px 10px 10px 0;
     }
 }
-
-.action-link {
-    @include flex();
-    color: white;
-    text-decoration: none;
-
-    &__title {
-        padding-left: 5px;
-    }
-}
-
