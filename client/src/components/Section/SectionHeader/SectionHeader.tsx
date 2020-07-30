@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-
-const Colors = ["bg-primary", "bg-success", "bg-danger", "bg-warning", "bg-info"];
+import PopUpMenu from "./PopUpMenu";
 
 interface ISectionHeader {
 	index: number;
@@ -8,25 +7,52 @@ interface ISectionHeader {
 	handleAddSection(index?: number | React.MouseEvent<HTMLButtonElement>): void;
 }
 
+const ColorsArray = ["blue", "indigo", "purple", "pink", "red", "orange", "yellow", "green", "teal", "cyan", "gray"];
+const IconsArray = [
+	"error",
+	"warning",
+	"add_alert",
+	"report",
+	"access_alarm",
+	'build_circle',
+	'bookmark_border',
+	'bug_report',
+	'check_circle',
+	'code',
+	'explore',
+	'event',
+	'favorite_border',
+	'grade',
+	'home',
+	'language',
+	'lock'
+	// 	"report",
+	// 	"access_alarm",
+	// 	"error",
+	// 	"warning",
+	// 	"add_alert",
+	// 	"report",
+	// 	"access_alarm",
+];
+
 const SectionHeader = (props: ISectionHeader) => {
 	console.log(props);
-	const [headerColor, setHeaderColor] = useState<string>(Colors[1]);
+	const [headerColor, setHeaderColor] = useState<string>(ColorsArray[1]);
+	const [headerIcon, setHeaderIcon] = useState<string>(IconsArray[1]);
 
 	const handleChangeColor = (color: string) => {
 		setHeaderColor(color);
 	};
+	const handleChangeIcon = (icon: string) => {
+		setHeaderIcon(icon);
+	};
 
 	return (
-		<div className={`section__header p-2 mb-3 d-flex ${props.addSection ? "border-bottom" : headerColor} `}>
+		<div className={`section__header p-2 mb-3 d-flex ${props.addSection ? "border-bottom" : "bg-" + headerColor} `}>
 			<div className="section-header__wrapperAddBtnLeft">
-				{props.addSection ? null : ( //if not addSection show add button section before curent section
-					<button
-						className="section-header__addBtnLeft"
-						onClick={() => {
-							console.log("Clickkkkkkk");
-							props.handleAddSection(props.index);
-						}}
-					>
+				{props.addSection ? null : (
+					//if not addSection show add button section before curent section
+					<button className="section-header__addBtnLeft" onClick={() => props.handleAddSection(props.index)}>
 						<span className="material-icons">add_circle_outline</span>
 					</button>
 				)}
@@ -39,9 +65,9 @@ const SectionHeader = (props: ISectionHeader) => {
 			) : (
 				//else show header with title of section
 				<>
-					<span className="material-icons text-white p-2 pl-3 mr-2">build</span>
+					<span className="material-icons text-white p-2 pl-3 mr-2">{headerIcon}</span>
 					<input
-						className={` form-control w-65 ${headerColor}  border-0 section-header__title`}
+						className={` form-control w-65 ${"bg-" + headerColor}  border-0 section-header__title`}
 						type="text"
 						defaultValue={"asdasd"}
 					/>
@@ -49,24 +75,14 @@ const SectionHeader = (props: ISectionHeader) => {
 				</>
 			)}
 			{props.addSection ? null : (
-				<div className="section-header__popUpMenu p-2">
-					<div className="d-flex w-100 justify-content-around">
-						{Colors.map((ell, i) => (
-							<div
-								className={` rounded-circle ${ell}
-						bs-pink`}
-								style={{ height: "15px", width: "15px" }}
-								onClick={() => {
-									handleChangeColor(ell);
-								}}
-							/>
-						))}
-					</div>
-					<p>
-						{/* Lorem ipsum dolor sit amet consectetur adipisicing elit. Error sequi eos laudantium eveniet repellat
-					dicta temporibus vero impedit illum velit? */}
-					</p>
-				</div>
+				<PopUpMenu
+					IconsArray={IconsArray}
+					HeaderIcon={headerIcon}
+					handleChangeIcon={handleChangeIcon}
+					ColorsArray={ColorsArray}
+					handleChangeColor={handleChangeColor}
+					HeaderColor={headerColor}
+				/>
 			)}
 		</div>
 	);
