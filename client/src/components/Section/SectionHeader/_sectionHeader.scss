@@ -1,6 +1,35 @@
 .section-header{
+    
+    &__wrapperAddBtnLeft {
+        position: absolute;
+        left: -17px;
+        top: 0;
+        height: 100%;
+        width: 34px;
+        padding: 0 2px;
+        @include flex(center, center,center);
+        cursor: default;
+        
+    }
 
-     
+    &__addBtnLeft {
+        padding: 0;
+        color: $primary;
+        background: #fff;
+        border-radius: 50%;        
+        @include flex(center, center,center);
+        opacity: 0;
+        width: 0px;
+        height: 0px;
+        transition: 0.4s ease;
+        outline: none !important;
+        border: 0;
+        &:hover {
+            opacity: 1;
+            width: 30px;
+            height: 30px
+        }
+    }
 
     &__title{
     color: #fff;
@@ -11,17 +40,23 @@
             background: #fff !important;
         }
     }
-    &__arrow {
-        // section-header__arrow
-        // display: none;
-        color: rgba(255, 255, 255, 0);
-        &:hover {
-            color: rgba(255, 255, 255, 1);
-            @include flex(center, center, center);
-        }
-    }
-    &:hover .section-header__arrow {
-        color: rgba(255, 255, 255, 1);
 
+    &__arrow {
+        color: rgba(255, 255, 255, 0);
+        @include flex(center, center, center);
+        cursor: pointer;
+        
+    }
+
+    &__popUpMenu {
+        @extend .card;
+        position: absolute;
+        width: 300px;
+        height: 150px;
+        left: 40%;
+        top: 35px;
+        z-index: 2;
+        border-radius: 10px;
+        
     }
 }
