@@ -1,0 +1,7 @@
+.not-available {
+    @include flex(center, center);
+    @include flex-position(column);
+    height: 100vh;
+    width: 100vw;
+    background: $light-gray;
+}
