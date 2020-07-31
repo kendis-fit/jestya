@@ -34,7 +34,7 @@ const auth = {
 					reject(body);
 				}
 			} catch {
-				reject({ message: "An unknown error" });
+				reject({ message: "An unknown error", status: 500 });
 			}
 		});
 	},
@@ -48,14 +48,14 @@ const auth = {
 						"Content-Type": "application/json",
 					},
 				});
-				const body = await req.json();
 				if (req.status === 204) {
-					resolve(body);
+					resolve();
 				} else {
+					const body = await req.json();
 					reject(body);
 				}
 			} catch {
-				reject({ message: "An unknown error" });
+				reject({ message: "An unknown error", status: 500 });
 			}
 		});
 	},

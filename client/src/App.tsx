@@ -38,6 +38,7 @@ const App = () => {
 						<PrivateRoute exact path="/registration" component={Registration} />
 						<Route path="/not-authenticated/:page" render={(route) => <NotAvailable status={401} page={route.match.params.page} />} />
 						<Route path="/not-authorized/:page" render={(route) => <NotAvailable status={403} page={route.match.params.page} />}  />
+						<Route path="/not-available/:page" render={(route) => <NotAvailable status={500} page={route.match.params.page} />}  />
 						<PrivateRoute exact path="/projects" component={() => renderWithHeader(Projects)} />
 						<PrivateRoute exact path="/projects/:id" component={() => renderWithHeader(SectionList)} />
 						<PrivateRoute exact path="/users" component={() => renderWithHeader(Users)} />

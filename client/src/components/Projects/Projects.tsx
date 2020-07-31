@@ -1,11 +1,11 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
 import { useVanillaFetch } from "vanilla-hooks";
 
+import Error from "../Error";
+import AddProject from "../AddProject";
 import Project from "../Project/Project";
 import resource from "../../api/resource";
 import { useAuth } from "../../context/auth";
-import AddProject from "../AddProject";
 
 const Projects = () => {
 	document.title = "PROJECTS | JESTYA";
@@ -14,7 +14,7 @@ const Projects = () => {
 	const { data: projects, loading, error } = useVanillaFetch(resource.projects.findAll);
 
 	if (error) {
-		return <Redirect to={`/not-available/projects`} />
+		return <Error error={error} />
 	}
 
 	if (loading) {

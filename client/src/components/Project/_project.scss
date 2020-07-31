@@ -1,4 +1,4 @@
-$project-colour: $light-gray;
+$project-colour: map-get($map: $colors, $key: "gray-light");
 $project-width: map-get($map: $project-size, $key: "width");
 $project-height: map-get($map: $project-size, $key: "height");
 
@@ -43,7 +43,7 @@ $project-height: map-get($map: $project-size, $key: "height");
     border-radius: 5px;
     
     &--filled {
-        background: $light-pink;
+        @extend .bg-pink-light;
     }
 
     &__icon {

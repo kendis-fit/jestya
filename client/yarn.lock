@@ -11070,10 +11070,10 @@ value-equal@^1.0.1:
   resolved "https://registry.yarnpkg.com/value-equal/-/value-equal-1.0.1.tgz#1e0b794c734c5c0cade179c437d356d931a34d6c"
   integrity sha512-NOJ6JZCAWr0zlxZt+xqCHNTEKOsrks2HQd4MqhP1qy4z1SkbEP467eNx6TgDKXMvUOb+OENfJCZwM+16n7fRfw==
 
-vanilla-hooks@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/vanilla-hooks/-/vanilla-hooks-1.3.0.tgz#d7a7b4c9e570bcfda9b888c96248bf9895e7f3bd"
-  integrity sha512-h1d7NY0Ug95MuaXJ2FIwSHuAPN30c0gSgJwSmHw9MXnpUJnFHkjrglA8AhP7KFbkEAhahCzISN8LmWDgu/Iq/Q==
+vanilla-hooks@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/vanilla-hooks/-/vanilla-hooks-2.0.2.tgz#5d2abc9c2447116e79b91ba75f1a477b7e96f511"
+  integrity sha512-Cmf6Nx/l/t9TU1HLRfl4W9WV3l5HQDNkH9thvgwWYVjApE1pGzOcktxz32Bqgv+p06gWr//u0k7r3FcFRCBxJg==
   dependencies:
     "@types/yup" "^0.29.3"
     yup "^0.29.1"

@@ -37,7 +37,7 @@ const projects = {
 					reject(body);
 				}
 			} catch (error) {
-				reject(error);
+				reject({ message: "An unknown error", status: 500 });
 			}
 		});
 	},
