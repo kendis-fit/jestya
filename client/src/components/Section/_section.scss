@@ -5,8 +5,10 @@
     // height: 100
     &__header {
         height: 60px;
-        // cursor: grab;
         position: relative;
+        @include flex(null,center);
+
+        // cursor: grab;
         &:active {
         // cursor: grabbing;
 

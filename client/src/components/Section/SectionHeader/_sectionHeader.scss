@@ -1,4 +1,6 @@
 .section-header{
+
+
     
     &__wrapperAddBtnLeft {
         position: absolute;
@@ -41,11 +43,20 @@
         }
     }
 
+    &__icon {
+        font-size: 33px;
+    }
+
     &__arrow {
         color: rgba(255, 255, 255, 0);
         @include flex(center, center, center);
-        cursor: pointer;
-        
+        cursor: pointer; 
+    }
+
+    &__arrow--active {
+        color: rgba(255, 255, 255, 1);
+        cursor: pointer; 
+
     }
 
     &__popUpMenu {
@@ -57,6 +68,9 @@
         top: 35px;
         z-index: 2;
         border-radius: 10px;
-        
+    }
+
+    &__popUpMenu--disable {
+        display: none;
     }
 }
