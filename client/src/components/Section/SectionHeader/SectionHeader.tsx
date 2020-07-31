@@ -49,14 +49,14 @@ const SectionHeader = (props: ISectionHeader) => {
 				{props.addSection ? null : (
 					//if not addSection show add button section before curent section
 					<button className="section-header__addBtnLeft" onClick={() => props.handleAddSection(props.index)}>
-						<span className="material-icons">add_circle_outline</span>
+						<span className="material-icons">add</span>
 					</button>
 				)}
 			</div>
 			{props.addSection ? (
 				//if add section show add section
 				<button className="btn text-info p-0 d-flex align-items-center" onClick={props.handleAddSection}>
-					<span className="material-icons p-2 mr-2">add_circle_outline</span> Add Section
+					<span className="material-icons p-2 mr-2">add</span> Add Section
 				</button>
 			) : (
 				//else show header with title of section

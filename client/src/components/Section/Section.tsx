@@ -33,7 +33,7 @@ const Section = (props: any) => {
 							shadow "
 							onClick={handleAddTask}
 						>
-							<span className="material-icons">add_circle_outline</span>
+							<span className="material-icons">add</span>
 						</button>
 						{taskList.length === 0 ? (
 							<div className="section__noTasks">
