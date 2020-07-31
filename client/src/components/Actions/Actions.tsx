@@ -8,9 +8,9 @@ const Actions = () => {
 
     return(
         <ul className="actions w-50 pl-0">
-            <Action path="/projects" icon="assignment" name="My project" />
+            <Action path="/projects" icon="assignment" name="My projects" />
             {
-                auth.user?.role === "SUPER_ADMIN" ? <Action path="/" icon="person_add" name="Create user" /> : null
+                auth.user?.role === "SUPER_ADMIN" ? <Action path="/create-user" icon="person_add" name="Create user" /> : null
             }
         </ul>
     );

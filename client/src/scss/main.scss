@@ -27,10 +27,17 @@ body {
     $i: $i * 5;
     
     .w-#{$i} {
-        width: $i !important;
+        width: #{$i}% !important;
     }
 
     .h-#{$i} {
-        height: $i !important;
+        height: #{$i}% !important;
+    }
+}
+
+@for $i from 4 to 24 {
+    $i: $i * 2;
+    .fs-#{$i} {
+        font-size: #{$i}px !important;
     }
 }

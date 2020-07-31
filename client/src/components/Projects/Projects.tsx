@@ -4,10 +4,13 @@ import { useVanillaFetch } from "vanilla-hooks";
 
 import Project from "../Project/Project";
 import resource from "../../api/resource";
+import { useAuth } from "../../context/auth";
+import AddProject from "../AddProject";
 
 const Projects = () => {
 	document.title = "PROJECTS | JESTYA";
 
+	const { auth } = useAuth();
 	const { data: projects, loading, error } = useVanillaFetch(resource.projects.findAll);
 
 	if (error) {
@@ -27,6 +30,9 @@ const Projects = () => {
 							<Project {...project} />
 						</div>
 					))}
+					{
+						auth.user?.role !== "USER" ? <AddProject /> : null
+					}
 				</div>
 			</div>
 		</div>

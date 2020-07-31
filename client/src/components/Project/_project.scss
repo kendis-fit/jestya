@@ -15,11 +15,18 @@ $project-height: map-get($map: $project-size, $key: "height");
     
     &__body {
         cursor: pointer;
-        opacity: 0.9;
+        opacity: 0.7;
         padding: 10px 10px 0 10px;
 
         &:hover {
             opacity: 1;
+        }
+
+        &--size {
+            @include flex(center, center);
+            @include flex-position(column);
+            @extend .w-100;
+            @extend .h-100;
         }
     }
     
