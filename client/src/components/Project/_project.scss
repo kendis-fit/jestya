@@ -51,6 +51,11 @@ $project-height: map-get($map: $project-size, $key: "height");
         opacity: 0.8;
         cursor: pointer;
 
+        &--disabled {
+            @extend .text-light;
+            cursor: not-allowed;
+        }
+
         &:hover {
             opacity: 1;
         }
