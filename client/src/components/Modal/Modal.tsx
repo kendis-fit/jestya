@@ -9,6 +9,9 @@ export interface IModal {
     isStatic?: boolean;
     verticalCentered?: boolean;
     fullscrean?: boolean;
+    childrenFooter?: ReactNode;
+    onClose?: () => void;
+    onOk?: () => void;
 }
 
 const Modal = (props: IModal) => {
@@ -59,7 +62,7 @@ const Modal = (props: IModal) => {
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title">{props.title}</h5>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" onClick={() => props.onClose && props.onClose()} className="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -69,8 +72,13 @@ const Modal = (props: IModal) => {
                         </div> : null
                     }
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" className="btn btn-primary">Save changes</button>
+                        {
+                            props.childrenFooter ?  props.childrenFooter :
+                            <>
+                                <button type="button" onClick={() => props.onClose && props.onClose()} className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" onClick={() => props.onOk && props.onOk()} className="btn btn-primary">Ok</button>
+                            </>
+                        }
                     </div>
                 </div>
             </div>
