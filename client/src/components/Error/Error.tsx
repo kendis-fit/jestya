@@ -6,7 +6,7 @@ interface IError {
 }
 
 const Error = (props: IError) => {
-    const status = (props.error as any).status;
+    const status = (props.error as any).statusCode;
     if (status === 401) {
         return <Redirect to="/not-authenticated/projects" />
     } else if (status === 403) {

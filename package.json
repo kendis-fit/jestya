@@ -3,6 +3,8 @@
   "author": "Kurt Endless",
   "license": "MIT",
   "scripts": {
+    "client:start": "yarn --cwd client start",
+    "api:start": "yarn --cwd api start:dev",
     "format": "prettier --write {api,client,redis}/src/**/*.ts"
   },
   "devDependencies": {

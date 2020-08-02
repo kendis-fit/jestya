@@ -34,7 +34,7 @@ const auth = {
 					reject(body);
 				}
 			} catch {
-				reject({ message: "An unknown error", status: 500 });
+				reject({ message: "An unknown error", statusCode: 500 });
 			}
 		});
 	},
@@ -55,7 +55,7 @@ const auth = {
 					reject(body);
 				}
 			} catch {
-				reject({ message: "An unknown error", status: 500 });
+				reject({ message: "An unknown error", statusCode: 500 });
 			}
 		});
 	},
