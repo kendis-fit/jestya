@@ -1,6 +1,14 @@
 import * as bootstrap from "bootstrap";
 import React, { ReactNode, useEffect, useRef, useState } from "react";
 
+import ButtonsFooter from "../ButtonsFooter/ButtonsFooter";
+
+export interface IModalFooter {
+    titlePrimary?: string;
+    titleSecondary?: string;
+    hideSecondary?: boolean;
+}
+
 export interface IModal {
     title: string;
     onClose: () => void;
@@ -8,12 +16,13 @@ export interface IModal {
     children?: ReactNode;
     isStatic?: boolean;
     verticalCentered?: boolean;
+    showFooter?: boolean;
     fullscrean?: boolean;
-    childrenFooter?: ReactNode;
+    footer?: IModalFooter;
     onOk?: () => void;
 }
 
-const Modal = (props: IModal) => {
+const Modal = ({ showFooter = true, ...props }: IModal) => {
     const [modal, setModal] = useState<bootstrap.Modal | null>(null);
     const modalRef = useRef<HTMLDivElement>(null);
 
@@ -73,15 +82,11 @@ const Modal = (props: IModal) => {
                             {props.children}
                         </div> : null
                     }
-                    <div className="modal-footer">
-                        {
-                            props.childrenFooter ?  props.childrenFooter :
-                            <>
-                                <button type="button" onClick={onClose} className="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" onClick={() => props.onOk && props.onOk()} className="btn btn-primary">Ok</button>
-                            </>
-                        }
-                    </div>
+                    {
+                        showFooter ? <div className="modal-footer">
+                            <ButtonsFooter onClose={onClose} onOk={props.onOk} {...props.footer} />
+                        </div> : null
+                    }
                 </div>
             </div>
         </div>
