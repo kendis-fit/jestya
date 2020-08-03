@@ -2,19 +2,16 @@ import React, { useState } from "react";
 import Task from "./Task";
 import SectionHeader from "./SectionHeader";
 
-
 const Section = (props: any) => {
 	const [taskList, setTaskList] = useState<any[]>([]);
 
 	const handleAddTask = () => {
 		setTaskList([...taskList, "s"]);
 	};
-	console.log(props);
-	
 
 	return (
 		<div className="section" style={{ background: props.index % 2 === 0 ? "#fafafa" : "#f2f2f2" }}>
-			<SectionHeader {...props}/>
+			<SectionHeader {...props} />
 			<div className="section__tasklist">
 				{props.addSection ? (
 					<p className="text-center">Add new section</p>

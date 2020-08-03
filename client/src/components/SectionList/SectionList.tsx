@@ -5,9 +5,7 @@ const SectionList = () => {
 	const [sectionsList, setSectionsList] = useState<any[]>([1]);
 
 	const handleAddSection = (index: number) => {
-		console.log("tut");
 		if (typeof index === "number") {
-			console.log("leeeeeeeft");
 			setSectionsList([...sectionsList.splice(index, 0, 2), ...sectionsList]);
 		} else {
 			setSectionsList([...sectionsList, 1]);
