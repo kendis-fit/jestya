@@ -33,7 +33,7 @@ export class ProjectService {
 			for (const relation of relations) {
 				builder = builder.leftJoinAndSelect(`project.${relation.relation}`, relation.relation);
 				for (const subrelation of relation.subrelations) {
-					builder = builder.leftJoinAndSelect(`${relation.relation}.subrelation`, subrelation);
+					builder = builder.leftJoinAndSelect(`${relation.relation}.${subrelation}`, subrelation);
 				}
 			}
 		}

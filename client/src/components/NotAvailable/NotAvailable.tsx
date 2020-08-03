@@ -12,7 +12,7 @@ const NotAvailable = (props: INotAvailable) => {
     const { setIsAuthenticated } = useAuth();
 
     useEffect(() => {
-        if (props.status === 401) {
+        if (props.status === 401 || props.status === 500) {
             setIsAuthenticated?.(false);
         }
     }, []);
