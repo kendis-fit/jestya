@@ -3,19 +3,21 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Injectable, HttpException, HttpStatus } from "@nestjs/common";
 
 import { Project } from "./project.entity";
-import { User } from "../user/user.entity";
+import { User, Role } from "../user/user.entity";
 import { Board } from "../board/board.entity";
+import { UserService } from "../user/user.service";
 import { BoardService } from "../board/board.service";
+import { IRelation } from "../helpers/relation.interface";
 import { ProjectCreating } from "./dto/project-creating.dto";
 import { ProjectUpdateState } from "./dto/project-update-state.dto";
-import { IRelation } from "src/helpers/relation.interface";
 
 @Injectable()
 export class ProjectService {
 	constructor(
 		@InjectRepository(Project)
 		private readonly projectsRepository: Repository<Project>,
-		private readonly boardService: BoardService
+		private readonly boardService: BoardService,
+		private readonly userService: UserService
 	) {}
 
 	public async findById(projectId: string, relations?: string[]): Promise<Project> {
@@ -58,12 +60,17 @@ export class ProjectService {
 
 	public async create(userId: string, project: ProjectCreating): Promise<Project> {
 		const standartBoards = await this.boardService.createBoards(["TO DO", "IN PROCESSING", "DONE"]);
+		const superAdmin = await this.userService.findByRole(Role.SUPER_ADMIN);
+		const users = [{ id: userId }] as any[];
+		if (userId !== superAdmin.id) {
+			users.push({ id: superAdmin.id });
+		}
 
 		const newProject = new Project();
 		newProject.name = project.name;
 		newProject.description = project.description;
 		newProject.creator = { id: userId } as any;
-		newProject.users = [{ id: userId }] as any;
+		newProject.users = users;
 		newProject.boards = standartBoards;
 
 		await this.projectsRepository.save(newProject);
