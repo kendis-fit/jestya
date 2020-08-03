@@ -62,7 +62,8 @@ export class ProjectService {
 		const newProject = new Project();
 		newProject.name = project.name;
 		newProject.description = project.description;
-		newProject.creatorId = userId;
+		newProject.creator = { id: userId } as any;
+		newProject.users = [{ id: userId }] as any;
 		newProject.boards = standartBoards;
 
 		await this.projectsRepository.save(newProject);

@@ -40,11 +40,11 @@ export class BoardService {
 
 	public async createBoards(boardsNames: string[]): Promise<Board[]> {
 		const newBoards: Board[] = [];
-		boardsNames.forEach(async board => {
+		for (const board of boardsNames) {
 			const newBoard = new Board();
 			newBoard.name = board;
 			newBoards.push(await this.boardRepository.save(newBoard));
-		});
+		}
 		return newBoards;
 	}
 

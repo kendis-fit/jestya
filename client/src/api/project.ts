@@ -70,6 +70,16 @@ export interface IProject {
 	boards: IBoard[];
 }
 
+export interface IAddProject {
+	name: string;
+	description?: string;
+}
+
+export interface IAddProjectResponse {
+	id: string;
+	boards: IBoard[];
+}
+
 const projects = {
 	findAll: () => {
 		return new Promise<IProject[]>(async (resolve, reject) => {
@@ -80,7 +90,29 @@ const projects = {
 
 				const body = await req.json();
 				if (req.status === 200) {
-					resolve(mockObject);
+					resolve([...body, ...mockObject]);
+				} else {
+					reject(body);
+				}
+			} catch (error) {
+				reject({ message: "An unknown error", statusCode: 500 });
+			}
+		});
+	},
+	create: (project: IAddProject) => {
+		return new Promise<IAddProjectResponse>(async (resolve, reject) => {
+			try {
+				const req = await fetcher(`${process.env.REACT_APP_API}/projects`, {
+					method: "POST",
+					body: JSON.stringify(project),
+					headers: {
+						"Content-Type": "application/json",
+					},
+				});
+
+				const body = await req.json();
+				if (req.status === 201) {
+					resolve(body);
 				} else {
 					reject(body);
 				}

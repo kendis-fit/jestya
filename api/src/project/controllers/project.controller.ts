@@ -65,7 +65,7 @@ export class ProjectController {
 	@UseGuards(JwtGuard, new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
 	public async create(@Body() project: ProjectCreating, @User("id") userId: string): Promise<ProjectCreated> {
 		const newProject = await this.projectService.create(userId, project);
-		return new ProjectCreated(newProject.id);
+		return new ProjectCreated(newProject);
 	}
 
 	@ApiNoContentResponse()
