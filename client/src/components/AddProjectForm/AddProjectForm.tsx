@@ -1,9 +1,9 @@
-import React, { useState } from "react";
 import { object, string } from "yup";
 import { Formik, Form } from "formik";
+import React, { useState } from "react";
 
-import { IAddProject } from "../../api/project";
 import resource from "../../api/resource";
+import { IAddProject, IProject } from "../../api/project";
 
 const schema = object().shape({
     name: string()
@@ -18,16 +18,22 @@ const initialValues: IAddProject = {
     description: ""
 }
 
-const AddProjectForm = () => {
+export interface IAddProjectForm {
+    addProject: (project: IProject) => void;
+}
+
+const AddProjectForm = (props: IAddProjectForm) => {
     const [loading, setLoading] = useState(false);
 
     const onSubmit = async (values: IAddProject) => {
         try {
+            setLoading(true);
             const newProject = await resource.projects.create(values);
-            console.log(JSON.stringify(newProject, null, 2));
-            // to do: update projects 
+            props.addProject({ ...newProject, ...values });
         } catch (error) {
-            
+            // setError(error);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -51,7 +57,7 @@ const AddProjectForm = () => {
                             </div>
                         </div>
                         <div className="d-flex justify-content-end">
-                            <button type="submit" className="btn btn-primary">
+                            <button type="submit" className="btn btn-primary" disabled={loading}>
                             {
                                 loading ?
                                 <>
