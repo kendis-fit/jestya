@@ -1,17 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useVanillaFetch } from "vanilla-hooks";
 
 import Error from "../Error";
-import AddProject from "../AddProject";
-import Project from "../Project/Project";
 import resource from "../../api/resource";
-import { useAuth } from "../../context/auth";
+import { IProject } from "../../api/project";
+import ListProjectsContainer from "../ListProjects/ListProjectsContainer";
 
-const Projects = () => {
+export interface IProjects {
+	initProjects: (project: IProject[]) => void;
+}
+
+const Projects = (props: IProjects) => {
 	document.title = "PROJECTS | JESTYA";
 
-	const { auth } = useAuth();
-	const { data: projects, loading, error, setData: setProjects } = useVanillaFetch(resource.projects.findAll);
+	const { data: projects, loading, error } = useVanillaFetch(resource.projects.findAll);
+
+	useEffect(() => {
+		if (projects) {
+			props.initProjects(projects);
+		}
+	}, [projects, props.initProjects]);
 
 	if (error) {
 		return <Error error={error} />
@@ -24,16 +32,7 @@ const Projects = () => {
 	return (
 		<div className="projects">
 			<div className="projects__body">
-				<div className="projects__content">
-					{projects.map((project, id) => (
-						<div key={id} className="project_wrapper">
-							<Project {...project} />
-						</div>
-					))}
-					{
-						auth.user?.role !== "USER" ? <AddProject /> : null
-					}
-				</div>
+				<ListProjectsContainer projects={[]} />
 			</div>
 		</div>
 	);

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+
 import Modal from "../Modal";
-import AddProjectForm from "../AddProjectForm";
+import AddProjectFormContainer from "../AddProjectForm/AddProjectFormContainer";
 
 const AddProject = () => {
     const [openModal, setOpenModal] = useState(false);
@@ -21,7 +22,7 @@ const AddProject = () => {
             </div>
             {
                 openModal ? <Modal size="lg" showFooter={false} title="Create project" onClose={() => setOpenModal(false)}>
-                    <AddProjectForm />
+                    <AddProjectFormContainer />
                 </Modal> : null
             }
         </>

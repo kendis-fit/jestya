@@ -1,10 +1,10 @@
-import { IAddProject, IProject } from "../../api/project";
+import { IProject } from "../../api/project";
 import { IRemoveAction } from "./interfaces/IRemoveAction";
 import { IAddProjectAction } from "./interfaces/IAddProjectAction";
 import { IInitProjectsAction } from "./interfaces/IInitProjectsAction";
 import { ADD_PROJECT, INIT_PROJECTS, REMOVE_PROJECT } from "../constants";
 
-export const addProject = (project: IAddProject): IAddProjectAction => ({
+export const addProject = (project: IProject): IAddProjectAction => ({
 	type: ADD_PROJECT,
 	value: project,
 });
