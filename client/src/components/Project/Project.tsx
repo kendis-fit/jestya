@@ -1,6 +1,7 @@
 import { Pie } from "react-chartjs-2";
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
+
 import Modal from "../Modal";
 
 export interface IProject {

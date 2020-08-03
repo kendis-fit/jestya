@@ -15,13 +15,13 @@ import { ProjectService } from "../project.service";
 import { JwtGuard } from "../../guards/jwt/jwt.guard";
 import { ProjectInfo } from "../dto/project-info.dto";
 import { User } from "../../decorators/user.decorator";
-import { Error, ErrorBadRequest } from "../../helpers/error.interfaces";
 import { RoleGuard } from "../../guards/role/role.guard";
 import { BoardInfo } from "../../board/dto/board-info.dto";
 import { ProjectCreated } from "../dto/project-created.dto";
 import { ProjectCreating } from "../dto/project-creating.dto";
 import { ProjectUsersInfo } from "../dto/project-users-info.dto";
 import { ProjectUpdateState } from "../dto/project-update-state.dto";
+import { Error, ErrorBadRequest } from "../../helpers/error.interfaces";
 import { JwtProjectsGuard } from "../../guards/jwt-projects/jwt-projects.guard";
 import { RoleProjectsGuard } from "../../guards/role-projects/role-projects.guard";
 
@@ -36,7 +36,9 @@ export class ProjectController {
 	@Get()
 	@UseGuards(JwtGuard)
 	public async findAll(@User("id") userId: string): Promise<ProjectInfo[]> {
-		const [projects] = await this.projectService.findAll(userId);
+		const [projects] = await this.projectService.findAll(userId, [
+			{ relation: "borders", subrelations: ["tasks"] },
+		]);
 		return projects.map(project => new ProjectInfo(project));
 	}
 

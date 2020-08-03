@@ -8,6 +8,7 @@ import { Board } from "../board/board.entity";
 import { BoardService } from "../board/board.service";
 import { ProjectCreating } from "./dto/project-creating.dto";
 import { ProjectUpdateState } from "./dto/project-update-state.dto";
+import { IRelation } from "src/helpers/relation.interface";
 
 @Injectable()
 export class ProjectService {
@@ -25,9 +26,19 @@ export class ProjectService {
 		return foundProject;
 	}
 
-	public async findAll(userId: string): Promise<[Project[], number]> {
-		const [projects, count] = await this.projectsRepository
-			.createQueryBuilder("project")
+	public async findAll(userId: string, relations?: IRelation[]): Promise<[Project[], number]> {
+		let builder = this.projectsRepository.createQueryBuilder("project");
+
+		if (relations) {
+			for (const relation of relations) {
+				builder = builder.leftJoinAndSelect(`project.${relation.relation}`, relation.relation);
+				for (const subrelation of relation.subrelations) {
+					builder = builder.leftJoinAndSelect(`${relation.relation}.subrelation`, subrelation);
+				}
+			}
+		}
+
+		const [projects, count] = await builder
 			.innerJoin("project.users", "user")
 			.where("user.id = :id", { id: userId })
 			.getManyAndCount();

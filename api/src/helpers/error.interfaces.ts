@@ -3,6 +3,9 @@ import { ApiProperty } from "@nestjs/swagger";
 export class Error {
 	@ApiProperty()
 	public message: string;
+
+	@ApiProperty()
+	public statusCode: string;
 }
 
 class ValidationDetail {
@@ -18,4 +21,7 @@ class ValidationDetail {
 export class ErrorBadRequest {
 	@ApiProperty({ type: ValidationDetail })
 	public message: ValidationDetail[];
+
+	@ApiProperty()
+	public statusCode: string;
 }
