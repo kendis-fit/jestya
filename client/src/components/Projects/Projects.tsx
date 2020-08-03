@@ -11,7 +11,7 @@ const Projects = () => {
 	document.title = "PROJECTS | JESTYA";
 
 	const { auth } = useAuth();
-	const { data: projects, loading, error } = useVanillaFetch(resource.projects.findAll);
+	const { data: projects, loading, error, setData: setProjects } = useVanillaFetch(resource.projects.findAll);
 
 	if (error) {
 		return <Error error={error} />

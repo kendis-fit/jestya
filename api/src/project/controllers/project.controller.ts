@@ -58,7 +58,7 @@ export class ProjectController {
 		return users.map(user => new ProjectUsersInfo(user));
 	}
 
-	@ApiCreatedResponse({ type: [ProjectCreated] })
+	@ApiCreatedResponse({ type: ProjectCreated })
 	@ApiBadRequestResponse({ type: ErrorBadRequest })
 	@ApiForbiddenResponse({ type: Error })
 	@Post()
