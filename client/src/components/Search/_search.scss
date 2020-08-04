@@ -1,0 +1,25 @@
+$search-light: map-get($map: $colors, $key: "light");
+
+.search {
+    @include flex();
+
+    &__button {
+        cursor: pointer;
+    }
+
+    &__input {
+        @include placeholder($search-light, 0.8);
+        @extend .text-light;
+        background: transparent;
+        border: 0;
+        border-bottom: 1px solid $search-light;
+
+        &:focus {
+            @include placeholder($search-light, 1);
+        }
+    }
+}
+
+.search_actions__items_wrapper {
+    margin-right: 20px;
+}

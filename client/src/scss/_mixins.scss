@@ -20,3 +20,26 @@
     flex-direction: $f-direction;
     flex-wrap: $f-wrap;
 }
+
+@mixin placeholder($color, $opacity: 1) {
+    &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+        color: $color;
+        opacity: $opacity;
+    }
+    &::-moz-placeholder { /* Firefox 19+ */
+        color: $color;
+        opacity: $opacity;
+    }
+    &:-ms-input-placeholder { /* IE 10+ */
+        color: $color;
+        opacity: $opacity;
+    }
+    &:-moz-placeholder { /* Firefox 18- */
+        color: $color;
+        opacity: $opacity;
+    }
+    &::placeholder {
+        color: $color;
+        opacity: $opacity;
+    }
+}
