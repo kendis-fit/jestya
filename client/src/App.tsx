@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import { BrowserRouter, Switch, Route } from "react-router-dom";

@@ -22,7 +22,7 @@ const AddProject = () => {
             </div>
             {
                 openModal ? <Modal size="lg" showFooter={false} title="Create project" onClose={() => setOpenModal(false)}>
-                    <AddProjectFormContainer />
+                    <AddProjectFormContainer onSubmit={() => setOpenModal(false)} />
                 </Modal> : null
             }
         </>

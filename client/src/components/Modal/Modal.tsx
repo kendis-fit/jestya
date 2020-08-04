@@ -31,6 +31,12 @@ const Modal = ({ showFooter = true, ...props }: IModal) => {
     const [center, setCenter] = useState<string | null>(props.verticalCentered ? "modal-dialog-centered" : "");
 
     useEffect(() => {
+        return function cleanup() {
+            document.querySelector(".modal-backdrop")?.remove();
+        }
+    }, []);
+
+    useEffect(() => {
         setFullscreen(props.fullscrean ? "modal-fullscreen" : "");
     }, [props.fullscrean]);
 
@@ -45,7 +51,7 @@ const Modal = ({ showFooter = true, ...props }: IModal) => {
     useEffect(() => {
         if (modalRef) {
             const current = modalRef.current;
-            if (current) {
+            if (current && !modal) {
                 current.addEventListener("hidden.bs.modal", () => {
                     props.onClose && props.onClose();
                 });
@@ -54,7 +60,7 @@ const Modal = ({ showFooter = true, ...props }: IModal) => {
                 setModal(modal);
             }
         }
-    }, [modalRef, props.onClose]);
+    }, [modalRef, props, modal]);
 
     const onClose = () => {
         modal?.hide();

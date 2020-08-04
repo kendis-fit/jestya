@@ -20,21 +20,18 @@ const initialValues: IAddProject = {
 
 export interface IAddProjectForm {
     addProject: (project: IProject) => void;
+    onSubmit?: (error?: Error) => void;
 }
 
 const AddProjectForm = (props: IAddProjectForm) => {
     const [loading, setLoading] = useState(false);
 
-    const onSubmit = async (values: IAddProject) => {
-        try {
-            setLoading(true);
-            const newProject = await resource.projects.create(values);
-            props.addProject({ ...newProject, ...values });
-        } catch (error) {
-            // setError(error);
-        } finally {
-            setLoading(false);
-        }
+    const onSubmit = (values: IAddProject) => {
+        setLoading(true);
+        resource.projects.create(values)
+            .then(newProject => props.addProject({ ...newProject, ...values }))
+            .then(() => props.onSubmit?.())
+            .finally(() => setLoading(false));
     }
 
     return(
@@ -62,7 +59,7 @@ const AddProjectForm = (props: IAddProjectForm) => {
                                 loading ?
                                 <>
                                     <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                                    <span className="sr-only">Loading...</span>
+                                    Loading...
                                 </>
                                 : <span>Create project</span>
                             }</button>
