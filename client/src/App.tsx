@@ -12,12 +12,13 @@ import Auth from "./components/Auth/Auth";
 import SectionList from "./components/SectionList";
 import Registration from "./components/Registration";
 import NotAvailable from "./components/NotAvailable";
-import Projects from "./components/Projects/Projects";
-import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import PrivateRoute from "./components/PrivateRoute";
+import PrivateAdminRoute from "./components/PrivateAdminRoute";
+import ProjectsContainer from "./components/Projects/ProjectsContainer";
 
 const store = createStore(reducer);
 
-const renderWithHeader = (component: () => JSX.Element) => {
+const renderWithHeader = (component: any) => {
 	const Component = component;
 
 	return(
@@ -36,11 +37,11 @@ const App = () => {
 					<Switch>
 						<PrivateRoute exact path={["/", "/login"]} component={Login} />
 						<PrivateRoute exact path="/registration" component={Registration} />
-						<PrivateRoute exact path="/projects" component={() => renderWithHeader(Projects)} />
+						<PrivateRoute exact path="/projects" component={() => renderWithHeader(ProjectsContainer)} />
 						<PrivateRoute exact path="/projects/:id" component={() => renderWithHeader(SectionList)} />
 						<PrivateRoute exact path="/users" component={() => renderWithHeader(Users)} />
-						<PrivateRoute exact path="/create-user" component={() => renderWithHeader(Registration)} />
 						<PrivateRoute exact path="/users/:id" component={Header} />
+						<PrivateAdminRoute roles={["ADMIN", "SUPER_ADMIN"]} exact path="/create-user" component={() => renderWithHeader(Registration)} />
 						<Route path="/not-authenticated/:page" render={(route) => <NotAvailable status={401} page={route.match.params.page} />} />
 						<Route path="/not-authorized/:page" render={(route) => <NotAvailable status={403} page={route.match.params.page} />}  />
 						<Route path="/not-available/:page" render={(route) => <NotAvailable status={500} page={route.match.params.page} />}  />

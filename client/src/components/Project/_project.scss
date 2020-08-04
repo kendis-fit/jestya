@@ -35,6 +35,13 @@ $project-height: map-get($map: $project-size, $key: "height");
         font-size: 24px;
         text-align: center;
     }
+
+    &__empty {
+        @include flex(center, center);
+        @extend .fs-28;
+        height: 140px;
+        width: 280px;
+    }
 }
 
 .area {

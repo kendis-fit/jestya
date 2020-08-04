@@ -3,9 +3,11 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Injectable, HttpException, HttpStatus } from "@nestjs/common";
 
 import { Project } from "./project.entity";
-import { User } from "../user/user.entity";
+import { User, Role } from "../user/user.entity";
 import { Board } from "../board/board.entity";
+import { UserService } from "../user/user.service";
 import { BoardService } from "../board/board.service";
+import { IRelation } from "../helpers/relation.interface";
 import { ProjectCreating } from "./dto/project-creating.dto";
 import { ProjectUpdateState } from "./dto/project-update-state.dto";
 
@@ -14,7 +16,8 @@ export class ProjectService {
 	constructor(
 		@InjectRepository(Project)
 		private readonly projectsRepository: Repository<Project>,
-		private readonly boardService: BoardService
+		private readonly boardService: BoardService,
+		private readonly userService: UserService
 	) {}
 
 	public async findById(projectId: string, relations?: string[]): Promise<Project> {
@@ -25,9 +28,19 @@ export class ProjectService {
 		return foundProject;
 	}
 
-	public async findAll(userId: string): Promise<[Project[], number]> {
-		const [projects, count] = await this.projectsRepository
-			.createQueryBuilder("project")
+	public async findAll(userId: string, relations?: IRelation[]): Promise<[Project[], number]> {
+		let builder = this.projectsRepository.createQueryBuilder("project");
+
+		if (relations) {
+			for (const relation of relations) {
+				builder = builder.leftJoinAndSelect(`project.${relation.relation}`, relation.relation);
+				for (const subrelation of relation.subrelations) {
+					builder = builder.leftJoinAndSelect(`${relation.relation}.${subrelation}`, subrelation);
+				}
+			}
+		}
+
+		const [projects, count] = await builder
 			.innerJoin("project.users", "user")
 			.where("user.id = :id", { id: userId })
 			.getManyAndCount();
@@ -47,11 +60,17 @@ export class ProjectService {
 
 	public async create(userId: string, project: ProjectCreating): Promise<Project> {
 		const standartBoards = await this.boardService.createBoards(["TO DO", "IN PROCESSING", "DONE"]);
+		const superAdmin = await this.userService.findByRole(Role.SUPER_ADMIN);
+		const users = [{ id: userId }] as any[];
+		if (userId !== superAdmin.id) {
+			users.push({ id: superAdmin.id });
+		}
 
 		const newProject = new Project();
 		newProject.name = project.name;
 		newProject.description = project.description;
-		newProject.creatorId = userId;
+		newProject.creator = { id: userId } as any;
+		newProject.users = users;
 		newProject.boards = standartBoards;
 
 		await this.projectsRepository.save(newProject);

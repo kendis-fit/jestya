@@ -1,15 +1,9 @@
 import { Pie } from "react-chartjs-2";
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
-import Modal from "../Modal";
 
-export interface IProject {
-    id: string;
-    name: string;
-    description?: string;
-    data: number[];
-    labels: string[];
-}
+import ProjectInfo from "../ProjectInfo";
+import { IProject } from "../../api/project";
 
 const getRandomColour = () => {
     var letters = '0123456789ABCDEF';
@@ -21,9 +15,9 @@ const getRandomColour = () => {
 }
 
 const Project = (props: IProject) => {
-    const [openModal, setOpenModal] = useState(false);
     const [isRedirected, setIsRedirected] = useState(false);
-    const datasets = [{ data: props.data, backgroundColor: props.data.map(() => getRandomColour()) }];
+    const datasets = [{ data: props.boards.map(board => board.countTasks), backgroundColor: props.boards.map(() => getRandomColour()) }];
+    const countTasks = props.boards.reduce((first, second) => first + second.countTasks, 0);
 
     if (isRedirected) {
         return <Redirect to={`/projects/${props.id}`} />
@@ -35,21 +29,20 @@ const Project = (props: IProject) => {
                 <div className="top-line_wrapper">
                     <div className="project">
                         <div className="project__body" onClick={() => setIsRedirected(true)}>
-                            <div className="project__title"><span>{props.name}</span></div>
-                            <Pie data={{ labels: props.labels, datasets }} options={{ legend: { display: false } }} />
+                            <div className="project__title" title={props.name}><span>{props.name.length > 12 ? props.name.slice(0, 12) + "..." : props.name}</span></div>
+                            {
+                                countTasks !== 0 ?
+                                    <Pie data={{ labels: props.boards.map(board => board.name), datasets }} options={{ legend: { display: false } }} />
+                                    : <div className="project__empty">
+                                        <span className="material-icons fs-28">content_paste</span>
+                                        <span>No Boards</span>
+                                    </div>
+                            }
                         </div>
-                        <div className="area area--filled">
-                            <span>Count tasks: {props.data.length}</span>
-                            <span onClick={() => props.description && setOpenModal(!openModal)} className={`material-icons area__icon ${props.description ? "" : "area__icon--disabled"}`}>info</span>
-                        </div>
+                        <ProjectInfo title={props.name} countTasks={countTasks} description={props.description} />
                     </div>
                 </div>
             </div>
-            {
-                openModal ? <Modal size="lg" showFooter={false} title="Description" onClose={() => setOpenModal(false)}>
-                    {props.description}
-                </Modal>: null
-            }
         </>
     );
 }
