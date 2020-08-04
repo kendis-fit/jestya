@@ -29,7 +29,7 @@ const Project = (props: IProject) => {
                 <div className="top-line_wrapper">
                     <div className="project">
                         <div className="project__body" onClick={() => setIsRedirected(true)}>
-                            <div className="project__title"><span>{props.name}</span></div>
+                            <div className="project__title" title={props.name}><span>{props.name.length > 12 ? props.name.slice(0, 12) + "..." : props.name}</span></div>
                             <Pie data={{ labels: props.boards.map(board => board.name), datasets }} options={{ legend: { display: false } }} />
                         </div>
                         <div className="area area--filled">
