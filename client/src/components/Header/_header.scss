@@ -1,9 +1,10 @@
 .header {
     @extend .w-100;
     @extend .bg-primary;
+    @extend .shadow;
     color: white;
     height: $header;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #888;
     padding: 0 25px 0 25px;
 
     &__main-container {

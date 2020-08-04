@@ -1,19 +1,22 @@
 import React from "react";
 
 interface IPopUpMenu {
+	left: number | undefined;
+	ShowPopUp?: boolean;
 	ColorsArray: string[];
 	IconsArray: string[];
 	HeaderColor: string;
 	HeaderIcon: string;
-	ShowPopUp: boolean;
+	index: number;
 	handleChangeColor(color: string): void;
 	handleChangeIcon(icon: string): void;
 }
 
 const PopUpMenu = (props: IPopUpMenu) => {
-	const { ColorsArray, HeaderColor, ShowPopUp, HeaderIcon, handleChangeColor, handleChangeIcon, IconsArray } = props;
+	const { ColorsArray, HeaderColor, HeaderIcon, handleChangeColor, handleChangeIcon, IconsArray, left = 0 } = props;
+
 	return (
-		<div className={`section-header__popUpMenu${ShowPopUp ? "" : "--disable"} p-2 `}>
+		<div className={`section-header__popUpMenu p-2 `} style={{ left: left - 140 < 100 ? 20 : left - 140 }}>
 			<div className="popUpMenu__color-list ">
 				{ColorsArray.map((color, i) => (
 					<div

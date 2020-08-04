@@ -2,19 +2,15 @@ import React, { useState } from "react";
 import Section from "../Section";
 
 const SectionList = () => {
-	const [sectionsList, setSectionsList] = useState<any[]>([1]);
+	const [sectionsList, setSectionsList] = useState<any[]>([1, 2, 2, 4, 5, 5, 6, 6, 6, 6, 2]);
 
 	const handleAddSection = (index: number) => {
-		console.log("tut");
 		if (typeof index === "number") {
-			console.log("leeeeeeeft");
 			setSectionsList([...sectionsList.splice(index, 0, 2), ...sectionsList]);
 		} else {
 			setSectionsList([...sectionsList, 1]);
 		}
 	};
-
-	console.log(sectionsList);
 
 	return (
 		<div className="sectionList ">

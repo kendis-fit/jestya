@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import PopUpMenu from "./PopUpMenu";
+import ModalContainer from "../../ModalContainer";
 
 interface ISectionHeader {
 	index: number;
@@ -27,10 +28,11 @@ const IconsArray = [
 ];
 
 const SectionHeader = (props: ISectionHeader) => {
-	console.log(props);
 	const [headerColor, setHeaderColor] = useState<string>(ColorsArray[1]);
 	const [headerIcon, setHeaderIcon] = useState<string>(IconsArray[1]);
 	const [showPopUp, setShowPopUp] = useState<boolean>(false);
+
+	const arrowBtnRef = useRef<HTMLSpanElement>(null);
 
 	const handleChangeColor = (color: string) => {
 		setHeaderColor(color);
@@ -40,7 +42,9 @@ const SectionHeader = (props: ISectionHeader) => {
 	};
 
 	const handlePopUp = () => {
-		setShowPopUp(!showPopUp);
+		setShowPopUp(state => !state);
+		console.log(arrowBtnRef.current?.getBoundingClientRect().left);
+		
 	};
 
 	return (
@@ -70,21 +74,25 @@ const SectionHeader = (props: ISectionHeader) => {
 					<span
 						className={`section-header__arrow${showPopUp ? "--active" : ""} material-icons`}
 						onClick={handlePopUp}
+						ref={arrowBtnRef}
 					>
 						keyboard_arrow_down
 					</span>
 				</>
 			)}
-			{props.addSection ? null : (
-				<PopUpMenu
-					ShowPopUp={showPopUp}
-					IconsArray={IconsArray}
-					HeaderIcon={headerIcon}
-					handleChangeIcon={handleChangeIcon}
-					ColorsArray={ColorsArray}
-					handleChangeColor={handleChangeColor}
-					HeaderColor={headerColor}
-				/>
+			{props.addSection && showPopUp ? null : (
+				<ModalContainer isOpen={showPopUp} onClose={handlePopUp}>
+					<PopUpMenu
+						left={arrowBtnRef.current?.getBoundingClientRect().left}
+						index={props.index}
+						IconsArray={IconsArray}
+						HeaderIcon={headerIcon}
+						handleChangeIcon={handleChangeIcon}
+						ColorsArray={ColorsArray}
+						handleChangeColor={handleChangeColor}
+						HeaderColor={headerColor}
+					/>
+				</ModalContainer>
 			)}
 		</div>
 	);
