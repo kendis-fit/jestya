@@ -8,15 +8,12 @@ interface IModalContainer {
 
 const ModalContainer = (props: IModalContainer) => {
 	const wrapperRef = useRef<HTMLDivElement>(null);
-	const handleClickOutside = (event: MouseEvent) => {
-		console.log(event.target, wrapperRef.current);
-
-		if (wrapperRef.current === event.target) {
-			props.onClose();
-			console.log("asdasdasd");
-		}
-	};
 	useEffect(() => {
+		const handleClickOutside = (event: MouseEvent) => {
+			if (wrapperRef.current === event.target) {
+				props.onClose();
+			}
+		};
 		document.addEventListener("mousedown", handleClickOutside);
 		return () => {
 			document.removeEventListener("mousedown", handleClickOutside);
@@ -29,11 +26,7 @@ const ModalContainer = (props: IModalContainer) => {
 			className="modal modal-container"
 			style={props.isOpen ? { display: "block" } : { display: "none", width: "0px" }}
 		>
-			{/* <div className="modal-dialog"> */}
-			{/* <div className="modal-content"> */}
 			{props.children}
-			{/* </div> */}
-			{/* </div> */}
 		</div>
 	);
 };

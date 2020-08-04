@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import PopUpMenu from "./PopUpMenu";
 import ModalContainer from "../../ModalContainer";
 
@@ -32,6 +32,8 @@ const SectionHeader = (props: ISectionHeader) => {
 	const [headerIcon, setHeaderIcon] = useState<string>(IconsArray[1]);
 	const [showPopUp, setShowPopUp] = useState<boolean>(false);
 
+	const arrowBtnRef = useRef<HTMLSpanElement>(null);
+
 	const handleChangeColor = (color: string) => {
 		setHeaderColor(color);
 	};
@@ -41,9 +43,9 @@ const SectionHeader = (props: ISectionHeader) => {
 
 	const handlePopUp = () => {
 		setShowPopUp(state => !state);
+		console.log(arrowBtnRef.current?.getBoundingClientRect().left);
+		
 	};
-
-	console.log(showPopUp);
 
 	return (
 		<div className={`section__header p-2 mb-3  ${props.addSection ? "border-bottom" : "bg-" + headerColor} `}>
@@ -72,37 +74,26 @@ const SectionHeader = (props: ISectionHeader) => {
 					<span
 						className={`section-header__arrow${showPopUp ? "--active" : ""} material-icons`}
 						onClick={handlePopUp}
+						ref={arrowBtnRef}
 					>
 						keyboard_arrow_down
 					</span>
 				</>
 			)}
 			{props.addSection && showPopUp ? null : (
-				<>
-					<ModalContainer isOpen={showPopUp} onClose={handlePopUp}>
-						<PopUpMenu
-							index={props.index}
-							IconsArray={IconsArray}
-							HeaderIcon={headerIcon}
-							handleChangeIcon={handleChangeIcon}
-							ColorsArray={ColorsArray}
-							handleChangeColor={handleChangeColor}
-							HeaderColor={headerColor}
-						/>
-					</ModalContainer>
-				</>
+				<ModalContainer isOpen={showPopUp} onClose={handlePopUp}>
+					<PopUpMenu
+						left={arrowBtnRef.current?.getBoundingClientRect().left}
+						index={props.index}
+						IconsArray={IconsArray}
+						HeaderIcon={headerIcon}
+						handleChangeIcon={handleChangeIcon}
+						ColorsArray={ColorsArray}
+						handleChangeColor={handleChangeColor}
+						HeaderColor={headerColor}
+					/>
+				</ModalContainer>
 			)}
-			{/* <ModalContainer> */}
-			{/* <PopUpMenu
-				ShowPopUp={true}
-				IconsArray={IconsArray}
-				HeaderIcon={headerIcon}
-				handleChangeIcon={handleChangeIcon}
-				ColorsArray={ColorsArray}
-				handleChangeColor={handleChangeColor}
-				HeaderColor={headerColor}
-			/> */}
-			{/* </ModalContainer> */}
 		</div>
 	);
 };
