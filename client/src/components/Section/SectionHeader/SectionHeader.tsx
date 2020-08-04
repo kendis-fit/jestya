@@ -31,7 +31,7 @@ const IconsArray = [
 const SectionHeader = (props: ISectionHeader) => {
 	const [headerColor, setHeaderColor] = useState<string>(ColorsArray[1]);
 	const [headerIcon, setHeaderIcon] = useState<string>(IconsArray[1]);
-	const [showPopUp, setShowPopUp] = useState<boolean>(true);
+	const [showPopUp, setShowPopUp] = useState<boolean>(false);
 	const [headerTitle, setHeaderTitle] = useState<string>("");
 
 	const arrowBtnRef = useRef<HTMLSpanElement>(null);

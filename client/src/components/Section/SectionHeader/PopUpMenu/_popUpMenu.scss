@@ -38,33 +38,19 @@
         color: $info;
     }
 
+    &__nav {
+        li {
+            cursor: pointer;
+        }
+    }
+
 }
 
 
 .description__text {
     border: transparent;
-    // width: 250px;
     height: 100%;
     max-height: 400px;
     resize: none;
+    @include custom-scrollbar(10px,10px,2px)
 }
-
-@include custom-scrollbar("description__text",6px,10px)
-
-// .description__text::-webkit-scrollbar-track
-// {
-// 	border-radius: 10px;
-// 	background-color: #F5F5F5;
-// }
-
-// .description__text::-webkit-scrollbar
-// {
-// 	width: 6px;
-// 	background-color: #F5F5F5;
-// }
-
-// .description__text::-webkit-scrollbar-thumb
-// {
-// 	border-radius: 10px;
-// 	background-color: #888;
-// }
