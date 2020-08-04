@@ -2,7 +2,7 @@ import { Pie } from "react-chartjs-2";
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 
-import Modal from "../Modal";
+import ProjectInfo from "../ProjectInfo";
 import { IProject } from "../../api/project";
 
 const getRandomColour = () => {
@@ -15,7 +15,6 @@ const getRandomColour = () => {
 }
 
 const Project = (props: IProject) => {
-    const [openModal, setOpenModal] = useState(false);
     const [isRedirected, setIsRedirected] = useState(false);
     const datasets = [{ data: props.boards.map(board => board.countTasks), backgroundColor: props.boards.map(() => getRandomColour()) }];
     const countTasks = props.boards.reduce((first, second) => first + second.countTasks, 0);
@@ -40,18 +39,10 @@ const Project = (props: IProject) => {
                                     </div>
                             }
                         </div>
-                        <div className="area area--filled">
-                            <span>Count tasks: {countTasks}</span>
-                            <span onClick={() => props.description && setOpenModal(!openModal)} className={`material-icons area__icon ${props.description ? "" : "area__icon--disabled"}`}>info</span>
-                        </div>
+                        <ProjectInfo title={props.name} countTasks={countTasks} description={props.description} />
                     </div>
                 </div>
             </div>
-            {
-                openModal ? <Modal size="lg" showFooter={false} title="Description" onClose={() => setOpenModal(false)}>
-                    {props.description}
-                </Modal>: null
-            }
         </>
     );
 }
