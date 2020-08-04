@@ -9,12 +9,13 @@ const Section = (props: any) => {
 		setTaskList([...taskList, "s"]);
 	};
 
+
 	return (
 		<div className="section" style={{ background: props.index % 2 === 0 ? "#fafafa" : "#f2f2f2" }}>
 			<SectionHeader {...props} />
 			<div className="section__tasklist">
 				{props.addSection ? (
-					<p className="text-center">Add new section</p>
+					<p className="section__addSection-text text-center text-muted">Add new section</p>
 				) : (
 					<>
 						{taskList.map((ell, i) => (

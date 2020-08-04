@@ -20,3 +20,42 @@
     flex-direction: $f-direction;
     flex-wrap: $f-wrap;
 }
+
+
+@mixin custom-scrollbar ($class,$width,$radius){
+    .#{class}::-webkit-scrollbar
+    {
+        width: $width;
+        background-color: #F5F5F5;
+    }
+
+    .#{class}::-webkit-scrollbar-track
+    {
+        border-radius: $radius;
+        background-color: #F5F5F5;
+    }
+    
+    .#{class}::-webkit-scrollbar-thumb
+    {
+        border-radius: $radius;
+        background-color: #888;
+    }
+}
+
+// .description__text::-webkit-scrollbar-track
+// {
+// 	border-radius: 10px;
+// 	background-color: #F5F5F5;
+// }
+
+// .description__text::-webkit-scrollbar
+// {
+// 	width: 6px;
+// 	background-color: #F5F5F5;
+// }
+
+// .description__text::-webkit-scrollbar-thumb
+// {
+// 	border-radius: 10px;
+// 	background-color: #888;
+// }

@@ -6,6 +6,7 @@ interface ISectionHeader {
 	index: number;
 	addSection: boolean;
 	handleAddSection(index?: number | React.MouseEvent<HTMLButtonElement>): void;
+	handleDeleteSection(index: number): void;
 }
 
 const ColorsArray = ["blue", "indigo", "purple", "pink", "red", "orange", "yellow", "green", "teal", "cyan", "gray"];
@@ -30,9 +31,12 @@ const IconsArray = [
 const SectionHeader = (props: ISectionHeader) => {
 	const [headerColor, setHeaderColor] = useState<string>(ColorsArray[1]);
 	const [headerIcon, setHeaderIcon] = useState<string>(IconsArray[1]);
-	const [showPopUp, setShowPopUp] = useState<boolean>(false);
+	const [showPopUp, setShowPopUp] = useState<boolean>(true);
+	const [headerTitle, setHeaderTitle] = useState<string>("");
 
 	const arrowBtnRef = useRef<HTMLSpanElement>(null);
+
+	let title = "Some title";
 
 	const handleChangeColor = (color: string) => {
 		setHeaderColor(color);
@@ -43,9 +47,24 @@ const SectionHeader = (props: ISectionHeader) => {
 
 	const handlePopUp = () => {
 		setShowPopUp(state => !state);
-		console.log(arrowBtnRef.current?.getBoundingClientRect().left);
-		
 	};
+
+	const handleChancheTitle = (event: React.FormEvent<HTMLInputElement>) => {
+		setHeaderTitle(event.currentTarget.value);
+	};
+
+	const handleBlurTitle = (event: React.FormEvent<HTMLInputElement>) => {
+		if (event.currentTarget.value.length !== 0) {
+			// setHeaderTitle(event.currentTarget.value);
+			title = headerTitle;
+		} else {
+			setHeaderTitle(title);
+		}
+	};
+
+	// console.log(title);
+
+	// console.log(headerTitle);
 
 	return (
 		<div className={`section__header p-2 mb-3  ${props.addSection ? "border-bottom" : "bg-" + headerColor} `}>
@@ -69,7 +88,10 @@ const SectionHeader = (props: ISectionHeader) => {
 					<input
 						className={` form-control w-65 ${"bg-" + headerColor}  border-0 section-header__title`}
 						type="text"
-						defaultValue={"asdasd"}
+						value={headerTitle}
+						onBlur={handleBlurTitle}
+						onChange={handleChancheTitle}
+						autoFocus
 					/>
 					<span
 						className={`section-header__arrow${showPopUp ? "--active" : ""} material-icons`}
@@ -87,10 +109,11 @@ const SectionHeader = (props: ISectionHeader) => {
 						index={props.index}
 						IconsArray={IconsArray}
 						HeaderIcon={headerIcon}
-						handleChangeIcon={handleChangeIcon}
 						ColorsArray={ColorsArray}
-						handleChangeColor={handleChangeColor}
 						HeaderColor={headerColor}
+						handleChangeIcon={handleChangeIcon}
+						handleChangeColor={handleChangeColor}
+						handleDeleteSection={props.handleDeleteSection}
 					/>
 				</ModalContainer>
 			)}

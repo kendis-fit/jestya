@@ -10,14 +10,34 @@ interface IPopUpMenu {
 	index: number;
 	handleChangeColor(color: string): void;
 	handleChangeIcon(icon: string): void;
+	handleDeleteSection(index: number): void;
 }
 
 const PopUpMenu = (props: IPopUpMenu) => {
-	const { ColorsArray, HeaderColor, HeaderIcon, handleChangeColor, handleChangeIcon, IconsArray, left = 0 } = props;
+	const {
+		index,
+		ColorsArray,
+		HeaderColor,
+		HeaderIcon,
+		handleChangeColor,
+		handleChangeIcon,
+		handleDeleteSection,
+		IconsArray,
+		left = 0,
+	} = props;
 
 	return (
 		<div className={`section-header__popUpMenu p-2 `} style={{ left: left - 140 < 100 ? 20 : left - 140 }}>
-			<div className="popUpMenu__color-list ">
+			<ul className="nav nav-tabs">
+				<li className="nav-item">
+					<span className="nav-link active">Description</span>
+				</li>
+				<li className="nav-item">
+					<span className="nav-link ">Controle</span>
+				</li>
+			</ul>
+
+			<div className="popUpMenu__color-list  pt-2 mb-4">
 				{ColorsArray.map((color, i) => (
 					<div
 						key={i}
@@ -29,7 +49,7 @@ const PopUpMenu = (props: IPopUpMenu) => {
 					/>
 				))}
 			</div>
-			<div className="popUpMenu__icon-list ">
+			<div className="popUpMenu__icon-list mb-4">
 				{IconsArray.map((icon, i) => (
 					<div
 						key={i}
@@ -42,10 +62,27 @@ const PopUpMenu = (props: IPopUpMenu) => {
 					</div>
 				))}
 			</div>
-			<p>
-				{/* Lorem ipsum dolor sit amet consectetur adipisicing elit. Error sequi eos laudantium eveniet repellat
-					dicta temporibus vero impedit illum velit? */}
-			</p>
+			{index === 0 ? null : (
+				<button
+					className="btn btn-outline-danger w-85 align-self-center"
+					onClick={() => handleDeleteSection(index)}
+				>
+					Delete Section
+				</button>
+			)}
+			<div className="popUpMenu__desription">
+				<textarea
+					className="description__text form-control text-muted bg-white "
+					name=""
+					id=""
+					cols={30}
+					rows={10}
+					disabled={false}
+				>
+					Lorem, ipsum dolor. Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat saepe architecto
+					voluptate fugit eum debitis, sapiente pariatur harum nihil sequi?
+				</textarea>
+			</div>
 		</div>
 	);
 };
