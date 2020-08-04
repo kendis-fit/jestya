@@ -3,13 +3,15 @@ import { getRepositoryToken } from "@nestjs/typeorm";
 import { Test, TestingModule } from "@nestjs/testing";
 
 import { Project } from "./project.entity";
+import { User } from "../user/user.entity";
 import { Board } from "../board/board.entity";
 import { ProjectService } from "./project.service";
+import { UserService } from "../user/user.service";
 import { BoardService } from "../board/board.service";
 import { mockedConfigService } from "../mocks/config.mock";
 import { ProjectController } from "./controllers/project.controller";
 
-describe("Project Controller", () => {
+describe("Project service", () => {
 	let service: ProjectService;
 
 	beforeEach(async () => {
@@ -18,6 +20,7 @@ describe("Project Controller", () => {
 			providers: [
 				ProjectService,
 				BoardService,
+				UserService,
 				{
 					provide: ConfigService,
 					useValue: mockedConfigService,
@@ -28,6 +31,10 @@ describe("Project Controller", () => {
 				},
 				{
 					provide: getRepositoryToken(Project),
+					useValue: {},
+				},
+				{
+					provide: getRepositoryToken(User),
 					useValue: {},
 				},
 			],
