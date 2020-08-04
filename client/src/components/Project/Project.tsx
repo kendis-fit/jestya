@@ -18,6 +18,7 @@ const Project = (props: IProject) => {
     const [openModal, setOpenModal] = useState(false);
     const [isRedirected, setIsRedirected] = useState(false);
     const datasets = [{ data: props.boards.map(board => board.countTasks), backgroundColor: props.boards.map(() => getRandomColour()) }];
+    const countTasks = props.boards.reduce((first, second) => first + second.countTasks, 0);
 
     if (isRedirected) {
         return <Redirect to={`/projects/${props.id}`} />
@@ -30,10 +31,17 @@ const Project = (props: IProject) => {
                     <div className="project">
                         <div className="project__body" onClick={() => setIsRedirected(true)}>
                             <div className="project__title" title={props.name}><span>{props.name.length > 12 ? props.name.slice(0, 12) + "..." : props.name}</span></div>
-                            <Pie data={{ labels: props.boards.map(board => board.name), datasets }} options={{ legend: { display: false } }} />
+                            {
+                                countTasks !== 0 ?
+                                    <Pie data={{ labels: props.boards.map(board => board.name), datasets }} options={{ legend: { display: false } }} />
+                                    : <div className="project__empty">
+                                        <span className="material-icons fs-28">content_paste</span>
+                                        <span>No Boards</span>
+                                    </div>
+                            }
                         </div>
                         <div className="area area--filled">
-                            <span>Count tasks: {props.boards.length}</span>
+                            <span>Count tasks: {countTasks}</span>
                             <span onClick={() => props.description && setOpenModal(!openModal)} className={`material-icons area__icon ${props.description ? "" : "area__icon--disabled"}`}>info</span>
                         </div>
                     </div>

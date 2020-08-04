@@ -19,7 +19,7 @@ const Projects = (props: IProjects) => {
 		if (projects) {
 			props.initProjects(projects);
 		}
-	}, [projects, props.initProjects]);
+	}, [projects, props]);
 
 	if (error) {
 		return <Error error={error} />
