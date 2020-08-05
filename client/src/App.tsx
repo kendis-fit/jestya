@@ -9,7 +9,7 @@ import Login from "./components/Login";
 import reducer from "./reducers/reducer";
 import Header from "./components/Header";
 import Auth from "./components/Auth/Auth";
-import SectionList from "./components/SectionList";
+import BoardList from "./components/Boards";
 import Registration from "./components/Registration";
 import NotAvailable from "./components/NotAvailable";
 import PrivateRoute from "./components/PrivateRoute";
@@ -39,7 +39,7 @@ const App = () => {
 						<PrivateRoute exact path={["/", "/login"]} component={Login} />
 						<PrivateRoute exact path="/registration" component={Registration} />
 						<PrivateRoute exact path="/projects" component={() => renderWithHeader(ProjectsContainer)} />
-						<PrivateRoute exact path="/projects/:id" component={() => renderWithHeader(SectionList)} />
+						<PrivateRoute exact path="/projects/:id" component={() => renderWithHeader(BoardList)} />
 						<PrivateRoute exact path="/users" component={() => renderWithHeader(Users)} />
 						<PrivateRoute exact path="/users/:id" component={Header} />
 						<PrivateAdminRoute roles={["ADMIN", "SUPER_ADMIN"]} exact path="/create-user" component={() => renderWithHeader(Registration)} />

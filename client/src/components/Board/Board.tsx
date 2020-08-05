@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import Task from "./Task";
-import SectionHeader from "./SectionHeader";
 
-const Section = (props: any) => {
+import BoardHeader from "./BoardHeader";
+
+import { IBoard } from "../../api/boardProjects";
+
+const Board = (props: any) => {
 	const [taskList, setTaskList] = useState<any[]>([]);
 
 	const handleAddTask = () => {
@@ -10,10 +13,10 @@ const Section = (props: any) => {
 	};
 
 	return (
-		<div className="section" style={{ background: props.index % 2 === 0 ? "#fafafa" : "#f2f2f2" }}>
-			<SectionHeader {...props} />
-			<div className="section__tasklist">
-				{props.addSection ? (
+		<div className="board" style={{ background: props.index % 2 === 0 ? "#fafafa" : "#f2f2f2" }}>
+			<BoardHeader {...props} />
+			<div>
+				{props.addBoard ? (
 					<p className="text-center">Add new section</p>
 				) : (
 					<>
@@ -22,7 +25,7 @@ const Section = (props: any) => {
 						))}
 						<button
 							className="
-							section__button
+							border__button
 							text-primary
 							rounded-circle
 							btn 
@@ -33,7 +36,7 @@ const Section = (props: any) => {
 							<span className="material-icons">add</span>
 						</button>
 						{taskList.length === 0 ? (
-							<div className="section__noTasks">
+							<div className="board__noTasks">
 								<span className="noTasks__icon text-secondary  material-icons">fact_check</span>
 								<h5 className="text-center text-muted">No Tasks </h5>
 								<p className="text-center text-muted m-0 w-75">
@@ -48,4 +51,4 @@ const Section = (props: any) => {
 	);
 };
 
-export default Section;
+export default Board;

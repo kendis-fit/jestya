@@ -2,10 +2,10 @@ import React, { useState, useRef } from "react";
 import PopUpMenu from "./PopUpMenu";
 import ModalContainer from "../../ModalContainer";
 
-interface ISectionHeader {
+interface IBoardHeader {
 	index: number;
-	addSection: boolean;
-	handleAddSection(index?: number | React.MouseEvent<HTMLButtonElement>): void;
+	addBoard: boolean;
+	handleAddBoard(index?: number | React.MouseEvent<HTMLButtonElement>): void;
 }
 
 const ColorsArray = ["blue", "indigo", "purple", "pink", "red", "orange", "yellow", "green", "teal", "cyan", "gray"];
@@ -27,7 +27,7 @@ const IconsArray = [
 	"lock",
 ];
 
-const SectionHeader = (props: ISectionHeader) => {
+const BoardHeader = (props: any) => {
 	const [headerColor, setHeaderColor] = useState<string>(ColorsArray[1]);
 	const [headerIcon, setHeaderIcon] = useState<string>(IconsArray[1]);
 	const [showPopUp, setShowPopUp] = useState<boolean>(false);
@@ -48,31 +48,31 @@ const SectionHeader = (props: ISectionHeader) => {
 	};
 
 	return (
-		<div className={`section__header p-2 mb-3  ${props.addSection ? "border-bottom" : "bg-" + headerColor} `}>
-			<div className="section-header__wrapperAddBtnLeft">
-				{props.addSection ? null : (
-					//if not addSection show add button section before curent section
-					<button className="section-header__addBtnLeft" onClick={() => props.handleAddSection(props.index)}>
+		<div className={`board__header p-2 mb-3  ${props.addBoard ? "border-bottom" : "bg-" + headerColor} `}>
+			<div className="board-header__wrapperAddBtnLeft">
+				{props.addBoard ? null : (
+					//if not addBoard show add button board before curent board
+					<button className="board-header__addBtnLeft" onClick={() => props.handleAddBoard(props.index)}>
 						<span className="material-icons">add</span>
 					</button>
 				)}
 			</div>
-			{props.addSection ? (
-				//if add section show add section
-				<button className="btn text-info p-0 d-flex align-items-center" onClick={props.handleAddSection}>
-					<span className="material-icons p-2 mr-2">add</span> Add Section
+			{props.addBoard ? (
+				//if add board show add board
+				<button className="btn text-info p-0 d-flex align-items-center" onClick={props.handleAddBoard}>
+					<span className="material-icons p-2 mr-2">add</span> Add Board
 				</button>
 			) : (
-				//else show header with title of section
+				//else show header with title of board
 				<>
-					<span className="section-header__icon material-icons text-white p-2 pl-3 mr-2">{headerIcon}</span>
+					<span className="board-header__icon material-icons text-white p-2 pl-3 mr-2">{headerIcon}</span>
 					<input
-						className={` form-control w-65 ${"bg-" + headerColor}  border-0 section-header__title`}
+						className={` form-control w-65 ${"bg-" + headerColor}  border-0 board-header__title`}
 						type="text"
 						defaultValue={"asdasd"}
 					/>
 					<span
-						className={`section-header__arrow${showPopUp ? "--active" : ""} material-icons`}
+						className={`board-header__arrow${showPopUp ? "--active" : ""} material-icons`}
 						onClick={handlePopUp}
 						ref={arrowBtnRef}
 					>
@@ -80,7 +80,7 @@ const SectionHeader = (props: ISectionHeader) => {
 					</span>
 				</>
 			)}
-			{props.addSection && showPopUp ? null : (
+			{props.addBoard && showPopUp ? null : (
 				<ModalContainer isOpen={showPopUp} onClose={handlePopUp}>
 					<PopUpMenu
 						left={arrowBtnRef.current?.getBoundingClientRect().left}
@@ -98,4 +98,4 @@ const SectionHeader = (props: ISectionHeader) => {
 	);
 };
 
-export default SectionHeader;
+export default BoardHeader;

@@ -4,7 +4,7 @@ const Task = (props: any) => {
 	return (
 		<div
 			className="
-                section__task
+                board__task
                 mb-2
 				p-3
 				shadow-sm

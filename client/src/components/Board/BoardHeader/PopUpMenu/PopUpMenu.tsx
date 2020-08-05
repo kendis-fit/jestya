@@ -16,7 +16,7 @@ const PopUpMenu = (props: IPopUpMenu) => {
 	const { ColorsArray, HeaderColor, HeaderIcon, handleChangeColor, handleChangeIcon, IconsArray, left = 0 } = props;
 
 	return (
-		<div className={`section-header__popUpMenu p-2 `} style={{ left: left - 140 < 100 ? 20 : left - 140 }}>
+		<div className={`board-header__popUpMenu p-2 `} style={{ left: left - 140 < 100 ? 20 : left - 140 }}>
 			<div className="popUpMenu__color-list ">
 				{ColorsArray.map((color, i) => (
 					<div

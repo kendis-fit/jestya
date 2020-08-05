@@ -1,4 +1,5 @@
 import { fetcher } from "./fetcher";
+import boardProjects from "./boardProjects";
 
 const mockObject = [
 	{
@@ -81,6 +82,7 @@ export interface IAddProjectResponse {
 }
 
 const projects = {
+	...boardProjects,
 	findAll: () => {
 		return new Promise<IProject[]>(async (resolve, reject) => {
 			try {
