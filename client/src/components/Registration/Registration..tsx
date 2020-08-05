@@ -111,7 +111,7 @@ const Registration = () => {
 								<option key={i} value={ell.value} label={ell.label} />
 							))}
 						</Select>
-						<button type="submit" className="content__submit-button btn btn-primary">
+						<button type="submit" className="content__submit-button">
 							{auth.user?.role ? "Create User" : "Register"}
 						</button>
 					</form>

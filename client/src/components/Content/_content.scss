@@ -24,7 +24,9 @@
         width: 400px;
     }
 
-    &__sumbit-button {
+    &__submit-button {
+        @extend .btn;
+        @extend .btn-primary;
         display: block;
         margin: 0 auto;
     }

@@ -59,11 +59,7 @@ const Login = () => {
 					className="mb-4"
 					heplerText="Type your password"
 					/>
-				<button
-					type="submit"
-					className="content__submit-button btn btn-primary">
-					Log in
-				</button>
+				<button type="submit" className="content__submit-button">Log in</button>
 			</form>
 		</Content>
 	);
