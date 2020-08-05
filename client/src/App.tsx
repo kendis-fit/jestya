@@ -15,6 +15,7 @@ import NotAvailable from "./components/NotAvailable";
 import PrivateRoute from "./components/PrivateRoute";
 import PrivateAdminRoute from "./components/PrivateAdminRoute";
 import ProjectsContainer from "./components/Projects/ProjectsContainer";
+import AddUser from "./components/AddUser";
 
 const store = createStore(reducer);
 
@@ -42,7 +43,7 @@ const App = () => {
 						<PrivateRoute exact path="/users" component={() => renderWithHeader(Users)} />
 						<PrivateRoute exact path="/users/:id" component={Header} />
 						<PrivateAdminRoute roles={["ADMIN", "SUPER_ADMIN"]} exact path="/create-user" component={() => renderWithHeader(Registration)} />
-						{/* <PrivateAdminRoute roles={["ADMIN", "SUPER_ADMIN"]} /> */}
+						<PrivateAdminRoute roles={["ADMIN", "SUPER_ADMIN"]} exact path="/add-user" component={() => renderWithHeader(AddUser)} />
 						<Route path="/not-authenticated/:page" render={(route) => <NotAvailable status={401} page={route.match.params.page} />} />
 						<Route path="/not-authorized/:page" render={(route) => <NotAvailable status={403} page={route.match.params.page} />}  />
 						<Route path="/not-available/:page" render={(route) => <NotAvailable status={500} page={route.match.params.page} />}  />

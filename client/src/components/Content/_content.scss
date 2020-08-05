@@ -1,11 +1,13 @@
-.login {
+.content {
     height: 85vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    // background-color: #e0f5ff;
 
     &__title {
+        @extend .card-title;
+        @extend .text-center;
+        @extend .text-primary;
         letter-spacing: 0.62em;
         font-weight: 300;
         margin-bottom: 20px;
@@ -13,10 +15,16 @@
     }
 
     &__container {
+        @extend .card;
+        @extend .shadow;
+        @extend .p-3;
+        @extend .mb-5;
+        @extend .bg-white;
+        @extend .rounded;
         width: 400px;
     }
 
-    &__sumbitButton {
+    &__sumbit-button {
         display: block;
         margin: 0 auto;
     }

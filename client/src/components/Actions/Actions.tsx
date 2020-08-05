@@ -14,7 +14,7 @@ const Actions = () => {
                 auth.user?.role === "ADMIN" ? 
                     <>
                         <Action path="/create-user" icon="person_add" name="Create user" />
-                        <Action path="/add-user-to-project" icon="group_add" name="Add user to project" />
+                        <Action path="/add-user" icon="group_add" name="Add user to project" />
                     </>
                     : null
             }
