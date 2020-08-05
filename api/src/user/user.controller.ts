@@ -105,7 +105,10 @@ export class UserController {
 	@HttpCode(204)
 	@Put(":id")
 	@UseGuards(JwtGuard, new UserSelfGuard([]))
-	public async update(@Param("id", ParseUUIDPipe) userId: string, @Body() user: UserUpdate): Promise<void> {
+	public async update(
+		@Param("id", ParseUUIDPipe) userId: string,
+		@Body() user: UserUpdate
+	): Promise<void> {
 		await this.userService.update(userId, user);
 	}
 

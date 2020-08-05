@@ -155,7 +155,9 @@ describe("Auth service", () => {
 			});
 
 			it("should throw an error 403", async () => {
-				await expect(service.registration(userRegistration)).rejects.toThrow(ForbiddenException);
+				await expect(service.registration(userRegistration)).rejects.toThrow(
+					ForbiddenException
+				);
 			});
 		});
 	});

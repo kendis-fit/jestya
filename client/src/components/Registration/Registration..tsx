@@ -57,7 +57,7 @@ const Registration = () => {
 	};
 
 	if (isRedirected) {
-		return <Redirect to="/login" />
+		return <Redirect to="/login" />;
 	}
 
 	return (

@@ -8,7 +8,9 @@ import { RequestUserProjects } from "../../helpers/request.interface";
 export class RoleProjectsGuard implements CanActivate {
 	constructor(private readonly checkFromFaces: Role[]) {}
 
-	public canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
+	public canActivate(
+		context: ExecutionContext
+	): boolean | Promise<boolean> | Observable<boolean> {
 		const ctx = context.switchToHttp();
 		const req = ctx.getRequest<RequestUserProjects>();
 		const projectId = req.params.id;
@@ -20,13 +22,17 @@ export class RoleProjectsGuard implements CanActivate {
 			switch (face) {
 				case Role.USER:
 				case Role.SUPER_ADMIN:
-					const userContainsProject = user.projects.some(project => project.id === projectId);
+					const userContainsProject = user.projects.some(
+						project => project.id === projectId
+					);
 					if (userContainsProject) {
 						return true;
 					}
 					break;
 				case Role.ADMIN:
-					const adminContainsProject = user.projects.some(project => project.creatorId === user.id);
+					const adminContainsProject = user.projects.some(
+						project => project.creatorId === user.id
+					);
 					if (adminContainsProject) {
 						return true;
 					}

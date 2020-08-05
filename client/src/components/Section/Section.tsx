@@ -9,13 +9,17 @@ const Section = (props: any) => {
 		setTaskList([...taskList, "s"]);
 	};
 
-
 	return (
-		<div className="section" style={{ background: props.index % 2 === 0 ? "#fafafa" : "#f2f2f2" }}>
+		<div
+			className="section"
+			style={{ background: props.index % 2 === 0 ? "#fafafa" : "#f2f2f2" }}
+		>
 			<SectionHeader {...props} />
 			<div className="section__tasklist">
 				{props.addSection ? (
-					<p className="section__addSection-text text-center text-muted">Add new section</p>
+					<p className="section__addSection-text text-center text-muted">
+						Add new section
+					</p>
 				) : (
 					<>
 						{taskList.map((ell, i) => (
@@ -35,7 +39,9 @@ const Section = (props: any) => {
 						</button>
 						{taskList.length === 0 ? (
 							<div className="section__noTasks">
-								<span className="noTasks__icon text-secondary  material-icons">fact_check</span>
+								<span className="noTasks__icon text-secondary  material-icons">
+									fact_check
+								</span>
 								<h5 className="text-center text-muted">No Tasks </h5>
 								<p className="text-center text-muted m-0 w-75">
 									Add new task by click "+" button or drag task here

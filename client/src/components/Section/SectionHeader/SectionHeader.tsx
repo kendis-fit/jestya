@@ -9,7 +9,19 @@ interface ISectionHeader {
 	handleDeleteSection(index: number): void;
 }
 
-const ColorsArray = ["blue", "indigo", "purple", "pink", "red", "orange", "yellow", "green", "teal", "cyan", "gray"];
+const ColorsArray = [
+	"blue",
+	"indigo",
+	"purple",
+	"pink",
+	"red",
+	"orange",
+	"yellow",
+	"green",
+	"teal",
+	"cyan",
+	"gray",
+];
 const IconsArray = [
 	"error",
 	"add_alert",
@@ -26,6 +38,19 @@ const IconsArray = [
 	"home",
 	"language",
 	"lock",
+	"phone",
+	"flash_on",
+	"star",
+	"emoji_objects",
+	"delete",
+	"favorite_border",
+	"print",
+	"settings",
+	"thumb_up",
+	"thumb_down",
+	"today",
+	"watch_later",
+	"work_outline",
 ];
 
 const SectionHeader = (props: ISectionHeader) => {
@@ -33,6 +58,7 @@ const SectionHeader = (props: ISectionHeader) => {
 	const [headerIcon, setHeaderIcon] = useState<string>(IconsArray[1]);
 	const [showPopUp, setShowPopUp] = useState<boolean>(false);
 	const [headerTitle, setHeaderTitle] = useState<string>("");
+	const [creating, setCreating] = useState<boolean>(true);
 
 	const arrowBtnRef = useRef<HTMLSpanElement>(null);
 
@@ -54,39 +80,52 @@ const SectionHeader = (props: ISectionHeader) => {
 	};
 
 	const handleBlurTitle = (event: React.FormEvent<HTMLInputElement>) => {
-		if (event.currentTarget.value.length !== 0) {
+		if (creating && event.currentTarget.value.trim().length === 0) {
+			props.handleDeleteSection(props.index);
+		} else if (event.currentTarget.value.trim().length !== 0) {
 			// setHeaderTitle(event.currentTarget.value);
 			title = headerTitle;
 		} else {
 			setHeaderTitle(title);
 		}
+		setCreating(false);
 	};
 
-	// console.log(title);
-
-	// console.log(headerTitle);
-
 	return (
-		<div className={`section__header p-2 mb-3  ${props.addSection ? "border-bottom" : "bg-" + headerColor} `}>
+		<div
+			className={`section__header p-2 mb-3  ${
+				props.addSection ? "border-bottom" : "bg-" + headerColor
+			} `}
+		>
 			<div className="section-header__wrapperAddBtnLeft">
 				{props.addSection ? null : (
 					//if not addSection show add button section before curent section
-					<button className="section-header__addBtnLeft" onClick={() => props.handleAddSection(props.index)}>
+					<button
+						className="section-header__addBtnLeft"
+						onClick={() => props.handleAddSection(props.index)}
+					>
 						<span className="material-icons">add</span>
 					</button>
 				)}
 			</div>
 			{props.addSection ? (
 				//if add section show add section
-				<button className="btn text-info p-0 d-flex align-items-center" onClick={props.handleAddSection}>
+				<button
+					className="btn text-info p-0 d-flex align-items-center"
+					onClick={props.handleAddSection}
+				>
 					<span className="material-icons p-2 mr-2">add</span> Add Section
 				</button>
 			) : (
 				//else show header with title of section
 				<>
-					<span className="section-header__icon material-icons text-white p-2 pl-3 mr-2">{headerIcon}</span>
+					<span className="section-header__icon material-icons text-white p-2 pl-3 mr-2">
+						{headerIcon}
+					</span>
 					<input
-						className={` form-control w-65 ${"bg-" + headerColor}  border-0 section-header__title`}
+						className={` form-control w-65 ${
+							"bg-" + headerColor
+						}  border-0 section-header__title`}
 						type="text"
 						value={headerTitle}
 						onBlur={handleBlurTitle}
@@ -94,7 +133,9 @@ const SectionHeader = (props: ISectionHeader) => {
 						autoFocus
 					/>
 					<span
-						className={`section-header__arrow${showPopUp ? "--active" : ""} material-icons`}
+						className={`section-header__arrow${
+							showPopUp ? "--active" : ""
+						} material-icons`}
 						onClick={handlePopUp}
 						ref={arrowBtnRef}
 					>

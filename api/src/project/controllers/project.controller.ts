@@ -1,4 +1,15 @@
-import { Controller, Post, Body, Delete, Param, UseGuards, Get, Patch, ParseUUIDPipe, HttpCode } from "@nestjs/common";
+import {
+	Controller,
+	Post,
+	Body,
+	Delete,
+	Param,
+	UseGuards,
+	Get,
+	Patch,
+	ParseUUIDPipe,
+	HttpCode,
+} from "@nestjs/common";
 import {
 	ApiTags,
 	ApiBearerAuth,
@@ -36,7 +47,9 @@ export class ProjectController {
 	@Get()
 	@UseGuards(JwtGuard)
 	public async findAll(@User("id") userId: string): Promise<ProjectInfo[]> {
-		const [projects] = await this.projectService.findAll(userId, [{ relation: "boards", subrelations: ["tasks"] }]);
+		const [projects] = await this.projectService.findAll(userId, [
+			{ relation: "boards", subrelations: ["tasks"] },
+		]);
 		return projects.map(project => new ProjectInfo(project));
 	}
 
@@ -44,7 +57,9 @@ export class ProjectController {
 	@ApiForbiddenResponse({ type: Error })
 	@Get(":id/boards")
 	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.USER]))
-	public async findAllBoards(@Param("id", ParseUUIDPipe) projectId: string): Promise<BoardInfo[]> {
+	public async findAllBoards(
+		@Param("id", ParseUUIDPipe) projectId: string
+	): Promise<BoardInfo[]> {
 		const boards = await this.projectService.findAllBoards(projectId);
 		return boards.map(board => new BoardInfo(board));
 	}
@@ -53,7 +68,9 @@ export class ProjectController {
 	@ApiForbiddenResponse({ type: Error })
 	@Get(":id/users")
 	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.USER]))
-	public async findAllUsers(@Param("id", ParseUUIDPipe) projectId: string): Promise<ProjectUsersInfo[]> {
+	public async findAllUsers(
+		@Param("id", ParseUUIDPipe) projectId: string
+	): Promise<ProjectUsersInfo[]> {
 		const users = await this.projectService.findAllUsers(projectId);
 		return users.map(user => new ProjectUsersInfo(user));
 	}
@@ -63,7 +80,10 @@ export class ProjectController {
 	@ApiForbiddenResponse({ type: Error })
 	@Post()
 	@UseGuards(JwtGuard, new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
-	public async create(@Body() project: ProjectCreating, @User("id") userId: string): Promise<ProjectCreated> {
+	public async create(
+		@Body() project: ProjectCreating,
+		@User("id") userId: string
+	): Promise<ProjectCreated> {
 		const newProject = await this.projectService.create(userId, project);
 		return new ProjectCreated(newProject);
 	}
@@ -73,7 +93,11 @@ export class ProjectController {
 	@ApiForbiddenResponse({ type: Error })
 	@HttpCode(204)
 	@Post(":id/users/:userId")
-	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.ADMIN]), new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
+	@UseGuards(
+		JwtProjectsGuard,
+		new RoleProjectsGuard([Role.ADMIN]),
+		new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN])
+	)
 	public async addUser(
 		@Param("id", ParseUUIDPipe) projectId: string,
 		@Param("userId", ParseUUIDPipe) userId: string
@@ -87,7 +111,11 @@ export class ProjectController {
 	@ApiForbiddenResponse({ type: Error })
 	@HttpCode(204)
 	@Patch(":id")
-	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.ADMIN]), new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
+	@UseGuards(
+		JwtProjectsGuard,
+		new RoleProjectsGuard([Role.ADMIN]),
+		new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN])
+	)
 	public async updateState(
 		@Param("id", ParseUUIDPipe) projectId: string,
 		@Body() project: ProjectUpdateState
@@ -100,7 +128,11 @@ export class ProjectController {
 	@ApiForbiddenResponse({ type: Error })
 	@HttpCode(204)
 	@Delete(":id/users/:userId")
-	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.ADMIN]), new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
+	@UseGuards(
+		JwtProjectsGuard,
+		new RoleProjectsGuard([Role.ADMIN]),
+		new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN])
+	)
 	public async removeUser(
 		@Param("id", ParseUUIDPipe) projectId: string,
 		@Param("userId", ParseUUIDPipe) userId: string

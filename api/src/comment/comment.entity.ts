@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToOne, RelationId } from "typeorm";
+import {
+	Entity,
+	Column,
+	PrimaryGeneratedColumn,
+	CreateDateColumn,
+	ManyToOne,
+	RelationId,
+} from "typeorm";
 
 import { Task } from "../task/task.entity";
 import { User } from "../user/user.entity";

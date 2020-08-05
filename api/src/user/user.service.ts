@@ -1,6 +1,12 @@
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Injectable, HttpException, HttpStatus, NotFoundException, ConflictException } from "@nestjs/common";
+import {
+	Injectable,
+	HttpException,
+	HttpStatus,
+	NotFoundException,
+	ConflictException,
+} from "@nestjs/common";
 
 import { User, Role } from "./user.entity";
 import { UserUpdate } from "./dto/user-update.dto";
@@ -49,7 +55,10 @@ export class UserService {
 
 	public async findAll(offset: number, size: number, relations?: string[]): Promise<User[]> {
 		if (size > 100) {
-			throw new HttpException({ message: "Users must be less than 100" }, HttpStatus.BAD_REQUEST);
+			throw new HttpException(
+				{ message: "Users must be less than 100" },
+				HttpStatus.BAD_REQUEST
+			);
 		}
 		const users = await this.usersRepository.find({ skip: offset, take: size, relations });
 		return users;

@@ -21,7 +21,11 @@ export class CommentService {
 		return foundComment;
 	}
 
-	public async create(userId: string, taskId: string, comment: CommentCreating): Promise<Comment> {
+	public async create(
+		userId: string,
+		taskId: string,
+		comment: CommentCreating
+	): Promise<Comment> {
 		const newComment = new Comment();
 		newComment.user = { id: userId } as any;
 		newComment.content = comment.content;

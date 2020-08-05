@@ -2,6 +2,12 @@ import React, { useState } from "react";
 import Section from "../Section";
 
 const SectionList = () => {
+	const initialSection = {
+		color: "",
+		icon: "",
+		title: "",
+		tasks: [],
+	};
 	const [sectionsList, setSectionsList] = useState<any[]>([0]);
 
 	const handleAddSection = (index: number) => {

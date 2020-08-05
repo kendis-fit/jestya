@@ -1,4 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToMany, JoinTable, RelationId } from "typeorm";
+import {
+	Entity,
+	Column,
+	PrimaryGeneratedColumn,
+	CreateDateColumn,
+	ManyToMany,
+	JoinTable,
+	RelationId,
+} from "typeorm";
 
 import { Task } from "../task/task.entity";
 

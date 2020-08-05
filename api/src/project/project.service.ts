@@ -33,9 +33,15 @@ export class ProjectService {
 
 		if (relations) {
 			for (const relation of relations) {
-				builder = builder.leftJoinAndSelect(`project.${relation.relation}`, relation.relation);
+				builder = builder.leftJoinAndSelect(
+					`project.${relation.relation}`,
+					relation.relation
+				);
 				for (const subrelation of relation.subrelations) {
-					builder = builder.leftJoinAndSelect(`${relation.relation}.${subrelation}`, subrelation);
+					builder = builder.leftJoinAndSelect(
+						`${relation.relation}.${subrelation}`,
+						subrelation
+					);
 				}
 			}
 		}
@@ -59,7 +65,11 @@ export class ProjectService {
 	}
 
 	public async create(userId: string, project: ProjectCreating): Promise<Project> {
-		const standartBoards = await this.boardService.createBoards(["TO DO", "IN PROCESSING", "DONE"]);
+		const standartBoards = await this.boardService.createBoards([
+			"TO DO",
+			"IN PROCESSING",
+			"DONE",
+		]);
 		const superAdmin = await this.userService.findByRole(Role.SUPER_ADMIN);
 		const users = [{ id: userId }] as any[];
 		if (userId !== superAdmin.id) {

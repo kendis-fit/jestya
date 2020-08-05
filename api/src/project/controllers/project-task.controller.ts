@@ -45,7 +45,10 @@ import { Error, ErrorBadRequest } from "../../helpers/error.interfaces";
 @ApiTags("projects")
 @Controller("projects")
 export class ProjectTaskController {
-	constructor(private readonly taskService: TaskService, private readonly commentService: CommentService) {}
+	constructor(
+		private readonly taskService: TaskService,
+		private readonly commentService: CommentService
+	) {}
 
 	@ApiOkResponse({ type: TaskInfo })
 	@ApiNotFoundResponse({ type: Error })
@@ -62,7 +65,9 @@ export class ProjectTaskController {
 	@ApiForbiddenResponse({ type: Error })
 	@Get(":id/tasks/:taskId/components")
 	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.USER]))
-	public async findComponents(@Param("taskId", ParseUUIDPipe) taskId: string): Promise<TaskComponentInfo[]> {
+	public async findComponents(
+		@Param("taskId", ParseUUIDPipe) taskId: string
+	): Promise<TaskComponentInfo[]> {
 		const task = await this.taskService.findById(taskId);
 		return task.components.map(component => new TaskComponentInfo(component));
 	}
@@ -72,7 +77,9 @@ export class ProjectTaskController {
 	@ApiForbiddenResponse({ type: Error })
 	@Get(":id/tasks/:taskId/comments")
 	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.USER]))
-	public async findComments(@Param("taskId", ParseUUIDPipe) taskId: string): Promise<TaskCommentInfo[]> {
+	public async findComments(
+		@Param("taskId", ParseUUIDPipe) taskId: string
+	): Promise<TaskCommentInfo[]> {
 		const task = await this.taskService.findById(taskId);
 		return task.comments.map(comment => new TaskCommentInfo(comment));
 	}
@@ -98,7 +105,10 @@ export class ProjectTaskController {
 	@HttpCode(204)
 	@Put(":id/tasks/:taskId")
 	@UseGuards(JwtTasksGuard, new RoleProjectsGuard([Role.USER]), new RoleTasksGuard(true))
-	public async updateTask(@Param("taskId", ParseUUIDPipe) taskId: string, @Body() task: TaskUpdate): Promise<void> {
+	public async updateTask(
+		@Param("taskId", ParseUUIDPipe) taskId: string,
+		@Body() task: TaskUpdate
+	): Promise<void> {
 		await this.taskService.update(taskId, task);
 	}
 
@@ -121,7 +131,10 @@ export class ProjectTaskController {
 	@ApiForbiddenResponse({ type: Error })
 	@Post(":id/tasks")
 	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.USER]))
-	public async createTask(@Body() task: TaskCreating, @User("id") userId: string): Promise<TaskCreated> {
+	public async createTask(
+		@Body() task: TaskCreating,
+		@User("id") userId: string
+	): Promise<TaskCreated> {
 		const newTask = await this.taskService.create(userId, task);
 		return new TaskCreated(newTask.id);
 	}
