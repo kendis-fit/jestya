@@ -10,7 +10,6 @@ interface ISectionHeader {
 }
 
 const ColorsArray = [
-	"blue",
 	"indigo",
 	"purple",
 	"pink",
@@ -20,6 +19,7 @@ const ColorsArray = [
 	"green",
 	"teal",
 	"cyan",
+	"blue",
 	"gray",
 ];
 const IconsArray = [
@@ -43,7 +43,7 @@ const IconsArray = [
 	"star",
 	"emoji_objects",
 	"delete",
-	"favorite_border",
+	"speed",
 	"print",
 	"settings",
 	"thumb_up",
@@ -83,7 +83,6 @@ const SectionHeader = (props: ISectionHeader) => {
 		if (creating && event.currentTarget.value.trim().length === 0) {
 			props.handleDeleteSection(props.index);
 		} else if (event.currentTarget.value.trim().length !== 0) {
-			// setHeaderTitle(event.currentTarget.value);
 			title = headerTitle;
 		} else {
 			setHeaderTitle(title);
