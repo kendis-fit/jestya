@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import Task from "./Task";
-import SectionHeader from "./SectionHeader";
 
-const Section = (props: any) => {
+import BoardHeader from "./BoardHeader";
+
+import { IBoard } from "../../api/boardProjects";
+
+const Board = (props: any) => {
 	const [taskList, setTaskList] = useState<any[]>([]);
 
 	const handleAddTask = () => {
@@ -11,11 +14,11 @@ const Section = (props: any) => {
 
 	return (
 		<div
-			className="section"
+			className="board"
 			style={{ background: props.index % 2 === 0 ? "#fafafa" : "#f2f2f2" }}
 		>
-			<SectionHeader {...props} />
-			<div className="section__tasklist">
+			<BoardHeader {...props} />
+			<div className="board__tasklist">
 				{props.addSection ? (
 					<p className="section__addSection-text text-center text-muted">
 						Add new section
@@ -27,7 +30,7 @@ const Section = (props: any) => {
 						))}
 						<button
 							className="
-							section__button
+							board__button
 							text-primary
 							rounded-circle
 							btn 
@@ -38,7 +41,7 @@ const Section = (props: any) => {
 							<span className="material-icons">add</span>
 						</button>
 						{taskList.length === 0 ? (
-							<div className="section__noTasks">
+							<div className="board__noTasks">
 								<span className="noTasks__icon text-secondary  material-icons">
 									fact_check
 								</span>
@@ -55,4 +58,4 @@ const Section = (props: any) => {
 	);
 };
 
-export default Section;
+export default Board;

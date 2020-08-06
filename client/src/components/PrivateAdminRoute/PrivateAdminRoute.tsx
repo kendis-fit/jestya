@@ -3,6 +3,7 @@ import { Redirect, Route } from "react-router-dom";
 
 import { useAuth } from "../../context/auth";
 import { IRoute } from "../PrivateRoute/PrivateRoute";
+import Header from "../Header";
 
 export interface IAdminRoute extends IRoute {
     roles: string[];
@@ -10,6 +11,7 @@ export interface IAdminRoute extends IRoute {
 
 const PrivateAdminRoute = (props: IAdminRoute) => {
     const { auth } = useAuth();
+    const { component: Component, ...rest } = props;
     
     if (!auth.isAuthenticated) {
         return <Redirect to="/login" />
@@ -18,7 +20,17 @@ const PrivateAdminRoute = (props: IAdminRoute) => {
         return <Redirect to={`/not-authorized${props.path}`} />
     }
 
-    return <Route {...props} />
+    return <Route {...rest} render={route => {
+        if (props.isHeader) {
+            return <>
+                {
+                    props.isHeader ? <Header /> : null
+                }
+                <Component {...route.match.params} />
+            </>
+        }
+        return <Component {...route.match.params} />
+    }} />
 }
 
 export default PrivateAdminRoute;

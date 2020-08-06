@@ -11,7 +11,7 @@ interface IPopUpMenu {
 	index: number;
 	handleChangeColor(color: string): void;
 	handleChangeIcon(icon: string): void;
-	handleDeleteSection(index: number): void;
+	handleDeleteBoard(index: number): void;
 }
 
 const PopUpMenu = (props: IPopUpMenu) => {
@@ -53,7 +53,7 @@ const PopUpMenu = (props: IPopUpMenu) => {
 	};
 
 	return (
-		<div className={`section-header__popUpMenu p-2 `} style={{ left: left - 140 < 100 ? 20 : left - 140 }}>
+		<div className={`border-header__popUpMenu p-2 `} style={{ left: left - 140 < 100 ? 20 : left - 140 }}>
 			<ul className="popUpMenu__nav nav nav-tabs">
 				<li id="description" onClick={handleChangeTab} className="nav-item">
 					<span className={`nav-link ${tab === "description" ? "active" : ""} `}>Description</span>

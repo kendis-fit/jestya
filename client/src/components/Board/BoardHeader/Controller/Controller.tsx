@@ -8,7 +8,7 @@ interface IController {
 	index: number;
 	handleChangeColor(color: string): void;
 	handleChangeIcon(icon: string): void;
-	handleDeleteSection(index: number): void;
+	handleDeleteBoard(index: number): void;
 }
 
 const Controller = (props: IController) => {
@@ -19,7 +19,7 @@ const Controller = (props: IController) => {
 		HeaderIcon,
 		handleChangeColor,
 		handleChangeIcon,
-		handleDeleteSection,
+		handleDeleteBoard,
 		IconsArray,
 	} = props;
 
@@ -53,7 +53,7 @@ const Controller = (props: IController) => {
 			{index === 0 ? null : (
 				<button
 					className="btn btn-outline-danger w-85 align-self-center"
-					onClick={() => handleDeleteSection(index)}
+					onClick={() => handleDeleteBoard(index)}
 				>
 					Delete Section
 				</button>

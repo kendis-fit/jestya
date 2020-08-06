@@ -1,4 +1,4 @@
-.section{
+.board{
     
     width: 350px;
     height: 100%;
@@ -9,12 +9,12 @@
         @include flex(null,center);
 
         // cursor: grab;
-        &:active {
-        // cursor: grabbing;
+        // &:active {
+        // // cursor: grabbing;
 
-        }
+        // }
         &:hover {
-            .section-header__arrow {
+            .board-header__arrow {
                 color: #fff;
             }
         }
@@ -37,25 +37,24 @@
         width: 20px;
         padding: 17px;
     }
+
+    &__noTasks{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 200px;
+        height: 60vh;
+    }
+    
     &__addSection-text {
         padding-top: 360px;
     }
-    
-    
 }
 
 .task__avatar{
     height: 30px;
     width: 30px;
     border-radius: 50%;
-}
-
-.section__noTasks{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 200px;
-    height: 60vh;
 }
 
 .noTasks {

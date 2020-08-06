@@ -6,23 +6,21 @@
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
 
 // components css
-@import "../components/Login/login";
+@import "../components/Board/board";
+@import "../components/Boards/boards";
 @import "../components/Header/header";
 @import "../components/Search/search";
-@import "../components//Action//action";
-@import "../components/Actions/actions";
-@import "../components/Section/section";
+@import "../components/Action/action";
 @import "../components/Project/project";
+@import "../components/Content/content";
+@import "../components/Actions/actions";
 @import "../components/Projects/projects";
-@import "../components/SectionList/sectionList";
-@import "../components/Registration/registration";
-@import "../components/Registration/registration";
 @import "../components/NotAvailable/not-available";
-@import "../components/ProfileActions/profile-actions";
-@import "../components/AddProjectForm/add-project-form";
-@import "../components/Section/SectionHeader/sectionHeader";
-@import "../components/Section/SectionHeader/PopUpMenu/popUpMenu";
 @import "../components/ModalContainer/modal-container";
+@import "../components/ProfileActions/profile-actions";
+@import "../components/Board/BoardHeader/board-header";
+@import "../components/AddProjectForm/add-project-form";
+@import "../components/Board/BoardHeader/PopUpMenu/popUpMenu";
 
 body {
     background: #fffefe;
