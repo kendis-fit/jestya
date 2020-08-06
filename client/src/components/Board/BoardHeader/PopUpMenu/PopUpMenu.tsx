@@ -11,7 +11,7 @@ interface IPopUpMenu {
 	index: number;
 	handleChangeColor(color: string): void;
 	handleChangeIcon(icon: string): void;
-	handleDeleteSection(index: number): void;
+	handleDeleteBoard(index: number): void;
 }
 
 const PopUpMenu = (props: IPopUpMenu) => {

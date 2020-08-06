@@ -8,7 +8,7 @@ export interface IBoardList {
 	projectId: string;
 }
 
-const BoardList = (props: IBoardList) => {
+const Boards = (props: IBoardList) => {
 	console.log(props);
 	const [sectionsList, setBoardsList] = useState<any[]>([1, 2, 2, 4, 5, 5, 6, 6, 6, 6, 2]);
 	const { data: boards, loading, error } = useVanillaFetch(() => resource.projects.findBoards(props.projectId));
@@ -25,14 +25,18 @@ const BoardList = (props: IBoardList) => {
 		}
 	};
 
+	const handleDeleteBoard = (index: number) => {
+		setBoardsList([...sectionsList.splice(0, index), ...sectionsList.splice(index)]);
+	};
+
 	return (
 		<div className="boards ">
 			{sectionsList.map((ell, i) => (
-				<Board key={i} index={i} handleAddBoard={handleAddBoard} />
+				<Board key={i} index={i} handleAddBoard={handleAddBoard} handleDeleteBoard={handleDeleteBoard} />
 			))}
 			<Board index={sectionsList.length} addBoard handleAddBoard={handleAddBoard} />
 		</div>
 	);
 };
 
-export default BoardList;
+export default Boards;

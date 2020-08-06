@@ -4,9 +4,9 @@ import ModalContainer from "../../ModalContainer";
 
 interface IBoardHeader {
 	index: number;
-	addSection: boolean;
-	handleAddSection(index?: number | React.MouseEvent<HTMLButtonElement>): void;
-	handleDeleteSection(index: number): void;
+	addBoard: boolean;
+	handleAddBoard(index?: number | React.MouseEvent<HTMLButtonElement>): void;
+	handleDeleteBoard(index: number): void;
 }
 
 const ColorsArray = [
@@ -53,7 +53,7 @@ const IconsArray = [
 	"work_outline",
 ];
 
-const BoardHeader = (props: any) => {
+const BoardHeader = (props: IBoardHeader) => {
 	const [headerColor, setHeaderColor] = useState<string>(ColorsArray[1]);
 	const [headerIcon, setHeaderIcon] = useState<string>(IconsArray[1]);
 	const [showPopUp, setShowPopUp] = useState<boolean>(false);
@@ -81,7 +81,7 @@ const BoardHeader = (props: any) => {
 
 	const handleBlurTitle = (event: React.FormEvent<HTMLInputElement>) => {
 		if (creating && event.currentTarget.value.trim().length === 0) {
-			props.handleDeleteSection(props.index);
+			props.handleDeleteBoard(props.index);
 		} else if (event.currentTarget.value.trim().length !== 0) {
 			// setHeaderTitle(event.currentTarget.value);
 			title = headerTitle;
@@ -94,25 +94,25 @@ const BoardHeader = (props: any) => {
 	return (
 		<div
 			className={`board__header p-2 mb-3  ${
-				props.addSection ? "border-bottom" : "bg-" + headerColor
+				props.addBoard ? "border-bottom" : "bg-" + headerColor
 			} `}
 		>
 			<div className="board-header__wrapperAddBtnLeft">
-				{props.addSection ? null : (
+				{props.addBoard ? null : (
 					//if not addSection show add button section before curent section
 					<button
 						className="board-header__addBtnLeft"
-						onClick={() => props.handleAddSection(props.index)}
+						onClick={() => props.handleAddBoard(props.index)}
 					>
 						<span className="material-icons">add</span>
 					</button>
 				)}
 			</div>
-			{props.addSection ? (
+			{props.addBoard ? (
 				//if add section show add section
 				<button
 					className="btn text-info p-0 d-flex align-items-center"
-					onClick={props.handleAddSection}
+					onClick={props.handleAddBoard}
 				>
 					<span className="material-icons p-2 mr-2">add</span> Add Section
 				</button>
@@ -154,7 +154,7 @@ const BoardHeader = (props: any) => {
 						HeaderColor={headerColor}
 						handleChangeIcon={handleChangeIcon}
 						handleChangeColor={handleChangeColor}
-						handleDeleteSection={props.handleDeleteSection}
+						handleDeleteBoard={props.handleDeleteBoard}
 					/>
 				</ModalContainer>
 			)}
