@@ -11,11 +11,11 @@ export interface INotAvailable {
 const NotAvailable = (props: INotAvailable) => {
 	const { setIsAuthenticated } = useAuth();
 
-    useEffect(() => {
-        if (props.status === 401 || props.status === 500) {
-            setIsAuthenticated?.(false);
-        }
-    }, []);
+	useEffect(() => {
+		if (props.status === 401 || props.status === 500) {
+			setIsAuthenticated?.(false);
+		}
+	}, [props.status, setIsAuthenticated]);
 
 	return (
 		<div className="not-available">

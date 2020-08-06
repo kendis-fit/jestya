@@ -19,7 +19,10 @@ export class ProjectCacheController {
 
 	@MessagePattern("containProject")
 	public async containProject(project: ProjectItem): Promise<boolean> {
-		const containedProject = await this.projectCache.containProject(project.userLogin, project.projectId);
+		const containedProject = await this.projectCache.containProject(
+			project.userLogin,
+			project.projectId
+		);
 		return containedProject;
 	}
 }

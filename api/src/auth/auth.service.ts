@@ -8,7 +8,10 @@ import { UserRegistration } from "../user/dto/user-registration.dto";
 
 @Injectable()
 export class AuthService {
-	constructor(private readonly userService: UserService, private readonly jwtService: JwtService) {}
+	constructor(
+		private readonly userService: UserService,
+		private readonly jwtService: JwtService
+	) {}
 
 	public async login(user: UserLogin): Promise<[User, string]> {
 		const foundUser = await this.userService.findByLogin(user.login);

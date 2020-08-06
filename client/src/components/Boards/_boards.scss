@@ -3,4 +3,5 @@
     display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
+    @include custom-scrollbar(20px,10px,4px)
 }

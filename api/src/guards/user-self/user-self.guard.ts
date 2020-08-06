@@ -8,7 +8,9 @@ import { RequestUser } from "../../helpers/request.interface";
 export class UserSelfGuard implements CanActivate {
 	constructor(private readonly roles: Role[]) {}
 
-	public canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
+	public canActivate(
+		context: ExecutionContext
+	): boolean | Promise<boolean> | Observable<boolean> {
 		const ctx = context.switchToHttp();
 		const req = ctx.getRequest<RequestUser>();
 		const user = req.user;

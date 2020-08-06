@@ -122,9 +122,9 @@ describe("Board service", () => {
 			});
 
 			it("should throw an error 404", async () => {
-				await expect(service.update("123", plainToClass(BoardUpdate, board))).rejects.toThrow(
-					NotFoundException
-				);
+				await expect(
+					service.update("123", plainToClass(BoardUpdate, board))
+				).rejects.toThrow(NotFoundException);
 			});
 		});
 	});

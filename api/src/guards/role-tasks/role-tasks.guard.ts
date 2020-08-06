@@ -6,9 +6,14 @@ import { RequestUserTasks } from "../../helpers/request.interface";
 
 @Injectable()
 export class RoleTasksGuard implements CanActivate {
-	constructor(private readonly allowedAdmin?: boolean, private readonly allowedExecutors?: boolean) {}
+	constructor(
+		private readonly allowedAdmin?: boolean,
+		private readonly allowedExecutors?: boolean
+	) {}
 
-	public canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
+	public canActivate(
+		context: ExecutionContext
+	): boolean | Promise<boolean> | Observable<boolean> {
 		const ctx = context.switchToHttp();
 		const req = ctx.getRequest<RequestUserTasks>();
 		const user = req.user;

@@ -1,4 +1,14 @@
-import { Controller, Put, UseGuards, Delete, Param, ParseUUIDPipe, Body, Post, HttpCode } from "@nestjs/common";
+import {
+	Controller,
+	Put,
+	UseGuards,
+	Delete,
+	Param,
+	ParseUUIDPipe,
+	Body,
+	Post,
+	HttpCode,
+} from "@nestjs/common";
 import {
 	ApiTags,
 	ApiBearerAuth,
@@ -30,7 +40,11 @@ export class ProjectBoardController {
 	@ApiNotFoundResponse({ type: Error })
 	@ApiForbiddenResponse({ type: Error })
 	@Post(":id/boards")
-	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.ADMIN]), new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
+	@UseGuards(
+		JwtProjectsGuard,
+		new RoleProjectsGuard([Role.ADMIN]),
+		new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN])
+	)
 	public async addBoard(
 		@Param("id", ParseUUIDPipe) projectId: string,
 		@Body() board: BoardCreating
@@ -45,7 +59,11 @@ export class ProjectBoardController {
 	@ApiForbiddenResponse({ type: Error })
 	@HttpCode(204)
 	@Put(":id/boards/:boardId")
-	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.ADMIN]), new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
+	@UseGuards(
+		JwtProjectsGuard,
+		new RoleProjectsGuard([Role.ADMIN]),
+		new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN])
+	)
 	public async updateBoard(
 		@Param("boardId", ParseUUIDPipe) boardId: string,
 		@Body() board: BoardUpdate
@@ -58,7 +76,11 @@ export class ProjectBoardController {
 	@ApiForbiddenResponse({ type: Error })
 	@HttpCode(204)
 	@Delete(":id/boards/:boardId")
-	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.ADMIN]), new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN]))
+	@UseGuards(
+		JwtProjectsGuard,
+		new RoleProjectsGuard([Role.ADMIN]),
+		new RoleGuard([Role.SUPER_ADMIN, Role.ADMIN])
+	)
 	public async removeBoard(@Param("boardId", ParseUUIDPipe) boardId: string): Promise<void> {
 		await this.boardService.remove(boardId);
 	}

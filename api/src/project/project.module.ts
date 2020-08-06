@@ -13,8 +13,19 @@ import { ProjectBoardController } from "./controllers/project-board.controller";
 import { ProjectCommentController } from "./controllers/project-comment.controller";
 
 @Module({
-	imports: [TypeOrmModule.forFeature([Project]), BoardModule, CommentModule, TaskModule, UserModule],
-	controllers: [ProjectController, ProjectTaskController, ProjectBoardController, ProjectCommentController],
+	imports: [
+		TypeOrmModule.forFeature([Project]),
+		BoardModule,
+		CommentModule,
+		TaskModule,
+		UserModule,
+	],
+	controllers: [
+		ProjectController,
+		ProjectTaskController,
+		ProjectBoardController,
+		ProjectCommentController,
+	],
 	providers: [ProjectService],
 	exports: [ProjectService],
 })

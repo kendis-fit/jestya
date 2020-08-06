@@ -13,11 +13,16 @@ const Board = (props: any) => {
 	};
 
 	return (
-		<div className="board" style={{ background: props.index % 2 === 0 ? "#fafafa" : "#f2f2f2" }}>
+		<div
+			className="board"
+			style={{ background: props.index % 2 === 0 ? "#fafafa" : "#f2f2f2" }}
+		>
 			<BoardHeader {...props} />
-			<div>
-				{props.addBoard ? (
-					<p className="text-center">Add new section</p>
+			<div className="board__tasklist">
+				{props.addSection ? (
+					<p className="section__addSection-text text-center text-muted">
+						Add new section
+					</p>
 				) : (
 					<>
 						{taskList.map((ell, i) => (
@@ -37,7 +42,9 @@ const Board = (props: any) => {
 						</button>
 						{taskList.length === 0 ? (
 							<div className="board__noTasks">
-								<span className="noTasks__icon text-secondary  material-icons">fact_check</span>
+								<span className="noTasks__icon text-secondary  material-icons">
+									fact_check
+								</span>
 								<h5 className="text-center text-muted">No Tasks </h5>
 								<p className="text-center text-muted m-0 w-75">
 									Add new task by click "+" button or drag task here

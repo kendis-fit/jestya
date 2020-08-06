@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
+import Controller from "../Controller";
+import { useAuth } from "../../../../context/auth";
 
 interface IPopUpMenu {
 	left: number | undefined;
-	ShowPopUp?: boolean;
 	ColorsArray: string[];
 	IconsArray: string[];
 	HeaderColor: string;
@@ -10,42 +11,60 @@ interface IPopUpMenu {
 	index: number;
 	handleChangeColor(color: string): void;
 	handleChangeIcon(icon: string): void;
+	handleDeleteSection(index: number): void;
 }
 
 const PopUpMenu = (props: IPopUpMenu) => {
-	const { ColorsArray, HeaderColor, HeaderIcon, handleChangeColor, handleChangeIcon, IconsArray, left = 0 } = props;
+	const { left = 0, ...controlerProps } = props;
+
+	const [tab, setTab] = useState("description");
+
+	const handleChangeTab = (event: React.MouseEvent<HTMLSpanElement>) => {
+		setTab(event.currentTarget.id);
+	};
+
+	const { auth } = useAuth();
+
+	const renderSwitch = (tab: string) => {
+		switch (tab) {
+			case "controller": {
+				return <Controller {...controlerProps} />;
+			}
+			case "description": {
+				return (
+					<div className="popUpMenu__desription p-2">
+						<textarea
+							className="description__text form-control text-muted bg-white "
+							cols={30}
+							rows={10}
+							disabled={auth.user?.role === "USER"}
+						>
+							Lorem, ipsum dolor. Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat saepe
+							architecto voluptate fugit eum debitis, sapiente pariatur harum nihil sequi?
+						</textarea>
+					</div>
+				);
+			}
+
+			default: {
+				break;
+			}
+		}
+	};
 
 	return (
-		<div className={`board-header__popUpMenu p-2 `} style={{ left: left - 140 < 100 ? 20 : left - 140 }}>
-			<div className="popUpMenu__color-list ">
-				{ColorsArray.map((color, i) => (
-					<div
-						key={i}
-						className={`popUpMenu__color rounded-circle ${"bg-" + color}
-						bs-pink ${color === HeaderColor ? "popUpMenu__color--active" : ""}`}
-						onClick={() => {
-							handleChangeColor(color);
-						}}
-					/>
-				))}
-			</div>
-			<div className="popUpMenu__icon-list ">
-				{IconsArray.map((icon, i) => (
-					<div
-						key={i}
-						className={`popUpMenu__icon ${icon === HeaderIcon ? "popUpMenu__icon--active" : ""}`}
-						onClick={() => {
-							handleChangeIcon(icon);
-						}}
-					>
-						<span className="material-icons">{icon}</span>
-					</div>
-				))}
-			</div>
-			<p>
-				{/* Lorem ipsum dolor sit amet consectetur adipisicing elit. Error sequi eos laudantium eveniet repellat
-					dicta temporibus vero impedit illum velit? */}
-			</p>
+		<div className={`border-header__popUpMenu p-2 `} style={{ left: left - 140 < 100 ? 20 : left - 140 }}>
+			<ul className="popUpMenu__nav nav nav-tabs">
+				<li id="description" onClick={handleChangeTab} className="nav-item">
+					<span className={`nav-link ${tab === "description" ? "active" : ""} `}>Description</span>
+				</li>
+				{auth.user?.role === "USER" ? null : (
+					<li id="controller" onClick={handleChangeTab} className="nav-item">
+						<span className={`nav-link ${tab === "controller" ? "active" : ""} `}>Controller</span>
+					</li>
+				)}
+			</ul>
+			{renderSwitch(tab)}
 		</div>
 	);
 };

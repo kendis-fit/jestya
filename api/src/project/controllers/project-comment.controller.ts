@@ -1,4 +1,13 @@
-import { Controller, UseGuards, Body, Put, Delete, Param, ParseUUIDPipe, HttpCode } from "@nestjs/common";
+import {
+	Controller,
+	UseGuards,
+	Body,
+	Put,
+	Delete,
+	Param,
+	ParseUUIDPipe,
+	HttpCode,
+} from "@nestjs/common";
 import {
 	ApiTags,
 	ApiBearerAuth,
@@ -41,8 +50,14 @@ export class ProjectCommentController {
 	@ApiForbiddenResponse({ type: Error })
 	@HttpCode(204)
 	@Delete(":id/comments/:commentId")
-	@UseGuards(JwtProjectsGuard, new RoleProjectsGuard([Role.USER]), new UserSelfGuard([Role.SUPER_ADMIN, Role.ADMIN]))
-	public async removeComment(@Param("commentId", ParseUUIDPipe) commentId: string): Promise<void> {
+	@UseGuards(
+		JwtProjectsGuard,
+		new RoleProjectsGuard([Role.USER]),
+		new UserSelfGuard([Role.SUPER_ADMIN, Role.ADMIN])
+	)
+	public async removeComment(
+		@Param("commentId", ParseUUIDPipe) commentId: string
+	): Promise<void> {
 		await this.commentService.remove(commentId);
 	}
 }
