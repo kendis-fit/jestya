@@ -1,42 +1,34 @@
-import React, { useState } from "react";
-
-import Board from "../Board";
-import resource from "../../api/resource";
+import React, { useEffect } from "react";
 import { useVanillaFetch } from "vanilla-hooks";
 
-export interface IBoardList {
+import resource from "../../api/resource";
+import { IBoard } from "../../api/boardProjects";
+import ListBoardsContainer from "../ListBoards/ListBoardsContainer";
+
+export interface IBoards {
 	projectId: string;
+	initBoards: (board: IBoard[]) => void;
 }
 
-const Boards = (props: IBoardList) => {
-	console.log(props);
-	const [sectionsList, setBoardsList] = useState<any[]>([1, 2, 2, 4, 5, 5, 6, 6, 6, 6, 2]);
-	const { data: boards, loading, error } = useVanillaFetch(() => resource.projects.findBoards(props.projectId));
+const Boards = (props: IBoards) => {
+    const { data: boards, loading, error } = useVanillaFetch(() => resource.projects.findBoards(props.projectId));
 
-	if (loading) {
-		return <div>Loading...</div>
-	}
+    useEffect(() => {
+		if (boards) {
+			props.initBoards(boards);
+        }
+        if (error) {
+            props.initBoards([]);
+        }
+	}, [boards, props, error]);
 
-	const handleAddBoard = (index: number) => {
-		if (typeof index === "number") {
-			setBoardsList([...sectionsList.splice(index, 0, 2), ...sectionsList]);
-		} else {
-			setBoardsList([...sectionsList, 1]);
-		}
-	};
+    if (loading) {
+        return <div>loading..</div>
+    }
 
-	const handleDeleteBoard = (index: number) => {
-		setBoardsList([...sectionsList.splice(0, index), ...sectionsList.splice(index)]);
-	};
-
-	return (
-		<div className="boards ">
-			{sectionsList.map((ell, i) => (
-				<Board key={i} index={i} handleAddBoard={handleAddBoard} handleDeleteBoard={handleDeleteBoard} />
-			))}
-			<Board index={sectionsList.length} addBoard handleAddBoard={handleAddBoard} />
-		</div>
-	);
-};
+    return(
+        <ListBoardsContainer boards={[]} />
+    );
+}
 
 export default Boards;
