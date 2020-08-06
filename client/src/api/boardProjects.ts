@@ -14,6 +14,15 @@ export interface IBoard {
 	tasks: ITask[];
 }
 
+export interface IAddBoard {
+	name: string;
+	description?: string;
+}
+
+export interface IAddBoardResponse {
+	id: string;
+}
+
 const boardProjects = {
 	findBoards: (id: string) => {
 		return new Promise<IBoard[]>(async (resolve, reject) => {
