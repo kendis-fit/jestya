@@ -124,7 +124,7 @@ const BoardHeader = (props: IBoardHeader) => {
 					<input
 						className={` form-control w-65 ${
 							"bg-" + headerColor
-						}  border-0 section-header__title`}
+						}  border-0 board-header__title`}
 						type="text"
 						value={headerTitle}
 						onBlur={handleBlurTitle}

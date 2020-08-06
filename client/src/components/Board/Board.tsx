@@ -5,6 +5,13 @@ import BoardHeader from "./BoardHeader";
 
 import { IBoard } from "../../api/boardProjects";
 
+interface IBoardComponent {
+	index: number;
+	addBoard: boolean;
+	handleAddBoard(index: number): void;
+	handleDeleteBoard?(index: number): void;
+}
+
 const Board = (props: any) => {
 	const [taskList, setTaskList] = useState<any[]>([]);
 
@@ -19,7 +26,7 @@ const Board = (props: any) => {
 		>
 			<BoardHeader {...props} />
 			<div className="board__tasklist">
-				{props.addSection ? (
+				{props.addBoard ? (
 					<p className="section__addSection-text text-center text-muted">
 						Add new section
 					</p>

@@ -39,8 +39,9 @@ const PopUpMenu = (props: IPopUpMenu) => {
 							rows={10}
 							disabled={auth.user?.role === "USER"}
 						>
-							Lorem, ipsum dolor. Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat saepe
-							architecto voluptate fugit eum debitis, sapiente pariatur harum nihil sequi?
+							Lorem, ipsum dolor. Lorem ipsum dolor sit amet consectetur adipisicing
+							elit. Fugiat saepe architecto voluptate fugit eum debitis, sapiente
+							pariatur harum nihil sequi?
 						</textarea>
 					</div>
 				);
@@ -53,14 +54,21 @@ const PopUpMenu = (props: IPopUpMenu) => {
 	};
 
 	return (
-		<div className={`border-header__popUpMenu p-2 `} style={{ left: left - 140 < 100 ? 20 : left - 140 }}>
+		<div
+			className={`board-header__popUpMenu p-2 `}
+			style={{ left: left - 140 < 100 ? 20 : left - 140 }}
+		>
 			<ul className="popUpMenu__nav nav nav-tabs">
 				<li id="description" onClick={handleChangeTab} className="nav-item">
-					<span className={`nav-link ${tab === "description" ? "active" : ""} `}>Description</span>
+					<span className={`nav-link ${tab === "description" ? "active" : ""} `}>
+						Description
+					</span>
 				</li>
 				{auth.user?.role === "USER" ? null : (
 					<li id="controller" onClick={handleChangeTab} className="nav-item">
-						<span className={`nav-link ${tab === "controller" ? "active" : ""} `}>Controller</span>
+						<span className={`nav-link ${tab === "controller" ? "active" : ""} `}>
+							Controller
+						</span>
 					</li>
 				)}
 			</ul>
