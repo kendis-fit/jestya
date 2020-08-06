@@ -3,11 +3,13 @@ import { Route, Redirect } from "react-router-dom";
 
 import { useAuth } from "../../context/auth";
 import NoUnauthenticatedRoute from "../NoUnauthenticatedRoute/NoUnauthenticatedRoute";
+import Header from "../Header";
 
 export interface IRoute {
-    component: () => JSX.Element;
+    component: any;
     path: string | string[];
     exact?: boolean;
+    isHeader?: boolean;
 }
 
 const PrivateRoute = (props: IRoute) => {
@@ -19,7 +21,17 @@ const PrivateRoute = (props: IRoute) => {
     }
 
     return(
-        <Route {...rest} render={() => auth.isAuthenticated && props.path !== "/registration" ? <Component /> : <NoUnauthenticatedRoute />} />
+        <Route {...rest} render={(route) => {
+            if (auth.isAuthenticated && props.path !== "/registration") {
+                return <>
+                    {
+                        props.isHeader ? <Header /> : null
+                    }
+                    <Component {...route.match.params} />
+                </>
+            }
+            return <NoUnauthenticatedRoute />
+        }} />
     );
 }
 

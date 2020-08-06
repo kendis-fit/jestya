@@ -25,7 +25,7 @@ const Board = (props: any) => {
 						))}
 						<button
 							className="
-							border__button
+							board__button
 							text-primary
 							rounded-circle
 							btn 
