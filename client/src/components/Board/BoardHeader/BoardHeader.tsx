@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import PopUpMenu from "./PopUpMenu";
 import ModalContainer from "../../ModalContainer";
 
-interface IBoardHeader {
+export interface IBoardHeader {
 	index: number;
 	addBoard: boolean;
 	handleAddBoard(index?: number | React.MouseEvent<HTMLButtonElement>): void;
