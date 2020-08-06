@@ -1,12 +1,12 @@
 import React, { useState, useRef } from "react";
+
 import PopUpMenu from "./PopUpMenu";
 import ModalContainer from "../../ModalContainer";
+import { IBoard } from "../../../api/boardProjects";
 
-export interface IBoardHeader {
-	index: number;
-	addBoard: boolean;
-	handleAddBoard(index?: number | React.MouseEvent<HTMLButtonElement>): void;
-	handleDeleteBoard(index: number): void;
+export interface IBoardHeader extends IBoard {
+	// addBoard
+	removeBoard(id: string): void;
 }
 
 const ColorsArray = [
@@ -81,7 +81,7 @@ const BoardHeader = (props: IBoardHeader) => {
 
 	const handleBlurTitle = (event: React.FormEvent<HTMLInputElement>) => {
 		if (creating && event.currentTarget.value.trim().length === 0) {
-			props.handleDeleteBoard(props.index);
+			props.removeBoard(props.id);
 		} else if (event.currentTarget.value.trim().length !== 0) {
 			// setHeaderTitle(event.currentTarget.value);
 			title = headerTitle;
@@ -93,68 +93,52 @@ const BoardHeader = (props: IBoardHeader) => {
 
 	return (
 		<div
-			className={`board__header p-2 mb-3  ${
-				props.addBoard ? "border-bottom" : "bg-" + headerColor
-			} `}
+			className={`board__header p-2 mb-3  ${"bg-" + headerColor} `}
 		>
 			<div className="board-header__wrapperAddBtnLeft">
-				{props.addBoard ? null : (
-					//if not addSection show add button section before curent section
-					<button
-						className="board-header__addBtnLeft"
-						onClick={() => props.handleAddBoard(props.index)}
-					>
-						<span className="material-icons">add</span>
-					</button>
-				)}
-			</div>
-			{props.addBoard ? (
-				//if add section show add section
 				<button
-					className="btn text-info p-0 d-flex align-items-center"
-					onClick={props.handleAddBoard}
+					className="board-header__addBtnLeft"
+					// onClick={() => props.handleAddBoard(props.index)}
 				>
-					<span className="material-icons p-2 mr-2">add</span> Add Section
+					<span className="material-icons">add</span>
 				</button>
-			) : (
-				//else show header with title of board
-				<>
-					<span className="board-header__icon material-icons text-white p-2 pl-3 mr-2">
-						{headerIcon}
-					</span>
-					<input
-						className={` form-control w-65 ${
-							"bg-" + headerColor
-						}  border-0 section-header__title`}
-						type="text"
-						value={headerTitle}
-						onBlur={handleBlurTitle}
-						onChange={handleChancheTitle}
-						autoFocus
-					/>
-					<span
-						className={`board-header__arrow${
-							showPopUp ? "--active" : ""
-						} material-icons`}
-						onClick={handlePopUp}
-						ref={arrowBtnRef}
-					>
-						keyboard_arrow_down
-					</span>
-				</>
-			)}
-			{props.addBoard && showPopUp ? null : (
+			</div>
+			<>
+				<span className="board-header__icon material-icons text-white p-2 pl-3 mr-2">
+					{headerIcon}
+				</span>
+				<input
+					className={` form-control w-65 ${
+						"bg-" + headerColor
+					}  border-0 section-header__title`}
+					type="text"
+					value={headerTitle}
+					onBlur={handleBlurTitle}
+					onChange={handleChancheTitle}
+					autoFocus
+				/>
+				<span
+					className={`board-header__arrow${
+						showPopUp ? "--active" : ""
+					} material-icons`}
+					onClick={handlePopUp}
+					ref={arrowBtnRef}
+				>
+					keyboard_arrow_down
+				</span>
+			</>
+			{showPopUp ? null : (
 				<ModalContainer isOpen={showPopUp} onClose={handlePopUp}>
 					<PopUpMenu
 						left={arrowBtnRef.current?.getBoundingClientRect().left}
-						index={props.index}
+						index={props.id}
 						IconsArray={IconsArray}
 						HeaderIcon={headerIcon}
 						ColorsArray={ColorsArray}
 						HeaderColor={headerColor}
 						handleChangeIcon={handleChangeIcon}
 						handleChangeColor={handleChangeColor}
-						handleDeleteBoard={props.handleDeleteBoard}
+						handleDeleteBoard={props.removeBoard}
 					/>
 				</ModalContainer>
 			)}

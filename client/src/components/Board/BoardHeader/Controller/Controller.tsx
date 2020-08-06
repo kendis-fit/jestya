@@ -5,10 +5,10 @@ interface IController {
 	IconsArray: string[];
 	HeaderColor: string;
 	HeaderIcon: string;
-	index: number;
+	index: string;
 	handleChangeColor(color: string): void;
 	handleChangeIcon(icon: string): void;
-	handleDeleteBoard(index: number): void;
+	handleDeleteBoard(index: string): void;
 }
 
 const Controller = (props: IController) => {
@@ -50,14 +50,12 @@ const Controller = (props: IController) => {
 					</div>
 				))}
 			</div>
-			{index === 0 ? null : (
-				<button
-					className="btn btn-outline-danger w-85 align-self-center"
-					onClick={() => handleDeleteBoard(index)}
-				>
-					Delete Section
-				</button>
-			)}
+			<button
+				className="btn btn-outline-danger w-85 align-self-center"
+				onClick={() => handleDeleteBoard(index)}
+			>
+				Delete board
+			</button>
 		</div>
 	);
 };

@@ -8,10 +8,10 @@ interface IPopUpMenu {
 	IconsArray: string[];
 	HeaderColor: string;
 	HeaderIcon: string;
-	index: number;
+	index: string;
 	handleChangeColor(color: string): void;
 	handleChangeIcon(icon: string): void;
-	handleDeleteBoard(index: number): void;
+	handleDeleteBoard(index: string): void;
 }
 
 const PopUpMenu = (props: IPopUpMenu) => {
