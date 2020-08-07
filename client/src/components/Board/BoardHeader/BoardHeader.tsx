@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import PopUpMenu from "./PopUpMenu";
 import ModalContainer from "../../ModalContainer";
 
@@ -7,6 +7,7 @@ export interface IBoardHeader {
 	addBoard: boolean;
 	handleAddBoard(index?: number | React.MouseEvent<HTMLButtonElement>): void;
 	handleDeleteBoard(index: number): void;
+	boardData: any;
 }
 
 const ColorsArray = [
@@ -54,15 +55,37 @@ const IconsArray = [
 ];
 
 const BoardHeader = (props: IBoardHeader) => {
-	const [headerColor, setHeaderColor] = useState<string>(ColorsArray[1]);
-	const [headerIcon, setHeaderIcon] = useState<string>(IconsArray[1]);
-	const [showPopUp, setShowPopUp] = useState<boolean>(false);
+	const { boardData = { title: "", color: ColorsArray[0], icon: IconsArray[0] } } = props;
+
+	console.log(boardData);
+
+	const [headerData, setHeaderData] = useState<any>({
+		title: "",
+		icon: IconsArray[2],
+		color: ColorsArray[0],
+	});
+	const [headerColor, setHeaderColor] = useState<string>(ColorsArray[3]);
+	const [headerIcon, setHeaderIcon] = useState<string>(IconsArray[2]);
 	const [headerTitle, setHeaderTitle] = useState<string>("");
+	const [showPopUp, setShowPopUp] = useState<boolean>(false);
 	const [creating, setCreating] = useState<boolean>(true);
 
-	const arrowBtnRef = useRef<HTMLSpanElement>(null);
+	useEffect(() => {
+		setHeaderColor(boardData.color);
+		setHeaderIcon(boardData.icon);
+		setHeaderTitle(boardData.title);
+		// setHeaderData(boardData);
+	}, [boardData]);
+	// useEffect(() => {
+	// 	setHeaderColor(ColorsArray[0]);
+	// 	setHeaderIcon(IconsArray[0]);
+	// 	setHeaderTitle("");
+	// 	// setHeaderData(boardData);
+	// }, [boardData]);
 
-	let title = "Some title";
+	// console.log("XAX", headerColor, headerIcon, headerTitle);
+
+	const arrowBtnRef = useRef<HTMLSpanElement>(null);
 
 	const handleChangeColor = (color: string) => {
 		setHeaderColor(color);
@@ -83,9 +106,9 @@ const BoardHeader = (props: IBoardHeader) => {
 		if (creating && event.currentTarget.value.trim().length === 0) {
 			props.handleDeleteBoard(props.index);
 		} else if (event.currentTarget.value.trim().length !== 0) {
-			title = headerTitle;
+			// title = headerTitle;
 		} else {
-			setHeaderTitle(title);
+			setHeaderTitle(boardData.title);
 		}
 		setCreating(false);
 	};

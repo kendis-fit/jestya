@@ -12,7 +12,7 @@ interface IBoardComponent {
 	handleDeleteBoard?(index: number): void;
 }
 
-const Board = (props: any) => {
+const Board = ({ provided, ...props }: any) => {
 	const [taskList, setTaskList] = useState<any[]>([]);
 
 	const handleAddTask = () => {
@@ -21,6 +21,7 @@ const Board = (props: any) => {
 
 	return (
 		<div
+			// ref={provided.innerRef}
 			className="board"
 			style={{ background: props.index % 2 === 0 ? "#fafafa" : "#f2f2f2" }}
 		>

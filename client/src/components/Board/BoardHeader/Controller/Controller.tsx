@@ -41,7 +41,9 @@ const Controller = (props: IController) => {
 				{IconsArray.map((icon, i) => (
 					<div
 						key={i}
-						className={`popUpMenu__icon ${icon === HeaderIcon ? "popUpMenu__icon--active" : ""}`}
+						className={`popUpMenu__icon ${
+							icon === HeaderIcon ? "popUpMenu__icon--active" : ""
+						}`}
 						onClick={() => {
 							handleChangeIcon(icon);
 						}}
@@ -50,14 +52,12 @@ const Controller = (props: IController) => {
 					</div>
 				))}
 			</div>
-			{index === 0 ? null : (
-				<button
-					className="btn btn-outline-danger w-85 align-self-center"
-					onClick={() => handleDeleteBoard(index)}
-				>
-					Delete Section
-				</button>
-			)}
+			<button
+				className="btn btn-outline-danger w-85 align-self-center"
+				onClick={() => handleDeleteBoard(index)}
+			>
+				Delete Section
+			</button>
 		</div>
 	);
 };

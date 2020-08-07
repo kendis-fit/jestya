@@ -38,11 +38,10 @@ const PopUpMenu = (props: IPopUpMenu) => {
 							cols={30}
 							rows={10}
 							disabled={auth.user?.role === "USER"}
-						>
-							Lorem, ipsum dolor. Lorem ipsum dolor sit amet consectetur adipisicing
-							elit. Fugiat saepe architecto voluptate fugit eum debitis, sapiente
-							pariatur harum nihil sequi?
-						</textarea>
+							defaultValue={
+								"Lorem, ipsum dolor. Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat saepe architecto voluptate fugit eum debitis, sapiente pariatur harum nihil sequi?"
+							}
+						/>
 					</div>
 				);
 			}
