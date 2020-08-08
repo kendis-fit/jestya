@@ -28,8 +28,20 @@ export class ProjectService {
 		return foundProject;
 	}
 
-	public async findAll(userId: string, relations?: IRelation[]): Promise<[Project[], number]> {
+	public async findAll(
+		userId: string,
+		isArchive?: boolean,
+		relations?: IRelation[]
+	): Promise<[Project[], number]> {
 		let builder = this.projectsRepository.createQueryBuilder("project");
+
+		if (typeof isArchive !== "undefined") {
+			if (isArchive) {
+				builder = builder.where("project.finishedAt IS NOT NULL");
+			} else {
+				builder = builder.where("project.finishedAt IS NULL");
+			}
+		}
 
 		if (relations) {
 			for (const relation of relations) {
@@ -95,7 +107,7 @@ export class ProjectService {
 
 	public async updateState(projectId: string, project: ProjectUpdateState): Promise<Project> {
 		const foundProject = await this.findById(projectId);
-		foundProject.finishedAt = project.finishedAt;
+		foundProject.finishedAt = project.isArchive ? new Date() : null;
 		await this.projectsRepository.save(foundProject);
 		return foundProject;
 	}

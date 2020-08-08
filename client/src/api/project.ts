@@ -123,11 +123,15 @@ const projects = {
 			}
 		});
 	},
-	remove: (id: string) => {
+	archive: (id: string, isArchive: boolean = true) => {
 		return new Promise<void>(async (resolve, reject) => {
 			try {
 				const req = await fetcher(`${process.env.REACT_APP_API}/projects/${id}`, {
-					method: "DELETE",
+					method: "PATCH",
+					body: JSON.stringify({ isArchive }),
+					headers: {
+						"Content-Type": "application/json",
+					},
 				});
 
 				if (req.status === 204) {

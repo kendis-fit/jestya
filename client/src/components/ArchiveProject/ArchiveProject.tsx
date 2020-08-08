@@ -6,15 +6,15 @@ import resource from "../../api/resource";
 export interface IRemoveProjectProps {
     id: string;
     title: string;
-    removeProject: (id: string) => void;
+    archiveProject: (id: string) => void;
 }
 
-const RemoveProject = (props: IRemoveProjectProps) => {
+const ArchiveProject = (props: IRemoveProjectProps) => {
     const [showModal, setShowModal] = useState(false);
 
     const removeProject = async () => {
-        await resource.projects.remove(props.id);
-        props.removeProject(props.id);
+        await resource.projects.archive(props.id);
+        props.archiveProject(props.id);
         setShowModal(false);
     }
 
@@ -24,16 +24,17 @@ const RemoveProject = (props: IRemoveProjectProps) => {
                 onClick={() => setShowModal(true)} 
                 className="material-icons area__icon area__icon--trash"
                 >
-                delete_forever
+                archive
             </span>
             {
-                showModal ? <Modal size="lg" title={`Are you sure you want to remove ${props.title}?`} 
+                showModal ? <Modal size="lg" title={`Are you sure you want to archive ${props.title}?`} 
                     onClose={() => setShowModal(false)}
                     onOk={removeProject}>
+                    You can unarchive this project in any time
                 </Modal> : null
             }
         </>
     ); 
 }
 
-export default RemoveProject;
+export default ArchiveProject;

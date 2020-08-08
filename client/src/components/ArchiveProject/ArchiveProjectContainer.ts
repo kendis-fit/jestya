@@ -1,14 +1,14 @@
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
 
-import RemoveProject from "./RemoveProject";
+import ArchiveProject from "./ArchiveProject";
 import { removeProject } from "../../reducers/projects/projectsActions";
 import { IRemoveProjectAction } from "../../reducers/projects/interfaces/IRemoveProjectAction";
 
 const mapDispatchToProps = (dispatch: Dispatch<IRemoveProjectAction>) => ({
-	removeProject: (id: string) => dispatch(removeProject(id)),
+	archiveProject: (id: string) => dispatch(removeProject(id)),
 });
 
-const RemoveProjectContainer = connect(null, mapDispatchToProps);
+const ArchiveProjectContainer = connect(null, mapDispatchToProps);
 
-export default RemoveProjectContainer(RemoveProject);
+export default ArchiveProjectContainer(ArchiveProject);

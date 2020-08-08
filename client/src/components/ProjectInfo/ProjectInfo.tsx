@@ -1,7 +1,7 @@
 import React from "react";
 
 import DescriptionProject from "../DescriptionProject";
-import RemoveProjectContainer from "../RemoveProject/RemoveProjectContainer";
+import ArchiveProjectContainer from "../ArchiveProject/ArchiveProjectContainer";
 
 export interface IProjectInfo {
     id: string;
@@ -17,7 +17,7 @@ const ProjectInfo = (props: IProjectInfo) => {
                 <span>Count tasks: {props.countTasks}</span>
                 <div>
                     <DescriptionProject {...props} />
-                    <RemoveProjectContainer {...props} />
+                    <ArchiveProjectContainer {...props} />
                 </div>
             </div>
             
