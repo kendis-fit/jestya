@@ -1,9 +1,9 @@
 import React from "react";
 
-import Project from "../Project";
 import AddProject from "../AddProject";
 import { IProject } from "../../api/project";
 import { useAuth } from "../../context/auth";
+import ProjectContainer from "../Project/ProjectContainer";
 
 export interface IListProjects {
     projects: IProject[];
@@ -16,7 +16,7 @@ const ListProjects = (props: IListProjects) => {
         <div className="projects__content">
             {props.projects.map((project, id) => (
                 <div key={id} className="project_wrapper">
-                    <Project {...project} />
+                    <ProjectContainer {...project} />
                 </div>
             ))}
             {

@@ -41,6 +41,26 @@ const boardProjects = {
 			}
 		});
 	},
+	removeBoard: (id: string, boardId: string) => {
+		return new Promise<void>(async (resolve, reject) => {
+			try {
+				const req = await fetcher(
+					`${process.env.REACT_APP_API}/projects/${id}/boards/${boardId}`,
+					{
+						method: "DELETE",
+					}
+				);
+				if (req.status === 204) {
+					resolve();
+				} else {
+					const body = await req.json();
+					reject(body);
+				}
+			} catch {
+				reject({ message: "An unknown error", statusCode: 500 });
+			}
+		});
+	},
 };
 
 export default boardProjects;

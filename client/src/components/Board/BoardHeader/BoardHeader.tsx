@@ -3,10 +3,10 @@ import React, { useState, useRef } from "react";
 import PopUpMenu from "./PopUpMenu";
 import ModalContainer from "../../ModalContainer";
 import { IBoard } from "../../../api/boardProjects";
+import { IAddBoard } from "../../AddBoard/AddBoard";
 
-export interface IBoardHeader extends IBoard {
-	// addBoard
-	removeBoard(id: string): void;
+export interface IBoardHeader extends IBoard, IAddBoard {
+	removeBoard: (id: string) => void;
 }
 
 const ColorsArray = [
@@ -57,12 +57,10 @@ const BoardHeader = (props: IBoardHeader) => {
 	const [headerColor, setHeaderColor] = useState<string>(ColorsArray[1]);
 	const [headerIcon, setHeaderIcon] = useState<string>(IconsArray[1]);
 	const [showPopUp, setShowPopUp] = useState<boolean>(false);
-	const [headerTitle, setHeaderTitle] = useState<string>("");
+	const [headerTitle, setHeaderTitle] = useState<string>(props.name);
 	const [creating, setCreating] = useState<boolean>(true);
 
 	const arrowBtnRef = useRef<HTMLSpanElement>(null);
-
-	let title = "Some title";
 
 	const handleChangeColor = (color: string) => {
 		setHeaderColor(color);
@@ -83,10 +81,7 @@ const BoardHeader = (props: IBoardHeader) => {
 		if (creating && event.currentTarget.value.trim().length === 0) {
 			props.removeBoard(props.id);
 		} else if (event.currentTarget.value.trim().length !== 0) {
-			// setHeaderTitle(event.currentTarget.value);
-			title = headerTitle;
-		} else {
-			setHeaderTitle(title);
+			setHeaderTitle(event.currentTarget.value);
 		}
 		setCreating(false);
 	};
@@ -98,7 +93,7 @@ const BoardHeader = (props: IBoardHeader) => {
 			<div className="board-header__wrapperAddBtnLeft">
 				<button
 					className="board-header__addBtnLeft"
-					// onClick={() => props.handleAddBoard(props.index)}
+					onClick={() => props.addBoard({ id: "rew", name: "rew", tasks: [] })}
 				>
 					<span className="material-icons">add</span>
 				</button>
@@ -131,7 +126,7 @@ const BoardHeader = (props: IBoardHeader) => {
 				<ModalContainer isOpen={showPopUp} onClose={handlePopUp}>
 					<PopUpMenu
 						left={arrowBtnRef.current?.getBoundingClientRect().left}
-						index={props.id}
+						index={"ew"}
 						IconsArray={IconsArray}
 						HeaderIcon={headerIcon}
 						ColorsArray={ColorsArray}

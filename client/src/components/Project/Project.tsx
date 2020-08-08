@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 
 import ProjectInfo from "../ProjectInfo";
-import { IProject } from "../../api/project";
+import { IProject as IProjectApi } from "../../api/project";
+import { IProject } from "../../reducers/project/interfaces/IProject";
 
 const getRandomColour = () => {
     var letters = '0123456789ABCDEF';
@@ -14,12 +15,17 @@ const getRandomColour = () => {
     return color;
 }
 
-const Project = (props: IProject) => {
+export interface IProjectProps extends IProjectApi {
+    selectProject: (project: IProject) => void;
+}
+
+const Project = (props: IProjectProps) => {
     const [isRedirected, setIsRedirected] = useState(false);
     const datasets = [{ data: props.boards.map(board => board.countTasks), backgroundColor: props.boards.map(() => getRandomColour()) }];
     const countTasks = props.boards.reduce((first, second) => first + second.countTasks, 0);
 
     if (isRedirected) {
+        props.selectProject({...props});
         return <Redirect to={`/projects/${props.id}`} />
     }
 

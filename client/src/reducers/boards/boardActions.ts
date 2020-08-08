@@ -24,4 +24,4 @@ export const updateBoard = (): IUpdateBoard => ({
 	type: UPDATE_BOARD,
 });
 
-export type BoardActions = IAddBoard | IRemoveBoard | IInitBoards | IUpdateBoard;
+export type BoardActions = IAddBoard | IRemoveBoard | IInitBoards;

@@ -8,3 +8,6 @@ export const ADD_BOARD = "ADD_BOARD";
 export const REMOVE_BOARD = "REMOVE_BOARD";
 export const INIT_BOARDS = "INIT_BOARDS";
 export const UPDATE_BOARD = "UPDATE_BOARD";
+
+// project
+export const SELECT_PROJECT = "SELECT_PROJECT";

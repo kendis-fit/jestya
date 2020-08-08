@@ -2,10 +2,13 @@ import { Dispatch } from "redux";
 import { connect } from "react-redux";
 
 import BoardHeader from "./BoardHeader";
-import { removeBoard } from "../../../reducers/boards/boardActions";
+import { IBoard } from "../../../api/boardProjects";
+import { IAddBoard } from "../../../reducers/boards/interfaces/IAddBoard";
+import { removeBoard, addBoard } from "../../../reducers/boards/boardActions";
 import { IRemoveBoard } from "../../../reducers/boards/interfaces/IRemoveBoard";
 
-const mapDispatchToProps = (dispatch: Dispatch<IRemoveBoard>) => ({
+const mapDispatchToProps = (dispatch: Dispatch<IRemoveBoard | IAddBoard>) => ({
+	addBoard: (board: IBoard) => dispatch(addBoard(board)),
 	removeBoard: (id: string) => dispatch(removeBoard(id)),
 });
 
