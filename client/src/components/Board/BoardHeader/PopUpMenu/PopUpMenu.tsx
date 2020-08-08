@@ -9,6 +9,7 @@ interface IPopUpMenu {
 	HeaderColor: string;
 	HeaderIcon: string;
 	index: string;
+	description: string;
 	handleChangeColor(color: string): void;
 	handleChangeIcon(icon: string): void;
 	handleDeleteBoard(index: string): void;
@@ -36,12 +37,10 @@ const PopUpMenu = (props: IPopUpMenu) => {
 						<textarea
 							className="description__text form-control text-muted bg-white "
 							cols={30}
+							defaultValue={props.description}
 							rows={10}
 							disabled={auth.user?.role === "USER"}
-						>
-							Lorem, ipsum dolor. Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat saepe
-							architecto voluptate fugit eum debitis, sapiente pariatur harum nihil sequi?
-						</textarea>
+						/>
 					</div>
 				);
 			}

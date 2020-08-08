@@ -6,7 +6,7 @@ import { IBoard } from "../../api/boardProjects";
 import ListBoardsContainer from "../ListBoards/ListBoardsContainer";
 
 export interface IBoards {
-	projectId: string;
+    projectId: string;
 	initBoards: (board: IBoard[]) => void;
 }
 

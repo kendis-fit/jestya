@@ -1,6 +1,8 @@
 import React, { useState, useRef } from "react";
+import { useRouteMatch } from "react-router-dom";
 
 import PopUpMenu from "./PopUpMenu";
+import resource from "../../../api/resource";
 import ModalContainer from "../../ModalContainer";
 import { IBoard } from "../../../api/boardProjects";
 import { IAddBoard } from "../../AddBoard/AddBoard";
@@ -54,11 +56,12 @@ const IconsArray = [
 ];
 
 const BoardHeader = (props: IBoardHeader) => {
+	const { params } = useRouteMatch();
 	const [headerColor, setHeaderColor] = useState<string>(ColorsArray[1]);
 	const [headerIcon, setHeaderIcon] = useState<string>(IconsArray[1]);
 	const [showPopUp, setShowPopUp] = useState<boolean>(false);
 	const [headerTitle, setHeaderTitle] = useState<string>(props.name);
-	const [creating, setCreating] = useState<boolean>(true);
+	const [creating, setCreating] = useState<boolean>(props.name.length === 0);
 
 	const arrowBtnRef = useRef<HTMLSpanElement>(null);
 
@@ -77,9 +80,14 @@ const BoardHeader = (props: IBoardHeader) => {
 		setHeaderTitle(event.currentTarget.value);
 	};
 
-	const handleBlurTitle = (event: React.FormEvent<HTMLInputElement>) => {
-		if (creating && event.currentTarget.value.trim().length === 0) {
-			props.removeBoard(props.id);
+	const handleBlurTitle = async (event: React.FormEvent<HTMLInputElement>) => {
+		if (event.currentTarget.value.trim().length === 0) {
+			if (creating) {
+				props.removeBoard(props.id);
+			} else {
+				await resource.projects.removeBoard((params as any).projectId, props.id);
+				props.removeBoard(props.id);
+			}
 		} else if (event.currentTarget.value.trim().length !== 0) {
 			setHeaderTitle(event.currentTarget.value);
 		}
@@ -93,7 +101,7 @@ const BoardHeader = (props: IBoardHeader) => {
 			<div className="board-header__wrapperAddBtnLeft">
 				<button
 					className="board-header__addBtnLeft"
-					onClick={() => props.addBoard({ id: "rew", name: "rew", tasks: [] })}
+					onClick={() => props.addBoard({ id: Date.now().toString(), name: "", tasks: [] })}
 				>
 					<span className="material-icons">add</span>
 				</button>
@@ -105,7 +113,7 @@ const BoardHeader = (props: IBoardHeader) => {
 				<input
 					className={` form-control w-65 ${
 						"bg-" + headerColor
-					}  border-0 section-header__title`}
+					}  border-0 board-header__title`}
 					type="text"
 					value={headerTitle}
 					onBlur={handleBlurTitle}
@@ -127,6 +135,7 @@ const BoardHeader = (props: IBoardHeader) => {
 					<PopUpMenu
 						left={arrowBtnRef.current?.getBoundingClientRect().left}
 						index={"ew"}
+						description={props.description || "This description is excess"}
 						IconsArray={IconsArray}
 						HeaderIcon={headerIcon}
 						ColorsArray={ColorsArray}

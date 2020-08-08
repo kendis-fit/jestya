@@ -61,6 +61,27 @@ const boardProjects = {
 			}
 		});
 	},
+	createBoard: (id: string, board: IAddBoard) => {
+		return new Promise<IAddBoardResponse>(async (resolve, reject) => {
+			try {
+				const req = await fetcher(`${process.env.REACT_APP_API}/projects/${id}/boards`, {
+					method: "POST",
+					body: JSON.stringify(board),
+					headers: {
+						"Content-Type": "application/json",
+					},
+				});
+				const body = await req.json();
+				if (req.status === 201) {
+					resolve(body);
+				} else {
+					reject(body);
+				}
+			} catch {
+				reject({ message: "An unknown error", statusCode: 500 });
+			}
+		});
+	},
 };
 
 export default boardProjects;
