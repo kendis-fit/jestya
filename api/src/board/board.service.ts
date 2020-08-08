@@ -25,6 +25,8 @@ export class BoardService {
 		const foundBoard = await this.findById(boardId);
 		foundBoard.name = board.name;
 		foundBoard.description = board.description;
+		foundBoard.color = board.color;
+		foundBoard.icon = board.icon;
 		return await this.boardRepository.save(foundBoard);
 	}
 
