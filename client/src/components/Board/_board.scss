@@ -1,12 +1,12 @@
-.board{
-    
+.board {
     width: 350px;
     height: 100%;
     flex: 0 0 auto;
+
     &__header {
         height: 60px;
         position: relative;
-        @include flex(null,center);
+        @include flex(null, center);
 
         // cursor: grab;
         // &:active {
@@ -26,7 +26,6 @@
         border-radius: 10px;
         background-color: #fff;
     }
-    
 
     &__button {
         display: flex;
@@ -38,30 +37,28 @@
         padding: 17px;
     }
 
-    &__noTasks{
+    &__noTasks {
         display: flex;
         flex-direction: column;
         align-items: center;
         padding-top: 200px;
         height: 60vh;
     }
-    
+
     &__addSection-text {
         padding-top: 360px;
     }
 }
 
-.task__avatar{
+.task__avatar {
     height: 30px;
     width: 30px;
     border-radius: 50%;
 }
 
 .noTasks {
-
-    &__icon{
+    &__icon {
         font-size: 70px;
         margin-bottom: 15px;
-    
     }
 }

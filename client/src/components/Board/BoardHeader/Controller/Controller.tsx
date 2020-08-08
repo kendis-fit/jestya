@@ -41,7 +41,9 @@ const Controller = (props: IController) => {
 				{IconsArray.map((icon, i) => (
 					<div
 						key={i}
-						className={`popUpMenu__icon ${icon === HeaderIcon ? "popUpMenu__icon--active" : ""}`}
+						className={`popUpMenu__icon ${
+							icon === HeaderIcon ? "popUpMenu__icon--active" : ""
+						}`}
 						onClick={() => {
 							handleChangeIcon(icon);
 						}}

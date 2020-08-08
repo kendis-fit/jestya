@@ -1,4 +1,4 @@
-.board-header{
+.board-header {
     &__wrapperAddBtnLeft {
         position: absolute;
         left: -17px;
@@ -6,17 +6,16 @@
         height: 100%;
         width: 34px;
         padding: 0 2px;
-        @include flex(center, center,center);
+        @include flex(center, center, center);
         cursor: default;
-        
     }
 
     &__addBtnLeft {
         padding: 0;
         color: $primary;
         background: #fff;
-        border-radius: 50%;        
-        @include flex(center, center,center);
+        border-radius: 50%;
+        @include flex(center, center, center);
         opacity: 0;
         width: 0px;
         height: 0px;
@@ -26,14 +25,14 @@
         &:hover {
             opacity: 1;
             width: 30px;
-            height: 30px
+            height: 30px;
         }
     }
 
-    &__title{
-    color: #fff;
-    font-weight: 500;
-    font-size: 18px;
+    &__title {
+        color: #fff;
+        font-weight: 500;
+        font-size: 18px;
         &:focus {
             color: #404040;
             background: #fff !important;
@@ -47,13 +46,12 @@
     &__arrow {
         color: rgba(255, 255, 255, 0);
         @include flex(center, center, center);
-        cursor: pointer; 
+        cursor: pointer;
     }
 
     &__arrow--active {
         color: rgba(255, 255, 255, 1);
-        cursor: pointer; 
-
+        cursor: pointer;
     }
 
     &__popUpMenu {

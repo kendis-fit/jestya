@@ -16,5 +16,8 @@
       "pre-commit": "yarn format && git add .",
       "pre-push": "yarn --cwd api test"
     }
+  },
+  "dependencies": {
+    "@types/react-beautiful-dnd": "^13.0.0"
   }
 }

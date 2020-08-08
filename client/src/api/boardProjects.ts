@@ -10,6 +10,8 @@ export interface ITask {
 export interface IBoard {
 	id: string;
 	name: string;
+	icon: string;
+	color: string;
 	description?: string;
 	tasks: ITask[];
 }
@@ -17,6 +19,8 @@ export interface IBoard {
 export interface ISavingBoard {
 	name: string;
 	description?: string;
+	color: string;
+	icon: string;
 }
 
 export interface IAddBoardResponse {

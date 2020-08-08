@@ -12,7 +12,6 @@ export interface IBoardHeader extends IBoard, IAddBoard {
 }
 
 const ColorsArray = [
-	"blue",
 	"indigo",
 	"purple",
 	"pink",
@@ -22,6 +21,7 @@ const ColorsArray = [
 	"green",
 	"teal",
 	"cyan",
+	"blue",
 	"gray",
 ];
 const IconsArray = [
@@ -45,7 +45,7 @@ const IconsArray = [
 	"star",
 	"emoji_objects",
 	"delete",
-	"favorite_border",
+	"speed",
 	"print",
 	"settings",
 	"thumb_up",
@@ -57,8 +57,8 @@ const IconsArray = [
 
 const BoardHeader = (props: IBoardHeader) => {
 	const { params } = useRouteMatch();
-	const [headerColor, setHeaderColor] = useState<string>(ColorsArray[1]);
-	const [headerIcon, setHeaderIcon] = useState<string>(IconsArray[1]);
+	const [headerColor, setHeaderColor] = useState<string>(props.color);
+	const [headerIcon, setHeaderIcon] = useState<string>(props.icon);
 	const [showPopUp, setShowPopUp] = useState<boolean>(false);
 	const [headerTitle, setHeaderTitle] = useState<string>(props.name);
 	const [creating, setCreating] = useState<boolean>(props.name.length === 0);
@@ -91,7 +91,9 @@ const BoardHeader = (props: IBoardHeader) => {
 		} else if (event.currentTarget.value.trim().length !== 0) {
 			const board = {
 				name: event.currentTarget.value,
-				description: ""
+				description: "",
+				color: headerColor,
+				icon: headerIcon
 			}
 			if (board.name !== props.name) {
 				if (creating) {
@@ -112,7 +114,7 @@ const BoardHeader = (props: IBoardHeader) => {
 			<div className="board-header__wrapperAddBtnLeft">
 				<button
 					className="board-header__addBtnLeft"
-					onClick={() => props.addBoard({ id: Date.now().toString(), name: "", tasks: [] })}
+					onClick={() => props.addBoard({ id: Date.now().toString(), name: "", tasks: [], color: "indigo", icon: "add_alert" })}
 				>
 					<span className="material-icons">add</span>
 				</button>

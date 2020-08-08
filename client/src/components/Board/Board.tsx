@@ -13,6 +13,7 @@ const Board = (props: IBoard) => {
 
 	return (
 		<div
+			// ref={provided.innerRef}
 			className="board"
 			style={{ background: "#fafafa" }}
 		>
