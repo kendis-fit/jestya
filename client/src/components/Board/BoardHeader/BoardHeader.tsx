@@ -89,7 +89,18 @@ const BoardHeader = (props: IBoardHeader) => {
 				props.removeBoard(props.id);
 			}
 		} else if (event.currentTarget.value.trim().length !== 0) {
-			setHeaderTitle(event.currentTarget.value);
+			const board = {
+				name: event.currentTarget.value,
+				description: ""
+			}
+			if (board.name !== props.name) {
+				if (creating) {
+					await resource.projects.createBoard((params as any).projectId, board);
+				} else {
+					await resource.projects.updateBoard((params as any).projectId, props.id, board);
+				}
+			}
+			setHeaderTitle(board.name);
 		}
 		setCreating(false);
 	};
