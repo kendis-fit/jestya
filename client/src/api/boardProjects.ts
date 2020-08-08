@@ -27,7 +27,7 @@ const boardProjects = {
 	findBoards: (id: string) => {
 		return new Promise<IBoard[]>(async (resolve, reject) => {
 			try {
-				const req = await fetcher(`${process.env.REACT_APP_API}/project/${id}/boards`, {
+				const req = await fetcher(`${process.env.REACT_APP_API}/projects/${id}/boards`, {
 					method: "GET",
 				});
 				const body = await req.json();
