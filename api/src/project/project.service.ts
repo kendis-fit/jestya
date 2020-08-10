@@ -33,7 +33,10 @@ export class ProjectService {
 		isArchive?: boolean,
 		relations?: IRelation[]
 	): Promise<[Project[], number]> {
-		let builder = this.projectsRepository.createQueryBuilder("project");
+		let builder = this.projectsRepository
+			.createQueryBuilder("project")
+			.innerJoin("project.users", "user")
+			.where("user.id = :id", { id: userId });
 
 		if (typeof isArchive !== "undefined") {
 			if (isArchive) {
@@ -58,11 +61,7 @@ export class ProjectService {
 			}
 		}
 
-		const [projects, count] = await builder
-			.innerJoin("project.users", "user")
-			.where("user.id = :id", { id: userId })
-			.getManyAndCount();
-
+		const [projects, count] = await builder.getManyAndCount();
 		return [projects, count];
 	}
 
