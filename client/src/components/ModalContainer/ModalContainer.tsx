@@ -19,6 +19,7 @@ const ModalContainer = (props: IModalContainer) => {
 			document.removeEventListener("mousedown", handleClickOutside);
 		};
 	}, [wrapperRef, props]);
+	console.log(props.isOpen);
 
 	return (
 		<div

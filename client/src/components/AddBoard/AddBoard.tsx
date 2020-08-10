@@ -1,14 +1,16 @@
 import React from "react";
 
 import { IBoard } from "../../api/boardProjects";
+import { IBoardProps } from "../Board/Board";
 
 export interface IAddBoard {
+	isOdd?: boolean;
 	addBoard: (board: IBoard) => void;
 }
 
 const AddBoard = (props: IAddBoard) => {
 	return (
-		<div className="board" style={{ background: "#fafafa" }}>
+		<div className={`board ${props.isOdd ? "board--odd" : ""}`}>
 			<div className="board__header p-2 mb-3 border-bottom">
 				<button
 					className="btn text-info p-0 d-flex align-items-center"
