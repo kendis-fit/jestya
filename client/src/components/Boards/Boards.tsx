@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import { useVanillaFetch } from "vanilla-hooks";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
-import resource from "../../api/resource";
-import { IBoard, IDragIndexs } from "../../api/boardProjects";
-import ListBoardsContainer from "../ListBoards/ListBoardsContainer";
 import Error from "../Error";
+import resource from "../../api/resource";
+import { IBoard } from "../../api/boardProjects";
 import AddBoardContainer from "../AddBoard/AddBoardContainer";
+import ListBoardsContainer from "../ListBoards/ListBoardsContainer";
 
 export interface IBoards {
 	projectId: string;

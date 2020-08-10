@@ -67,7 +67,7 @@ export class ProjectService {
 
 	public async findAllBoards(projectId: string): Promise<Board[]> {
 		const foundProject = await this.findById(projectId, ["boards", "boards.tasks"]);
-		return foundProject.boards;
+		return foundProject.boards.sort((a, b) => a.position - b.position);
 	}
 
 	public async findAllUsers(projectId: string): Promise<User[]> {

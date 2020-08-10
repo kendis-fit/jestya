@@ -157,7 +157,7 @@ const BoardHeader = ({ provided, ...props }: IBoardHeader) => {
 					value={headerTitle}
 					onBlur={handleBlurTitle}
 					onChange={handleChangeTitle}
-					autoFocus
+					autoFocus={creating}
 				/>
 				<span
 					className={`board-header__arrow${showPopUp ? "--active" : ""} material-icons`}
