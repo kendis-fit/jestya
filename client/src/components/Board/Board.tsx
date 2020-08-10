@@ -10,16 +10,26 @@ export interface IBoardProps extends IBoard {
 }
 
 const Board = ({ isOdd, ...props }: IBoardProps) => {
-	const [taskList, setTaskList] = useState<any[]>([1,1]);
+	const [taskList, setTaskList] = useState<any[]>([1, 11, 1, 1, 1, 1, 1, 11]);
 
 	const handleAddTask = () => {
 		setTaskList([...taskList, "s"]);
 	};
 
+	const handleOnScroll = (event: React.UIEvent<HTMLElement>) => {
+		const el = event.currentTarget;
+		el.classList.add("tasklist--scroll");
+		// console.log(event.currentTarget.classList);
+		setTimeout(() => {
+			el.classList.remove("tasklist--scroll");
+			// console.log(el.classList.remove);
+		}, 1000);
+	};
+
 	return (
 		<div className={`board ${isOdd ? "board--odd" : ""}`}>
 			<BoardHeaderContainer {...props} />
-			<div className="board__tasklist">
+			<div onScrollCapture={handleOnScroll} className="board__tasklist tasklist">
 				{taskList.map((ell, i) => (
 					<Task key={i} />
 				))}

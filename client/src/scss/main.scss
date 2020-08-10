@@ -21,6 +21,7 @@
 @import "../components/Board/BoardHeader/board-header";
 @import "../components/AddProjectForm/add-project-form";
 @import "../components/Board/BoardHeader/PopUpMenu/popUpMenu";
+@import "../components/Board/TaskList/tasklist";
 
 body {
     background: #fffefe;
@@ -28,7 +29,7 @@ body {
 
 @for $i from 0 to 20 {
     $i: $i * 5;
-    
+
     .w-#{$i} {
         width: #{$i}% !important;
     }
@@ -46,12 +47,12 @@ body {
     }
 }
 
-@each $name,$color in $colors {
+@each $name, $color in $colors {
     .bg-#{$name} {
         background: $color !important;
     }
 
     .text-#{$name} {
         color: $color !important;
-    }   
+    }
 }
