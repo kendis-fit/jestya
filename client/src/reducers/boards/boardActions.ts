@@ -1,9 +1,10 @@
-import { IBoard } from "../../api/boardProjects";
+import { IBoard, IDragIndexs } from "../../api/boardProjects";
 import { IAddBoard } from "./interfaces/IAddBoard";
 import { IInitBoards } from "./interfaces/IInitBoards";
 import { IUpdateBoard } from "./interfaces/IUpdateBoard";
 import { IRemoveBoard } from "./interfaces/IRemoveBoard";
-import { ADD_BOARD, REMOVE_BOARD, INIT_BOARDS, UPDATE_BOARD } from "../constants";
+import { ADD_BOARD, REMOVE_BOARD, INIT_BOARDS, UPDATE_BOARD, DRAG_BOARD } from "../constants";
+import { IDragBoard } from "./interfaces/IDragBoard";
 
 export const addBoard = (board: IBoard): IAddBoard => ({
 	type: ADD_BOARD,
@@ -24,4 +25,9 @@ export const updateBoard = (): IUpdateBoard => ({
 	type: UPDATE_BOARD,
 });
 
-export type BoardActions = IAddBoard | IRemoveBoard | IInitBoards;
+export const dragBoard = (result: IDragIndexs): IDragBoard => ({
+	value: result,
+	type: DRAG_BOARD,
+});
+
+export type BoardActions = IAddBoard | IRemoveBoard | IInitBoards | IDragBoard;

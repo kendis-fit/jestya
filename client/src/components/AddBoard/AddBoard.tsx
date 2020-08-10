@@ -1,7 +1,6 @@
 import React from "react";
 
 import { IBoard } from "../../api/boardProjects";
-import { IBoardProps } from "../Board/Board";
 
 export interface IAddBoard {
 	isOdd?: boolean;
