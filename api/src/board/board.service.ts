@@ -27,7 +27,6 @@ export class BoardService {
 		foundBoard.description = board.description ?? foundBoard.description;
 		foundBoard.color = board.color ?? foundBoard.color;
 		foundBoard.icon = board.icon ?? foundBoard.icon;
-		foundBoard.position = board.position ?? foundBoard.position;
 		return await this.boardRepository.save(foundBoard);
 	}
 
@@ -40,20 +39,19 @@ export class BoardService {
 		const newBoard = new Board();
 		newBoard.name = board.name;
 		newBoard.description = board.description;
-		newBoard.position = lastBoard.position + 1;
+		newBoard.position = lastBoard ? lastBoard.position + 1 : 0;
 		newBoard.project = { id: projectId } as any;
 		return await this.boardRepository.save(newBoard);
 	}
 
 	public async createBoards(boardsNames: string[]): Promise<Board[]> {
 		const newBoards: Board[] = [];
-		boardsNames.forEach(async (board, index) => {
+		for (const board of boardsNames) {
 			const newBoard = new Board();
-			newBoard.position = index + 1;
 			newBoard.name = board;
 			await this.boardRepository.save(newBoard);
 			newBoards.push(newBoard);
-		});
+		}
 		return newBoards;
 	}
 

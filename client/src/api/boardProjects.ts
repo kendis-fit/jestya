@@ -21,6 +21,7 @@ export interface ISavingBoard {
 	description?: string;
 	color?: string;
 	icon?: string;
+	position?: number;
 }
 
 export interface IAddBoardResponse {

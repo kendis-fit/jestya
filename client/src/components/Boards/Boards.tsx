@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { useVanillaFetch } from "vanilla-hooks";
-import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 
 import Error from "../Error";
 import resource from "../../api/resource";
 import { IBoard } from "../../api/boardProjects";
-import AddBoardContainer from "../AddBoard/AddBoardContainer";
+import { IDragIndexs } from "../../api/boardProjects";
 import ListBoardsContainer from "../ListBoards/ListBoardsContainer";
 
 export interface IBoards {
@@ -15,6 +16,8 @@ export interface IBoards {
 }
 
 const Boards = (props: IBoards) => {
+	const { projectId } = useParams();
+
 	const { data: boards, loading, error } = useVanillaFetch(() =>
 		resource.projects.findBoards(props.projectId)
 	);
@@ -33,12 +36,13 @@ const Boards = (props: IBoards) => {
 		return <div>Loading...</div>;
 	}
 
-	const onDragEnd = (result: any) => {
-		if (!result.destination) return; // dropped outside the list
+	const onDragEnd = async (result: DropResult) => {
+		if (!result.destination) return;
 		const dragIndexs = {
 			startIndex: result.source.index,
 			endIndex: result.destination.index,
 		};
+		// await resource.projects.updateBoard(projectId, result.draggableId, { position: result.destination.index });
 		props.dragBoard(dragIndexs);
 	};
 
@@ -47,9 +51,7 @@ const Boards = (props: IBoards) => {
 			<Droppable droppableId="droppable" direction="horizontal">
 				{provided => (
 					<div className="boards " ref={provided.innerRef} {...provided.droppableProps}>
-						<ListBoardsContainer boards={[]} />
-						{provided.placeholder}
-						<AddBoardContainer isOdd={boards.length % 2 !== 0} />
+						<ListBoardsContainer dragPlaceholder={provided.placeholder} boards={[]} />
 					</div>
 				)}
 			</Droppable>

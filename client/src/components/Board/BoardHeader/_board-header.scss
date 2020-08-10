@@ -1,4 +1,13 @@
 .board-header {
+    height: 60px;
+    position: relative;
+    @include flex(null, center);
+    &:hover {
+        .board-header__arrow {
+            color: #fff;
+        }
+    }
+
     &__wrapperAddBtnLeft {
         position: absolute;
         left: -17px;
