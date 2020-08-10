@@ -57,7 +57,7 @@ const IconsArray = [
 const BoardHeader = (props: IBoardHeader) => {
 	const { boardData = { title: "", color: ColorsArray[0], icon: IconsArray[0] } } = props;
 
-	console.log(boardData);
+	// console.log(boardData);
 
 	const [headerData, setHeaderData] = useState<any>({
 		title: "",

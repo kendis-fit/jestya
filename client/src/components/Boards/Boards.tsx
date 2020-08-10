@@ -56,15 +56,21 @@ const Boards = (props: IBoardList) => {
 
 	const handleDeleteBoard = (index: number) => {
 		setBoardsList([...boardsList.slice(0, index), ...boardsList.slice(index + 1)]);
-		// console.group("delete");
-		// console.log(index);
-		// console.log(boardsList.slice(0, index));
-		// console.log(boardsList.slice(index + 1));
-		// console.groupEnd();
+	};
+
+	const onDragEnd = (result: any) => {
+		if (!result.destination) return; // dropped outside the list
+
+		const startIndex = result.source.index;
+		const endIndex = result.destination.index;
+
+		const list = [...boardsList.slice(0, startIndex), ...boardsList.slice(startIndex + 1)];
+		list.splice(endIndex, 0, boardsList[startIndex]);
+		setBoardsList(list);
 	};
 
 	return (
-		<DragDropContext onDragEnd={() => console.log()}>
+		<DragDropContext onDragEnd={onDragEnd}>
 			<Droppable droppableId="droppable" direction="horizontal">
 				{(provided, snapshot) => (
 					<div className="boards " ref={provided.innerRef} {...provided.droppableProps}>

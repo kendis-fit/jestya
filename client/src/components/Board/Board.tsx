@@ -20,11 +20,7 @@ const Board = ({ provided, ...props }: any) => {
 	};
 
 	return (
-		<div
-			// ref={provided.innerRef}
-			className="board"
-			style={{ background: props.index % 2 === 0 ? "#fafafa" : "#f2f2f2" }}
-		>
+		<div className={`board ${props.index % 2 !== 0 ? "board--odd" : ""}`}>
 			<BoardHeader {...props} />
 			<div className="board__tasklist">
 				{props.addBoard ? (
