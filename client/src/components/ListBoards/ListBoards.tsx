@@ -17,9 +17,8 @@ const ListBoards = (props: IListBoards) => {
 						<div
 							ref={provided.innerRef}
 							{...provided.draggableProps}
-							{...provided.dragHandleProps}
 						>
-							<Board isOdd={index % 2 !== 0} {...board} />
+							<Board provided={provided} isOdd={index % 2 !== 0} {...board} />
 						</div>
 					)}
 				</Draggable>

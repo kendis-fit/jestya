@@ -3,7 +3,7 @@ import { useVanillaFetch } from "vanilla-hooks";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
 import resource from "../../api/resource";
-import { IBoard } from "../../api/boardProjects";
+import { IBoard, IDragIndexs } from "../../api/boardProjects";
 import ListBoardsContainer from "../ListBoards/ListBoardsContainer";
 import Error from "../Error";
 import AddBoardContainer from "../AddBoard/AddBoardContainer";
@@ -11,6 +11,7 @@ import AddBoardContainer from "../AddBoard/AddBoardContainer";
 export interface IBoards {
 	projectId: string;
 	initBoards: (board: IBoard[]) => void;
+	dragBoard: (result: IDragIndexs) => void;
 }
 
 const Boards = (props: IBoards) => {
@@ -32,24 +33,17 @@ const Boards = (props: IBoards) => {
 		return <div>Loading...</div>;
 	}
 
-	// const onDragEnd = (result: any) => {
-	// 	if (!result.destination) return; // dropped outside the list
-
-	// 	const startIndex = result.source.index;
-	// 	const endIndex = result.destination.index;
-
-	// 	const list = [...boardsList.slice(0, startIndex), ...boardsList.slice(startIndex + 1)];
-	// 	list.splice(endIndex, 0, boardsList[startIndex]);
-	// 	setBoardsList(list);
-	// };
-	// console.log(boards.length);
+	const onDragEnd = (result: any) => {
+		if (!result.destination) return; // dropped outside the list
+		const dragIndexs = {
+			startIndex: result.source.index,
+			endIndex: result.destination.index,
+		};
+		props.dragBoard(dragIndexs);
+	};
 
 	return (
-		<DragDropContext
-			onDragEnd={() => {
-				console.log("asd");
-			}}
-		>
+		<DragDropContext onDragEnd={onDragEnd}>
 			<Droppable droppableId="droppable" direction="horizontal">
 				{provided => (
 					<div className="boards " ref={provided.innerRef} {...provided.droppableProps}>

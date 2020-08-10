@@ -10,6 +10,7 @@ import Modal from "../../Modal";
 
 export interface IBoardHeader extends IBoard, IAddBoard {
 	removeBoard: (id: string) => void;
+	provided: any;
 }
 
 const ColorsArray = [
@@ -56,7 +57,7 @@ const IconsArray = [
 	"work_outline",
 ];
 
-const BoardHeader = (props: IBoardHeader) => {
+const BoardHeader = ({ provided, ...props }: IBoardHeader) => {
 	const { params } = useRouteMatch();
 	const [showRemoveBoard, setShowRemoveBoard] = useState<boolean>(false);
 	const [headerColor, setHeaderColor] = useState<string>(props.color);
@@ -122,10 +123,11 @@ const BoardHeader = (props: IBoardHeader) => {
 		setCreating(false);
 	};
 
-	console.log(showPopUp);
-
 	return (
-		<div className={`board__header p-2 mb-3  ${"bg-" + headerColor} `}>
+		<div
+			{...provided.dragHandleProps}
+			className={`board__header p-2 mb-3  ${"bg-" + headerColor} `}
+		>
 			<div className="board-header__wrapperAddBtnLeft">
 				<button
 					className="board-header__addBtnLeft"

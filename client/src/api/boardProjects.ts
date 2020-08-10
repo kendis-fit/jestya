@@ -27,6 +27,11 @@ export interface IAddBoardResponse {
 	id: string;
 }
 
+export interface IDragIndexs {
+	startIndex: number;
+	endIndex: number;
+}
+
 const boardProjects = {
 	findBoards: (id: string) => {
 		return new Promise<IBoard[]>(async (resolve, reject) => {
