@@ -111,7 +111,7 @@ const BoardHeader = ({ provided, ...props }: IBoardHeader) => {
 	return (
 		<div
 			{...provided.dragHandleProps}
-			className={`board__header p-2 mb-3  ${"bg-" + headerColor} `}
+			className={`board__header board-header p-2 ${"bg-" + headerColor} `}
 		>
 			<div className="board-header__wrapperAddBtnLeft">
 				<button

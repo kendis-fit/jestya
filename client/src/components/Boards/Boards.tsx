@@ -6,7 +6,6 @@ import resource from "../../api/resource";
 import { IBoard, IDragIndexs } from "../../api/boardProjects";
 import ListBoardsContainer from "../ListBoards/ListBoardsContainer";
 import Error from "../Error";
-import AddBoardContainer from "../AddBoard/AddBoardContainer";
 
 export interface IBoards {
 	projectId: string;
@@ -47,9 +46,7 @@ const Boards = (props: IBoards) => {
 			<Droppable droppableId="droppable" direction="horizontal">
 				{provided => (
 					<div className="boards " ref={provided.innerRef} {...provided.droppableProps}>
-						<ListBoardsContainer boards={[]} />
-						{provided.placeholder}
-						<AddBoardContainer isOdd={boards.length % 2 !== 0} />
+						<ListBoardsContainer dragPlaceholder={provided.placeholder} boards={[]} />
 					</div>
 				)}
 			</Droppable>
