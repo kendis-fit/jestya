@@ -8,10 +8,11 @@ interface IPopUpMenu {
 	IconsArray: string[];
 	HeaderColor: string;
 	HeaderIcon: string;
-	index: string;
+	id: string;
 	description: string;
 	handleChangeColor(color: string): void;
 	handleChangeIcon(icon: string): void;
+	handleChangeDescription(description: string): void;
 	handleDeleteBoard(index: string): void;
 }
 
@@ -19,13 +20,19 @@ const PopUpMenu = (props: IPopUpMenu) => {
 	const { left = 0, ...controlerProps } = props;
 
 	const [tab, setTab] = useState("description");
+	const [description, setDescription] = useState(controlerProps.description);
 
-	const handleChangeTab = (event: React.MouseEvent<HTMLSpanElement>) => {
+	const handleChangeTab = async (event: React.MouseEvent<HTMLSpanElement>) => {
 		setTab(event.currentTarget.id);
 	};
 
+	const handleDescription = (event: any) => {
+		const description = event.currentTarget.value;
+		setDescription(description);
+		props.handleChangeDescription(description);
+	}
+
 	const { auth } = useAuth();
-	console.log(props);
 
 	const renderSwitch = (tab: string) => {
 		switch (tab) {
@@ -38,7 +45,8 @@ const PopUpMenu = (props: IPopUpMenu) => {
 						<textarea
 							className="description__text form-control text-muted bg-white "
 							cols={30}
-							defaultValue={props.description}
+							value={description}
+							onChange={handleDescription}
 							rows={10}
 							disabled={auth.user?.role === "USER"}
 						/>

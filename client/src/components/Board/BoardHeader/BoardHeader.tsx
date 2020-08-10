@@ -67,12 +67,18 @@ const BoardHeader = (props: IBoardHeader) => {
 
 	const arrowBtnRef = useRef<HTMLSpanElement>(null);
 
-	const handleChangeColor = (color: string) => {
+	const handleChangeColor = async (color: string) => {
+		await resource.projects.updateBoard((params as any).projectId, props.id, { color });
 		setHeaderColor(color);
 	};
-	const handleChangeIcon = (icon: string) => {
+	const handleChangeIcon = async (icon: string) => {
+		await resource.projects.updateBoard((params as any).projectId, props.id, { icon });
 		setHeaderIcon(icon);
 	};
+
+	const handleChangeDescription = async (description: string) => {
+		await resource.projects.updateBoard((params as any).projectId, props.id, { description });
+	}
 
 	const handlePopUp = () => {
 		setShowPopUp(state => !state);
@@ -101,11 +107,8 @@ const BoardHeader = (props: IBoardHeader) => {
 				setShowRemoveBoard(true);
 			}
 		} else {
-			const board = {
-				name: event.currentTarget.value,
-				description: "",
-				color: headerColor,
-				icon: headerIcon,
+			const board = { 
+				name: event.currentTarget.value
 			};
 			if (board.name !== props.name) {
 				if (creating) {
@@ -165,7 +168,7 @@ const BoardHeader = (props: IBoardHeader) => {
 				<ModalContainer isOpen={showPopUp} onClose={handlePopUp}>
 					<PopUpMenu
 						left={arrowBtnRef.current?.getBoundingClientRect().left}
-						index={"ew"}
+						id={props.id}
 						description={props.description || "This description is excess"}
 						IconsArray={IconsArray}
 						HeaderIcon={headerIcon}
@@ -173,6 +176,7 @@ const BoardHeader = (props: IBoardHeader) => {
 						HeaderColor={headerColor}
 						handleChangeIcon={handleChangeIcon}
 						handleChangeColor={handleChangeColor}
+						handleChangeDescription={handleChangeDescription}
 						handleDeleteBoard={props.removeBoard}
 					/>
 				</ModalContainer>

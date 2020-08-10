@@ -23,10 +23,10 @@ export class BoardService {
 
 	public async update(boardId: string, board: BoardUpdate): Promise<Board> {
 		const foundBoard = await this.findById(boardId);
-		foundBoard.name = board.name;
-		foundBoard.description = board.description;
-		foundBoard.color = board.color;
-		foundBoard.icon = board.icon;
+		foundBoard.name = board.name ?? foundBoard.name;
+		foundBoard.description = board.description ?? foundBoard.description;
+		foundBoard.color = board.color ?? foundBoard.color;
+		foundBoard.icon = board.icon ?? foundBoard.icon;
 		return await this.boardRepository.save(foundBoard);
 	}
 
