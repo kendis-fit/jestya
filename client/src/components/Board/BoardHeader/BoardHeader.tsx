@@ -107,6 +107,8 @@ const BoardHeader = (props: IBoardHeader) => {
 		setCreating(false);
 	};
 
+	console.log(showPopUp);
+
 	return (
 		<div className={`board__header p-2 mb-3  ${"bg-" + headerColor} `}>
 			<div className="board-header__wrapperAddBtnLeft">
@@ -147,7 +149,7 @@ const BoardHeader = (props: IBoardHeader) => {
 					keyboard_arrow_down
 				</span>
 			</>
-			{showPopUp ? null : (
+			{!showPopUp ? null : (
 				<ModalContainer isOpen={showPopUp} onClose={handlePopUp}>
 					<PopUpMenu
 						left={arrowBtnRef.current?.getBoundingClientRect().left}

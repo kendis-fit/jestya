@@ -6,6 +6,7 @@ import resource from "../../api/resource";
 import { IBoard } from "../../api/boardProjects";
 import ListBoardsContainer from "../ListBoards/ListBoardsContainer";
 import Error from "../Error";
+import AddBoardContainer from "../AddBoard/AddBoardContainer";
 
 export interface IBoards {
 	projectId: string;
@@ -31,18 +32,6 @@ const Boards = (props: IBoards) => {
 		return <div>Loading...</div>;
 	}
 
-	// const handleAddBoard = (index: number) => {
-	// 	if (typeof index === "number") {
-	// 		setBoardsList([...boardsList.splice(index, 0, 2), ...boardsList]);
-	// 	} else {
-	// 		setBoardsList([...boardsList, 1]);
-	// 	}
-	// };
-
-	// const handleDeleteBoard = (index: number) => {
-	// 	setBoardsList([...boardsList.slice(0, index), ...boardsList.slice(index + 1)]);
-	// };
-
 	// const onDragEnd = (result: any) => {
 	// 	if (!result.destination) return; // dropped outside the list
 
@@ -53,6 +42,7 @@ const Boards = (props: IBoards) => {
 	// 	list.splice(endIndex, 0, boardsList[startIndex]);
 	// 	setBoardsList(list);
 	// };
+	// console.log(boards.length);
 
 	return (
 		<DragDropContext
@@ -65,6 +55,7 @@ const Boards = (props: IBoards) => {
 					<div className="boards " ref={provided.innerRef} {...provided.droppableProps}>
 						<ListBoardsContainer boards={[]} />
 						{provided.placeholder}
+						<AddBoardContainer isOdd={boards.length % 2 !== 0} />
 					</div>
 				)}
 			</Droppable>

@@ -25,6 +25,7 @@ const PopUpMenu = (props: IPopUpMenu) => {
 	};
 
 	const { auth } = useAuth();
+	console.log(props);
 
 	const renderSwitch = (tab: string) => {
 		switch (tab) {

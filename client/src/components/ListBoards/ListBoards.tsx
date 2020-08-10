@@ -3,7 +3,6 @@ import { Draggable } from "react-beautiful-dnd";
 
 import Board from "../Board";
 import { IBoard } from "../../api/boardProjects";
-import AddBoardContainer from "../AddBoard/AddBoardContainer";
 
 export interface IListBoards {
 	boards: IBoard[];
@@ -25,7 +24,6 @@ const ListBoards = (props: IListBoards) => {
 					)}
 				</Draggable>
 			))}
-			<AddBoardContainer />
 		</>
 	);
 };
