@@ -6,6 +6,7 @@ import resource from "../../../api/resource";
 import ModalContainer from "../../ModalContainer";
 import { IBoard } from "../../../api/boardProjects";
 import { IAddBoard } from "../../AddBoard/AddBoard";
+import Modal from "../../Modal";
 
 export interface IBoardHeader extends IBoard, IAddBoard {
 	removeBoard: (id: string) => void;
@@ -57,6 +58,7 @@ const IconsArray = [
 
 const BoardHeader = (props: IBoardHeader) => {
 	const { params } = useRouteMatch();
+	const [showRemoveBoard, setShowRemoveBoard] = useState<boolean>(false);
 	const [headerColor, setHeaderColor] = useState<string>(props.color);
 	const [headerIcon, setHeaderIcon] = useState<string>(props.icon);
 	const [showPopUp, setShowPopUp] = useState<boolean>(false);
@@ -76,19 +78,29 @@ const BoardHeader = (props: IBoardHeader) => {
 		setShowPopUp(state => !state);
 	};
 
-	const handleChancheTitle = (event: React.FormEvent<HTMLInputElement>) => {
+	const handleChangeTitle = (event: React.FormEvent<HTMLInputElement>) => {
 		setHeaderTitle(event.currentTarget.value);
 	};
 
+	const cancelRemoveBoard = () => {
+		setHeaderTitle(props.name);
+		setShowRemoveBoard(false);
+	}
+
+	const removeBoard = async () => {
+		await resource.projects.removeBoard((params as any).projectId, props.id);
+		props.removeBoard(props.id);
+	}
+
 	const handleBlurTitle = async (event: React.FormEvent<HTMLInputElement>) => {
-		if (event.currentTarget.value.trim().length === 0) {
+		const value = event.currentTarget.value.trim();
+		if (value.length === 0) {
 			if (creating) {
 				props.removeBoard(props.id);
 			} else {
-				await resource.projects.removeBoard((params as any).projectId, props.id);
-				props.removeBoard(props.id);
+				setShowRemoveBoard(true);
 			}
-		} else if (event.currentTarget.value.trim().length !== 0) {
+		} else {
 			const board = {
 				name: event.currentTarget.value,
 				description: "",
@@ -136,7 +148,7 @@ const BoardHeader = (props: IBoardHeader) => {
 					type="text"
 					value={headerTitle}
 					onBlur={handleBlurTitle}
-					onChange={handleChancheTitle}
+					onChange={handleChangeTitle}
 					autoFocus
 				/>
 				<span
@@ -163,6 +175,9 @@ const BoardHeader = (props: IBoardHeader) => {
 					/>
 				</ModalContainer>
 			)}
+			{
+				showRemoveBoard ? <Modal title="Removing of board" onClose={cancelRemoveBoard} onOk={removeBoard} /> : null
+			}
 		</div>
 	);
 };
