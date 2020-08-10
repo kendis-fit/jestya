@@ -1,12 +1,13 @@
+import { createPortal } from "react-dom";
 import React, { useState, useRef } from "react";
 import { useRouteMatch } from "react-router-dom";
 
+import Modal from "../../Modal";
 import PopUpMenu from "./PopUpMenu";
 import resource from "../../../api/resource";
 import ModalContainer from "../../ModalContainer";
 import { IBoard } from "../../../api/boardProjects";
 import { IAddBoard } from "../../AddBoard/AddBoard";
-import Modal from "../../Modal";
 
 export interface IBoardHeader extends IBoard, IAddBoard {
 	removeBoard: (id: string) => void;
@@ -94,7 +95,7 @@ const BoardHeader = ({ provided, ...props }: IBoardHeader) => {
 		setShowRemoveBoard(false);
 	}
 
-	const removeBoard = async () => {
+	const handleRemoveBoard = async () => {
 		await resource.projects.removeBoard((params as any).projectId, props.id);
 		props.removeBoard(props.id);
 	}
@@ -179,12 +180,17 @@ const BoardHeader = ({ provided, ...props }: IBoardHeader) => {
 						handleChangeIcon={handleChangeIcon}
 						handleChangeColor={handleChangeColor}
 						handleChangeDescription={handleChangeDescription}
-						handleDeleteBoard={props.removeBoard}
+						handleDeleteBoard={() => {
+							setShowPopUp(false);
+							setShowRemoveBoard(true);
+						}}
 					/>
 				</ModalContainer>
 			)}
 			{
-				showRemoveBoard ? <Modal title="Removing of board" onClose={cancelRemoveBoard} onOk={removeBoard} /> : null
+				showRemoveBoard ? createPortal(<Modal title="Removing of board" onClose={cancelRemoveBoard} onOk={handleRemoveBoard}>
+					Are you sure you want to remove this board?
+				</Modal>, document.body) : null
 			}
 		</div>
 	);

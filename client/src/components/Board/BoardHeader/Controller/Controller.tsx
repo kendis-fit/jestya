@@ -5,15 +5,13 @@ interface IController {
 	IconsArray: string[];
 	HeaderColor: string;
 	HeaderIcon: string;
-	id: string;
 	handleChangeColor(color: string): void;
 	handleChangeIcon(icon: string): void;
-	handleDeleteBoard(id: string): void;
+	handleDeleteBoard: () => void;
 }
 
 const Controller = (props: IController) => {
 	const {
-		id,
 		ColorsArray,
 		HeaderColor,
 		HeaderIcon,
@@ -54,7 +52,7 @@ const Controller = (props: IController) => {
 			</div>
 			<button
 				className="btn btn-outline-danger w-85 align-self-center"
-				onClick={() => handleDeleteBoard(id)}
+				onClick={handleDeleteBoard}
 			>
 				Delete board
 			</button>
