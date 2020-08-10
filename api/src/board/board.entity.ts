@@ -39,4 +39,14 @@ export class Board {
 
 	@OneToMany(type => Task, task => task.board)
 	public tasks: Task[];
+
+	@Column({
+		default: "indigo",
+	})
+	public color: string;
+
+	@Column({
+		default: "add_alert",
+	})
+	public icon: string;
 }

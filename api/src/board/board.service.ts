@@ -25,7 +25,9 @@ export class BoardService {
 		const foundBoard = await this.findById(boardId);
 		foundBoard.name = board.name;
 		foundBoard.description = board.description;
-		return await this.boardRepository.save(board);
+		foundBoard.color = board.color;
+		foundBoard.icon = board.icon;
+		return await this.boardRepository.save(foundBoard);
 	}
 
 	public async create(board: BoardCreating, projectId?: string): Promise<Board> {

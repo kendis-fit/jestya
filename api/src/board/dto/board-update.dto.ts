@@ -10,4 +10,12 @@ export class BoardUpdate {
 	@ApiProperty()
 	@IsString()
 	public description: string;
+
+	@ApiProperty()
+	@IsString()
+	public color: string;
+
+	@ApiProperty()
+	@IsString()
+	public icon: string;
 }

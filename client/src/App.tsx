@@ -9,11 +9,11 @@ import Login from "./components/Login";
 import reducer from "./reducers/reducer";
 import Auth from "./components/Auth/Auth";
 import AddUser from "./components/AddUser";
-import BoardList from "./components/Boards";
 import Registration from "./components/Registration";
 import NotAvailable from "./components/NotAvailable";
 import PrivateRoute from "./components/PrivateRoute";
 import PrivateAdminRoute from "./components/PrivateAdminRoute";
+import BoardsContainer from "./components/Boards/BoardsContainer";
 import ProjectsContainer from "./components/Projects/ProjectsContainer";
 
 const store = createStore(reducer);
@@ -27,7 +27,7 @@ const App = () => {
 						<PrivateRoute exact path={["/", "/login"]} component={Login} />
 						<PrivateRoute exact path="/registration" component={Registration} />
 						<PrivateRoute exact path="/projects" isHeader component={ProjectsContainer} />
-						<PrivateRoute exact path="/projects/:projectId" isHeader component={BoardList} />
+						<PrivateRoute exact path="/projects/:projectId" isHeader component={BoardsContainer} />
 						<PrivateRoute exact path="/users" isHeader component={Users} />
 						<PrivateRoute exact path="/users/:id" isHeader component={Users} />
 						<PrivateAdminRoute roles={["ADMIN", "SUPER_ADMIN"]} exact path="/create-user" isHeader component={Registration} />
