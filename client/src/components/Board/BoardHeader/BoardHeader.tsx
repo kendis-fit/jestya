@@ -93,8 +93,8 @@ const BoardHeader = (props: IBoardHeader) => {
 				name: event.currentTarget.value,
 				description: "",
 				color: headerColor,
-				icon: headerIcon
-			}
+				icon: headerIcon,
+			};
 			if (board.name !== props.name) {
 				if (creating) {
 					await resource.projects.createBoard((params as any).projectId, board);
@@ -108,13 +108,19 @@ const BoardHeader = (props: IBoardHeader) => {
 	};
 
 	return (
-		<div
-			className={`board__header p-2 mb-3  ${"bg-" + headerColor} `}
-		>
+		<div className={`board__header p-2 mb-3  ${"bg-" + headerColor} `}>
 			<div className="board-header__wrapperAddBtnLeft">
 				<button
 					className="board-header__addBtnLeft"
-					onClick={() => props.addBoard({ id: Date.now().toString(), name: "", tasks: [], color: "indigo", icon: "add_alert" })}
+					onClick={() =>
+						props.addBoard({
+							id: Date.now().toString(),
+							name: "",
+							tasks: [],
+							color: "indigo",
+							icon: "add_alert",
+						})
+					}
 				>
 					<span className="material-icons">add</span>
 				</button>
@@ -134,9 +140,7 @@ const BoardHeader = (props: IBoardHeader) => {
 					autoFocus
 				/>
 				<span
-					className={`board-header__arrow${
-						showPopUp ? "--active" : ""
-					} material-icons`}
+					className={`board-header__arrow${showPopUp ? "--active" : ""} material-icons`}
 					onClick={handlePopUp}
 					ref={arrowBtnRef}
 				>

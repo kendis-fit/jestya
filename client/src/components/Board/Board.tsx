@@ -4,7 +4,11 @@ import Task from "./Task";
 import { IBoard } from "../../api/boardProjects";
 import BoardHeaderContainer from "./BoardHeader/BoardHeaderContainer";
 
-const Board = (props: IBoard) => {
+export interface IBoardProps extends IBoard {
+	isOdd?: boolean;
+}
+
+const Board = (props: IBoardProps) => {
 	const [taskList, setTaskList] = useState<any[]>([]);
 
 	const handleAddTask = () => {
@@ -12,11 +16,7 @@ const Board = (props: IBoard) => {
 	};
 
 	return (
-		<div
-			// ref={provided.innerRef}
-			className="board"
-			style={{ background: "#fafafa" }}
-		>
+		<div className={`board ${props.isOdd ? "board--odd" : ""}`}>
 			<BoardHeaderContainer {...props} />
 			<div className="board__tasklist">
 				<>
