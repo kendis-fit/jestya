@@ -13,16 +13,16 @@
     }
 
     &__tasklist {
-        overflow-y: scroll;
-        height: 100%;
-        @include custom-scrollbar(15px, 10px, 4px, transparent);
+        // overflow-y: scroll;
+        // height: calc(100% - 60px);
+        // @include custom-scrollbar(15px, 10px, 4px, transparent);
         padding-bottom: 10px;
     }
 
     &__task {
         height: 150px;
         width: 95%;
-        margin: 0 auto;
+        margin-left: 15px;
         border-radius: 10px;
         background-color: #fff;
         &:first-child {

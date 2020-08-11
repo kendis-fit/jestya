@@ -1,0 +1,14 @@
+.tasklist {
+    overflow-y: scroll;
+    height: calc(100% - 60px);
+    @include custom-scrollbar(15px, 10px, 4px, transparent);
+
+    &::-webkit-scrollbar-thumb {
+        background-color: transparent;
+    }
+    &--scroll {
+        &::-webkit-scrollbar-thumb {
+            background-color: #888;
+        }
+    }
+}
