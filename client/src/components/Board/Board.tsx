@@ -1,58 +1,56 @@
 import React, { useState } from "react";
 
-import Task from "./Task";
 import { IBoard } from "../../api/boardProjects";
 import BoardHeaderContainer from "./BoardHeader/BoardHeaderContainer";
+import TaskList from "./TaskList";
+import { Droppable } from "react-beautiful-dnd";
+// import Task from "./Task";
 
 export interface IBoardProps extends IBoard {
 	isOdd?: boolean;
-	provided: any;
+	providedBoard: any;
+	isDragingBoard: boolean;
 }
 
-const Board = ({ isOdd, ...props }: IBoardProps) => {
-	const [taskList, setTaskList] = useState<any[]>([1, 11, 1, 1, 1, 1, 1, 11]);
+const Board = ({ isOdd, isDragingBoard, ...props }: IBoardProps) => {
+	const [taskList, setTaskList] = useState<any[]>([{ id: Date.now() }, { id: Date.now() }]);
 
 	const handleAddTask = () => {
 		setTaskList([...taskList, "s"]);
 	};
 
-	const handleOnScroll = (event: React.UIEvent<HTMLElement>) => {
-		const el = event.currentTarget;
-		el.classList.add("tasklist--scroll");
-		// console.log(event.currentTarget.classList);
-		setTimeout(() => {
-			el.classList.remove("tasklist--scroll");
-			// console.log(el.classList.remove);
-		}, 1000);
-	};
+	console.log(props.tasks.length);
 
 	return (
 		<div className={`board ${isOdd ? "board--odd" : ""}`}>
 			<BoardHeaderContainer {...props} />
-			<div onScrollCapture={handleOnScroll} className="board__tasklist tasklist">
-				{taskList.map((ell, i) => (
-					<Task key={i} />
-				))}
-				<button
-					className="
-						board__button
-						"
-					onClick={handleAddTask}
-				>
-					<span className="material-icons">add</span>
-				</button>
-			</div>
-			{taskList.length === 0 ? (
-				<div className="no-tasks board__no-tasks ">
-					<span className="no-tasks__icon text-secondary  material-icons">
-						fact_check
-					</span>
-					<h5 className="text-center text-muted">No Tasks </h5>
-					<p className="text-center text-muted m-0 w-75">
-						Add new task by click "+" button or drag task here
-					</p>
-				</div>
-			) : null}
+			<Droppable isDropDisabled={isDragingBoard} droppableId={`drag-task`}>
+				{(provided, snapshot) => (
+					<div ref={provided.innerRef} {...provided.droppableProps}>
+						<div className="board__tasklist ">
+							<TaskList providedTask={provided} tasks={props.tasks} />
+							{/* empty task list */}
+							{props.tasks.length === 0 ? (
+								<>
+									<button className="board__button mt-2" onClick={handleAddTask}>
+										<span className="material-icons">add</span>
+									</button>
+									<div className="no-tasks board__no-tasks ">
+										<span className="no-tasks__icon material-icons">
+											fact_check
+										</span>
+										<h5 className="text-center text-muted">No Tasks </h5>
+										<p className="text-center text-muted m-0 w-75">
+											Add new task by click "+" button or drag task here
+										</p>
+									</div>
+								</>
+							) : null}
+						</div>
+						{provided.placeholder}
+					</div>
+				)}
+			</Droppable>
 		</div>
 	);
 };

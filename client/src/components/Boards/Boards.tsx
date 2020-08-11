@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useVanillaFetch } from "vanilla-hooks";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
@@ -18,6 +18,9 @@ const Boards = (props: IBoards) => {
 		resource.projects.findBoards(props.projectId)
 	);
 
+	const [isDragingBoard, setIsDragingBoard] = useState(false);
+	const [isDragingTask, setIsDragingTask] = useState(false);
+
 	useEffect(() => {
 		if (boards) {
 			props.initBoards(boards);
@@ -32,7 +35,9 @@ const Boards = (props: IBoards) => {
 		return <div>Loading...</div>;
 	}
 
-	const onDragEnd = (result: any) => {
+	const handleOnDragEnd = (result: any) => {
+		setIsDragingBoard(false); //reset drag status
+		setIsDragingTask(false); //reset drag status
 		if (!result.destination) return; // dropped outside the list
 		const dragIndexs = {
 			startIndex: result.source.index,
@@ -41,12 +46,27 @@ const Boards = (props: IBoards) => {
 		props.dragBoard(dragIndexs);
 	};
 
+	const handleOnDragStart = (dragItem: any) => {
+		if (dragItem.source.droppableId === "drag-board") {
+			setIsDragingBoard(true);
+		} else {
+			setIsDragingTask(true);
+		}
+	};
 	return (
-		<DragDropContext onDragEnd={onDragEnd}>
-			<Droppable droppableId="droppable" direction="horizontal">
+		<DragDropContext onDragStart={handleOnDragStart} onDragEnd={handleOnDragEnd}>
+			<Droppable
+				isDropDisabled={isDragingTask}
+				droppableId="drag-board"
+				direction="horizontal"
+			>
 				{provided => (
-					<div className="boards " ref={provided.innerRef} {...provided.droppableProps}>
-						<ListBoardsContainer dragPlaceholder={provided.placeholder} boards={[]} />
+					<div className="boards" ref={provided.innerRef} {...provided.droppableProps}>
+						<ListBoardsContainer
+							isDragingBoard={isDragingBoard}
+							dragPlaceholder={provided.placeholder}
+							boards={[]}
+						/>
 					</div>
 				)}
 			</Droppable>
