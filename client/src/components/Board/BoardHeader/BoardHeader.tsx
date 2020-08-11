@@ -188,9 +188,9 @@ const BoardHeader = ({ provided, ...props }: IBoardHeader) => {
 				</ModalContainer>
 			)}
 			{
-				showRemoveBoard ? createPortal(<Modal title="Removing of board" onClose={cancelRemoveBoard} onOk={handleRemoveBoard}>
+				showRemoveBoard ? <Modal title="Removing of board" onClose={cancelRemoveBoard} onOk={handleRemoveBoard}>
 					Are you sure you want to remove this board?
-				</Modal>, document.body) : null
+				</Modal> : null
 			}
 		</div>
 	);
