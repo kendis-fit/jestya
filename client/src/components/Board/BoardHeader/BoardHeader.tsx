@@ -11,7 +11,7 @@ import { IAddBoard } from "../../AddBoard/AddBoard";
 
 export interface IBoardHeader extends IBoard, IAddBoard {
 	removeBoard: (id: string) => void;
-	provided: any;
+	providedBoard: any;
 }
 
 const ColorsArray = [
@@ -58,7 +58,7 @@ const IconsArray = [
 	"work_outline",
 ];
 
-const BoardHeader = ({ provided, ...props }: IBoardHeader) => {
+const BoardHeader = ({ providedBoard, ...props }: IBoardHeader) => {
 	const { params } = useRouteMatch();
 	const [showRemoveBoard, setShowRemoveBoard] = useState<boolean>(false);
 	const [headerColor, setHeaderColor] = useState<string>(props.color);
@@ -126,7 +126,7 @@ const BoardHeader = ({ provided, ...props }: IBoardHeader) => {
 
 	return (
 		<div
-			{...provided.dragHandleProps}
+			{...providedBoard.dragHandleProps}
 			className={`board__header board-header p-2 ${"bg-" + headerColor} `}
 		>
 			<div className="board-header__wrapperAddBtnLeft">

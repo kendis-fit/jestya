@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useVanillaFetch } from "vanilla-hooks";
+import React, { useEffect, useState } from "react";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 
 import Error from "../Error";
@@ -22,6 +22,9 @@ const Boards = (props: IBoards) => {
 		resource.projects.findBoards(props.projectId)
 	);
 
+	const [isDragingBoard, setIsDragingBoard] = useState(false);
+	const [isDragingTask, setIsDragingTask] = useState(false);
+
 	useEffect(() => {
 		if (boards) {
 			props.initBoards(boards);
@@ -36,8 +39,10 @@ const Boards = (props: IBoards) => {
 		return <div>Loading...</div>;
 	}
 
-	const onDragEnd = async (result: DropResult) => {
-		if (!result.destination) return;
+	const handleOnDragEnd = (result: any) => {
+		setIsDragingBoard(false); //reset drag status
+		setIsDragingTask(false); //reset drag status
+		if (!result.destination) return; // dropped outside the list
 		const dragIndexs = {
 			startIndex: result.source.index,
 			endIndex: result.destination.index,
@@ -46,12 +51,27 @@ const Boards = (props: IBoards) => {
 		props.dragBoard(dragIndexs);
 	};
 
+	const handleOnDragStart = (dragItem: any) => {
+		if (dragItem.source.droppableId === "drag-board") {
+			setIsDragingBoard(true);
+		} else {
+			setIsDragingTask(true);
+		}
+	};
 	return (
-		<DragDropContext onDragEnd={onDragEnd}>
-			<Droppable droppableId="droppable" direction="horizontal">
+		<DragDropContext onDragStart={handleOnDragStart} onDragEnd={handleOnDragEnd}>
+			<Droppable
+				isDropDisabled={isDragingTask}
+				droppableId="drag-board"
+				direction="horizontal"
+			>
 				{provided => (
-					<div className="boards " ref={provided.innerRef} {...provided.droppableProps}>
-						<ListBoardsContainer dragPlaceholder={provided.placeholder} boards={[]} />
+					<div className="boards" ref={provided.innerRef} {...provided.droppableProps}>
+						<ListBoardsContainer
+							isDragingBoard={isDragingBoard}
+							dragPlaceholder={provided.placeholder}
+							boards={[]}
+						/>
 					</div>
 				)}
 			</Droppable>
