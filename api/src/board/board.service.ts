@@ -47,6 +47,11 @@ export class BoardService {
 			order: {
 				position: "DESC",
 			},
+			where: {
+				project: {
+					id: projectId,
+				},
+			},
 		});
 		const newBoard = new Board();
 		newBoard.name = board.name;
