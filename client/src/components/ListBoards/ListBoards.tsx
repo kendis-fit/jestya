@@ -12,6 +12,7 @@ export interface IListBoards {
 }
 
 const ListBoards = (props: IListBoards) => {
+
 	return (
 		<>
 			{props.boards.map((board, index) => (
@@ -23,7 +24,12 @@ const ListBoards = (props: IListBoards) => {
 				>
 					{provided => (
 						<div ref={provided.innerRef} {...provided.draggableProps}>
-							<Board isDragingBoard={props.isDragingBoard} providedBoard={provided} isOdd={index % 2 !== 0} {...board} />
+							<Board
+								isDragingBoard={props.isDragingBoard}
+								providedBoard={provided}
+								isOdd={index % 2 !== 0}
+								{...board}
+							/>
 						</div>
 					)}
 				</Draggable>
