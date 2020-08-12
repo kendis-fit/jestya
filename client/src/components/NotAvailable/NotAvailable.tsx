@@ -15,7 +15,7 @@ const NotAvailable = (props: INotAvailable) => {
 		if (props.status === 401 || props.status === 500) {
 			setIsAuthenticated?.(false);
 		}
-	}, []);
+	}, [setIsAuthenticated, props.status]);
 
 	return (
 		<div className="not-available">
@@ -25,7 +25,10 @@ const NotAvailable = (props: INotAvailable) => {
 			<div>
 				<h2>The page {props.page ? props.page + " " : null}isn't available</h2>
 			</div>
-			<Link to={props.status === 404 ? "/login" : "/projects"} className="btn btn-secondary d-flex">
+			<Link
+				to={props.status === 404 ? "/login" : "/projects"}
+				className="btn btn-secondary d-flex"
+			>
 				<span>Exit to main page</span>
 				<span className="material-icons">exit_to_app</span>
 			</Link>

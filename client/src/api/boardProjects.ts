@@ -1,5 +1,6 @@
 import { fetcher } from "./fetcher";
 
+//Task
 export interface ITask {
 	id: string;
 	name: string;
@@ -12,10 +13,20 @@ export interface IAddTaskValues {
 	boardId: string;
 }
 
+export interface IDragTaskData {
+	dropInBoardId: string;
+	dropOutBoardId: string;
+	dropTaskId: string;
+	dropInPosition: number;
+	dropOutPosition: number;
+}
+
 export interface IRemoveTaskValues {
 	taskId: string;
 	boardId: string;
 }
+
+// Board
 export interface IBoard {
 	id: string;
 	name: string;

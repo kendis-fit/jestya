@@ -5,7 +5,7 @@ import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 
 import Error from "../Error";
 import resource from "../../api/resource";
-import { IBoard } from "../../api/boardProjects";
+import { IBoard, IDragTaskData } from "../../api/boardProjects";
 import { IDragIndexs } from "../../api/boardProjects";
 import ListBoardsContainer from "../ListBoards/ListBoardsContainer";
 
@@ -13,6 +13,7 @@ export interface IBoards {
 	projectId: string;
 	initBoards: (board: IBoard[]) => void;
 	dragBoard: (result: IDragIndexs) => void;
+	dragTask: (result: IDragTaskData) => void;
 }
 
 const Boards = (props: IBoards) => {
@@ -58,18 +59,18 @@ const Boards = (props: IBoards) => {
 				position: result.destination.index,
 			});
 		} else {
-			console.group("TASKSSS");
-			console.log(result);
-			console.log(result.source.droppableId.match(/[^_]*$/g)[0]);
-			console.groupEnd();
-			const a = {
+			console.log("TASKSSS");
+			// console.log(result);
+			// console.log(result.source.droppableId.match(/[^_]*$/g)[0]);
+			// console.groupEnd();
+			props.dragTask({
 				dropInBoardId: result.destination.droppableId.match(/[^_]*$/g)[0],
 				dropOutBoardId: result.source.droppableId.match(/[^_]*$/g)[0],
 				dropInPosition: result.destination.index,
 				dropOutPosition: result.source.index,
 				dropTaskId: result.draggableId,
-			};
-			console.log(a);
+			});
+			// console.log(a);
 		}
 	};
 

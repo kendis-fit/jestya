@@ -43,7 +43,7 @@ const TaskList = (props: ITaskList) => {
 							{...provided.draggableProps}
 							{...provided.dragHandleProps}
 						>
-							<Task key={ell} />
+							<Task key={ell} task={ell} />
 						</div>
 					)}
 				</Draggable>
