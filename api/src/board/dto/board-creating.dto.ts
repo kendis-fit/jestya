@@ -8,6 +8,5 @@ export class BoardCreating {
 	public name: string;
 
 	@ApiProperty()
-	@IsString()
-	public description: string;
+	public description?: string;
 }

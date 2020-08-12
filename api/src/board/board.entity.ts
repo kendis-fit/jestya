@@ -49,4 +49,9 @@ export class Board {
 		default: "add_alert",
 	})
 	public icon: string;
+
+	@Column({
+		default: 0,
+	})
+	public position: number;
 }

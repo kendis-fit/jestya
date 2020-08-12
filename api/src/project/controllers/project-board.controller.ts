@@ -49,7 +49,7 @@ export class ProjectBoardController {
 		@Param("id", ParseUUIDPipe) projectId: string,
 		@Body() board: BoardCreating
 	): Promise<BoardCreated> {
-		const newBoard = await this.boardService.create(board, projectId);
+		const newBoard = await this.boardService.create(projectId, board);
 		return new BoardCreated(newBoard.id);
 	}
 

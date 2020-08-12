@@ -26,10 +26,11 @@ export interface IBoard {
 }
 
 export interface ISavingBoard {
-	name: string;
+	name?: string;
 	description?: string;
-	color: string;
-	icon: string;
+	color?: string;
+	icon?: string;
+	position?: number;
 }
 
 export interface IAddBoardResponse {

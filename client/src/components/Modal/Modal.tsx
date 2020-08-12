@@ -2,6 +2,7 @@ import * as bootstrap from "bootstrap";
 import React, { ReactNode, useEffect, useRef, useState } from "react";
 
 import ButtonsFooter from "../ButtonsFooter/ButtonsFooter";
+import { createPortal } from "react-dom";
 
 export interface IModalFooter {
     titlePrimary?: string;
@@ -66,7 +67,7 @@ const Modal = ({ showFooter = true, ...props }: IModal) => {
         modal?.hide();
     }
 
-    return(
+    return createPortal(
         <div className="modal fade" 
             data-backdrop={props.isStatic ? "static" : null}
             data-keyboard={props.isStatic ? "false" : null}
@@ -95,7 +96,8 @@ const Modal = ({ showFooter = true, ...props }: IModal) => {
                     }
                 </div>
             </div>
-        </div>
+        </div>,
+        document.body
     );
 }
 

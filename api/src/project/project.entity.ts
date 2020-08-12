@@ -35,7 +35,7 @@ export class Project {
 	@Column({
 		nullable: true,
 	})
-	public finishedAt!: Date;
+	public finishedAt!: Date | null;
 
 	@RelationId((project: Project) => project.creator)
 	public creatorId: string;

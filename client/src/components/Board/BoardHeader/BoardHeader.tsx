@@ -1,6 +1,8 @@
+import { createPortal } from "react-dom";
 import React, { useState, useRef } from "react";
 import { useRouteMatch } from "react-router-dom";
 
+import Modal from "../../Modal";
 import PopUpMenu from "./PopUpMenu";
 import resource from "../../../api/resource";
 import ModalContainer from "../../ModalContainer";
@@ -58,6 +60,7 @@ const IconsArray = [
 
 const BoardHeader = ({ providedBoard, ...props }: IBoardHeader) => {
 	const { params } = useRouteMatch();
+	const [showRemoveBoard, setShowRemoveBoard] = useState<boolean>(false);
 	const [headerColor, setHeaderColor] = useState<string>(props.color);
 	const [headerIcon, setHeaderIcon] = useState<string>(props.icon);
 	const [showPopUp, setShowPopUp] = useState<boolean>(false);
@@ -66,35 +69,48 @@ const BoardHeader = ({ providedBoard, ...props }: IBoardHeader) => {
 
 	const arrowBtnRef = useRef<HTMLSpanElement>(null);
 
-	const handleChangeColor = (color: string) => {
+	const handleChangeColor = async (color: string) => {
+		await resource.projects.updateBoard((params as any).projectId, props.id, { color });
 		setHeaderColor(color);
 	};
-	const handleChangeIcon = (icon: string) => {
+	const handleChangeIcon = async (icon: string) => {
+		await resource.projects.updateBoard((params as any).projectId, props.id, { icon });
 		setHeaderIcon(icon);
 	};
+
+	const handleChangeDescription = async (description: string) => {
+		await resource.projects.updateBoard((params as any).projectId, props.id, { description });
+	}
 
 	const handlePopUp = () => {
 		setShowPopUp(state => !state);
 	};
 
-	const handleChancheTitle = (event: React.FormEvent<HTMLInputElement>) => {
+	const handleChangeTitle = (event: React.FormEvent<HTMLInputElement>) => {
 		setHeaderTitle(event.currentTarget.value);
 	};
 
+	const cancelRemoveBoard = () => {
+		setHeaderTitle(props.name);
+		setShowRemoveBoard(false);
+	}
+
+	const handleRemoveBoard = async () => {
+		await resource.projects.removeBoard((params as any).projectId, props.id);
+		props.removeBoard(props.id);
+	}
+
 	const handleBlurTitle = async (event: React.FormEvent<HTMLInputElement>) => {
-		if (event.currentTarget.value.trim().length === 0) {
+		const value = event.currentTarget.value.trim();
+		if (value.length === 0) {
 			if (creating) {
 				props.removeBoard(props.id);
 			} else {
-				await resource.projects.removeBoard((params as any).projectId, props.id);
-				props.removeBoard(props.id);
+				setShowRemoveBoard(true);
 			}
-		} else if (event.currentTarget.value.trim().length !== 0) {
-			const board = {
-				name: event.currentTarget.value,
-				description: "",
-				color: headerColor,
-				icon: headerIcon,
+		} else {
+			const board = { 
+				name: event.currentTarget.value
 			};
 			if (board.name !== props.name) {
 				if (creating) {
@@ -140,7 +156,7 @@ const BoardHeader = ({ providedBoard, ...props }: IBoardHeader) => {
 					type="text"
 					value={headerTitle}
 					onBlur={handleBlurTitle}
-					onChange={handleChancheTitle}
+					onChange={handleChangeTitle}
 					autoFocus={creating}
 				/>
 				<span
@@ -155,7 +171,7 @@ const BoardHeader = ({ providedBoard, ...props }: IBoardHeader) => {
 				<ModalContainer isOpen={showPopUp} onClose={handlePopUp}>
 					<PopUpMenu
 						left={arrowBtnRef.current?.getBoundingClientRect().left}
-						index={"ew"}
+						id={props.id}
 						description={props.description || "This description is excess"}
 						IconsArray={IconsArray}
 						HeaderIcon={headerIcon}
@@ -163,10 +179,19 @@ const BoardHeader = ({ providedBoard, ...props }: IBoardHeader) => {
 						HeaderColor={headerColor}
 						handleChangeIcon={handleChangeIcon}
 						handleChangeColor={handleChangeColor}
-						handleDeleteBoard={props.removeBoard}
+						handleChangeDescription={handleChangeDescription}
+						handleDeleteBoard={() => {
+							setShowPopUp(false);
+							setShowRemoveBoard(true);
+						}}
 					/>
 				</ModalContainer>
 			)}
+			{
+				showRemoveBoard ? <Modal title="Removing of board" onClose={cancelRemoveBoard} onOk={handleRemoveBoard}>
+					Are you sure you want to remove this board?
+				</Modal> : null
+			}
 		</div>
 	);
 };

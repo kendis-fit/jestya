@@ -22,7 +22,7 @@ const Projects = (props: IProjects) => {
 	}, [projects, props]);
 
 	if (error) {
-		return <Error error={{ name: "", message: "" }} />
+		return <Error error={error} />
 	}
 
 	if (loading) {

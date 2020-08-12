@@ -123,6 +123,28 @@ const projects = {
 			}
 		});
 	},
+	archive: (id: string, isArchive: boolean = true) => {
+		return new Promise<void>(async (resolve, reject) => {
+			try {
+				const req = await fetcher(`${process.env.REACT_APP_API}/projects/${id}`, {
+					method: "PATCH",
+					body: JSON.stringify({ isArchive }),
+					headers: {
+						"Content-Type": "application/json",
+					},
+				});
+
+				if (req.status === 204) {
+					resolve();
+				} else {
+					const body = await req.json();
+					reject(body);
+				}
+			} catch (error) {
+				reject({ message: "An unknown error", statusCode: 500 });
+			}
+		});
+	},
 };
 
 export default projects;

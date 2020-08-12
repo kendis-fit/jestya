@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { useVanillaFetch } from "vanilla-hooks";
-import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import React, { useEffect, useState } from "react";
+import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 
-import resource from "../../api/resource";
-import { IBoard, IDragIndexs } from "../../api/boardProjects";
-import ListBoardsContainer from "../ListBoards/ListBoardsContainer";
 import Error from "../Error";
+import resource from "../../api/resource";
+import { IBoard } from "../../api/boardProjects";
+import { IDragIndexs } from "../../api/boardProjects";
+import ListBoardsContainer from "../ListBoards/ListBoardsContainer";
 
 export interface IBoards {
 	projectId: string;
@@ -14,6 +16,8 @@ export interface IBoards {
 }
 
 const Boards = (props: IBoards) => {
+	const { projectId } = useParams();
+
 	const { data: boards, loading, error } = useVanillaFetch(() =>
 		resource.projects.findBoards(props.projectId)
 	);
@@ -43,6 +47,7 @@ const Boards = (props: IBoards) => {
 			startIndex: result.source.index,
 			endIndex: result.destination.index,
 		};
+		// await resource.projects.updateBoard(projectId, result.draggableId, { position: result.destination.index });
 		props.dragBoard(dragIndexs);
 	};
 

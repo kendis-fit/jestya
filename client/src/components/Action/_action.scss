@@ -1,10 +1,16 @@
 .action-link {
-    @include flex();
+    @include flex($a-items: center);
     color: white;
     text-decoration: none;
 
     &__title {
         padding-left: 5px;
+    }
+
+    &--close {
+        @media screen and (min-width: map-get($map: $screen, $key: "mobile")) {
+            display: none;
+        }
     }
 
     &:hover {

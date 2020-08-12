@@ -39,7 +39,7 @@ const Project = (props: IProject) => {
                                     </div>
                             }
                         </div>
-                        <ProjectInfo title={props.name} countTasks={countTasks} description={props.description} />
+                        <ProjectInfo id={props.id} description={props.description} title={props.name} countTasks={countTasks} />
                     </div>
                 </div>
             </div>

@@ -36,6 +36,10 @@ export const REDIS_SERVICE = "REDIS_SERVICE";
 				password: config.get<string>("database.password"),
 				database: config.get<string>("database.database"),
 				entities: [User, Project, Board, Task, Component, Comment],
+				migrations: ["migrations/*.ts"],
+				cli: {
+					migrationsDir: "migrations",
+				},
 				synchronize: true,
 			}),
 			inject: [ConfigService],
