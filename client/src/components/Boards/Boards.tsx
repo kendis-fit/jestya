@@ -39,7 +39,7 @@ const Boards = (props: IBoards) => {
 		return <div>Loading...</div>;
 	}
 
-	const handleOnDragEnd = (result: any) => {
+	const handleOnDragEnd = async (result: any) => {
 		setIsDragingBoard(false); //reset drag status
 		setIsDragingTask(false); //reset drag status
 		if (!result.destination) return; // dropped outside the list
@@ -47,8 +47,8 @@ const Boards = (props: IBoards) => {
 			startIndex: result.source.index,
 			endIndex: result.destination.index,
 		};
-		// await resource.projects.updateBoard(projectId, result.draggableId, { position: result.destination.index });
 		props.dragBoard(dragIndexs);
+		await resource.projects.updateBoard(projectId, result.draggableId, { position: result.destination.index });
 	};
 
 	const handleOnDragStart = (dragItem: any) => {

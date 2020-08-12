@@ -28,6 +28,7 @@ import { BoardCreated } from "../../board/dto/board-created.dto";
 import { BoardCreating } from "../../board/dto/board-creating.dto";
 import { JwtProjectsGuard } from "../../guards/jwt-projects/jwt-projects.guard";
 import { RoleProjectsGuard } from "../../guards/role-projects/role-projects.guard";
+import { User } from "src/decorators/user.decorator";
 
 @ApiBearerAuth()
 @ApiTags("projects")
