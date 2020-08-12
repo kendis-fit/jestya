@@ -1,13 +1,22 @@
-import React from "react";
+import React, { useRef } from "react";
 
 import Action from "../Action/Action";
 import { useAuth } from "../../context/auth";
 
+
+
 const Actions = () => {
     const { auth } = useAuth();
+    const menuRef = useRef<HTMLUListElement>(null);
+
+    const hideShowMenu = () => {
+        if (menuRef && menuRef.current) {
+            menuRef.current.classList.toggle("actions--menu-show")
+        }
+    }
 
     return(
-        <ul className="actions w-50 pl-0">
+        <ul id="menu" ref={menuRef} className="actions actions--menu-hide">
             <Action path="/projects" icon="assignment" name="My projects" />
             {
                 auth.user?.role === "SUPER_ADMIN" ||
@@ -18,6 +27,7 @@ const Actions = () => {
                     </>
                     : null
             }
+            <Action icon="close" name="Close" onClick={hideShowMenu} />
         </ul>
     );
 }

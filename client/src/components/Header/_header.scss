@@ -12,4 +12,14 @@
         @extend .w-100;
         @include flex(space-between);
     }
+
+    &__menu {
+        display: none;
+        @extend .btn;
+        @extend .text-light;
+        
+        @media screen and (max-width: 955px) {
+            @include flex($a-items: center);
+        }
+    }
 }
