@@ -78,7 +78,7 @@ describe("Board service", () => {
 		beforeEach(async () => {
 			boardCreating = plainToClass(BoardCreating, board);
 			boardRepository.save.mockReturnValue({ id: "123a", ...board });
-			newBoard = await service.create(boardCreating);
+			newBoard = await service.create("32", boardCreating);
 		});
 
 		it("should be defined", () => {
