@@ -12,16 +12,12 @@ export interface IListBoards {
 }
 
 const ListBoards = (props: IListBoards) => {
+	// console.log(props);
 
 	return (
 		<>
 			{props.boards.map((board, index) => (
-				<Draggable
-					isDragDisabled={false}
-					key={board.id}
-					draggableId={board.id}
-					index={index}
-				>
+				<Draggable key={board.id} draggableId={board.id} index={index}>
 					{provided => (
 						<div ref={provided.innerRef} {...provided.draggableProps}>
 							<Board

@@ -2,10 +2,8 @@ import React, { useState } from "react";
 
 import { IBoard } from "../../api/boardProjects";
 import BoardHeaderContainer from "./BoardHeader/BoardHeaderContainer";
-import TaskList from "./TaskList";
 import { Droppable } from "react-beautiful-dnd";
 import TackListContainer from "./TaskList/TackListContainer";
-// import Task from "./Task";
 
 export interface IBoardProps extends IBoard {
 	isOdd?: boolean;
@@ -14,18 +12,13 @@ export interface IBoardProps extends IBoard {
 }
 
 const Board = ({ isOdd, isDragingBoard, ...props }: IBoardProps) => {
-	const [taskList, setTaskList] = useState<any[]>([{ id: Date.now() }, { id: Date.now() }]);
-
-	const handleAddTask = () => {
-		setTaskList([...taskList, "s"]);
-	};
-
+	// console.log("prooooooooops", props);
 
 	return (
 		<div className={`board ${isOdd ? "board--odd" : ""}`}>
 			<BoardHeaderContainer {...props} />
-			<Droppable isDropDisabled={isDragingBoard} droppableId={`drag-task`}>
-				{(provided, snapshot) => (
+			<Droppable isDropDisabled={isDragingBoard} droppableId={`drag-task_${props.id}`}>
+				{provided => (
 					<div ref={provided.innerRef} {...provided.droppableProps}>
 						<div className="board__tasklist ">
 							<TackListContainer
@@ -36,7 +29,7 @@ const Board = ({ isOdd, isDragingBoard, ...props }: IBoardProps) => {
 							{/* empty task list */}
 							{props.tasks.length === 0 ? (
 								<>
-									<button className="board__button mt-2" onClick={handleAddTask}>
+									<button className="board__button mt-2">
 										<span className="material-icons">add</span>
 									</button>
 									<div className="no-tasks board__no-tasks ">

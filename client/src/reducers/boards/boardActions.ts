@@ -17,7 +17,7 @@ import {
 } from "../constants";
 import { IAddBoard } from "./interfaces/IAddBoard";
 import { IInitBoards } from "./interfaces/IInitBoards";
-import { IUpdateBoard } from "./interfaces/IUpdateBoard";
+import { IUpdateBoardAction, IUpdateBoard } from "./interfaces/IUpdateBoardAction";
 import { IRemoveBoard } from "./interfaces/IRemoveBoard";
 import { IDragBoard } from "./interfaces/IDragBoard";
 import { IAddTask } from "./interfaces/IAddTask";
@@ -39,8 +39,9 @@ export const initBoards = (boards: IBoard[]): IInitBoards => ({
 	value: boards,
 });
 
-export const updateBoard = (): IUpdateBoard => ({
+export const updateBoard = (board: IUpdateBoard): IUpdateBoardAction => ({
 	type: UPDATE_BOARD,
+	value: board,
 });
 
 export const dragBoard = (result: IDragIndexs): IDragBoard => ({
@@ -70,4 +71,5 @@ export type BoardActions =
 	| IDragBoard
 	| IInitTasks
 	| IAddTask
-	| IRemoveTask;
+	| IRemoveTask
+	| IUpdateBoardAction;

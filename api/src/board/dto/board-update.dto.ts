@@ -12,4 +12,7 @@ export class BoardUpdate {
 
 	@ApiProperty()
 	public icon?: string;
+
+	@ApiProperty()
+	public position?: number;
 }
