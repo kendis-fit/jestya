@@ -8,7 +8,7 @@
     }
 
     &--close {
-        @media screen and (min-width: 955px) {
+        @media screen and (min-width: map-get($map: $screen, $key: "mobile")) {
             display: none;
         }
     }

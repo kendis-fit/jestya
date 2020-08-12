@@ -16,7 +16,7 @@ const Actions = () => {
     }
 
     return(
-        <ul id="menu" ref={menuRef} className="actions actions--menu-hide">
+        <ul id="menu" ref={menuRef} className="actions actions--menu-hide" onClick={hideShowMenu}>
             <Action path="/projects" icon="assignment" name="My projects" />
             {
                 auth.user?.role === "SUPER_ADMIN" ||
@@ -27,7 +27,7 @@ const Actions = () => {
                     </>
                     : null
             }
-            <Action icon="close" name="Close" onClick={hideShowMenu} />
+            <Action icon="close" name="Close" />
         </ul>
     );
 }
