@@ -7,6 +7,15 @@ export interface ITask {
 	priority: string;
 }
 
+export interface IAddTaskValues {
+	task: ITask;
+	boardId: string;
+}
+
+export interface IRemoveTaskValues {
+	taskId: string;
+	boardId: string;
+}
 export interface IBoard {
 	id: string;
 	name: string;

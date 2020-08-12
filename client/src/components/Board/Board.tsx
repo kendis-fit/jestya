@@ -4,6 +4,7 @@ import { IBoard } from "../../api/boardProjects";
 import BoardHeaderContainer from "./BoardHeader/BoardHeaderContainer";
 import TaskList from "./TaskList";
 import { Droppable } from "react-beautiful-dnd";
+import TackListContainer from "./TaskList/TackListContainer";
 // import Task from "./Task";
 
 export interface IBoardProps extends IBoard {
@@ -19,7 +20,6 @@ const Board = ({ isOdd, isDragingBoard, ...props }: IBoardProps) => {
 		setTaskList([...taskList, "s"]);
 	};
 
-	console.log(props.tasks.length);
 
 	return (
 		<div className={`board ${isOdd ? "board--odd" : ""}`}>
@@ -28,7 +28,11 @@ const Board = ({ isOdd, isDragingBoard, ...props }: IBoardProps) => {
 				{(provided, snapshot) => (
 					<div ref={provided.innerRef} {...provided.droppableProps}>
 						<div className="board__tasklist ">
-							<TaskList providedTask={provided} tasks={props.tasks} />
+							<TackListContainer
+								boardId={props.id}
+								providedTask={provided}
+								tasks={props.tasks}
+							/>
 							{/* empty task list */}
 							{props.tasks.length === 0 ? (
 								<>
