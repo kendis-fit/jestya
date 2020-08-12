@@ -1,6 +1,5 @@
-import { createPortal } from "react-dom";
+import { useParams } from "react-router-dom";
 import React, { useState, useRef } from "react";
-import { useRouteMatch } from "react-router-dom";
 
 import Modal from "../../Modal";
 import PopUpMenu from "./PopUpMenu";
@@ -8,9 +7,11 @@ import resource from "../../../api/resource";
 import ModalContainer from "../../ModalContainer";
 import { IBoard } from "../../../api/boardProjects";
 import { IAddBoard } from "../../AddBoard/AddBoard";
+import { IUpdateBoard } from "../../../reducers/boards/interfaces/IUpdateBoardAction";
 
 export interface IBoardHeader extends IBoard, IAddBoard {
 	removeBoard: (id: string) => void;
+	updateBoard: (board: IUpdateBoard) => void;
 	providedBoard: any;
 }
 
@@ -59,7 +60,7 @@ const IconsArray = [
 ];
 
 const BoardHeader = ({ providedBoard, ...props }: IBoardHeader) => {
-	const { params } = useRouteMatch();
+	const { projectId } = useParams();
 	const [showRemoveBoard, setShowRemoveBoard] = useState<boolean>(false);
 	const [headerColor, setHeaderColor] = useState<string>(props.color);
 	const [headerIcon, setHeaderIcon] = useState<string>(props.icon);
@@ -70,16 +71,16 @@ const BoardHeader = ({ providedBoard, ...props }: IBoardHeader) => {
 	const arrowBtnRef = useRef<HTMLSpanElement>(null);
 
 	const handleChangeColor = async (color: string) => {
-		await resource.projects.updateBoard((params as any).projectId, props.id, { color });
+		await resource.projects.updateBoard(projectId, props.id, { color });
 		setHeaderColor(color);
 	};
 	const handleChangeIcon = async (icon: string) => {
-		await resource.projects.updateBoard((params as any).projectId, props.id, { icon });
+		await resource.projects.updateBoard(projectId, props.id, { icon });
 		setHeaderIcon(icon);
 	};
 
 	const handleChangeDescription = async (description: string) => {
-		await resource.projects.updateBoard((params as any).projectId, props.id, { description });
+		await resource.projects.updateBoard(projectId, props.id, { description });
 	}
 
 	const handlePopUp = () => {
@@ -96,7 +97,7 @@ const BoardHeader = ({ providedBoard, ...props }: IBoardHeader) => {
 	}
 
 	const handleRemoveBoard = async () => {
-		await resource.projects.removeBoard((params as any).projectId, props.id);
+		await resource.projects.removeBoard(projectId, props.id);
 		props.removeBoard(props.id);
 	}
 
@@ -114,9 +115,10 @@ const BoardHeader = ({ providedBoard, ...props }: IBoardHeader) => {
 			};
 			if (board.name !== props.name) {
 				if (creating) {
-					await resource.projects.createBoard((params as any).projectId, board);
+					const newBoard = await resource.projects.createBoard(projectId, board);
+					props.updateBoard({ id: props.id, board: { id: newBoard.id, name: board.name } })
 				} else {
-					await resource.projects.updateBoard((params as any).projectId, props.id, board);
+					await resource.projects.updateBoard(projectId, props.id, board);
 				}
 			}
 			setHeaderTitle(board.name);
