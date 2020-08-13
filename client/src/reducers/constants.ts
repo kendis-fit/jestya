@@ -18,3 +18,6 @@ export const DRAG_TASK = "DRAG_TASK";
 
 // searchProject
 export const SEARCH_PROJECTS = "SEARCH_PROJECTS";
+
+// showArchiveProjects
+export const SHOW_ARCHIVE_PROJECTS = "SHOW_ARCHIVE_PROJECTS";

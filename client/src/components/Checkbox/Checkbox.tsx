@@ -1,12 +1,11 @@
 import React, { HTMLAttributes } from "react";
 
-export interface ICheckboxProps extends HTMLAttributes<HTMLDivElement> {
+export interface ICheckboxProps extends HTMLAttributes<HTMLInputElement> {
     label: string;
     isSwitch?: boolean;
     disabled?: boolean;
     checked?: boolean;
     name?: string;
-    onChange?: (e: any) => void;
 }
 
 const Checkbox = (props: ICheckboxProps) => {
