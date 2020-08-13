@@ -8,7 +8,7 @@
         }
     }
 
-    &__wrapperAddBtnLeft {
+    &__wrapper-add-btn-left {
         position: absolute;
         left: -17px;
         top: 0;
@@ -19,19 +19,15 @@
         cursor: default;
     }
 
-    &__addBtnLeft {
+    &__add-btn-left {
         padding: 0;
-        color: $primary;
-        background: #fff;
-        border-radius: 50%;
-        @include flex(center, center, center);
         opacity: 0;
         width: 0px;
         height: 0px;
-        transition: 0.4s ease;
-        outline: none !important;
         border: 0;
+        transition: 0.4s ease;
         &:hover {
+            color: $primary;
             opacity: 1;
             width: 30px;
             height: 30px;

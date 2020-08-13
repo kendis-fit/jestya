@@ -1,5 +1,5 @@
-import { BoardActions, initBoards } from "./boardActions";
-import { IBoard, ITask } from "../../api/boardProjects";
+import { BoardActions } from "./boardActions";
+import { IBoard } from "../../api/boardProjects";
 import {
 	ADD_BOARD,
 	REMOVE_BOARD,

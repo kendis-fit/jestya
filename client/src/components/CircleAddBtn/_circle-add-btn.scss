@@ -1,0 +1,13 @@
+.circle-add-btn {
+    @include flex(center, center, center);
+    margin: 0 auto;
+    height: 15px;
+    width: 15px;
+    padding: 15px;
+    color: $primary;
+    background: $white;
+    outline: none !important;
+    @extend .rounded-circle;
+    @extend .btn;
+    @extend .shadow;
+}

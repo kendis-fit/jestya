@@ -16,35 +16,7 @@
         margin-left: 15px;
     }
 
-    &__task {
-        height: 150px;
-        // width: 95%;
-        // margin-left: 15px;
-        border-radius: 10px;
-        background-color: #fff;
-        &:first-child {
-            @extend .mt-2;
-        }
-    }
-
-    &__button {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto;
-        height: 15px;
-        width: 15px;
-        padding: 15px;
-        color: $primary;
-        background: $white;
-        @extend .rounded-circle;
-        @extend .btn;
-        @extend .shadow;
-    }
-
-    &__no-tasks {
-        padding-top: 200px;
-    }
+    
 
     &__addSection-text {
         padding-top: 360px;

@@ -8,6 +8,7 @@ import ModalContainer from "../../ModalContainer";
 import { IBoard } from "../../../api/boardProjects";
 import { IAddBoard } from "../../AddBoard/AddBoard";
 import { IUpdateBoard } from "../../../reducers/boards/interfaces/IUpdateBoardAction";
+import CircleAddBtn from "../../CircleAddBtn";
 
 export interface IBoardHeader extends IBoard, IAddBoard {
 	removeBoard: (id: string) => void;
@@ -81,7 +82,7 @@ const BoardHeader = ({ providedBoard, ...props }: IBoardHeader) => {
 
 	const handleChangeDescription = async (description: string) => {
 		await resource.projects.updateBoard(projectId, props.id, { description });
-	}
+	};
 
 	const handlePopUp = () => {
 		setShowPopUp(state => !state);
@@ -94,12 +95,12 @@ const BoardHeader = ({ providedBoard, ...props }: IBoardHeader) => {
 	const cancelRemoveBoard = () => {
 		setHeaderTitle(props.name);
 		setShowRemoveBoard(false);
-	}
+	};
 
 	const handleRemoveBoard = async () => {
 		await resource.projects.removeBoard(projectId, props.id);
 		props.removeBoard(props.id);
-	}
+	};
 
 	const handleBlurTitle = async (event: React.FormEvent<HTMLInputElement>) => {
 		const value = event.currentTarget.value.trim();
@@ -110,13 +111,16 @@ const BoardHeader = ({ providedBoard, ...props }: IBoardHeader) => {
 				setShowRemoveBoard(true);
 			}
 		} else {
-			const board = { 
-				name: event.currentTarget.value
+			const board = {
+				name: event.currentTarget.value,
 			};
 			if (board.name !== props.name) {
 				if (creating) {
 					const newBoard = await resource.projects.createBoard(projectId, board);
-					props.updateBoard({ id: props.id, board: { id: newBoard.id, name: board.name } })
+					props.updateBoard({
+						id: props.id,
+						board: { id: newBoard.id, name: board.name },
+					});
 				} else {
 					await resource.projects.updateBoard(projectId, props.id, board);
 				}
@@ -131,9 +135,9 @@ const BoardHeader = ({ providedBoard, ...props }: IBoardHeader) => {
 			{...providedBoard.dragHandleProps}
 			className={`board__header board-header p-2 ${"bg-" + headerColor} `}
 		>
-			<div className="board-header__wrapperAddBtnLeft">
-				<button
-					className="board-header__addBtnLeft"
+			<div className="board-header__wrapper-add-btn-left">
+				<CircleAddBtn
+					className="board-header__add-btn-left"
 					onClick={() =>
 						props.addBoard({
 							id: Date.now().toString(),
@@ -143,9 +147,7 @@ const BoardHeader = ({ providedBoard, ...props }: IBoardHeader) => {
 							icon: "add_alert",
 						})
 					}
-				>
-					<span className="material-icons">add</span>
-				</button>
+				/>
 			</div>
 			<>
 				<span className="board-header__icon material-icons text-white p-2 pl-3 mr-2">
@@ -189,11 +191,15 @@ const BoardHeader = ({ providedBoard, ...props }: IBoardHeader) => {
 					/>
 				</ModalContainer>
 			)}
-			{
-				showRemoveBoard ? <Modal title="Removing of board" onClose={cancelRemoveBoard} onOk={handleRemoveBoard}>
+			{showRemoveBoard ? (
+				<Modal
+					title="Removing of board"
+					onClose={cancelRemoveBoard}
+					onOk={handleRemoveBoard}
+				>
 					Are you sure you want to remove this board?
-				</Modal> : null
-			}
+				</Modal>
+			) : null}
 		</div>
 	);
 };
