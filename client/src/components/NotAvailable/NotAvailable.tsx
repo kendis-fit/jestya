@@ -15,7 +15,7 @@ const NotAvailable = (props: INotAvailable) => {
 		if (props.status === 401 || props.status === 500) {
 			setIsAuthenticated?.(false);
 		}
-	}, [setIsAuthenticated, props.status]);
+	}, []);
 
 	return (
 		<div className="not-available">
