@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Task from "../Task";
 import { Draggable } from "react-beautiful-dnd";
 import { IAddTaskValues, IRemoveTaskValues } from "../../../api/boardProjects";
 import CircleAddBtn from "../../CircleAddBtn";
+import ModalContainer from "../../ModalContainer";
 
 export interface ITaskList {
 	tasks: any[];
@@ -13,6 +14,7 @@ export interface ITaskList {
 }
 
 const TaskList = (props: ITaskList) => {
+	const [showTaskModal, setShowTaskModal] = useState(false);
 	const handleOnScroll = (event: React.UIEvent<HTMLElement>) => {
 		const el = event.currentTarget;
 		el.classList.add("tasklist--scroll");
@@ -22,17 +24,17 @@ const TaskList = (props: ITaskList) => {
 	};
 
 	const handleAddTask = () => {
-		props.addTask({
-			boardId: props.boardId,
-			task: {
-				id: `f${(+new Date()).toString(16)}`,
-				name: "task",
-				description: "asdasdasd",
-				priority: "1",
-			},
-		});
+		// props.addTask({
+		// 	boardId: props.boardId,
+		// 	task: {
+		// 		id: `f${(+new Date()).toString(16)}`,
+		// 		name: "task",
+		// 		description: "asdasdasd",
+		// 		priority: "1",
+		// 	},
+		// });
+		setShowTaskModal(true);
 	};
-	console.log(props.tasks.length);
 
 	return (
 		<div onScrollCapture={handleOnScroll} className="tasklist">
@@ -51,23 +53,15 @@ const TaskList = (props: ITaskList) => {
 				<>
 					{props.tasks.map((ell, index) => (
 						<Draggable key={ell.id} draggableId={ell.id} index={index}>
-							{(provided, snashot) => {
-								console.log(snashot);
-
-								return (
-									<div
-										ref={provided.innerRef}
-										{...provided.draggableProps}
-										{...provided.dragHandleProps}
-									>
-										<Task
-											key={ell}
-											task={ell}
-											isDragging={snashot.isDragging}
-										/>
-									</div>
-								);
-							}}
+							{(provided, snashot) => (
+								<div
+									ref={provided.innerRef}
+									{...provided.draggableProps}
+									{...provided.dragHandleProps}
+								>
+									<Task key={ell} task={ell} isDragging={snashot.isDragging} />
+								</div>
+							)}
 						</Draggable>
 					))}
 					<div className="tasklist__add-btn">
@@ -75,6 +69,11 @@ const TaskList = (props: ITaskList) => {
 					</div>
 				</>
 			)}
+			{showTaskModal ? (
+				<ModalContainer backdrop isOpen={true} onClose={() => setShowTaskModal(false)}>
+					<h2 className="text-white">sdf</h2>
+				</ModalContainer>
+			) : null}
 		</div>
 	);
 };

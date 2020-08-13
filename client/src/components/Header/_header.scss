@@ -1,6 +1,6 @@
 .header {
     @extend .w-100;
-    @extend .bg-primary;
+    background-color: $gray-900 !important;
     @extend .shadow;
     color: white;
     height: $header;
@@ -17,7 +17,7 @@
         display: none;
         @extend .btn;
         @extend .text-light;
-        
+
         @media screen and (max-width: 955px) {
             @include flex($a-items: center);
         }

@@ -17,7 +17,12 @@ const ListBoards = (props: IListBoards) => {
 	return (
 		<>
 			{props.boards.map((board, index) => (
-				<Draggable key={board.id} draggableId={board.id} index={index}>
+				<Draggable
+					isDragDisabled={props.isDragingBoard}
+					key={board.id}
+					draggableId={board.id}
+					index={index}
+				>
 					{provided => (
 						<div ref={provided.innerRef} {...provided.draggableProps}>
 							<Board

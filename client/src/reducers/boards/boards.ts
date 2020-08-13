@@ -15,14 +15,18 @@ import { ChangePositionInArray } from "./boardsHelpers";
 
 const boards = (state: IBoard[] = [], action: BoardActions) => {
 	switch (action.type) {
-		case ADD_BOARD:
-			return [...state, action.value];
+		case ADD_BOARD: {
+			const BoardIndex = state.findIndex(board => board.id === action.value.id);
+			if (!action.value.id) return [...state, action.value.board];
+			const Boards = [...state];
+			Boards.splice(BoardIndex, 0, action.value.board);
+			return Boards;
+		}
 		case REMOVE_BOARD:
 			return state.filter(board => board.id !== action.value);
 		case INIT_BOARDS:
 			return action.value;
 		case UPDATE_BOARD:
-			console.log(action);
 			return state.map(board => {
 				if (board.id === action.value.id) {
 					return { ...board, ...action.value.board };
@@ -85,11 +89,9 @@ const boards = (state: IBoard[] = [], action: BoardActions) => {
 				0,
 				state[boardDropOutIndex].tasks[action.value.dropOutPosition]
 			);
-			const result = state.filter(
-				board => board.id !== DropOutBoard.id && board.id !== DropInBoard.id
-			);
-			result.splice(boardDropInIndex, 0, DropInBoard);
-			result.splice(boardDropOutIndex, 0, DropOutBoard);
+			const result = [...state];
+			result[boardDropInIndex] = DropInBoard;
+			result[boardDropOutIndex] = DropOutBoard;
 
 			return result;
 		}

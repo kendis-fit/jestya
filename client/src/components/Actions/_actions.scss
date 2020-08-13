@@ -16,7 +16,6 @@
     }
 
     &--menu-show {
-        @extend .bg-primary;
         
         @media screen and (max-width: 955px) {
             @include flex(center);

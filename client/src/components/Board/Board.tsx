@@ -24,29 +24,6 @@ const Board = ({ isOdd, isDragingBoard, ...props }: IBoardProps) => {
 								providedTask={provided}
 								tasks={props.tasks}
 							/>
-							{/* empty task list */}
-							{/* {props.tasks.length === 0 ? (
-								<>
-									<button className="board__button mt-2">
-										<span className="material-icons">add</span>
-									</button>
-									<div className="no-tasks board__no-tasks ">
-										<span className="no-tasks__icon material-icons">
-											fact_check
-										</span>
-										<h5 className="text-center text-muted">No Tasks </h5>
-										<p className="text-center text-muted m-0 w-75">
-											Add new task by click "+" button or drag task here
-										</p>
-									</div>
-								</>
-							) : (
-								<TackListContainer
-									boardId={props.id}
-									providedTask={provided}
-									tasks={props.tasks}
-								/>
-							)} */}
 						</div>
 						{provided.placeholder}
 					</div>

@@ -5,16 +5,9 @@ import Modal from "../../Modal";
 import PopUpMenu from "./PopUpMenu";
 import resource from "../../../api/resource";
 import ModalContainer from "../../ModalContainer";
-import { IBoard } from "../../../api/boardProjects";
-import { IAddBoard } from "../../AddBoard/AddBoard";
+import { IBoard, IAddBoardValues } from "../../../api/boardProjects";
 import { IUpdateBoard } from "../../../reducers/boards/interfaces/IUpdateBoardAction";
 import CircleAddBtn from "../../CircleAddBtn";
-
-export interface IBoardHeader extends IBoard, IAddBoard {
-	removeBoard: (id: string) => void;
-	updateBoard: (board: IUpdateBoard) => void;
-	providedBoard: any;
-}
 
 const ColorsArray = [
 	"indigo",
@@ -59,6 +52,12 @@ const IconsArray = [
 	"watch_later",
 	"work_outline",
 ];
+export interface IBoardHeader extends IBoard {
+	removeBoard: (id: string) => void;
+	updateBoard: (board: IUpdateBoard) => void;
+	addBoard: (value: IAddBoardValues) => void;
+	providedBoard: any;
+}
 
 const BoardHeader = ({ providedBoard, ...props }: IBoardHeader) => {
 	const { projectId } = useParams();
@@ -140,11 +139,14 @@ const BoardHeader = ({ providedBoard, ...props }: IBoardHeader) => {
 					className="board-header__add-btn-left"
 					onClick={() =>
 						props.addBoard({
-							id: Date.now().toString(),
-							name: "",
-							tasks: [],
-							color: "indigo",
-							icon: "add_alert",
+							board: {
+								id: Date.now().toString(),
+								name: "",
+								tasks: [],
+								color: "indigo",
+								icon: "add_alert",
+							},
+							id: props.id,
 						})
 					}
 				/>

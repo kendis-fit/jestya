@@ -48,6 +48,11 @@ export interface IAddBoardResponse {
 	id: string;
 }
 
+export interface IAddBoardValues {
+	board: IBoard;
+	id?: string;
+}
+
 export interface IDragIndexs {
 	startIndex: number;
 	endIndex: number;

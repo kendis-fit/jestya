@@ -5,6 +5,7 @@ import {
 	IRemoveTaskValues,
 	ITask,
 	IDragTaskData,
+	IAddBoardValues,
 } from "../../api/boardProjects";
 import {
 	ADD_BOARD,
@@ -27,9 +28,9 @@ import { IRemoveTask } from "./interfaces/IRemoveTask";
 import { IInitTasks } from "./interfaces/IInitialTask";
 import IDragTask from "./interfaces/IDragTask";
 
-export const addBoard = (board: IBoard): IAddBoard => ({
+export const addBoard = (value: IAddBoardValues): IAddBoard => ({
 	type: ADD_BOARD,
-	value: board,
+	value: value,
 });
 
 export const removeBoard = (id: string): IRemoveBoard => ({

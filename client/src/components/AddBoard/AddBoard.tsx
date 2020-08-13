@@ -1,10 +1,10 @@
 import React from "react";
 
-import { IBoard } from "../../api/boardProjects";
+import { IAddBoardValues } from "../../api/boardProjects";
 
 export interface IAddBoard {
 	isOdd?: boolean;
-	addBoard: (board: IBoard) => void;
+	addBoard: (value: IAddBoardValues) => void;
 }
 
 const AddBoard = (props: IAddBoard) => {
@@ -15,11 +15,13 @@ const AddBoard = (props: IAddBoard) => {
 					className="btn text-info p-0 d-flex align-items-center"
 					onClick={() =>
 						props.addBoard({
-							name: "",
-							tasks: [],
-							id: Date.now().toString(),
-							icon: "add_alert",
-							color: "indigo",
+							board: {
+								name: "",
+								tasks: [],
+								id: Date.now().toString(),
+								icon: "add_alert",
+								color: "indigo",
+							},
 						})
 					}
 				>
