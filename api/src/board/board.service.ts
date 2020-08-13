@@ -33,17 +33,22 @@ export class BoardService {
 		foundBoard.icon = board.icon ?? foundBoard.icon;
 		if (positionExisted) {
 			const foundBoardPosition = foundBoard.position;
-			const biggerPosition = Math.max(foundBoardPosition, board.position);
-			const smallerPosition = Math.min(foundBoardPosition, board.position);
-			foundBoard.project.boards.forEach(async (b, i) => {
-				if (i === foundBoardPosition) {
-					b.position = foundBoardPosition;
-					await this.boardRepository.save(b);
-				} else if (i > smallerPosition && i < biggerPosition) {
-					b.position = i + 1;
-					await this.boardRepository.save(b);
+			const bs = foundBoard.project.boards.sort((a, b) => a.position - b.position);
+			let i = 0;
+			for (const b of bs) {
+				if (foundBoardPosition > board.position) {
+					if (i >= board.position && i < foundBoardPosition) {
+						b.position = i + 1;
+						await this.boardRepository.save(b);
+					}
+				} else {
+					if (i <= board.position && i > foundBoardPosition) {
+						b.position = i - 1;
+						await this.boardRepository.save(b);
+					}
 				}
-			});
+				++i;
+			}
 			foundBoard.position = board.position;
 		}
 		return await this.boardRepository.save(foundBoard);
