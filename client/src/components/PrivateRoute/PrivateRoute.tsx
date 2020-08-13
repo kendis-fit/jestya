@@ -4,6 +4,7 @@ import { Route, Redirect } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 import NoUnauthenticatedRoute from "../NoUnauthenticatedRoute/NoUnauthenticatedRoute";
 import Header from "../Header";
+import ErrorBoundary from "../ErrorBoundary";
 
 export interface IRoute {
     component: any;
@@ -23,12 +24,12 @@ const PrivateRoute = (props: IRoute) => {
     return(
         <Route {...rest} render={(route) => {
             if (auth.isAuthenticated && props.path !== "/registration") {
-                return <>
+                return <ErrorBoundary>
                     {
                         props.isHeader ? <Header /> : null
                     }
                     <Component {...route.match.params} />
-                </>
+                </ErrorBoundary>
             }
             return <NoUnauthenticatedRoute />
         }} />

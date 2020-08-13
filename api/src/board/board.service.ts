@@ -32,12 +32,24 @@ export class BoardService {
 		foundBoard.color = board.color ?? foundBoard.color;
 		foundBoard.icon = board.icon ?? foundBoard.icon;
 		if (positionExisted) {
-			const boardWithCurrentPosition = foundBoard.project.boards.find(
-				b => b.position === board.position
-			);
-			boardWithCurrentPosition.position = foundBoard.position;
+			const foundBoardPosition = foundBoard.position;
+			const bs = foundBoard.project.boards.sort((a, b) => a.position - b.position);
+			let i = 0;
+			for (const b of bs) {
+				if (foundBoardPosition > board.position) {
+					if (i >= board.position && i < foundBoardPosition) {
+						b.position = i + 1;
+						await this.boardRepository.save(b);
+					}
+				} else {
+					if (i <= board.position && i > foundBoardPosition) {
+						b.position = i - 1;
+						await this.boardRepository.save(b);
+					}
+				}
+				++i;
+			}
 			foundBoard.position = board.position;
-			await this.boardRepository.save(boardWithCurrentPosition);
 		}
 		return await this.boardRepository.save(foundBoard);
 	}
