@@ -12,8 +12,6 @@ export interface IBoardProps extends IBoard {
 }
 
 const Board = ({ isOdd, isDragingBoard, ...props }: IBoardProps) => {
-	// console.log("prooooooooops", props);
-
 	return (
 		<div className={`board ${isOdd ? "board--odd" : ""}`}>
 			<BoardHeaderContainer {...props} />
@@ -27,7 +25,7 @@ const Board = ({ isOdd, isDragingBoard, ...props }: IBoardProps) => {
 								tasks={props.tasks}
 							/>
 							{/* empty task list */}
-							{props.tasks.length === 0 ? (
+							{/* {props.tasks.length === 0 ? (
 								<>
 									<button className="board__button mt-2">
 										<span className="material-icons">add</span>
@@ -42,7 +40,13 @@ const Board = ({ isOdd, isDragingBoard, ...props }: IBoardProps) => {
 										</p>
 									</div>
 								</>
-							) : null}
+							) : (
+								<TackListContainer
+									boardId={props.id}
+									providedTask={provided}
+									tasks={props.tasks}
+								/>
+							)} */}
 						</div>
 						{provided.placeholder}
 					</div>

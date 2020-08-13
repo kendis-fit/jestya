@@ -2,6 +2,7 @@ import React from "react";
 import Task from "../Task";
 import { Draggable } from "react-beautiful-dnd";
 import { IAddTaskValues, IRemoveTaskValues } from "../../../api/boardProjects";
+import CircleAddBtn from "../../CircleAddBtn";
 
 export interface ITaskList {
 	tasks: any[];
@@ -31,28 +32,49 @@ const TaskList = (props: ITaskList) => {
 			},
 		});
 	};
+	console.log(props.tasks.length);
 
 	return (
 		<div onScrollCapture={handleOnScroll} className="tasklist">
-			{props.tasks.map((ell, index) => (
-				<Draggable key={ell.id} draggableId={ell.id} index={index}>
-					{provided => (
-						<div
-							className=""
-							ref={provided.innerRef}
-							{...provided.draggableProps}
-							{...provided.dragHandleProps}
-						>
-							<Task key={ell} task={ell} />
-						</div>
-					)}
-				</Draggable>
-			))}
-			<div className="tasklist__add-btn">
-				<button className="board__button mt-2" onClick={handleAddTask}>
-					<span className="material-icons">add</span>
-				</button>
-			</div>
+			{props.tasks.length === 0 ? (
+				<>
+					<CircleAddBtn className="mt-2" onClick={handleAddTask} />
+					<div className="no-tasks tasklist__no-tasks ">
+						<span className="no-tasks__icon material-icons">fact_check</span>
+						<h5 className="text-center text-muted">No Tasks </h5>
+						<p className="text-center text-muted m-0 w-75">
+							Add new task by click "+" button or drag task here
+						</p>
+					</div>
+				</>
+			) : (
+				<>
+					{props.tasks.map((ell, index) => (
+						<Draggable key={ell.id} draggableId={ell.id} index={index}>
+							{(provided, snashot) => {
+								console.log(snashot);
+
+								return (
+									<div
+										ref={provided.innerRef}
+										{...provided.draggableProps}
+										{...provided.dragHandleProps}
+									>
+										<Task
+											key={ell}
+											task={ell}
+											isDragging={snashot.isDragging}
+										/>
+									</div>
+								);
+							}}
+						</Draggable>
+					))}
+					<div className="tasklist__add-btn">
+						<CircleAddBtn className="mt-2" onClick={handleAddTask} />
+					</div>
+				</>
+			)}
 		</div>
 	);
 };

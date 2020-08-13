@@ -1,0 +1,21 @@
+.task {
+    height: 150px;
+    border-radius: 10px;
+    background-color: #fff;
+    @extend .p-3, .mb-2;
+    @extend .shadow-sm;
+    @extend .card;
+    &:first-child {
+        @extend .mt-2;
+    }
+
+    &--draging {
+        border: 2px solid $blue-100;
+    }
+    &__header {
+        margin: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
