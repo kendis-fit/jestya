@@ -8,6 +8,7 @@ export interface IProjectInfo {
     title: string;
     countTasks: number;
     description?: string;
+    isArchive: boolean;
 }
 
 const ProjectInfo = (props: IProjectInfo) => {

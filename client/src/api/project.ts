@@ -69,6 +69,7 @@ export interface IProject {
 	name: string;
 	description?: string;
 	boards: IBoard[];
+	isArchive: boolean;
 }
 
 export interface IAddProject {

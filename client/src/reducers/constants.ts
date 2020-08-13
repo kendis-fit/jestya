@@ -1,7 +1,7 @@
 // projects
 export const ADD_PROJECT = "ADD_PROJECT";
 export const INIT_PROJECTS = "INIT_PROJECTS";
-export const REMOVE_PROJECT = "REMOVE_PROJECT";
+export const ARCHIVE_PROJECT = "ARCHIVE_PROJECT";
 
 // boards
 export const ADD_BOARD = "ADD_BOARD";
