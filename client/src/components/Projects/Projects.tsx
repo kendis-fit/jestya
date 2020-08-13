@@ -5,6 +5,9 @@ import Error from "../Error";
 import resource from "../../api/resource";
 import { IProject } from "../../api/project";
 import ListProjectsContainer from "../ListProjects/ListProjectsContainer";
+import Search from "../Search";
+import SearchProjects from "../SearchProjects";
+import Checkbox from "../Checkbox";
 
 export interface IProjects {
 	initProjects: (project: IProject[]) => void;
@@ -32,6 +35,14 @@ const Projects = (props: IProjects) => {
 	return (
 		<div className="projects">
 			<div className="projects__body">
+				<div className="projects_config-panel_wrapper">
+					<div className="config-panel">
+						<SearchProjects />
+						<div className="config-panel__switcher_wrapper">
+							<Checkbox className="config-panel__switcher" label="Show archive projects as well" isSwitch />
+						</div>
+					</div>
+				</div>
 				<ListProjectsContainer projects={[]} />
 			</div>
 		</div>

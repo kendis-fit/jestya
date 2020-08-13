@@ -1,7 +1,28 @@
 import React from "react";
-import IInput from "./Interfaces";
 
-const Input = (props: IInput) => {
+export interface IInputProps {
+	name: string;
+	type?:
+		| "button"
+		| "checkbox"
+		| "file"
+		| "hidden"
+		| "image"
+		| "password"
+		| "radio"
+		| "reset"
+		| "submit"
+		| "text";
+	value?: any;
+	onChange?: any;
+	className?: string;
+	heplerText?: string;
+	label?: string;
+	errors?: any;
+	touched?: any;
+}
+
+const Input = (props: IInputProps) => {
 	const { errors, heplerText, label, className, touched, ...inputProps } = props;
 	let isInvalid = false;
 
