@@ -24,7 +24,7 @@ const TaskList = (props: ITaskList) => {
 		props.addTask({
 			boardId: props.boardId,
 			task: {
-				id: Date.now() + "",
+				id: `f${(+new Date()).toString(16)}`,
 				name: "task",
 				description: "asdasdasd",
 				priority: "1",
@@ -35,7 +35,7 @@ const TaskList = (props: ITaskList) => {
 	return (
 		<div onScrollCapture={handleOnScroll} className="tasklist">
 			{props.tasks.map((ell, index) => (
-				<Draggable key={ell.id + index} draggableId={ell.id * index + ""} index={index}>
+				<Draggable key={ell.id} draggableId={ell.id} index={index}>
 					{provided => (
 						<div
 							className=""
@@ -43,7 +43,7 @@ const TaskList = (props: ITaskList) => {
 							{...provided.draggableProps}
 							{...provided.dragHandleProps}
 						>
-							<Task key={ell} />
+							<Task key={ell} task={ell} />
 						</div>
 					)}
 				</Draggable>

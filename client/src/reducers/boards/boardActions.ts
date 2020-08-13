@@ -4,6 +4,7 @@ import {
 	IAddTaskValues,
 	IRemoveTaskValues,
 	ITask,
+	IDragTaskData,
 } from "../../api/boardProjects";
 import {
 	ADD_BOARD,
@@ -14,6 +15,7 @@ import {
 	ADD_TASK,
 	REMOVE_TASK,
 	INIT_TASKS,
+	DRAG_TASK,
 } from "../constants";
 import { IAddBoard } from "./interfaces/IAddBoard";
 import { IInitBoards } from "./interfaces/IInitBoards";
@@ -23,6 +25,7 @@ import { IDragBoard } from "./interfaces/IDragBoard";
 import { IAddTask } from "./interfaces/IAddTask";
 import { IRemoveTask } from "./interfaces/IRemoveTask";
 import { IInitTasks } from "./interfaces/IInitialTask";
+import IDragTask from "./interfaces/IDragTask";
 
 export const addBoard = (board: IBoard): IAddBoard => ({
 	type: ADD_BOARD,
@@ -64,6 +67,10 @@ export const initTasks = (tasks: ITask[]): IInitTasks => ({
 	value: tasks,
 });
 
+export const dragTask = (value: IDragTaskData): IDragTask => ({
+	type: DRAG_TASK,
+	value: value,
+});
 export type BoardActions =
 	| IAddBoard
 	| IRemoveBoard
@@ -72,4 +79,5 @@ export type BoardActions =
 	| IInitTasks
 	| IAddTask
 	| IRemoveTask
-	| IUpdateBoardAction;
+	| IUpdateBoardAction
+	| IDragTask;
