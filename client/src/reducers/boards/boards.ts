@@ -80,14 +80,11 @@ const boards = (state: IBoard[] = [], action: BoardActions) => {
 				task => task.id !== state[boardDropOutIndex].tasks[action.value.dropOutPosition].id
 			); //Deleting draging task from board
 
-			const DropInBoardTasks = ChangePositionInArray(
-				DropInBoard.tasks,
-				action.value.dropOutPosition,
-				action.value.dropInPosition - 1,
+			DropInBoard.tasks.splice(
+				action.value.dropInPosition,
+				0,
 				state[boardDropOutIndex].tasks[action.value.dropOutPosition]
 			);
-			DropInBoard.tasks = DropInBoardTasks;
-
 			const result = state.filter(
 				board => board.id !== DropOutBoard.id && board.id !== DropInBoard.id
 			);
