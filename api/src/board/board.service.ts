@@ -32,12 +32,19 @@ export class BoardService {
 		foundBoard.color = board.color ?? foundBoard.color;
 		foundBoard.icon = board.icon ?? foundBoard.icon;
 		if (positionExisted) {
-			const boardWithCurrentPosition = foundBoard.project.boards.find(
-				b => b.position === board.position
-			);
-			boardWithCurrentPosition.position = foundBoard.position;
+			const foundBoardPosition = foundBoard.position;
+			const biggerPosition = Math.max(foundBoardPosition, board.position);
+			const smallerPosition = Math.min(foundBoardPosition, board.position);
+			foundBoard.project.boards.forEach(async (b, i) => {
+				if (i === foundBoardPosition) {
+					b.position = foundBoardPosition;
+					await this.boardRepository.save(b);
+				} else if (i > smallerPosition && i < biggerPosition) {
+					b.position = i + 1;
+					await this.boardRepository.save(b);
+				}
+			});
 			foundBoard.position = board.position;
-			await this.boardRepository.save(boardWithCurrentPosition);
 		}
 		return await this.boardRepository.save(foundBoard);
 	}
