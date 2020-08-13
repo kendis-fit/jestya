@@ -5,6 +5,7 @@ interface IModalContainer {
 	children: React.ReactNode;
 	onClose(): void;
 	isOpen: boolean;
+	backdrop?: boolean;
 }
 
 const ModalContainer = (props: IModalContainer) => {
@@ -24,13 +25,16 @@ const ModalContainer = (props: IModalContainer) => {
 	}, [wrapperRef, props]);
 
 	return ReactDOM.createPortal(
-		<div
-			ref={wrapperRef}
-			className="modal modal-container"
-			style={props.isOpen ? { display: "block" } : { display: "none", width: "0px" }}
-		>
-			{props.children}
-		</div>,
+		<>
+			{props.backdrop ? <div className="modal-backdrop fade show"></div> : null}
+			<div
+				ref={wrapperRef}
+				className="modal modal-container"
+				style={props.isOpen ? { display: "block" } : { display: "none", width: "0px" }}
+			>
+				{props.children}
+			</div>
+		</>,
 		Body
 	);
 };
