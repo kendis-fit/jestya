@@ -2,12 +2,11 @@ import React, { useEffect } from "react";
 import { useVanillaFetch } from "vanilla-hooks";
 
 import Error from "../Error";
+import Checkbox from "../Checkbox";
 import resource from "../../api/resource";
 import { IProject } from "../../api/project";
 import ListProjectsContainer from "../ListProjects/ListProjectsContainer";
-import Search from "../Search";
-import SearchProjects from "../SearchProjects";
-import Checkbox from "../Checkbox";
+import SearchProjectsContainer from "../SearchProjects/SearchProjectsContainer";
 
 export interface IProjects {
 	initProjects: (project: IProject[]) => void;
@@ -37,7 +36,7 @@ const Projects = (props: IProjects) => {
 			<div className="projects__body">
 				<div className="projects_config-panel_wrapper">
 					<div className="config-panel">
-						<SearchProjects />
+						<SearchProjectsContainer />
 						<div className="config-panel__switcher_wrapper">
 							<Checkbox className="config-panel__switcher" label="Show archive projects as well" isSwitch />
 						</div>
