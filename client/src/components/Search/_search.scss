@@ -1,4 +1,7 @@
-$search-light: map-get($map: $colors, $key: "light");
+$search-light: map-get(
+    $map: $colors,
+    $key: "light",
+);
 
 .search {
     @include flex();
@@ -16,6 +19,10 @@ $search-light: map-get($map: $colors, $key: "light");
 
         &:focus {
             @include placeholder($search-light, 1);
+            outline: none !important;
+        }
+        &::placeholder {
+            color: $gray-300;
         }
     }
 }
