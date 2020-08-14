@@ -1,8 +1,8 @@
 import { IProject } from "../../api/project";
-import { IRemoveProjectAction } from "./interfaces/IRemoveProjectAction";
 import { IAddProjectAction } from "./interfaces/IAddProjectAction";
 import { IInitProjectsAction } from "./interfaces/IInitProjectsAction";
-import { ADD_PROJECT, INIT_PROJECTS, REMOVE_PROJECT } from "../constants";
+import { ADD_PROJECT, INIT_PROJECTS, ARCHIVE_PROJECT } from "../constants";
+import { IArchiveProjectAction, IArchiveProject } from "./interfaces/IArchiveProjectAction";
 
 export const addProject = (project: IProject): IAddProjectAction => ({
 	type: ADD_PROJECT,
@@ -14,9 +14,9 @@ export const initProjects = (projects: IProject[]): IInitProjectsAction => ({
 	value: projects,
 });
 
-export const removeProject = (id: string): IRemoveProjectAction => ({
-	type: REMOVE_PROJECT,
-	value: id,
+export const archiveProject = (project: IArchiveProject): IArchiveProjectAction => ({
+	type: ARCHIVE_PROJECT,
+	value: project,
 });
 
-export type ProjectActions = IAddProjectAction | IInitProjectsAction | IRemoveProjectAction;
+export type ProjectActions = IAddProjectAction | IInitProjectsAction | IArchiveProjectAction;

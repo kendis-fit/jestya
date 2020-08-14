@@ -5,6 +5,8 @@ import Error from "../Error";
 import resource from "../../api/resource";
 import { IProject } from "../../api/project";
 import ListProjectsContainer from "../ListProjects/ListProjectsContainer";
+import SearchProjectsContainer from "../SearchProjects/SearchProjectsContainer";
+import SwitcherProjectsContainer from "../SwitcherProjects/SwitcherProjectsContainer";
 
 export interface IProjects {
 	initProjects: (project: IProject[]) => void;
@@ -32,6 +34,12 @@ const Projects = (props: IProjects) => {
 	return (
 		<div className="projects">
 			<div className="projects__body">
+				<div className="projects_config-panel_wrapper">
+					<div className="config-panel">
+						<SearchProjectsContainer />
+						<SwitcherProjectsContainer />
+					</div>
+				</div>
 				<ListProjectsContainer projects={[]} />
 			</div>
 		</div>

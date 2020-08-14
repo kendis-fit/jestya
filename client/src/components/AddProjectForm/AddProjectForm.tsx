@@ -29,7 +29,7 @@ const AddProjectForm = (props: IAddProjectForm) => {
     const onSubmit = (values: IAddProject) => {
         setLoading(true);
         resource.projects.create(values)
-            .then(newProject => props.addProject({ ...newProject, ...values }))
+            .then(newProject => props.addProject({ ...newProject, ...values, isArchive: false }))
             .then(() => props.onSubmit?.())
             .finally(() => setLoading(false));
     }

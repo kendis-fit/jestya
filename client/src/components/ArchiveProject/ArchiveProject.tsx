@@ -2,19 +2,22 @@ import React, { useState } from "react";
 
 import Modal from "../Modal";
 import resource from "../../api/resource";
+import { IArchiveProject } from "../../reducers/projects/interfaces/IArchiveProjectAction";
 
 export interface IRemoveProjectProps {
     id: string;
     title: string;
-    archiveProject: (id: string) => void;
+    isArchive: boolean;
+    archiveProject: (project: IArchiveProject) => void;
 }
 
 const ArchiveProject = (props: IRemoveProjectProps) => {
     const [showModal, setShowModal] = useState(false);
+    const antiStatusProject = props.isArchive ? "unarchive" : "archive";
 
-    const removeProject = async () => {
-        await resource.projects.archive(props.id);
-        props.archiveProject(props.id);
+    const archiveProject = async () => {
+        await resource.projects.archive(props.id, !props.isArchive);
+        props.archiveProject({ id: props.id, isArchive: !props.isArchive });
         setShowModal(false);
     }
 
@@ -24,13 +27,13 @@ const ArchiveProject = (props: IRemoveProjectProps) => {
                 onClick={() => setShowModal(true)} 
                 className="material-icons area__icon area__icon--trash"
                 >
-                archive
+                {antiStatusProject}
             </span>
             {
-                showModal ? <Modal size="lg" title={`Are you sure you want to archive ${props.title}?`} 
+                showModal ? <Modal size="lg" title={`Are you sure you want to ${antiStatusProject} ${props.title}?`} 
                     onClose={() => setShowModal(false)}
-                    onOk={removeProject}>
-                    You can unarchive this project in any time
+                    onOk={archiveProject}>
+                    You can {antiStatusProject} this project in any time
                 </Modal> : null
             }
         </>

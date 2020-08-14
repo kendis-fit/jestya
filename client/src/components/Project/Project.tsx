@@ -35,11 +35,11 @@ const Project = (props: IProject) => {
                                     <Pie data={{ labels: props.boards.map(board => board.name), datasets }} options={{ legend: { display: false } }} />
                                     : <div className="project__empty">
                                         <span className="material-icons fs-28">content_paste</span>
-                                        <span>No Boards</span>
+                                        <span>No Tasks</span>
                                     </div>
                             }
                         </div>
-                        <ProjectInfo id={props.id} description={props.description} title={props.name} countTasks={countTasks} />
+                        <ProjectInfo isArchive={props.isArchive} id={props.id} description={props.description} title={props.name} countTasks={countTasks} />
                     </div>
                 </div>
             </div>

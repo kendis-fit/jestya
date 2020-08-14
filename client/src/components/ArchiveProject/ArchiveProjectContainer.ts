@@ -2,11 +2,14 @@ import { Dispatch } from "redux";
 import { connect } from "react-redux";
 
 import ArchiveProject from "./ArchiveProject";
-import { removeProject } from "../../reducers/projects/projectsActions";
-import { IRemoveProjectAction } from "../../reducers/projects/interfaces/IRemoveProjectAction";
+import { archiveProject } from "../../reducers/projects/projectsActions";
+import {
+	IArchiveProjectAction,
+	IArchiveProject,
+} from "../../reducers/projects/interfaces/IArchiveProjectAction";
 
-const mapDispatchToProps = (dispatch: Dispatch<IRemoveProjectAction>) => ({
-	archiveProject: (id: string) => dispatch(removeProject(id)),
+const mapDispatchToProps = (dispatch: Dispatch<IArchiveProjectAction>) => ({
+	archiveProject: (project: IArchiveProject) => dispatch(archiveProject(project)),
 });
 
 const ArchiveProjectContainer = connect(null, mapDispatchToProps);

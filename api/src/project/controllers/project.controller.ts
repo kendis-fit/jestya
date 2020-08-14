@@ -47,7 +47,7 @@ export class ProjectController {
 	@Get()
 	@UseGuards(JwtGuard)
 	public async findAll(@User("id") userId: string): Promise<ProjectInfo[]> {
-		const [projects] = await this.projectService.findAll(userId, false, [
+		const [projects] = await this.projectService.findAll(userId, [
 			{ relation: "boards", subrelations: ["tasks"] },
 		]);
 		return projects.map(project => new ProjectInfo(project));

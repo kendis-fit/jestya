@@ -11,6 +11,10 @@ $projects-width: map-get($map: $page-size, $key: "width");
         padding-right: 50px;
     }
 
+    &__config-panel {
+        @include flex($j-content: center);
+    }
+
     &__content {
         @include flex(flex-start);
         @include flex-position(row, wrap);
@@ -19,4 +23,29 @@ $projects-width: map-get($map: $page-size, $key: "width");
             @include flex(center);
         }
     }
+}
+
+.config-panel {
+    @include flex($j-content: center);
+    
+    &__switcher {
+        height: 100%;
+        @include flex($a-items: center);
+    }
+
+    @media screen and (max-width: 955px) {
+        flex-wrap: wrap;
+    }
+}
+
+.config-panel__switcher_wrapper {
+    margin-left: 10px;
+
+    @media screen and (max-width: 695px) {
+        margin-top: 10px;
+    }
+}
+
+.projects_config-panel_wrapper {
+    margin: 20px;
 }
