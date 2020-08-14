@@ -2,6 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 
 import { User, Role } from "../user.entity";
 import { ProjectInfo } from "../../project/dto/project-info.dto";
+import { UserProjectInfo } from "./user-project-info.dto";
 
 export class UserInfo {
 	@ApiProperty()
@@ -22,8 +23,8 @@ export class UserInfo {
 	@ApiProperty()
 	public isActive: boolean;
 
-	@ApiProperty({ type: [ProjectInfo] })
-	public projects: ProjectInfo[];
+	@ApiProperty({ type: [UserProjectInfo] })
+	public projects: UserProjectInfo[];
 
 	constructor(user: User) {
 		this.id = user.id;
@@ -31,6 +32,6 @@ export class UserInfo {
 		this.name = user.name;
 		this.createdAt = user.createdAt;
 		this.isActive = user.isActive;
-		this.projects = user.projects.map(project => new ProjectInfo(project));
+		this.projects = user.projects.map(project => new UserProjectInfo(project));
 	}
 }

@@ -15,6 +15,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import PrivateAdminRoute from "./components/PrivateAdminRoute";
 import BoardsContainer from "./components/Boards/BoardsContainer";
 import ProjectsContainer from "./components/Projects/ProjectsContainer";
+import User from "./components/User";
 
 const store = createStore(reducer);
 
@@ -29,7 +30,7 @@ const App = () => {
 						<PrivateRoute exact path="/projects" isHeader component={ProjectsContainer} />
 						<PrivateRoute exact path="/projects/:projectId" isHeader component={BoardsContainer} />
 						<PrivateRoute exact path="/users" isHeader component={Users} />
-						<PrivateRoute exact path="/users/:id" isHeader component={Users} />
+						<PrivateRoute exact path="/users/:userId" isHeader component={User} />
 						<PrivateAdminRoute roles={["ADMIN", "SUPER_ADMIN"]} exact path="/create-user" isHeader component={Registration} />
 						<PrivateAdminRoute roles={["ADMIN", "SUPER_ADMIN"]} exact path="/add-user" isHeader component={AddUser} />
 						<Route path="/not-authenticated/:page" render={(route) => <NotAvailable status={401} page={route.match.params.page} />} />

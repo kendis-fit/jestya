@@ -1,4 +1,5 @@
 import { fetcher } from "./fetcher";
+import { IProject } from "./project";
 
 export type Role = "SUPER_ADMIN" | "ADMIN" | "USER";
 
@@ -9,12 +10,43 @@ export interface IUser {
 	role: Role;
 }
 
+export interface IProjectInfo {
+	id: string;
+	name: string;
+	description?: string;
+}
+
+export interface IUserInfo {
+	name: string;
+	role: Role;
+	login: string;
+	createdAt: Date;
+	isActive: boolean;
+	projects: IProjectInfo[];
+}
+
 export interface INewUser {
 	id: string;
 }
 
 const users = {
-	find: (id: string) => {},
+	findById: (id: string) => {
+		return new Promise<IUserInfo>(async (resolve, reject) => {
+			try {
+				const req = await fetcher(`${process.env.REACT_APP_API}/users/${id}`, {
+					method: "GET",
+				});
+				const body = await req.json();
+				if (req.status === 200) {
+					resolve(body);
+				} else {
+					reject(body);
+				}
+			} catch {
+				reject({ message: "An unknown error", statusCode: 500 });
+			}
+		});
+	},
 	findByRole: (role: Role) => {
 		return new Promise<boolean>(async (resolve, reject) => {
 			try {
