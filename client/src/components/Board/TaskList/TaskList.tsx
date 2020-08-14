@@ -4,6 +4,7 @@ import { Draggable } from "react-beautiful-dnd";
 import { IAddTaskValues, IRemoveTaskValues } from "../../../api/boardProjects";
 import CircleAddBtn from "../../CircleAddBtn";
 import ModalContainer from "../../ModalContainer";
+import TaskWindow from "../TaskWindow";
 
 export interface ITaskList {
 	tasks: any[];
@@ -14,7 +15,7 @@ export interface ITaskList {
 }
 
 const TaskList = (props: ITaskList) => {
-	const [showTaskModal, setShowTaskModal] = useState(false);
+	const [showTaskModal, setShowTaskModal] = useState(!false);
 	const handleOnScroll = (event: React.UIEvent<HTMLElement>) => {
 		const el = event.currentTarget;
 		el.classList.add("tasklist--scroll");
@@ -71,7 +72,8 @@ const TaskList = (props: ITaskList) => {
 			)}
 			{showTaskModal ? (
 				<ModalContainer backdrop isOpen={true} onClose={() => setShowTaskModal(false)}>
-					<h2 className="text-white">sdf</h2>
+					{/* <h2 className="text-white">sdf</h2> */}
+					<TaskWindow />
 				</ModalContainer>
 			) : null}
 		</div>
