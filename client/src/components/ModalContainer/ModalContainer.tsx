@@ -5,7 +5,7 @@ interface IModalContainer {
 	children: React.ReactNode;
 	onClose(): void;
 	isOpen: boolean;
-	backdrop?: boolean;
+	backdrop?: string;
 }
 
 const ModalContainer = (props: IModalContainer) => {
@@ -26,7 +26,9 @@ const ModalContainer = (props: IModalContainer) => {
 
 	return ReactDOM.createPortal(
 		<>
-			{props.backdrop ? <div className="modal-backdrop fade show"></div> : null}
+			{props.backdrop ? (
+				<div className={`modal-backdrop fade show bg-${props.backdrop}`}></div>
+			) : null}
 			<div
 				ref={wrapperRef}
 				className="modal modal-container"

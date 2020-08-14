@@ -13,6 +13,7 @@ export interface IInputProps {
 		| "reset"
 		| "submit"
 		| "text";
+	placeholder?: string;
 	value?: any;
 	onChange?: any;
 	className?: string;
@@ -34,7 +35,10 @@ const Input = (props: IInputProps) => {
 		<div className={"form-group " + className}>
 			<label className="w-100">
 				{label}
-				<input className={`form-control ${isInvalid ? "is-invalid" : " "}`} {...inputProps} />
+				<input
+					className={`form-control ${isInvalid ? "is-invalid" : " "}`}
+					{...inputProps}
+				/>
 				<small className={`form-text  ${isInvalid ? "text-danger" : "text-muted"} `}>
 					{isInvalid ? props.errors[props.name] : heplerText}
 				</small>

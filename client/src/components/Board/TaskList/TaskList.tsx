@@ -71,8 +71,11 @@ const TaskList = (props: ITaskList) => {
 				</>
 			)}
 			{showTaskModal ? (
-				<ModalContainer backdrop isOpen={true} onClose={() => setShowTaskModal(false)}>
-					{/* <h2 className="text-white">sdf</h2> */}
+				<ModalContainer
+					backdrop="secondary"
+					isOpen={true}
+					onClose={() => setShowTaskModal(false)}
+				>
 					<TaskWindow />
 				</ModalContainer>
 			) : null}
