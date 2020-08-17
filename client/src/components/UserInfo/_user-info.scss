@@ -1,0 +1,40 @@
+.user-info {
+    @include flex($f-direction: column);
+    width: 500px;
+    max-width: 500px;
+
+    &__details {
+        @include flex($j-content: space-between);
+    }
+
+    &__icon {
+        @extend .bg-primary;
+        @include flex($j-content: center, $a-items: center);
+        color: white;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        border: 2px solid black;
+    }
+
+    &__editor {
+        @extend .text-dark;
+        cursor: pointer;
+        padding: 5px;
+        border-radius: 5px;
+
+        &:hover {
+            @extend .bg-dark;
+            @extend .text-light;
+        }
+    }
+
+    &__column-information {
+        text-align: left;
+        list-style: none;
+
+        &--label {
+            color: map-get($map: $colors, $key: "gray");
+        }
+    }
+}

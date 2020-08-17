@@ -23,8 +23,7 @@ $project-height: map-get($map: $project-size, $key: "height");
         }
 
         &--size {
-            @include flex(center, center);
-            @include flex-position(column);
+            @include flex(center, center, $f-direction: column);
             @extend .w-100;
             @extend .h-100;
         }

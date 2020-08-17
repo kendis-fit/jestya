@@ -3,6 +3,7 @@ import { useVanillaFetch } from "vanilla-hooks";
 
 import Error from "../Error";
 import resource from "../../api/resource";
+import UserInfo from "../UserInfo";
 
 export interface IUserProps {
     userId: string;
@@ -19,10 +20,10 @@ const User = (props: IUserProps) => {
         return <div>loading...</div>
     }
 
-    console.log(user);
-
     return(
-        <div>User info</div>
+        <div className="user user_wrapper">
+            <UserInfo {...user} />
+        </div>
     );
 }
 

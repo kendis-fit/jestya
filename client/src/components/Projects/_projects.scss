@@ -16,8 +16,7 @@ $projects-width: map-get($map: $page-size, $key: "width");
     }
 
     &__content {
-        @include flex(flex-start);
-        @include flex-position(row, wrap);
+        @include flex(flex-start, $f-direction: row, $f-wrap: wrap);
 
         @media screen and (max-width: 955px) {
             @include flex(center);
