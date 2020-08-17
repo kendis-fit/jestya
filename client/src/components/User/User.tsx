@@ -22,7 +22,7 @@ const User = (props: IUserProps) => {
 
     return(
         <div className="user user_wrapper">
-            <UserInfo {...user} />
+            <UserInfo id={props.userId} {...user} />
         </div>
     );
 }

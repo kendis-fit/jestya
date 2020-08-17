@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+
+import EditUser from "../EditUser";
 import { Role } from "../../api/users";
+import { useAuth } from "../../context/auth";
 
 export interface IUserInfoProps {
+    id: string;
     name: string;
     role: Role;
     login: string;
@@ -10,27 +14,38 @@ export interface IUserInfoProps {
 }
 
 const UserInfo = (props: IUserInfoProps) => {
+    const { auth } = useAuth();
+    const [userInfo, setUserInfo] = useState(props);
+
+    useEffect(() => {
+        setUserInfo(props);
+    }, [props]);
+
     return(
         <section className="user-info">
             <div className="user-info__details">
                 <div className="fs-20">Details</div>
-                <span className="material-icons user-info__editor">edit</span>
+                {
+                    auth.user?.id === props.id ? <EditUser onUpdate={(values) => setUserInfo({...userInfo, ...values})} {...userInfo} /> : null
+                }
             </div>
             <div className="d-flex">
                 <ul className="user-info__column-information user-info__column-information--label">
                     <li style={{ height: "50px" }}>Avatar:</li>
                     <li>Name:</li>
+                    <li>Login:</li>
                     <li>Role:</li>
                     <li>Created at:</li>
                     <li>Password:</li>
                 </ul>
                 <ul className="user-info__column-information">
-                    <li><div className="user-info__icon">{props.name[0].toUpperCase()}</div></li>
-                    <li>{props.name}</li>
-                    <li>{props.role}</li>
-                    <li>{new Date(props.createdAt).toUTCString()}</li>
+                    <li><div className="user-info__icon">{userInfo.name[0].toUpperCase()}</div></li>
+                    <li>{userInfo.name}</li>
+                    <li>{userInfo.login}</li>
+                    <li>{userInfo.role}</li>
+                    <li>{new Date(userInfo.createdAt).toUTCString()}</li>
                     <li>
-                        <button className="btn btn-primary btn-sm">Change Password</button>
+                        <button className="btn btn-dark btn-sm">Change Password</button>
                     </li>
                 </ul>
             </div>

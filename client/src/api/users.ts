@@ -1,5 +1,4 @@
 import { fetcher } from "./fetcher";
-import { IProject } from "./project";
 
 export type Role = "SUPER_ADMIN" | "ADMIN" | "USER";
 
@@ -27,6 +26,11 @@ export interface IUserInfo {
 
 export interface INewUser {
 	id: string;
+}
+
+export interface IUpdateUser {
+	name: string;
+	login: string;
 }
 
 const users = {
@@ -80,6 +84,27 @@ const users = {
 				if (req.status === 201) {
 					resolve(body);
 				} else {
+					reject(body);
+				}
+			} catch {
+				reject({ message: "An unknown error", statusCode: 500 });
+			}
+		});
+	},
+	update: (id: string, user: IUpdateUser) => {
+		return new Promise<void>(async (resolve, reject) => {
+			try {
+				const req = await fetcher(`${process.env.REACT_APP_API}/users/${id}`, {
+					method: "PUT",
+					body: JSON.stringify(user),
+					headers: {
+						"Content-Type": "application/json",
+					},
+				});
+				if (req.status === 204) {
+					resolve();
+				} else {
+					const body = await req.json();
 					reject(body);
 				}
 			} catch {

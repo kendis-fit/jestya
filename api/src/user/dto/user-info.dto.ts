@@ -1,7 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 
 import { User, Role } from "../user.entity";
-import { ProjectInfo } from "../../project/dto/project-info.dto";
 import { UserProjectInfo } from "./user-project-info.dto";
 
 export class UserInfo {
@@ -28,6 +27,7 @@ export class UserInfo {
 
 	constructor(user: User) {
 		this.id = user.id;
+		this.login = user.login;
 		this.role = user.role;
 		this.name = user.name;
 		this.createdAt = user.createdAt;

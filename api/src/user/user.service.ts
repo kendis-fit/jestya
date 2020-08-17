@@ -87,9 +87,8 @@ export class UserService {
 
 	public async update(userId: string, user: UserUpdate): Promise<void> {
 		const foundUser = await this.findById(userId);
-		foundUser.name = user.name;
-		foundUser.login = user.login;
-		foundUser.isActive = user.isActive;
+		foundUser.name = user.name ?? foundUser.name;
+		foundUser.login = user.login ?? foundUser.login;
 		await this.usersRepository.save(foundUser);
 	}
 

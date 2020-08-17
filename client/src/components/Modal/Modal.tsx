@@ -21,6 +21,7 @@ export interface IModal {
     fullscrean?: boolean;
     footer?: IModalFooter;
     onOk?: () => void;
+    disabled?: boolean;
 }
 
 const Modal = ({ showFooter = true, ...props }: IModal) => {
@@ -68,7 +69,7 @@ const Modal = ({ showFooter = true, ...props }: IModal) => {
     }
 
     return createPortal(
-        <div className="modal fade" 
+        <div className={`modal fade ${props.disabled ? "disabled" : null}`} 
             data-backdrop={props.isStatic ? "static" : null}
             data-keyboard={props.isStatic ? "false" : null}
             id={`${props.title}-modal`}
@@ -78,10 +79,10 @@ const Modal = ({ showFooter = true, ...props }: IModal) => {
             ref={modalRef}>
             <div className={`modal-dialog ${size} ${fullscreen} ${center}`}>
                 <div className="modal-content">
-                    <div className="modal-header text-light bg-primary">
+                    <div className="modal-header text-light bg-dark">
                         <h5 className="modal-title">{props.title}</h5>
                         <button type="button" onClick={onClose} className="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                            <span className="material-icons text-light" aria-hidden="true">close</span>
                         </button>
                     </div>
                     {

@@ -12,7 +12,7 @@ const ButtonsFooter = (props: IButtonsFooter) => {
     return(
         <>
             <button type="button" onClick={props.onClose} className="btn btn-secondary" data-dismiss="modal">{props.titleSecondary || "Close"}</button>
-            <button type="button" onClick={props.onOk} className="btn btn-primary">{props.titlePrimary || "Ok"}</button>
+            <button type="button" onClick={props.onOk} className="btn btn-dark">{props.titlePrimary || "Ok"}</button>
         </> 
     );
 }
