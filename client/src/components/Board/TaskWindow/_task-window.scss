@@ -33,10 +33,43 @@
             margin-right: 15px;
             color: $danger;
             &:hover {
-                background-color: $danger;
+                @extend .btn-danger;
                 color: $white;
             }
         }
     }
+
+    &__input {
+        // label {
+        //     font-weight: bold;
+        // }
+        input {
+            font-size: 20px;
+            border: transparent;
+            &:hover {
+                background: $gray-100;
+            }
+        }
+    }
+
+    &__select {
+        width: 45%;
+        font-weight: bold;
+    }
+
+    &__descripton {
+        // font-weight: bold;
+        textarea {
+            @include custom-scrollbar(10px, 10px, 2px);
+            border: transparent;
+        }
+    }
+
+    &__submit {
+        @extend .btn, .bg-blue;
+        color: $white;
+        display: block;
+        margin: 0 auto;
+        width: 150px;
+    }
 }
-// @include custom-scrollbar(10px, 10px, 2px);

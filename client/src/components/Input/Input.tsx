@@ -3,6 +3,7 @@ import React from "react";
 export interface IBaseInputProps {
 	placeholder?: string;
 	onChange?: any;
+	onBlur?: any;
 	heplerText?: string;
 	label?: string;
 	name: string;
@@ -10,7 +11,7 @@ export interface IBaseInputProps {
 	className?: string;
 	disabled?: boolean;
 	required?: boolean;
-	autofocus?: boolean;
+	autoFocus?: boolean;
 	readOnly?: boolean;
 	//formik
 	touched?: any;
@@ -46,6 +47,7 @@ const Input = (props: IInputProps) => {
 			<label className="w-100">
 				{label}
 				<input
+					
 					className={`form-control ${isInvalid ? "is-invalid" : " "}`}
 					{...inputProps}
 				/>

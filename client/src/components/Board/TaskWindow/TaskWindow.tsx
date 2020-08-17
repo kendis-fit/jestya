@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Input from "../../Input";
 import Select from "../../Select";
 import TextArea from "../../TextArea";
@@ -6,6 +6,7 @@ import { Formik } from "formik";
 import { ITask, IRemoveTaskValues, IAddTaskValues } from "../../../api/boardProjects";
 import { object, string } from "yup";
 
+// __________________data______________________________________
 const UserList = ["Unassigned", "se", "er"];
 const PriorityList = [
 	{ value: "", label: "Choose priority..." },
@@ -16,32 +17,40 @@ const PriorityList = [
 	{ value: "HIGHEST", label: "Highest" },
 ];
 
+const validationSchema = object().shape({
+	name: string().max(200, "Too Long!").required("Required"),
+	priority: string().required("Required"),
+});
+
+const initialValues = {
+	id: `f${(+new Date()).toString(16)}`,
+	name: "",
+	description: "",
+	priority: "",
+};
+
+// --------------------------------------------------------------
+
 export interface ITaskWindow {
 	onClose: any;
 	boardId: string;
 	addTask: (value: IAddTaskValues) => void;
 	removeTask: (value: IRemoveTaskValues) => void;
+	task: ITask | null;
 }
 
-const validationSchema = object().shape({
-	name: string().max(200, "Too Long!").required("Required"),
-	description: string().max(50, "Too Long!"),
-	priority: string().required("Required"),
-});
-
 const TaskWindow = (props: ITaskWindow) => {
+	const [readOnly, setReadOnly] = useState(false);
 	const handleSubmiting = (task: ITask) => {
 		console.log("submit", task);
 		props.addTask({ task, boardId: props.boardId });
 		props.onClose();
 	};
 
-	const initialValues = {
-		id: `f${(+new Date()).toString(16)}`,
-		name: "",
-		description: "",
-		priority: "",
-	};
+	const Values = props.task ? props.task : initialValues;
+
+	console.log(props.task);
+	console.log("Values", Values);
 
 	return (
 		<div className="task-window bg-white card ">
@@ -55,7 +64,7 @@ const TaskWindow = (props: ITaskWindow) => {
 							onClick={() => {
 								props.removeTask({
 									boardId: props.boardId,
-									taskId: initialValues.id,
+									taskId: Values.id,
 								});
 								props.onClose();
 							}}
@@ -73,46 +82,51 @@ const TaskWindow = (props: ITaskWindow) => {
 			</div>
 			<div className="w-90 p-3">
 				<Formik
-					initialValues={initialValues}
+					initialValues={Values}
 					validationSchema={validationSchema}
 					onSubmit={handleSubmiting}
 				>
 					{({ handleChange, handleSubmit, errors, touched, values }) => (
 						<form onSubmit={handleSubmit}>
 							<Input
+								className="mb-3 task-window__input"
 								name="name"
-								label="Task"
+								// label="Task"
+								// autofocus={props.task ? false : true}
+								autoFocus
 								heplerText=""
-								placeholder={"Title"}
-								className="mb-3"
+								placeholder={"Name"}
 								value={values.name}
 								errors={errors}
 								touched={touched}
+								readOnly={readOnly}
 								onChange={handleChange}
 							/>
 							<TextArea
+								className="mb-3 task-window__descripton"
 								name="description"
-								className="mb-3"
+								// label="Description"
 								cols={30}
 								rows={10}
 								placeholder="This task doesnt have descripton"
 								resize="none"
-								label="Description"
 								value={values.description}
 								errors={errors}
 								touched={touched}
+								readOnly={readOnly}
 								onChange={handleChange}
 							/>
 							<div className="d-flex justify-content-between w-100">
 								<Select
+									className="mb-4 task-window__select"
 									value={"Executor"}
 									label="Assign"
 									name="executor"
-									className="mb-4 w-45"
 									heplerText="Choose user role"
 									onChange={handleChange}
 									errors={errors}
 									touched={touched}
+									readOnly={readOnly}
 								>
 									{UserList.map((ell, i) => (
 										<option key={i} value={ell} label={ell} />
@@ -121,21 +135,24 @@ const TaskWindow = (props: ITaskWindow) => {
 								<Select
 									label="Priority"
 									name="priority"
-									className="mb-4 w-45"
+									className="mb-4 task-window__select"
 									heplerText="Choose priority of task"
 									value={values.priority}
 									onChange={handleChange}
 									errors={errors}
 									touched={touched}
+									readOnly={readOnly}
 								>
 									{PriorityList.map((ell, i) => (
 										<option key={i} value={ell.value} label={ell.label} />
 									))}
 								</Select>
 							</div>
-							<button type="submit" className="btn bg-blue">
-								Create
-							</button>
+							{readOnly ? null : (
+								<button type="submit" className=" task-window__submit">
+									Create
+								</button>
+							)}
 						</form>
 					)}
 				</Formik>

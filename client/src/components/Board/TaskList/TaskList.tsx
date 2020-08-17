@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Task from "../Task";
 import { Draggable } from "react-beautiful-dnd";
-import { IAddTaskValues, IRemoveTaskValues } from "../../../api/boardProjects";
+import { IAddTaskValues, IRemoveTaskValues, ITask } from "../../../api/boardProjects";
 import CircleAddBtn from "../../CircleAddBtn";
 import ModalContainer from "../../ModalContainer";
 import TaskWindow from "../TaskWindow";
@@ -16,7 +16,8 @@ export interface ITaskList {
 }
 
 const TaskList = (props: ITaskList) => {
-	const [showTaskModal, setShowTaskModal] = useState(!false);
+	const [showTaskModal, setShowTaskModal] = useState(false);
+	const [activeTask, setActiveTask] = useState<ITask | null>(null);
 	const handleOnScroll = (event: React.UIEvent<HTMLElement>) => {
 		const el = event.currentTarget;
 		el.classList.add("tasklist--scroll");
@@ -36,6 +37,16 @@ const TaskList = (props: ITaskList) => {
 		// 	},
 		// });
 		setShowTaskModal(true);
+	};
+
+	const handleOpenTask = (task: ITask) => {
+		setActiveTask(task);
+		setShowTaskModal(true);
+	};
+
+	const handleOnClose = () => {
+		setShowTaskModal(false);
+		setActiveTask(null);
 	};
 
 	return (
@@ -60,8 +71,14 @@ const TaskList = (props: ITaskList) => {
 									ref={provided.innerRef}
 									{...provided.draggableProps}
 									{...provided.dragHandleProps}
+									className="tasklist__drag-wrapper"
 								>
-									<Task key={ell} task={ell} isDragging={snashot.isDragging} />
+									<Task
+										onClick={() => handleOpenTask(ell)}
+										key={ell.id}
+										{...ell}
+										isDragging={snashot.isDragging}
+									/>
 								</div>
 							)}
 						</Draggable>
@@ -72,14 +89,11 @@ const TaskList = (props: ITaskList) => {
 				</>
 			)}
 			{showTaskModal ? (
-				<ModalContainer
-					backdrop="secondary"
-					isOpen={true}
-					onClose={() => setShowTaskModal(false)}
-				>
+				<ModalContainer backdrop="secondary" isOpen={true} onClose={handleOnClose}>
 					<TaskWindowContainer
+						task={activeTask}
 						boardId={props.boardId}
-						onClose={() => setShowTaskModal(false)}
+						onClose={handleOnClose}
 					/>
 				</ModalContainer>
 			) : null}

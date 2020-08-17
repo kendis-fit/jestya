@@ -62,8 +62,12 @@ const Registration = () => {
 
 	return (
 		<Content title={auth.user?.role ? "Creating of user" : "Registration of user"}>
-			<Formik initialValues={initialValues} validationSchema={SignupSchema} onSubmit={handleSubmiting}>
-				{({ handleChange, handleSubmit, errors, touched, values }) => (
+			<Formik
+				initialValues={initialValues}
+				validationSchema={SignupSchema}
+				onSubmit={handleSubmiting}
+			>
+				{({ handleChange, handleSubmit, handleBlur, errors, touched, values }) => (
 					<form onSubmit={handleSubmit}>
 						<Input
 							errors={errors}
@@ -72,6 +76,7 @@ const Registration = () => {
 							value={values.name}
 							touched={touched}
 							onChange={handleChange}
+							onBlur={handleBlur}
 							heplerText="Type user name"
 							className="mb-3"
 						/>
@@ -82,6 +87,7 @@ const Registration = () => {
 							value={values.login}
 							touched={touched}
 							onChange={handleChange}
+							onBlur={handleBlur}
 							heplerText="Type user login"
 							className="mb-3"
 						/>
@@ -93,6 +99,7 @@ const Registration = () => {
 							name="password"
 							label="Password"
 							onChange={handleChange}
+							onBlur={handleBlur}
 							heplerText="Type user password"
 							className="mb-3"
 						/>
@@ -103,6 +110,7 @@ const Registration = () => {
 							disabled={auth.user?.role === "ADMIN" ? true : false}
 							label="User role"
 							onChange={handleChange}
+							onBlur={handleBlur}
 							name="role"
 							className="mb-4"
 							heplerText="Choose user role"
