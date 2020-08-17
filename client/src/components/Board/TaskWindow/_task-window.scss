@@ -1,12 +1,42 @@
 .task-window {
-    // width: 60%;
     position: fixed;
     width: 500px;
-    // height: ;
     top: 250px;
     left: 50%;
     margin-top: -100px; /* Negative half of height. */
     margin-left: -250px;
     border-radius: 10px;
-    @include flex(center,center)
+    @include flex(center, center);
+
+    &__header {
+        width: 100%;
+        border-bottom: 1px solid $gray-400;
+        @include flex(space-between, center);
+        padding: 18px;
+    }
+
+    &__nav {
+        @include flex(flex-end);
+    }
+
+    &__nav-btn {
+        @extend .btn;
+        @include flex(center, center);
+
+        color: $secondary;
+        &:hover {
+            color: $blue;
+        }
+
+        &--delete {
+            @extend .btn-outline-danger;
+            margin-right: 15px;
+            color: $danger;
+            &:hover {
+                background-color: $danger;
+                color: $white;
+            }
+        }
+    }
 }
+// @include custom-scrollbar(10px, 10px, 2px);

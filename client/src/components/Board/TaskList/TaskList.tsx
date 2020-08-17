@@ -5,6 +5,7 @@ import { IAddTaskValues, IRemoveTaskValues } from "../../../api/boardProjects";
 import CircleAddBtn from "../../CircleAddBtn";
 import ModalContainer from "../../ModalContainer";
 import TaskWindow from "../TaskWindow";
+import TaskWindowContainer from "../TaskWindow/TaskWindowContainer";
 
 export interface ITaskList {
 	tasks: any[];
@@ -76,7 +77,10 @@ const TaskList = (props: ITaskList) => {
 					isOpen={true}
 					onClose={() => setShowTaskModal(false)}
 				>
-					<TaskWindow />
+					<TaskWindowContainer
+						boardId={props.boardId}
+						onClose={() => setShowTaskModal(false)}
+					/>
 				</ModalContainer>
 			) : null}
 		</div>
