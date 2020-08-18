@@ -3,7 +3,7 @@ $projects-width: map-get($map: $page-size, $key: "width");
 
 .projects {
     @include size($projects-width, $projects-height);
-    overflow-y: auto;
+    overflow-y: scroll;
 
     &__body {
         padding-left: 50px;
@@ -21,12 +21,17 @@ $projects-width: map-get($map: $page-size, $key: "width");
         @media screen and (max-width: 955px) {
             @include flex(center);
         }
+
+        &--position {
+            @include flex(center);
+        }
     }
 }
 
 .config-panel {
-    @include flex($j-content: center);
-    
+    @include flex($a-items: center, $j-content: space-evenly, $f-direction: column);
+    height: 100px;
+
     &__switcher {
         height: 100%;
         @include flex($a-items: center);

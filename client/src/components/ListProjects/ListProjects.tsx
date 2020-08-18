@@ -13,7 +13,7 @@ const ListProjects = (props: IListProjects) => {
     const { auth } = useAuth();
 
     return(
-        <div className="projects__content">
+        <div className={`projects__content ${props.projects.length > 2 ? "projects__content--position" : ""}`}>
             {props.projects.map((project, id) => (
                 <div key={id} className="project_wrapper">
                     <Project {...project} />

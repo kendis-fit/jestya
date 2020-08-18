@@ -9,4 +9,14 @@
         border-radius: 50px;
         text-align: center;
     }
+
+    &__add-project {
+        border: 0;
+        background: transparent;
+        
+        &_wrapper {
+            margin-right: 10px;
+            margin-left: -50px;
+        }
+    }
 }
