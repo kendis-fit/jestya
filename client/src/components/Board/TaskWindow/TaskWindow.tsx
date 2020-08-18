@@ -40,7 +40,7 @@ export interface ITaskWindow {
 }
 
 const TaskWindow = (props: ITaskWindow) => {
-	const [readOnly, setReadOnly] = useState(false);
+	const [readOnly, setReadOnly] = useState(!false);
 	const handleSubmiting = (task: ITask) => {
 		console.log("submit", task);
 		props.addTask({ task, boardId: props.boardId });
@@ -126,7 +126,7 @@ const TaskWindow = (props: ITaskWindow) => {
 									onChange={handleChange}
 									errors={errors}
 									touched={touched}
-									readOnly={readOnly}
+									disabled={readOnly}
 								>
 									{UserList.map((ell, i) => (
 										<option key={i} value={ell} label={ell} />
@@ -134,14 +134,14 @@ const TaskWindow = (props: ITaskWindow) => {
 								</Select>
 								<Select
 									label="Priority"
-									name="priority"
+									name="priority1"
 									className="mb-4 task-window__select"
 									heplerText="Choose priority of task"
 									value={values.priority}
 									onChange={handleChange}
 									errors={errors}
 									touched={touched}
-									readOnly={readOnly}
+									disabled={readOnly}
 								>
 									{PriorityList.map((ell, i) => (
 										<option key={i} value={ell.value} label={ell.label} />
@@ -150,7 +150,7 @@ const TaskWindow = (props: ITaskWindow) => {
 							</div>
 							{readOnly ? null : (
 								<button type="submit" className=" task-window__submit">
-									Create
+									{!Values.name ? "Create" : "Edit"}
 								</button>
 							)}
 						</form>

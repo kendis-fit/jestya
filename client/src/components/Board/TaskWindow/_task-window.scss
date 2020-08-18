@@ -55,6 +55,9 @@
     &__select {
         width: 45%;
         font-weight: bold;
+        select:first-child {
+            // color: red;
+        }
     }
 
     &__descripton {
@@ -62,6 +65,9 @@
         textarea {
             @include custom-scrollbar(10px, 10px, 2px);
             border: transparent;
+            &:hover {
+                background: $gray-100;
+            }
         }
     }
 
