@@ -3,6 +3,13 @@ import React, { useState } from "react";
 
 import Modal from "../Modal";
 import InputModal from "../InputModal";
+import resource from "../../api/resource";
+
+export interface IChangePassword {
+    oldPassword: string;
+    newPassword: string;
+    repeatNewPassword: string;
+}
 
 const initialValues = {
     oldPassword: "",
@@ -11,6 +18,7 @@ const initialValues = {
 }
 
 export interface IChangePasswordProps {
+    id: string;
     onChangePassword?: () => void;
 }
 
@@ -18,9 +26,16 @@ const ChangePassword = (props: IChangePasswordProps) => {
     const [showModal, setShowModal] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    const onSubmit = (values: any) => {
-        setShowModal(false);
-        props.onChangePassword?.();
+    const onSubmit = async (values: IChangePassword) => {
+        const { repeatNewPassword, ...rest } = values;
+        try {
+            setLoading(true);
+            await resource.users.changePassword(props.id, rest);
+            setShowModal(false);
+            props.onChangePassword?.();
+        } finally {
+            setLoading(false);
+        }
     }
 
     return(

@@ -37,7 +37,9 @@ const UserInfo = (props: IUserInfoProps) => {
                     <li>Login:</li>
                     <li>Role:</li>
                     <li>Created at:</li>
-                    <li>Password:</li>
+                    {
+                       auth.user?.id === props.id ? <li>Password:</li> : null
+                    }
                 </ul>
                 <ul className="user-info__column-information">
                     <li><div className="user-info__icon">{userInfo.name[0].toUpperCase()}</div></li>
@@ -46,7 +48,9 @@ const UserInfo = (props: IUserInfoProps) => {
                     <li>{userInfo.role}</li>
                     <li>{new Date(userInfo.createdAt).toUTCString()}</li>
                     <li>
-                        <ChangePassword />
+                        {
+                            auth.user?.id === props.id ? <ChangePassword id={props.id} /> : null
+                        }
                     </li>
                 </ul>
             </div>

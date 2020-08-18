@@ -33,6 +33,11 @@ export interface IUpdateUser {
 	login: string;
 }
 
+export interface IChangePasswordUser {
+	oldPassword: string;
+	newPassword: string;
+}
+
 const users = {
 	findById: (id: string) => {
 		return new Promise<IUserInfo>(async (resolve, reject) => {
@@ -96,6 +101,27 @@ const users = {
 			try {
 				const req = await fetcher(`${process.env.REACT_APP_API}/users/${id}`, {
 					method: "PUT",
+					body: JSON.stringify(user),
+					headers: {
+						"Content-Type": "application/json",
+					},
+				});
+				if (req.status === 204) {
+					resolve();
+				} else {
+					const body = await req.json();
+					reject(body);
+				}
+			} catch {
+				reject({ message: "An unknown error", statusCode: 500 });
+			}
+		});
+	},
+	changePassword: (id: string, user: IChangePasswordUser) => {
+		return new Promise<void>(async (resolve, reject) => {
+			try {
+				const req = await fetcher(`${process.env.REACT_APP_API}/users/${id}`, {
+					method: "PATCH",
 					body: JSON.stringify(user),
 					headers: {
 						"Content-Type": "application/json",

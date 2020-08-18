@@ -69,7 +69,7 @@ const Modal = ({ showFooter = true, ...props }: IModal) => {
     }
 
     return createPortal(
-        <div className={`modal fade ${props.disabled ? "disabled" : null}`} 
+        <div className="modal fade" 
             data-backdrop={props.isStatic ? "static" : null}
             data-keyboard={props.isStatic ? "false" : null}
             id={`${props.title}-modal`}
@@ -86,7 +86,7 @@ const Modal = ({ showFooter = true, ...props }: IModal) => {
                         </button>
                     </div>
                     {
-                        props.children ? <div className="modal-body">
+                        props.children ? <div className={`modal-body ${props.disabled ? "disabled" : null}`}>
                             {props.children}
                         </div> : null
                     }
