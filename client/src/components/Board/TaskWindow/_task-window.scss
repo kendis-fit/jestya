@@ -1,13 +1,81 @@
 .task-window {
     position: fixed;
-
-    // width: 60%;
-    position: fixed;
     width: 500px;
-    height: 200px;
-    top: 50%;
+    top: 250px;
     left: 50%;
     margin-top: -100px; /* Negative half of height. */
     margin-left: -250px;
     border-radius: 10px;
+    @include flex(center, center);
+
+    &__header {
+        width: 100%;
+        border-bottom: 1px solid $gray-400;
+        @include flex(space-between, center);
+        padding: 18px;
+    }
+
+    &__nav {
+        @include flex(flex-end);
+    }
+
+    &__nav-btn {
+        @extend .btn;
+        @include flex(center, center);
+
+        color: $secondary;
+        &:hover {
+            color: $blue;
+        }
+
+        &--delete {
+            @extend .btn-outline-danger;
+            margin-right: 15px;
+            color: $danger;
+            &:hover {
+                @extend .btn-danger;
+                color: $white;
+            }
+        }
+    }
+
+    &__input {
+        // label {
+        //     font-weight: bold;
+        // }
+        input {
+            font-size: 20px;
+            border: transparent;
+            &:hover {
+                background: $gray-100;
+            }
+        }
+    }
+
+    &__select {
+        width: 45%;
+        font-weight: bold;
+        select:first-child {
+            // color: red;
+        }
+    }
+
+    &__descripton {
+        // font-weight: bold;
+        textarea {
+            @include custom-scrollbar(10px, 10px, 2px);
+            border: transparent;
+            &:hover {
+                background: $gray-100;
+            }
+        }
+    }
+
+    &__submit {
+        @extend .btn, .bg-blue;
+        color: $white;
+        display: block;
+        margin: 0 auto;
+        width: 150px;
+    }
 }

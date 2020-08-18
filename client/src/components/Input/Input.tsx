@@ -1,7 +1,24 @@
 import React from "react";
 
-export interface IInputProps {
+export interface IBaseInputProps {
+	placeholder?: string;
+	onChange?: any;
+	onBlur?: any;
+	heplerText?: string;
+	label?: string;
 	name: string;
+	value?: any;
+	className?: string;
+	disabled?: boolean;
+	required?: boolean;
+	autoFocus?: boolean;
+	readOnly?: boolean;
+	//formik
+	touched?: any;
+	errors?: any;
+}
+
+export interface IInputProps extends IBaseInputProps {
 	type?:
 		| "button"
 		| "checkbox"
@@ -13,13 +30,8 @@ export interface IInputProps {
 		| "reset"
 		| "submit"
 		| "text";
-	value?: any;
-	onChange?: any;
-	className?: string;
-	heplerText?: string;
-	label?: string;
-	errors?: any;
-	touched?: any;
+	maxlength?: number;
+	minlength?: number;
 }
 
 const Input = (props: IInputProps) => {
@@ -34,7 +46,11 @@ const Input = (props: IInputProps) => {
 		<div className={"form-group " + className}>
 			<label className="w-100">
 				{label}
-				<input className={`form-control ${isInvalid ? "is-invalid" : " "}`} {...inputProps} />
+				<input
+					
+					className={`form-control ${isInvalid ? "is-invalid" : " "}`}
+					{...inputProps}
+				/>
 				<small className={`form-text  ${isInvalid ? "text-danger" : "text-muted"} `}>
 					{isInvalid ? props.errors[props.name] : heplerText}
 				</small>

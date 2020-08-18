@@ -18,4 +18,8 @@
     &__no-tasks {
         padding-top: 200px;
     }
+
+    &__drag-wrapper {
+        cursor: pointer !important;
+    }
 }
