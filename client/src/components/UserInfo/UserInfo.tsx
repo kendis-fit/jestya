@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import EditUser from "../EditUser";
 import { Role } from "../../api/users";
 import { useAuth } from "../../context/auth";
+import ChangePassword from "../ChangePassword";
 
 export interface IUserInfoProps {
     id: string;
@@ -45,7 +46,7 @@ const UserInfo = (props: IUserInfoProps) => {
                     <li>{userInfo.role}</li>
                     <li>{new Date(userInfo.createdAt).toUTCString()}</li>
                     <li>
-                        <button className="btn btn-dark btn-sm">Change Password</button>
+                        <ChangePassword />
                     </li>
                 </ul>
             </div>
