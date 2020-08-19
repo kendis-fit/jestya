@@ -16,7 +16,6 @@
     }
 
     &--menu-show {
-        
         @media screen and (max-width: 955px) {
             @include flex(center);
             position: absolute;
@@ -27,6 +26,7 @@
             width: 100%;
             top: 0;
             left: 0;
+            background: map-get($map: $colors, $key: "dark");
             transition: height 0.15s ease-out;
         }
     }
