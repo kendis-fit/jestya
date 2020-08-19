@@ -30,7 +30,7 @@ $project-height: map-get($map: $project-size, $key: "height");
     }
     
     &__title {
-        @extend .text-primary;
+        @extend .text-info;
         font-size: 24px;
         text-align: center;
     }
@@ -44,7 +44,7 @@ $project-height: map-get($map: $project-size, $key: "height");
 }
 
 .area {
-    @include flex(space-between);
+    @include flex(space-between, $a-items: center);
     padding: 10px;
     border-radius: 5px;
     
@@ -53,7 +53,7 @@ $project-height: map-get($map: $project-size, $key: "height");
     }
 
     &__icon {
-        @extend .text-primary;
+        @extend .text-info;
         opacity: 0.8;
         cursor: pointer;
 

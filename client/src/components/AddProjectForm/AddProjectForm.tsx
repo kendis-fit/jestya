@@ -26,12 +26,19 @@ export interface IAddProjectForm {
 const AddProjectForm = (props: IAddProjectForm) => {
     const [loading, setLoading] = useState(false);
 
-    const onSubmit = (values: IAddProject) => {
+    const onSubmit = async (values: IAddProject) => {
         setLoading(true);
-        resource.projects.create(values)
-            .then(newProject => props.addProject({ ...newProject, ...values, isArchive: false }))
-            .then(() => props.onSubmit?.())
-            .finally(() => setLoading(false));
+        try {
+            const newProject = await resource.projects.create(values);
+            props.addProject({ ...newProject, ...values, isArchive: false });
+            props.onSubmit?.()
+        } finally {
+            setLoading(false);
+            const projectsDOM = document.querySelector(".projects");
+            if (projectsDOM) {
+                projectsDOM.scrollTo(0, projectsDOM.scrollHeight);
+            }
+        }
     }
 
     return(

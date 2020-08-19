@@ -1,64 +1,6 @@
 import { fetcher } from "./fetcher";
 import boardProjects from "./boardProjects";
 
-const mockObject = [
-	{
-		id: "1",
-		name: "Front-end",
-		description: "mdaa",
-		boards: [
-			{
-				name: "to-do",
-				countTasks: 12,
-			},
-			{
-				name: "in processing",
-				countTasks: 34,
-			},
-			{
-				name: "done",
-				countTasks: 44,
-			},
-		],
-	},
-	{
-		id: "2",
-		name: "Back-end",
-		boards: [
-			{
-				name: "to-do",
-				countTasks: 22,
-			},
-			{
-				name: "in processing",
-				countTasks: 10,
-			},
-			{
-				name: "done",
-				countTasks: 67,
-			},
-		],
-	},
-	{
-		id: "3",
-		name: "Devops",
-		boards: [
-			{
-				name: "to-do",
-				countTasks: 2,
-			},
-			{
-				name: "in processing",
-				countTasks: 54,
-			},
-			{
-				name: "done",
-				countTasks: 3,
-			},
-		],
-	},
-];
-
 export interface IBoard {
 	name: string;
 	countTasks: number;
@@ -93,7 +35,7 @@ const projects = {
 
 				const body = await req.json();
 				if (req.status === 200) {
-					resolve([...body, ...mockObject]);
+					resolve(body);
 				} else {
 					reject(body);
 				}

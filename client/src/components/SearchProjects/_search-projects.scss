@@ -1,4 +1,6 @@
 .search-projects {
+    @include flex();
+
     &__string {
         @extend .fs-18;
         background-color: map-get($map: $colors, $key: 'gray-light');
@@ -12,8 +14,13 @@
     }
 
     &__add-project {
+        @include flex($a-items: center);
         border: 0;
         background: transparent;
+        
+        &:focus {
+            outline: none;
+        }
         
         &_wrapper {
             margin-right: 10px;
