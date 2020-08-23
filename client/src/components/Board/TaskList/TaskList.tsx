@@ -1,17 +1,18 @@
 import React, { useState } from "react";
 import Task from "../Task";
 import { Draggable } from "react-beautiful-dnd";
-import { IAddTaskValues, IRemoveTaskValues, ITask } from "../../../api/boardProjects";
+import { IRemoveTaskValues, ITask } from "../../../api/boardProjects";
 import CircleAddBtn from "../../CircleAddBtn";
 import ModalContainer from "../../ModalContainer";
 import TaskWindow from "../TaskWindow";
 import TaskWindowContainer from "../TaskWindow/TaskWindowContainer";
+import { IAddTask } from "../../../reducers/boards/interfaces/IAddTask";
 
 export interface ITaskList {
 	tasks: any[];
 	boardId: string;
 	providedTask: any;
-	addTask: (value: IAddTaskValues) => void;
+	addTask: (value: IAddTask) => void;
 	removeTask: (value: IRemoveTaskValues) => void;
 }
 

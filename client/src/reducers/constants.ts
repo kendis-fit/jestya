@@ -13,6 +13,7 @@ export const DRAG_BOARD = "DRAG_BOARD";
 // tasks
 export const ADD_TASK = "ADD_TASK";
 export const REMOVE_TASK = "REMOVE_TASK";
+export const UPDATE_TASK = "UPDATE_TASK";
 export const INIT_TASKS = "INIT_TASKS";
 export const DRAG_TASK = "DRAG_TASK";
 

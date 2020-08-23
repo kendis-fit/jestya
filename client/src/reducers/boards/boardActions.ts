@@ -1,7 +1,6 @@
 import {
 	IBoard,
 	IDragIndexs,
-	IAddTaskValues,
 	IRemoveTaskValues,
 	ITask,
 	IDragTaskData,
@@ -17,20 +16,22 @@ import {
 	REMOVE_TASK,
 	INIT_TASKS,
 	DRAG_TASK,
+	UPDATE_TASK,
 } from "../constants";
 import { IAddBoard } from "./interfaces/IAddBoard";
 import { IInitBoards } from "./interfaces/IInitBoards";
 import { IUpdateBoardAction, IUpdateBoard } from "./interfaces/IUpdateBoardAction";
 import { IRemoveBoard } from "./interfaces/IRemoveBoard";
 import { IDragBoard } from "./interfaces/IDragBoard";
-import { IAddTask } from "./interfaces/IAddTask";
+import { IAddTask, IAddTaskAction } from "./interfaces/IAddTask";
 import { IRemoveTask } from "./interfaces/IRemoveTask";
 import { IInitTasks } from "./interfaces/IInitialTask";
 import IDragTask from "./interfaces/IDragTask";
+import { IUpdateTaskAction, IUpdateTask } from "./interfaces/IUpdateTaskAction";
 
 export const addBoard = (value: IAddBoardValues): IAddBoard => ({
 	type: ADD_BOARD,
-	value: value,
+	value,
 });
 
 export const removeBoard = (id: string): IRemoveBoard => ({
@@ -53,9 +54,14 @@ export const dragBoard = (result: IDragIndexs): IDragBoard => ({
 	type: DRAG_BOARD,
 });
 
-export const addTask = (result: IAddTaskValues): IAddTask => ({
+export const addTask = (result: IAddTask): IAddTaskAction => ({
 	type: ADD_TASK,
 	value: result,
+});
+
+export const updateTask = (value: IUpdateTask): IUpdateTaskAction => ({
+	type: UPDATE_TASK,
+	value,
 });
 
 export const removeTask = (objOfId: IRemoveTaskValues): IRemoveTask => ({
@@ -70,7 +76,7 @@ export const initTasks = (tasks: ITask[]): IInitTasks => ({
 
 export const dragTask = (value: IDragTaskData): IDragTask => ({
 	type: DRAG_TASK,
-	value: value,
+	value,
 });
 export type BoardActions =
 	| IAddBoard
@@ -78,7 +84,8 @@ export type BoardActions =
 	| IInitBoards
 	| IDragBoard
 	| IInitTasks
-	| IAddTask
+	| IAddTaskAction
 	| IRemoveTask
 	| IUpdateBoardAction
+	| IUpdateTaskAction
 	| IDragTask;

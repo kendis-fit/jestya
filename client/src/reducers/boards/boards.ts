@@ -10,11 +10,13 @@ import {
 	REMOVE_TASK,
 	UPDATE_BOARD,
 	DRAG_TASK,
+	UPDATE_TASK,
 } from "../constants";
 import { ChangePositionInArray } from "./boardsHelpers";
 
 const boards = (state: IBoard[] = [], action: BoardActions) => {
 	switch (action.type) {
+		// ________________________Board______________________________
 		case ADD_BOARD: {
 			const BoardIndex = state.findIndex(board => board.id === action.value.id);
 			if (!action.value.id) return [...state, action.value.board];
@@ -35,6 +37,7 @@ const boards = (state: IBoard[] = [], action: BoardActions) => {
 			});
 		case DRAG_BOARD:
 			return ChangePositionInArray(state, action.value.startIndex, action.value.endIndex);
+		// -----------------------------------Task--------------------------
 		case ADD_TASK: {
 			const boardIndex = state.findIndex(board => board.id === action.value.boardId);
 			const board = state[boardIndex];
@@ -48,11 +51,21 @@ const boards = (state: IBoard[] = [], action: BoardActions) => {
 
 		case REMOVE_TASK: {
 			const boardIndex = state.findIndex(board => board.id === action.value.boardId);
-			const taskList = state[boardIndex];
-			taskList.tasks = state[boardIndex].tasks.filter(
-				task => task.id !== action.value.taskId
-			);
-			return [...state.slice(0, boardIndex), taskList, ...state.slice(boardIndex + 1)];
+			const board = state[boardIndex];
+			board.tasks = state[boardIndex].tasks.filter(task => task.id !== action.value.taskId);
+			return [...state.slice(0, boardIndex), board, ...state.slice(boardIndex + 1)];
+		}
+
+		case UPDATE_TASK: {
+			const boardIndex = state.findIndex(board => board.id === action.value.boardId);
+			const board = state[boardIndex];
+			board.tasks = state[boardIndex].tasks.map(task => {
+				if (task.id === action.value.task.id) {
+					return action.value.task;
+				}
+				return task;
+			});
+			return [...state.slice(0, boardIndex), board, ...state.slice(boardIndex + 1)];
 		}
 
 		case DRAG_TASK: {

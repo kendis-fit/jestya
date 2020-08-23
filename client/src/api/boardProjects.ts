@@ -8,11 +8,6 @@ export interface ITask {
 	priority: string;
 }
 
-export interface IAddTaskValues {
-	task: ITask;
-	boardId: string;
-}
-
 export interface IDragTaskData {
 	dropInBoardId: string;
 	dropOutBoardId: string;
