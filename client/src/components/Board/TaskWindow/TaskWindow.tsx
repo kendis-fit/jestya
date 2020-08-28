@@ -7,6 +7,7 @@ import { ITask, IRemoveTaskValues } from "../../../api/boardProjects";
 import { object, string } from "yup";
 import { IUpdateTask } from "../../../reducers/boards/interfaces/IUpdateTaskAction";
 import { IAddTask } from "../../../reducers/boards/interfaces/IAddTask";
+import CommentBlock from "../CommentBlock";
 
 // __________________data______________________________________
 const UserList = ["Unassigned", "se", "er"];
@@ -44,10 +45,10 @@ export interface ITaskWindow {
 
 const TaskWindow = (props: ITaskWindow) => {
 	const [readOnly, setReadOnly] = useState(false);
-	const [editing] = useState(!!props.task);
-	const { boardId } = props;
+	const { boardId, task } = props;
+	const editing = !!task;
 
-	const Values = props.task ? props.task : initialValues;
+	const Values = task ? task : initialValues;
 
 	const handleSubmiting = (task: ITask) => {
 		console.log("submit", task);
@@ -59,15 +60,10 @@ const TaskWindow = (props: ITaskWindow) => {
 		props.onClose();
 	};
 
-	console.log(props.task);
-	console.log("Values", Values);
-	console.log("editing", editing);
-
 	return (
 		<div className="task-window bg-white card ">
 			<div className="task-window__header">
 				<h4>{editing ? "Editing task" : "Creating task"}</h4>
-
 				<div className="">
 					<div className="task-window__nav">
 						{readOnly || !editing ? null : (
@@ -96,82 +92,85 @@ const TaskWindow = (props: ITaskWindow) => {
 					</div>
 				</div>
 			</div>
-			<div className="w-90 p-3">
-				<Formik
-					initialValues={Values}
-					validationSchema={validationSchema}
-					onSubmit={handleSubmiting}
-				>
-					{({ handleChange, handleSubmit, errors, touched, values }) => (
-						<form onSubmit={handleSubmit}>
-							<Input
-								className="mb-3 task-window__input"
-								name="name"
-								// label="Task"
-								// autofocus={props.task ? false : true}
-								autoFocus
-								heplerText=""
-								placeholder={"Name"}
-								value={values.name}
-								errors={errors}
-								touched={touched}
-								readOnly={readOnly}
-								onChange={handleChange}
-							/>
-							<TextArea
-								className="mb-3 task-window__descripton"
-								name="description"
-								// label="Description"
-								cols={30}
-								rows={10}
-								placeholder="This task doesnt have descripton"
-								resize="none"
-								value={values.description}
-								errors={errors}
-								touched={touched}
-								readOnly={readOnly}
-								onChange={handleChange}
-							/>
-							<div className="d-flex justify-content-between w-100">
-								<Select
-									className="mb-4 task-window__select"
-									value={"Executor"}
-									label="Assign"
-									name="executor"
-									heplerText="Choose user role"
-									onChange={handleChange}
+
+			<div className="task-window__forms w-95 p-3">
+				<div className="task-window__form">
+					<Formik
+						initialValues={Values}
+						validationSchema={validationSchema}
+						onSubmit={handleSubmiting}
+					>
+						{({ handleChange, handleSubmit, errors, touched, values }) => (
+							<form onSubmit={handleSubmit}>
+								<Input
+									className="mb-3 task-window__input"
+									name="name"
+									autoFocus={editing ? false : true}
+									heplerText=""
+									placeholder={"Name"}
+									value={values.name}
 									errors={errors}
 									touched={touched}
-									disabled={readOnly}
-								>
-									{UserList.map((ell, i) => (
-										<option key={i} value={ell} label={ell} />
-									))}
-								</Select>
-								<Select
-									label="Priority"
-									name="priority"
-									className="mb-4 task-window__select"
-									heplerText="Choose priority of task"
-									value={values.priority}
+									readOnly={readOnly}
 									onChange={handleChange}
+								/>
+								<TextArea
+									className="mb-3 task-window__descripton"
+									name="description"
+									cols={30}
+									rows={10}
+									placeholder="This task doesnt have descripton"
+									resize="none"
+									value={values.description}
 									errors={errors}
 									touched={touched}
-									disabled={readOnly}
-								>
-									{PriorityList.map((ell, i) => (
-										<option key={i} value={ell.value} label={ell.label} />
-									))}
-								</Select>
-							</div>
-							{readOnly ? null : (
-								<button type="submit" className=" task-window__submit">
-									{editing ? "Edit" : "Create"}
-								</button>
-							)}
-						</form>
-					)}
-				</Formik>
+									readOnly={readOnly}
+									onChange={handleChange}
+								/>
+								<div className="d-flex justify-content-between w-100">
+									<Select
+										className="mb-4 task-window__select"
+										value={"Executor"}
+										label="Assign"
+										name="executor"
+										heplerText="Choose user role"
+										onChange={handleChange}
+										errors={errors}
+										touched={touched}
+										disabled={readOnly}
+									>
+										{UserList.map((ell, i) => (
+											<option key={i} value={ell} label={ell} />
+										))}
+									</Select>
+									<Select
+										label="Priority"
+										name="priority"
+										className="mb-4 task-window__select"
+										heplerText="Choose priority of task"
+										value={values.priority}
+										onChange={handleChange}
+										errors={errors}
+										touched={touched}
+										disabled={readOnly}
+									>
+										{PriorityList.map((ell, i) => (
+											<option key={i} value={ell.value} label={ell.label} />
+										))}
+									</Select>
+								</div>
+								{readOnly ? null : (
+									<button type="submit" className=" task-window__submit">
+										{editing ? "Edit" : "Create"}
+									</button>
+								)}
+							</form>
+						)}
+					</Formik>
+				</div>
+				<div className="">
+					<CommentBlock />
+				</div>
 			</div>
 		</div>
 	);

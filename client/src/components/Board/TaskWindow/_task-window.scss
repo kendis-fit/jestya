@@ -1,6 +1,6 @@
 .task-window {
     position: fixed;
-    width: 500px;
+    width: 700px;
     top: 25%;
     left: 50%;
     margin-top: -100px; /* Negative half of height. */
@@ -40,14 +40,12 @@
     }
 
     &__input {
-        // label {
-        //     font-weight: bold;
-        // }
         input {
             font-size: 20px;
             border: transparent;
+            background: $gray-100;
             &:hover {
-                background: $gray-100;
+                background: $gray-200;
             }
         }
     }
@@ -55,18 +53,16 @@
     &__select {
         width: 45%;
         font-weight: bold;
-        select:first-child {
-            // color: red;
-        }
     }
 
     &__descripton {
-        // font-weight: bold;
         textarea {
+            background: $gray-100;
+
             @include custom-scrollbar(10px, 10px, 2px);
             border: transparent;
             &:hover {
-                background: $gray-100;
+                background: $gray-200;
             }
         }
     }
@@ -77,5 +73,17 @@
         display: block;
         margin: 0 auto;
         width: 150px;
+    }
+
+    &__form {
+        width: 60%;
+        // background: #e6e6e6;
+        padding: 7px;
+        border-radius: 10px;
+    }
+
+    &__forms {
+        display: flex;
+        justify-content: space-between;
     }
 }
