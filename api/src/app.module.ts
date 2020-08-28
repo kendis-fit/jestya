@@ -14,6 +14,7 @@ import { Comment } from "./comment/comment.entity";
 import { ProjectModule } from "./project/project.module";
 import { Component } from "./component/component.entity";
 import { ComponentModule } from "./component/component.module";
+import { SearchModule } from "./search/search.module";
 
 export const REDIS_SERVICE = "REDIS_SERVICE";
 
@@ -57,6 +58,7 @@ export const REDIS_SERVICE = "REDIS_SERVICE";
 				inject: [ConfigService],
 			},
 		]),
+		SearchModule,
 	],
 })
 export class AppModule {}
