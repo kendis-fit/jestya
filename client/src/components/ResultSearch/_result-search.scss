@@ -1,0 +1,20 @@
+.result-search {
+    list-style-type: none;
+    padding: 0;
+
+    &__title {
+        @extend .text-info;
+        padding: 5px;
+    }
+
+    &__item {
+        cursor: pointer;
+        padding-left: 25px;
+    
+        &:hover {
+            @extend .bg-dark;
+            @extend .text-light;
+            border-radius: 5px;
+        }
+    }
+}

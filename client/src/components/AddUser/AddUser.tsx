@@ -3,16 +3,20 @@ import React, { useState, useEffect } from "react";
 import Input from "../Input";
 import Content from "../Content";
 import resource from "../../api/resource";
+import ResultSearch from "../ResultSearch";
 
 const AddUser = () => {
     const [searchLogin, setSearchLogin] = useState("");
+    const [foundUsers, setFoundUsers] = useState<any[]>([]);
     const [searchProject, setSearchProject] = useState("");
 
     useEffect(() => {
         const searchUsers = async () => {
             if (searchLogin.length > 3) {
                 const users = await resource.search.findUsers("login", searchLogin);
-                console.log(users);
+                setFoundUsers(users.map(user => ({ name: user.login })));
+            } else {
+                setFoundUsers([]);
             }
         }
         searchUsers();
@@ -38,7 +42,9 @@ const AddUser = () => {
                     label="User login"
                     className="mb-3"
                     heplerText="Type a user login"
-                />
+                >
+                    <ResultSearch search={[{ name: "Users", items: foundUsers }]} />
+                </Input>
                 <Input
                     value={searchProject}
                     onChange={(e: any) => setSearchProject(e.currentTarget.value)}

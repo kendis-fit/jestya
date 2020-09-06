@@ -1,0 +1,8 @@
+.search-input {
+    @extend .bg-light;
+    @extend .shadow;
+    position: absolute;
+    margin-top: -20px;
+    width: 100%;
+    border-radius: 5px;
+}

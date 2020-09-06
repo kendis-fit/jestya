@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
 export interface IBaseInputProps {
 	placeholder?: string;
@@ -32,10 +32,11 @@ export interface IInputProps extends IBaseInputProps {
 		| "text";
 	maxlength?: number;
 	minlength?: number;
+	children?: ReactNode;
 }
 
 const Input = (props: IInputProps) => {
-	const { errors, heplerText, label, className, touched, ...inputProps } = props;
+	const { errors, heplerText, label, className, touched, children, ...inputProps } = props;
 	let isInvalid = false;
 
 	if (errors) {
@@ -54,6 +55,11 @@ const Input = (props: IInputProps) => {
 				<small className={`form-text  ${isInvalid ? "text-danger" : "text-muted"} `}>
 					{isInvalid ? props.errors[props.name] : heplerText}
 				</small>
+				{
+					children ? <div className="search-input">
+						{children}
+					</div> : null
+				}
 			</label>
 		</div>
 	);
