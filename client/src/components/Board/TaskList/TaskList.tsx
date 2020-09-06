@@ -17,7 +17,7 @@ export interface ITaskList {
 }
 
 const TaskList = (props: ITaskList) => {
-	const [showTaskModal, setShowTaskModal] = useState(false);
+	const [showTaskModal, setShowTaskModal] = useState(!false);
 	const [activeTask, setActiveTask] = useState<ITask | null>(null);
 	const handleOnScroll = (event: React.UIEvent<HTMLElement>) => {
 		const el = event.currentTarget;
@@ -28,15 +28,6 @@ const TaskList = (props: ITaskList) => {
 	};
 
 	const handleAddTask = () => {
-		// props.addTask({
-		// 	boardId: props.boardId,
-		// 	task: {
-		// 		id: `f${(+new Date()).toString(16)}`,
-		// 		name: "task",
-		// 		description: "asdasdasd",
-		// 		priority: "1",
-		// 	},
-		// });
 		setShowTaskModal(true);
 	};
 
