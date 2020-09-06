@@ -9,6 +9,7 @@ const AddUser = () => {
     const [searchLogin, setSearchLogin] = useState("");
     const [foundUsers, setFoundUsers] = useState<any[]>([]);
     const [searchProject, setSearchProject] = useState("");
+    const [foundProjects, setFoundProjects] = useState<any[]>([]);
 
     useEffect(() => {
         const searchUsers = async () => {
@@ -26,7 +27,9 @@ const AddUser = () => {
         const searchProjects = async () => {
             if (searchProject.length > 3) {
                 const projects = await resource.search.findProjects("name", searchProject);
-                console.log(projects);
+                setFoundProjects(projects);
+            } else {
+                setFoundProjects([]);
             }
         }
         searchProjects();
@@ -52,7 +55,9 @@ const AddUser = () => {
                     label="Project name"
                     className="mb-3"
                     heplerText="Type a project name"
-                />
+                >
+                    <ResultSearch search={[{ name: "Projects", items: foundProjects }]} />
+                </Input>
                 <button type="submit" className="content__submit-button">Add user to project</button>
             </form>
         </Content>

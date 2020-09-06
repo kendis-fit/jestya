@@ -1,0 +1,4 @@
+.selected-entity {
+    @include flex($f-direction: row);
+    padding: 5px;
+}
