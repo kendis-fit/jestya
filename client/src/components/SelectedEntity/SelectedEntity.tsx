@@ -9,7 +9,7 @@ const SelectedEntity = (props: ISelectedEntityProps) => {
     return(
         <div className="selected-entity">
             <span>{props.name}</span>
-            <span className="material-icons" onClick={() => props.onClose()}>close</span>
+            <span className="material-icons selected-entity__close" onClick={() => props.onClose()}>close</span>
         </div>
     );
 }

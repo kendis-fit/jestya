@@ -1,15 +1,17 @@
 import React from "react";
 
+export interface IResultSearchItem {
+    id: string;
+    name: string;
+    description?: string;
+}
+
 export interface IResultSearchProps {
     search: {
         name: string,
-        items: {
-            id: string,
-            name: string,
-            description?: string;
-        }[]
+        items: IResultSearchItem[]
     }[],
-    onChoose?: (id: string) => void;
+    onChoose?: (id: IResultSearchItem) => void;
 }
 
 const ResultSearch = (props: IResultSearchProps) => {
@@ -26,7 +28,7 @@ const ResultSearch = (props: IResultSearchProps) => {
                                         search.items.length > 0 ? <ul className="result-search">
                                         {
                                             search.items.map((item, key) => (
-                                                <li className="result-search__item" key={key} onClick={() => props.onChoose?.(item.id)}>
+                                                <li className="result-search__item" key={key} onClick={() => props.onChoose?.(item)}>
                                                     <h5>{item.name}</h5>
                                                     <span>{item.description}</span>
                                                 </li>

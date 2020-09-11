@@ -1,5 +1,6 @@
 import { fetcher } from "./fetcher";
 import boardProjects from "./boardProjects";
+import userProjects from "./userProjects";
 
 export interface IBoard {
 	name: string;
@@ -25,6 +26,7 @@ export interface IAddProjectResponse {
 }
 
 const projects = {
+	...userProjects,
 	...boardProjects,
 	findAll: () => {
 		return new Promise<IProject[]>(async (resolve, reject) => {
