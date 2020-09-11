@@ -1,8 +1,17 @@
 .selected-entity {
-    @include flex($f-direction: row);
+    @extend .bg-secondary;
+    @extend .form-control;
+    @include flex($j-content: space-between, $f-direction: row);
     padding: 5px;
+    border-radius: 5px;
+    width: 100%;
+    color: white;
 
     &__close {
         cursor: pointer;
     }
+}
+
+.selected-entity_wrapper {
+    margin-bottom: 20px;
 }

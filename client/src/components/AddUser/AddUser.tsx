@@ -22,12 +22,14 @@ const AddUser = () => {
                 <InputWithSearch
                     label="User"
                     nameSearch="Users"
+                    helperText="Type a user login"
                     resource={(value: string) => resource.search.findUsers("login", value)}
                     onChoose={id => setUserId(id)}
                     />
                 <InputWithSearch
                     label="Project"
                     nameSearch="Projects"
+                    helperText="Type a project name"
                     resource={(value: string) => resource.search.findProjects("name", value)}
                     onChoose={id => setProjectId(id)}
                     />

@@ -19,13 +19,13 @@ const ResultSearch = (props: IResultSearchProps) => {
         <>
             {
                 props.search.reduce((first, second) => first + second.items.length, 0) > 0 ?
-                    <ul className="result-search">
+                    <ul className="result-search result-search--scroll">
                         {
                             props.search.map((search, key) => (
                                 <li key={key}>
                                     <h4 className="result-search__title">{search.name}</h4>
                                     {
-                                        search.items.length > 0 ? <ul className="result-search">
+                                        search.items.length > 0 ? <ul className="result-search result-search--scroll">
                                         {
                                             search.items.map((item, key) => (
                                                 <li className="result-search__item" key={key} onClick={() => props.onChoose?.(item)}>

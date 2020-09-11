@@ -8,6 +8,7 @@ import SelectedEntity from "../SelectedEntity";
 export interface IInputWithSearch {
     label: string;
     nameSearch: string;
+    helperText?: string;
     onChoose?: (id: string) => void;
     resource: (value: string) => Promise<any[]>;
 }
@@ -19,7 +20,7 @@ const InputWithSearch = (props: IInputWithSearch) => {
 
     useEffect(() => {
         const searchEntities = async () => {
-            if (value.length > 3) {
+            if (value.length >= 1) {
                 const entities = await props.resource(value);
                 setFoundEntities(entities)
             } else {
@@ -35,11 +36,16 @@ const InputWithSearch = (props: IInputWithSearch) => {
     }
 
     if (entity) {
-        return <SelectedEntity name={entity.name} onClose={() => setEntity(undefined)} />
+        return (
+            <div className="selected-entity_wrapper">
+                <label>{props.label}</label>
+                <SelectedEntity name={entity.name} onClose={() => setEntity(undefined)} />
+            </div>
+        );
     }
 
     return(
-        <Input heplerText="Type a user" label={props.label} name="" value={value} onChange={(e: any) => setValue(e.currentTarget.value)}>
+        <Input heplerText={props.helperText} label={props.label} name="" value={value} onChange={(e: any) => setValue(e.currentTarget.value)}>
             <ResultSearch onChoose={value => chooseEntity(value)} search={[{ name: props.nameSearch, items: foundEntities }]} />
         </Input>
     )
