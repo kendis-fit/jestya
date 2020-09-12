@@ -6,29 +6,38 @@ export interface IResultSearchItem {
     description?: string;
 }
 
+export interface IResultSearchContainer {
+    name: string;
+    items: IResultSearchItem[];
+}
+
+export interface IResultSearchContainerItem {
+    name: string;
+    item: IResultSearchItem;
+}
+
 export interface IResultSearchProps {
-    search: {
-        name: string,
-        items: IResultSearchItem[]
-    }[],
-    onChoose?: (id: IResultSearchItem) => void;
+    search: IResultSearchContainer[];
+    onChoose?: (item: IResultSearchContainerItem) => void;
 }
 
 const ResultSearch = (props: IResultSearchProps) => {
     return(
         <>
             {
-                props.search.reduce((first, second) => first + second.items.length, 0) > 0 ?
+                props.search.reduce((first, second) => first + second.items.length ,0) > 0 ?
                     <ul className="result-search result-search--scroll">
-                        {
-                            props.search.map((search, key) => (
-                                <li key={key}>
+                    {
+                        props.search.map((search, key) => (
+                            <>
+                            {
+                                search.items.length > 0 ? <li key={key}>
                                     <h4 className="result-search__title">{search.name}</h4>
                                     {
                                         search.items.length > 0 ? <ul className="result-search result-search--scroll">
                                         {
                                             search.items.map((item, key) => (
-                                                <li className="result-search__item" key={key} onClick={() => props.onChoose?.(item)}>
+                                                <li className="result-search__item" key={key} onClick={() => props.onChoose?.({ name: search.name, item })}>
                                                     <h5>{item.name}</h5>
                                                     <span>{item.description}</span>
                                                 </li>
@@ -36,10 +45,13 @@ const ResultSearch = (props: IResultSearchProps) => {
                                         }
                                         </ul> : null
                                     }
-                                </li>
-                            ))
-                        }
-                    </ul> : null
+                                </li> : null
+                            }
+                            </>
+                        ))
+                    }
+                </ul>
+                : null
             }
         </>
     );

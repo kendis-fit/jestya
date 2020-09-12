@@ -28,7 +28,7 @@ const InputWithSearch = (props: IInputWithSearch) => {
             }
         }
         searchEntities();
-    }, [value, setFoundEntities]);
+    }, [value, setFoundEntities, props]);
 
     const chooseEntity = (entity: IResultSearchItem) => {
         setEntity(entity);
@@ -46,7 +46,7 @@ const InputWithSearch = (props: IInputWithSearch) => {
 
     return(
         <Input heplerText={props.helperText} label={props.label} name="" value={value} onChange={(e: any) => setValue(e.currentTarget.value)}>
-            <ResultSearch onChoose={value => chooseEntity(value)} search={[{ name: props.nameSearch, items: foundEntities }]} />
+            <ResultSearch onChoose={value => chooseEntity(value.item)} search={[{ name: props.nameSearch, items: foundEntities }]} />
         </Input>
     )
 }

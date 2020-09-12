@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import Content from "../Content";
 import resource from "../../api/resource";
 import InputWithSearch from "../InputWithSearch";
-import { IResultSearchItem } from "../ResultSearch/ResultSearch";
 
 const AddUser = () => {
     const [userId, setUserId] = useState<string>("");

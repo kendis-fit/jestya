@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useVanillaFetch } from "vanilla-hooks";
-import React, { useEffect, useState, useLayoutEffect } from "react";
-import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
+import React, { useEffect, useState } from "react";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
 import Error from "../Error";
 import resource from "../../api/resource";

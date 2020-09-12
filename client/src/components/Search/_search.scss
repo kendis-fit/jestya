@@ -5,17 +5,13 @@ $search-light: map-get(
 
 .search {
     @include flex();
-
-    &__button {
-        cursor: pointer;
-    }
-
+    border-bottom: 1px solid $search-light;
+    
     &__input {
         @include placeholder($search-light, 0.8);
         @extend .text-light;
-        background: transparent;
         border: 0;
-        border-bottom: 1px solid $search-light;
+        background: transparent;
 
         &:focus {
             @include placeholder($search-light, 1);
@@ -24,6 +20,14 @@ $search-light: map-get(
         &::placeholder {
             color: $gray-300;
         }
+    }
+
+    &__result {
+        @extend .shadow;
+        @extend .bg-light;
+        border-radius: 5px;
+        position: absolute;
+        width: 300px;
     }
 }
 

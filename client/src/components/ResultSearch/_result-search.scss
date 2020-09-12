@@ -3,7 +3,7 @@
     padding: 0;
 
     &--scroll {
-        height: 200px;
+        max-height: 200px;
         overflow-y: scroll;
     }
 
@@ -13,11 +13,12 @@
     }
 
     &__item {
+        @extend .text-primary;
         cursor: pointer;
         padding-left: 25px;
     
         &:hover {
-            @extend .bg-dark;
+            @extend .bg-primary;
             @extend .text-light;
             border-radius: 5px;
         }
