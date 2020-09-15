@@ -28,6 +28,7 @@
             left: 0;
             background: map-get($map: $colors, $key: "dark");
             transition: height 0.15s ease-out;
+            margin: 0;
         }
     }
 }
