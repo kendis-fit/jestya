@@ -8,8 +8,7 @@ $search-light: map-get(
     border-bottom: 1px solid $search-light;
 
     @media screen and (max-width: 480px) {
-        width: 24px;
-        border: none;
+        width: 80px;
     }
 
     &__input {
@@ -35,6 +34,11 @@ $search-light: map-get(
         border-radius: 5px;
         position: absolute;
         width: 300px;
+        z-index: 1;
+        margin-top: 10px;
+        @media screen and (max-width: 480px) {
+            width: 55%;
+        }
     }
 }
 
