@@ -3,11 +3,12 @@ import Input from "../../Input";
 import Select from "../../Select";
 import TextArea from "../../TextArea";
 import { Formik } from "formik";
-import { ITask, IRemoveTaskValues } from "../../../api/boardProjects";
+import { ITask } from "../../../api/boardProjects";
 import { object, string } from "yup";
 import { IUpdateTask } from "../../../reducers/boards/interfaces/IUpdateTaskAction";
 import { IAddTask } from "../../../reducers/boards/interfaces/IAddTask";
 import CommentBlock from "../CommentBlock";
+import TaskHeaderContainer from "../TaskHeader/TaskHeaderContainer.";
 
 // __________________data______________________________________
 const UserList = ["Unassigned", "se", "er"];
@@ -35,17 +36,17 @@ const initialValues = {
 // --------------------------------------------------------------
 
 export interface ITaskWindow {
-	onClose: any;
 	boardId: string;
-	addTask: (value: IAddTask) => void;
-	removeTask: (value: IRemoveTaskValues) => void;
-	updateTask: (value: IUpdateTask) => void;
 	task: ITask | null;
+	//functions
+	onClose: () => void;
+	addTask: (value: IAddTask) => void;
+	updateTask: (value: IUpdateTask) => void;
 }
 
 const TaskWindow = (props: ITaskWindow) => {
-	const [readOnly, setReadOnly] = useState(false);
-	const { boardId, task } = props;
+	const [readOnly] = useState(false);
+	const { boardId, task, onClose } = props;
 	const editing = !!task;
 
 	const Values = task ? task : initialValues;
@@ -62,37 +63,7 @@ const TaskWindow = (props: ITaskWindow) => {
 
 	return (
 		<div className="task-window bg-white card ">
-			<div className="task-window__header">
-				<h4>{editing ? "Editing task" : "Creating task"}</h4>
-				<div className="">
-					<div className="task-window__nav">
-						{readOnly || !editing ? null : (
-							<>
-								<button
-									className="task-window__nav-btn task-window__nav-btn--delete"
-									onClick={() => {
-										props.removeTask({
-											boardId: props.boardId,
-											taskId: Values.id,
-										});
-										props.onClose();
-									}}
-								>
-									Delete
-								</button>
-								<button className="task-window__nav-btn ">
-									<span className="material-icons">archive</span>
-								</button>
-							</>
-						)}
-
-						<button className="task-window__nav-btn" onClick={props.onClose}>
-							<span className="material-icons">close</span>
-						</button>
-					</div>
-				</div>
-			</div>
-
+			<TaskHeaderContainer {...{ editing, readOnly, boardId, onClose }} taskId={Values.id} />
 			<div className="task-window__forms w-95 p-3">
 				<div className="task-window__form">
 					<Formik

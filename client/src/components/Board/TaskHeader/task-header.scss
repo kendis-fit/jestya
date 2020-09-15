@@ -1,0 +1,30 @@
+.task-header {
+    width: 100%;
+    border-bottom: 1px solid $gray-400;
+    @include flex(space-between, center);
+    padding: 18px;
+
+    &__nav {
+        @include flex(flex-end);
+    }
+
+    &__nav-btn {
+        @extend .btn;
+        @include flex(center, center);
+
+        color: $secondary;
+        &:hover {
+            color: $blue;
+        }
+
+        &--delete {
+            @extend .btn-outline-danger;
+            margin-right: 15px;
+            color: $danger;
+            &:hover {
+                @extend .btn-danger;
+                color: $white;
+            }
+        }
+    }
+}
