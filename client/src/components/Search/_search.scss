@@ -6,13 +6,20 @@ $search-light: map-get(
 .search {
     @include flex();
     border-bottom: 1px solid $search-light;
-    
+
+    @media screen and (max-width: 480px) {
+        width: 24px;
+        border: none;
+    }
+
     &__input {
         @include placeholder($search-light, 0.8);
         @extend .text-light;
         border: 0;
         background: transparent;
-
+        @media screen and (max-width: 480px) {
+            width: 100%;
+        }
         &:focus {
             @include placeholder($search-light, 1);
             outline: none !important;
