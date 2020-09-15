@@ -81,7 +81,7 @@ const TaskList = (props: ITaskList) => {
 				</>
 			)}
 			{showTaskModal ? (
-				<ModalContainer backdrop="secondary" isOpen onClose={handleOnClose}>
+				<ModalContainer backdrop="secondary" className="tasklist__modal" isOpen onClose={handleOnClose} >
 					<TaskWindowContainer
 						task={activeTask}
 						boardId={props.boardId}

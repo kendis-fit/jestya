@@ -1,10 +1,10 @@
 .task-window {
     position: fixed;
     width: 700px;
-    top: 25%;
-    left: 50%;
-    margin-top: -100px; /* Negative half of height. */
-    margin-left: -250px;
+    // top: 25%;
+    // left: 50%;
+    // margin-top: -100px; /* Negative half of height. */
+    // margin-left: -250px;
     border-radius: 10px;
     @include flex(center, center);
 
@@ -58,4 +58,6 @@
         width: 95%;
         @extend .p-3;
     }
+
+    
 }

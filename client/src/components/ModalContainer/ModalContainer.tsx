@@ -6,6 +6,7 @@ interface IModalContainer {
 	onClose(): void;
 	isOpen: boolean;
 	backdrop?: string;
+	className?: string;
 }
 
 const ModalContainer = (props: IModalContainer) => {
@@ -31,8 +32,8 @@ const ModalContainer = (props: IModalContainer) => {
 			) : null}
 			<div
 				ref={wrapperRef}
-				className="modal modal-container"
-				style={props.isOpen ? { display: "block" } : { display: "none", width: "0px" }}
+				className={`modal modal-container ${props.className}`}
+				style={props.isOpen ? { display: "flex" } : { display: "none", width: "0px" }}
 			>
 				{props.children}
 			</div>
