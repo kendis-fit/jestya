@@ -40,14 +40,19 @@ const Boards = (props: IBoards) => {
 		return <div>Loading...</div>;
 	}
 
+	const handleOnDragStart = (dragItem: any) => {
+		if (dragItem.source.droppableId === "drag-board") {
+			setIsDragingBoard(true);
+		} else {
+			setIsDragingTask(true);
+		}
+	};
+
 	const handleOnDragEnd = async (result: any) => {
 		setIsDragingBoard(false); //reset drag status
 		setIsDragingTask(false); //reset drag status
 
 		if (!result.destination) return; // dropped outside the list
-		// console.log("result", result);
-		// console.log(result.source.droppableId.match(/drag-board:\w+/));
-		// console.log(/drag-board\w+/.test(result.source.droppableId));
 
 		if (result.source.droppableId === "drag-board") {
 			const dragIndexs = {
@@ -60,27 +65,16 @@ const Boards = (props: IBoards) => {
 			});
 		} else {
 			console.log("TASKSSS");
-			// console.log(result);
-			// console.log(result.source.droppableId.match(/[^_]*$/g)[0]);
-			// console.groupEnd();
 			props.dragTask({
-				dropInBoardId: result.destination.droppableId.match(/[^_]*$/g)[0],
-				dropOutBoardId: result.source.droppableId.match(/[^_]*$/g)[0],
+				dropInBoardId: result.destination.droppableId.match(/[^_]*$/g)[0], //get id of board
+				dropOutBoardId: result.source.droppableId.match(/[^_]*$/g)[0], //get id of board
 				dropInPosition: result.destination.index,
 				dropOutPosition: result.source.index,
 				dropTaskId: result.draggableId,
 			});
-			// console.log(a);
 		}
 	};
 
-	const handleOnDragStart = (dragItem: any) => {
-		if (dragItem.source.droppableId === "drag-board") {
-			setIsDragingBoard(true);
-		} else {
-			setIsDragingTask(true);
-		}
-	};
 	return (
 		<DragDropContext onDragStart={handleOnDragStart} onDragEnd={handleOnDragEnd}>
 			<Droppable

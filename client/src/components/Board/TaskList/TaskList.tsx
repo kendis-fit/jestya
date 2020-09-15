@@ -16,8 +16,9 @@ export interface ITaskList {
 }
 
 const TaskList = (props: ITaskList) => {
-	const [showTaskModal, setShowTaskModal] = useState(!false);
+	const [showTaskModal, setShowTaskModal] = useState(false);
 	const [activeTask, setActiveTask] = useState<ITask | null>(null);
+
 	const handleOnScroll = (event: React.UIEvent<HTMLElement>) => {
 		const el = event.currentTarget;
 		el.classList.add("tasklist--scroll");
@@ -80,7 +81,7 @@ const TaskList = (props: ITaskList) => {
 				</>
 			)}
 			{showTaskModal ? (
-				<ModalContainer backdrop="secondary" isOpen={true} onClose={handleOnClose}>
+				<ModalContainer backdrop="secondary" isOpen onClose={handleOnClose}>
 					<TaskWindowContainer
 						task={activeTask}
 						boardId={props.boardId}

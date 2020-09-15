@@ -8,8 +8,6 @@
     border-radius: 10px;
     @include flex(center, center);
 
-    
-
     &__input {
         input {
             font-size: 20px;
@@ -50,7 +48,6 @@
 
     &__form {
         width: 60%;
-        // background: #e6e6e6;
         padding: 7px;
         border-radius: 10px;
     }
@@ -58,5 +55,7 @@
     &__forms {
         display: flex;
         justify-content: space-between;
+        width: 95%;
+        @extend .p-3;
     }
 }

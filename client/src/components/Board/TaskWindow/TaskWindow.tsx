@@ -21,11 +21,6 @@ const PriorityList = [
 	{ value: "HIGHEST", label: "Highest" },
 ];
 
-const validationSchema = object().shape({
-	name: string().max(200, "Too Long!").required("Required"),
-	priority: string().required("Required"),
-});
-
 const initialValues = {
 	id: `f${(+new Date()).toString(16)}`,
 	name: "",
@@ -33,6 +28,10 @@ const initialValues = {
 	priority: "",
 };
 
+const validationSchema = object().shape({
+	name: string().max(200, "Too Long!").required("Required"),
+	priority: string().required("Required"),
+});
 // --------------------------------------------------------------
 
 export interface ITaskWindow {
@@ -64,7 +63,7 @@ const TaskWindow = (props: ITaskWindow) => {
 	return (
 		<div className="task-window bg-white card ">
 			<TaskHeaderContainer {...{ editing, readOnly, boardId, onClose }} taskId={Values.id} />
-			<div className="task-window__forms w-95 p-3">
+			<div className="task-window__forms">
 				<div className="task-window__form">
 					<Formik
 						initialValues={Values}
