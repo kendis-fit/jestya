@@ -1,0 +1,23 @@
+.comment {
+    display: flex;
+    padding-bottom: 4px;
+    &__author-avatar {
+        @include size(30px);
+        margin-right: 7px;
+        @extend .bg-orange;
+        border-color: transparent;
+    }
+    &__author-name {
+        font-weight: 500;
+        margin: 0;
+    }
+    &__comment-bubble {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__text {
+        margin: 0;
+        width: 200px;
+    }
+}

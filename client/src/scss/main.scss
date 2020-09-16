@@ -21,23 +21,27 @@ $info: #3e86f6;
 @import "../components/NotAvailable/not-available";
 @import "../components/ModalContainer/modal-container";
 @import "../components/ProfileActions/profile-actions";
-@import "../components/Board/BoardHeader/board-header";
 @import "../components/AddProjectForm/add-project-form";
-@import "../components/Board/BoardHeader/PopUpMenu/popUpMenu";
-@import "../components/Board/TaskList/tasklist";
-@import "../components/Board/Task/task";
 @import "../components/SearchProjects/search-projects";
 @import "../components/CircleAddBtn/circle-add-btn";
-@import "../components/Board/TaskWindow/task-window";
 @import "../components/User/user";
 @import "../components/UserInfo/user-info";
 @import "../components/InputModal/input-modal";
 @import "../components/ResultSearch/result-search";
 @import "../components/Input/_input";
 @import "../components/SelectedEntity/selected-entity";
-@import "../components/Board/CommentBlock/comment-block.scss";
+
+// Boards components
+@import "../components/Board/BoardHeader/board-header";
+@import "../components/Board/BoardHeader/PopUpMenu/popUpMenu";
+@import "../components/Board/TaskList/tasklist";
+@import "../components/Board/Task/task";
+@import "../components/Board/TaskWindow/task-window";
 @import "../components/Board/TaskHeader/task-header.scss";
 
+// Comment components
+@import "../components/CommentBlock/comment-block.scss";
+@import "../components/Comment/comment.scss";
 body {
     background: #fffefe;
 }

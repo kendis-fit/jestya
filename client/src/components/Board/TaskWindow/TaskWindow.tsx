@@ -7,7 +7,7 @@ import { ITask } from "../../../api/boardProjects";
 import { object, string } from "yup";
 import { IUpdateTask } from "../../../reducers/boards/interfaces/IUpdateTaskAction";
 import { IAddTask } from "../../../reducers/boards/interfaces/IAddTask";
-import CommentBlock from "../CommentBlock";
+import CommentBlock from "../../CommentBlock";
 import TaskHeaderContainer from "../TaskHeader/TaskHeaderContainer.";
 
 // __________________data______________________________________

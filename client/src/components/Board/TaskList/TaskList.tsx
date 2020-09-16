@@ -16,7 +16,7 @@ export interface ITaskList {
 }
 
 const TaskList = (props: ITaskList) => {
-	const [showTaskModal, setShowTaskModal] = useState(false);
+	const [showTaskModal, setShowTaskModal] = useState(!false);
 	const [activeTask, setActiveTask] = useState<ITask | null>(null);
 
 	const handleOnScroll = (event: React.UIEvent<HTMLElement>) => {
