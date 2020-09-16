@@ -4,7 +4,7 @@ import Comment from "../Comment/Comment";
 import TextArea from "../TextArea";
 
 const CommentBlock = () => {
-	let CommentList = new Array(4).fill(2);
+	const CommentList = new Array(9).fill(0);
 
 	const handleSubmit = (value: any, FormikProps: any) => {
 		console.log(value);
@@ -15,11 +15,15 @@ const CommentBlock = () => {
 		<div className="comment-block">
 			<h4>Comments</h4>
 			<div className="comment-block__list">
-				{CommentList.map((ell, i) => (
-					<div key={i} className="comment-block__list-item">
-						<Comment />
-					</div>
-				))}
+				{CommentList.length === 0 ? (
+					<p className="p-1 text-muted"> There are no comments</p>
+				) : (
+					CommentList.map((ell, i) => (
+						<div key={i} className="comment-block__list-item">
+							<Comment />
+						</div>
+					))
+				)}
 			</div>
 			<div className="comment-block__form-wrapper">
 				<Formik initialValues={{ comment: "" }} onSubmit={handleSubmit}>

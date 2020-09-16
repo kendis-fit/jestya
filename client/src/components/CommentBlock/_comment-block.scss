@@ -19,24 +19,30 @@
 
     &__form {
         display: flex;
-        // flex-direction: column;
         align-items: flex-start;
         justify-content: space-between;
     }
 
     &__form-input {
-        // @extend .mb-3;as
+        width: calc(100% - 75px);
         textarea {
             @include custom-scrollbar(10px, 10px, 2px);
-            // min-height: 40px;
         }
     }
 
     &__sent-btn {
         @extend .bg-blue;
         color: #fff;
+    }
+}
 
-        // display: flex;
-        // align-self: flex-end;
+@media screen and (max-width: 768px) {
+    .comment-block {
+        height: calc(100vh - 290px);
+
+        &__list {
+            height: 100%;
+        }
+        
     }
 }

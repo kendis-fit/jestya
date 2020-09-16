@@ -45,6 +45,8 @@ export interface ITaskWindow {
 
 const TaskWindow = (props: ITaskWindow) => {
 	const [readOnly] = useState(false);
+	const [tab, setTab] = useState("comments");
+
 	const { boardId, task, onClose } = props;
 	const editing = !!task;
 
@@ -60,11 +62,34 @@ const TaskWindow = (props: ITaskWindow) => {
 		props.onClose();
 	};
 
+	const handleChangeTab = async (event: React.MouseEvent<HTMLSpanElement>) => {
+		setTab(event.currentTarget.id);
+	};
+	console.log(tab);
+
 	return (
 		<div className="task-window bg-white card ">
-			<TaskHeaderContainer {...{ editing, readOnly, boardId, onClose }} taskId={Values.id} />
+			<div className="task-window__task-header">
+				<TaskHeaderContainer
+					{...{ editing, readOnly, boardId, onClose }}
+					taskId={Values.id}
+				/>
+			</div>
+
+			<ul className="task-window__nav nav nav-tabs">
+				<li id="task" onClick={handleChangeTab} className="nav-item">
+					<span className={`nav-link ${tab === "task" ? "active" : ""} `}>Task</span>
+				</li>
+
+				<li id="comments" onClick={handleChangeTab} className="nav-item">
+					<span className={`nav-link ${tab === "comments" ? "active" : ""} `}>
+						Comments
+					</span>
+				</li>
+			</ul>
+
 			<div className="task-window__forms">
-				<div className="task-window__form">
+				<div className={`task-window__form ${tab !== "task" ? "d-none" : ""}`}>
 					<Formik
 						initialValues={Values}
 						validationSchema={validationSchema}
@@ -138,7 +163,7 @@ const TaskWindow = (props: ITaskWindow) => {
 						)}
 					</Formik>
 				</div>
-				<div className="task-window__comment-block">
+				<div className={`task-window__comment-block ${tab !== "comments" ? "d-none" : ""}`}>
 					<CommentBlock />
 				</div>
 			</div>
