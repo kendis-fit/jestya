@@ -47,7 +47,7 @@
     }
 
     &__form {
-        width: 60%;
+        width: 55%;
         padding: 7px;
         border-radius: 10px;
     }
@@ -55,9 +55,10 @@
     &__forms {
         display: flex;
         justify-content: space-between;
-        width: 95%;
+        width: 100%;
         @extend .p-3;
     }
-
-    
+    &__comment-block {
+        width: 280px;
+    }
 }

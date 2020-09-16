@@ -3,7 +3,7 @@ import React from "react";
 const Comment = () => {
 	return (
 		<div className="comment">
-			<div className="user-info__icon comment__author-avatar">N</div>
+			<div className="user-info__icon comment__author-avatar">I</div>
 			<div className="comment__comment-bubble">
 				<p className="comment__author-name">Ivan Step</p>
 				<p className="comment__text">

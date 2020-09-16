@@ -138,7 +138,7 @@ const TaskWindow = (props: ITaskWindow) => {
 						)}
 					</Formik>
 				</div>
-				<div className="">
+				<div className="task-window__comment-block">
 					<CommentBlock />
 				</div>
 			</div>
