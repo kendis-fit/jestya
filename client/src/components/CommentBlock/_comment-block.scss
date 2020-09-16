@@ -43,6 +43,12 @@
         &__list {
             height: 100%;
         }
-        
+
+        &__form {
+            align-items: flex-end;
+            position: absolute;
+            bottom: 2px;
+            background-color: #fff;
+        }
     }
 }
