@@ -28,8 +28,8 @@ const CommentBlock = () => {
 			<div className="comment-block__form-wrapper">
 				<Formik initialValues={{ comment: "" }} onSubmit={handleSubmit}>
 					{({ handleChange, values }) => (
-						<Form>
-							<div className="comment-block__form">
+						<Form className="comment-block__form">
+							<div className="comment-block__inputs-wrapper">
 								<TextArea
 									name="comment"
 									onChange={handleChange}
@@ -37,13 +37,15 @@ const CommentBlock = () => {
 									resize="none"
 									className="comment-block__form-input"
 									placeholder="Add comment ..."
-									rows={
-										values.comment.length < 18
-											? 1
-											: values.comment.length < 41
-											? 2
-											: 3
-									}
+									rows={1}
+									// rows={
+									// 	values.comment.length < 18
+									// 		? 1
+									// 		: values.comment.length < 41
+									// 		? 2
+									// 		: 3
+									// }
+									
 								/>
 								<button type="submit" className="comment-block__sent-btn btn">
 									Sent

@@ -45,7 +45,7 @@ export interface ITaskWindow {
 
 const TaskWindow = (props: ITaskWindow) => {
 	const [readOnly] = useState(false);
-	const [tab, setTab] = useState("comments");
+	const [tab, setTab] = useState("task");
 
 	const { boardId, task, onClose } = props;
 	const editing = !!task;

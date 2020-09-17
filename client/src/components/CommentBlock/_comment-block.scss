@@ -17,7 +17,7 @@
         }
     }
 
-    &__form {
+    &__inputs-wrapper {
         display: flex;
         align-items: flex-start;
         justify-content: space-between;
@@ -38,17 +38,31 @@
 
 @media screen and (max-width: 768px) {
     .comment-block {
-        height: calc(100vh - 290px);
-
+        
         &__list {
-            height: 100%;
+            height: calc(100vh - 255px);
+            min-height: 100px;
+        }
+
+        &__form-wrapper {
+            // position: absolute;
+            // padding-top: 5px;
+            // left: 0;
+            // right: 0;
+            // bottom: 2px;
+            // margin: 0 auto;
+            // width: 100%;
+            background-color: #fff;
         }
 
         &__form {
+            display: flex;
+            justify-content: center;
+        }
+        &__inputs-wrapper {
             align-items: flex-end;
-            position: absolute;
-            bottom: 2px;
-            background-color: #fff;
+            justify-content: space-between;
+            width: 100%;
         }
     }
 }

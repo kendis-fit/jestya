@@ -53,7 +53,7 @@
 
     &__form {
         width: 85%;
-        height: 567px;
+        // height: 567px;
         padding: 7px;
         border-radius: 10px;
     }
@@ -67,7 +67,7 @@
     &__comment-block {
         // width: 280px;
         width: 85%;
-        height: 567px;
+        // height: 567px;
     }
 }
 
@@ -78,6 +78,14 @@
         top: 0;
         justify-content: start;
         border-radius: 0;
+        &__descripton {
+            textarea {
+                height: calc(100vh - 435px);
+            }
+        }
+        &__forms {
+            // padding: 0 !important;
+        }
     }
 }
 @media screen and (max-width: 500px) {
@@ -89,10 +97,6 @@
             width: 100%;
         }
 
-        &__descripton {
-            textarea {
-                height: calc(100vh - 435px);
-            }
-        }
+        
     }
 }

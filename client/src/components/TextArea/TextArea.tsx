@@ -20,7 +20,7 @@ const TextArea = (props: ITextAreaProps) => {
 
 	return (
 		<div className={"form-group " + className}>
-			<label className="w-100">
+			<label className="w-100 d-block">
 				{label}
 				<textarea
 					style={{ height: height, resize: resize }}
